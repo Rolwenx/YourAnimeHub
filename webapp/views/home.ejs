@@ -1,0 +1,37 @@
+
+<%
+const title = 'Home - YourAnimeHub';
+%>
+<%- include('partials/header.ejs', { title: title}) %>
+<link type="text/css" rel="stylesheet" href="/css/styleHome.css">
+
+    <section class="card_section">
+        <div class="row">
+            <div class="card one">
+                <h3>Explore a World of Anime</h3>
+                <p>Dive into a captivating collection of anime shows, memorable quotes, and beloved characters. Uncover hidden gems and relive your favorite classics.</p>
+            </div>
+            <div class="card two">
+                <h3>Personalized Watchlist</h3>
+                <p>Create a watchlist tailored to your tastes. Organize your anime viewing and never miss out on your must-watch shows.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card three">
+                <h3>Review and Rate</h3>
+                <p>Share your thoughts on beloved anime and manga characters. Provide ratings and engage in lively character discussions with the community.</p>
+            </div>
+            <div class="card four">
+                <h3>Progress Tracking</h3>
+                <p>Effortlessly monitor your anime journey. Never lose your place in ongoing series, and continue your adventures without interruption.</p>
+            </div>
+        </div>
+        <div class="join-button-container">
+            <a href="/signup" class="join-button">Join Now</a>
+        </div>
+        
+    </section>
+    <%- include('partials/footer_home.ejs') %>
+    
+</body>
+</html>

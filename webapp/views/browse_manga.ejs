@@ -1,0 +1,99 @@
+<%
+const title = 'Browse Manga - YourAnimeHub';
+%>
+<%- include('partials/header.ejs', { title: title}) %>
+<link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
+
+
+<section class="section">
+  <div class="search_wrap search_wrap_1">
+    <h4>Search</h4>
+    <div class="search_box">
+      <input type="text" class="input">
+      <div class="btn btn_common">
+        <i class="fa fa-search"></i>
+      </div>
+    </div>
+  </div>
+  <div class="dropdown_filter">
+    <h4>Genre</h4>
+    <div class="select">
+      <span class="selected">Any</span>
+      <div class="caret"></div>
+    </div>
+    <ul class="menu">
+      <li class="active">Any</li>
+      <li>Action</li>
+      <li>Adventure</li>
+      <li>Romance</li>
+      <li>Sports</li>
+    </ul>
+  </div>
+  <div class="dropdown_filter">
+    <h4>Country of Origin</h4>
+    <div class="select">
+      <span class="selected">Any</span>
+      <div class="caret"></div>
+    </div>
+    <ul class="menu">
+      <li class="active">Any</li>
+      <li>Japan</li>
+      <li>South Korea</li>
+      <li>China</li>
+      <li>Taiwan</li>
+    </ul>
+  </div>
+  <div class="dropdown_filter">
+    <h4>Status</h4>
+    <div class="select">
+      <span class="selected">Any</span>
+      <div class="caret"></div>
+    </div>
+    <ul class="menu">
+      <li class="active">Any</li>
+      <li>Finished</li>
+      <li>Ongoing</li>
+      <li>Hiatus</li>
+      <li>Cancelled</li>
+    </ul>
+  </div>
+</section>
+
+
+<%- include('partials/footer_home.ejs') %>
+<script>
+  const dropdowns = document.querySelectorAll('.dropdown_filter');
+  
+  // We now loop through all the dropdown elements
+  dropdowns.forEach(dropdown => {
+    const select = dropdown.querySelector('.select');
+    const caret = dropdown.querySelector('.caret');
+    const menu = dropdown.querySelector('.menu');
+    const options = dropdown.querySelectorAll('.menu li');
+    const selected = dropdown.querySelector('.selected');
+
+    select.addEventListener('click', () => {
+      select.classList.toggle('select-clicked');
+      caret.classList.toggle('caret-rotate');
+      menu.classList.toggle('menu-open');
+    });
+
+    options.forEach(option => {
+      option.addEventListener('click', () => {
+        selected.innerText = option.innerText;
+        select.classList.remove('select-clicked');
+        caret.classList.remove('caret-rotate');
+        menu.classList.remove('menu-open');
+        
+        options.forEach(option => {
+          option.classList.remove('active');
+        });
+        
+        option.classList.add('active');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

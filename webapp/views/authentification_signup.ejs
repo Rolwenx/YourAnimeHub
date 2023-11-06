@@ -1,0 +1,65 @@
+<%
+const title = 'Sign Up for YourAnimeHub';
+%>
+<%- include('partials/header.ejs', { title: title}) %>
+<link type="text/css" rel="stylesheet" href="/css/styleLoginSignUp.css">
+
+
+<section class="login_wrapper_signup">
+  <div class="form-box login">
+      <h2>Register To YourAnimeHub</h2>
+      <form action="#">
+          <div class="input-box">
+              <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+              <input type="text" required>
+              <label>Username</label>
+          </div>
+          <div class="input-box">
+              <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+              <input type="email" required>
+              <label>Email</label>
+          </div>
+          <div class="input-box">
+              <span class="icon" id="password_span"><i class="fa fa-eye" aria-hidden="true" id="eye1" onclick="toggle('password1', 'eye1')"></i></span>
+              <input type="password" id="password1" required>
+              <label>Password</label>
+          </div>
+          <div class="input-box">
+              <span class="icon" id="password_span"><i class="fa fa-eye" aria-hidden="true" id="eye2" onclick="toggle('password2', 'eye2')"></i></span>
+              <input type="password" id="password2" required>
+              <label>Confirm Password</label>
+          </div>
+          <div class="remember_forgot">
+              <label><input type="checkbox">I agree to the <a href="/terms">terms & conditions</a></label>
+          </div>
+          <button type="submit" class="btn">Register</button>
+          <div class="login_register">
+              <p>Already have an account? <a href="/login" class="register-link">Login</a></p>
+
+          </div>
+      </form>
+  </div>
+
+</section>
+<%- include('partials/footer.ejs') %>
+<script>
+        function toggle(passwordId, eyeId) {
+            var passwordInput = document.getElementById(passwordId);
+            var eyeIcon = document.getElementById(eyeId);
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    
+</body>
+</html>

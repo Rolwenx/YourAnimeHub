@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link type="text/css" rel="stylesheet" href="/css/styleAllPage.css">
+  </head>
+  <body>
+    <header>
+        <nav class="navbar">
+            <div class="logo_container">
+                <a href="/">
+                    <img class="website_logo" src="/img/website_logo.png" alt="Logo image">
+
+                </a>
+            </div>
+            
+
+            <ul class="nav_bar_links">
+                <li class="nav_bar_link">
+                    <a href="/">Home</a></li>
+                <li class="nav_bar_link browse">
+                    <a href="/browse/anime">Browse
+                        <span class="material-icons drop_down-icon">
+                            arrow_drop_down
+                        </span>
+                    </a>
+                    <ul class="drop_down">
+                        <li><a href="/browse/anime" class="drop_down_li">Anime</a></li>
+                        <li><a href="/browse/manga" class="drop_down_li">Manga</a></li>
+                        <li><a href="/browse/characters" class="drop_down_li">Characters</a></li>
+                        <li><a href="/browse/quotes" class="drop_down_li">Quotes</a></li>
+                        <li><a href="/browse/reviews" class="drop_down_li">Reviews</a></li>
+                    </ul>
+                </li>
+                <li class="nav_bar_link">
+                    <a href="/profile">Profile</a></li>
+            </ul>
+            <div class="login_signup_container">
+                <a href="/login" class="login_btn">Log In</a>
+                <a href="/signup" class="signup_btn">Sign Up</a>
+            </div>
+        </nav>
+    </header>
