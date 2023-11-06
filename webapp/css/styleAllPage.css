@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+/* ---------- GENERAL -----------*/
+*{
+
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+
+}
+
+body{
+  background: rgb(255, 255, 255);
+}
+
+
+/* ---------- LOGO -----------*/
+
+.website_logo{
+    height: 80px;
+    width:80px;
+    box-shadow: 0 2px 4px rgb(255, 255, 255);
+}
+
+.logo_container{
+    display: flex;
+    justify-content: flex-start; /* Align the logo to the left */
+    align-items: center; /* Vertically center the logo */
+
+}
+
+/* ---------- NAVBAR -----------*/
+
+
+.navbar{
+   
+    /*height: 80px;*/
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+    margin-top: 10px;
+    margin-bottom: 50px;
+
+}
+
+.navbar li{
+    list-style: none;
+    /* Allows the small line under the navbar tab*/
+    position: relative;
+}
+
+/* Manages the lines that appears when you hover on the navbar*/
+.navbar li::after{
+    content:'';
+    height: 3px;
+    width: 0;
+    background:rgb(80,157,220);
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    transition: 0.5s;
+}
+
+.nav_bar_links > .nav_bar_link:hover::after {
+    width: 100%;
+}
+
+.navbar li a{
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.navbar a, .drop_down li{
+    text-decoration: none;
+    color: white;
+}
+
+
+.nav_bar_links{
+    display: flex;
+    gap: 30px;
+    max-width: 500px;
+    justify-content: center;
+    background-color: rgb(8,14,31);
+    margin-left: 80px;
+    padding: 1.5vw 0; 
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgb(0, 0, 0);
+    flex-grow: 1; /* Allow this container to expand and take the available space */
+}
+
+.signup_btn, .login_btn{
+    background: rgb(72,144,222);
+    padding: 8px;
+    font-weight: 800;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgb(0, 0, 0);
+    list-style: none;
+    margin-left:18px;
+}
+
+.login_signup_container{
+    margin-left: 25px; 
+    justify-content: right;
+}
+
+.login_signup_container a{
+    text-shadow: 2px 1px 3px rgba(0,0,0,0.2);
+}
+
+/* ---------- NAVBAR - DROPDOWN -----------*/
+.nav_bar_link, .drop_down li{
+    list-style: none;
+    height: 100%;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+.drop_down{
+    position: absolute;
+    text-align: center;
+    color: black;
+    font-size: 12px;
+    border-radius: 0.5rem;
+    background: white;
+    margin: 13.5px 0 0 -20px;
+    padding: 5px 0 0 5px;
+    left: 28px;
+    width: auto; /* Set width to 'auto' to cover a larger width */
+    display:none;
+    z-index: 2;
+    box-shadow: 0 5px 10px rgb(0, 0, 0,0.5);
+
+}
+
+.drop_down_li {
+    color: black !important;
+    text-transform: lowercase !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    transition: 0.3s !important;
+    
+}
+
+.drop_down_li:hover {
+    width: auto;
+    font-size: 14px;
+    font-weight: 700; 
+    transform: scale(1.1);
+    text-align: center;
+}
+
+
+
+.browse:hover .drop_down{
+    display: block;
+}
+
+.browse a{
+    display: flex;
+}
+
+.drop_down-icon{
+    font-size: 20px;
+    right: -5px;
+    top: 2px;
+    position: relative;
+    transform: rotate(0deg);
+    transition: 0.4s ease-in-out all;
+}
+
+.browse:hover .drop_down-icon{
+    transform: rotate(180deg);
+}
+
+
+/* ---------- FOOTER -----------*/
+
+.footer{
+    background: rgb(8,14,31);
+    width: 100%;
+    bottom: 0;
+    background: linear-gradient(to right, #00093c);
+    color: #fff;
+    padding: 25px 0 30px;
+    border-top-left-radius: 125px;
+    font-size: 13px;
+    line-height: 20px;
+}
+    
+.footer_home{
+    background: rgb(8,14,31);
+    margin-top: 600px;
+    width: 100%;
+    bottom: 0;
+    background: linear-gradient(to right, #00093c);
+    color: #fff;
+    padding: 25px 0 30px;
+    border-top-left-radius: 125px;
+    font-size: 13px;
+    line-height: 20px;
+    
+}
+
+.row_footer{
+    width: 85%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between
+}
+
+.col_footer{
+    flex-basis: 25%;
+    padding: 10px;
+}
+
+.col_footer:nth-child(2), .col:nth-child(3){
+    flex-basis: 15%;
+}
+
+.website_logo_footer{
+    margin-top: 0;
+    height: 50px;
+    width:50px;
+
+}
+
+.col_footer h3{
+    width: fit-content;
+    position: relative;
+    margin-bottom: 40px;
+    margin-left: 40px;
+}
+
+.col_footer ul li{
+    list-style: none;
+    margin-bottom: 12px;
+}
+
+.col_footer ul li a{
+    text-decoration: none;
+    color: white;
+}
+
+hr{
+    width: 90%;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    margin: 20px auto;
+}
+
+.copyright{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.underline_footer{
+    width: 100%;
+    height: 5px;
+    background: #767676;
+    border-radius: 3px;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    overflow: hidden;
+}
+
+.underline_footer span{
+    width: 15px;
+    height: 100%;
+    background: #fff;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    animation: moving 2s linear infinite;
+
+}
+@keyframes moving{
+    0%{
+        left:-20px;
+    }
+    100%{
+        left: 100%;
+    }
+}

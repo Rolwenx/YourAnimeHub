@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.terms_section {
+    padding: 20px;
+}
+
+.content {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.h2 {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    background: rgb(72,144,222);
+    border-radius: 20px;
+    color:white;
+    text-shadow: 2px 1px 3px rgba(0,0,0,0.2);
+    margin-bottom: 60px;
+}
+
+.ol {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.terms_li {
+    margin-bottom: 20px;
+
+}
+
+.h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+footer{
+
+    margin-top:0 !important;
+}

@@ -1,0 +1,150 @@
+
+/* ---------- 4 CARDS AT THE BEGINNING -----------*/
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.card_section{
+    margin-top: 50px;
+    background: rgb(8,14,31);
+    border-radius: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 1200px;
+    height: auto;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: absolute;
+    z-index: 1;
+}
+
+.card{
+    position: relative;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    color: slate;
+    cursor: pointer;
+    flex-basis: calc(33%-40px);
+    margin: 20px;
+    padding: 30px;
+    overflow: hidden;
+    transition: 0.2s ease all;
+    width: 400px;
+}
+
+.card:before{
+    content:"";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    left: 20px;
+    height: 5px;
+    background: #fff;
+    border-radius: 40px;
+    transition: 0.5s ease all;
+}
+
+
+.card_section h3{
+    color: black;
+    z-index: 2;
+    margin: 0 0 20px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.card_section p{
+    font-size: 13px;
+    z-index: 2;
+    margin: 10px 0 0;
+}
+
+.card.one:before{
+    background-image: linear-gradient(153deg, blue 0%, green 95%);
+}
+.card.two:before {
+    background-image: linear-gradient(153deg, red 0%, yellow 95%);
+}
+.card.three:before{
+    background-image: linear-gradient(153deg, black 0%, yellow 95%);
+}
+.card.four:before{
+    background-image: linear-gradient(153deg, black 0%, yellow 95%);
+}
+
+.card:hover{
+    border:0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    color: #fff;
+    transform: scale(1.05);
+    z-index: 2;
+}
+
+.card:hover:before{
+    border-radius: 20px;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+}
+
+.card:hover h3, .card:hover p{
+    text-shadow: 2px 1px 3px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 2;
+}
+
+.card:hover p{
+    font-size: 14px;
+}
+.card:hover h3{
+    font-size: 24px;
+}
+
+
+/* ---------- JOIN BUTTON -----------*/
+
+.join-button-container {
+    flex-direction: column;
+    margin-bottom: 20px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -50px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+    border-radius: 30px; 
+    padding: 10px 20px;
+    background: rgb(72,144,222);
+    width: 120px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+}
+
+.join-button{
+
+    text-decoration: none;
+    color: white;
+    text-shadow: 2px 1px 3px rgba(0,0,0,0.2);
+
+}
+
+.join-button-container:hover {
+    background: rgb(101, 199, 196);
+    transition: 0.5s;
+    transform: scale(1.4);
+}

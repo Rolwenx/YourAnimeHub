@@ -1,0 +1,159 @@
+/* SEARCH BAR */
+
+
+.search_wrap{
+    margin-top: 50px !important;
+    min-width: 15em;
+    position: relative;
+    margin-left: 160px;
+
+}
+
+.search_wrap h2{
+
+    margin-bottom: 30px;
+}
+
+.search_wrap .search_box{
+    position: relative;
+    width: 102px;
+    height: 8px;
+}
+
+.search_wrap .search_box .input{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px 20px;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+.search_wrap .search_box .btn{
+    position: absolute;
+    left: 145px;
+    width: 59px;
+    height: 30px;
+    background: rgb(72,144,222);
+    cursor: pointer;
+}
+
+.search_wrap .search_box .btn:hover{
+    background: rgb(72,144,222);
+}
+
+.search_wrap .search_box .btn.btn_common .fa{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #fff;
+    font-size: 20px;
+}
+
+
+
+.search_wrap.search_wrap_1 .search_box .input{
+    padding-right: 80px;
+}
+
+.search_wrap.search_wrap_2 .search_box .btn{
+    left: 0;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+/* CHARACTERS CARD */
+
+.characters_container{
+    width: 91%;
+    height: 70vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 150px;
+    margin-top: 70px;
+}
+
+
+.card{
+    position: relative;
+    background: #808080;
+    box-shadow: 0 1px 5px black;
+    width: 200px;
+    height: 279px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.8s;
+    overflow: hidden;
+    margin:15px;
+}
+
+.card0{
+    background: url(https://i.imgur.com/gPRz5BR.jpg)center center
+    no-repeat;
+    background-size: 200px;
+}
+
+
+.card0:hover{
+    background: url(https://i.imgur.com/gPRz5BR.jpg)left center
+    no-repeat;
+    background-size: 300px;
+}
+
+.characters_container h2{
+    color: white;
+    margin: 70px;
+    opacity: 0;
+    transition: opacity 1s;
+    
+}
+
+.card0:hover h2{
+    opacity: 1;
+    text-shadow: 2px 1px 3px rgba(0,0,0,0.2);
+    background: black;
+    width: auto;
+}
+
+.border{
+    position: relative;
+    width: 188px;
+    height: 257px;
+    background: transparent;
+    border-radius: 5px;
+    transition: border 1s;
+}
+
+.border:hover{
+    border: 1px solid white;
+}
+
+.load-more-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px; /* Adjust the margin to your liking */
+}
+
+
+.load-more-button {
+    margin: 20px auto; 
+    display: block; /* Ensure it's a block-level element */
+    background-color: #808080;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
