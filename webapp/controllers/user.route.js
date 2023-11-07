@@ -32,4 +32,10 @@ router.get('/reviews', (req, res) => {
     res.render('user/user_reviews', { favourites: [] });
 });
 
+//http://localhost:9000/user/favourites
+router.get('/favourites', (req, res) => {
+    //res.send('Hello, from controller...');
+    res.render('user/user_favourites', { favourites: [] });
+});
+
 module.exports = router;
