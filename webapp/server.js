@@ -31,12 +31,18 @@ app.get('/', (request, response) => {
 // app.use(routeBase, callback);
 app.use("/css", express.static(__dirname + '/css'));
 app.use("/img", express.static(__dirname + '/img'));
+
 app.use("/", require("./controllers/home.route"));
+
 app.use("/browse", require("./controllers/browse.route"));
-app.use("/profile", require("./controllers/profile.route"));
+app.use("/browse", express.static(__dirname + '/browse'));
+
+app.use("/user", require("./controllers/user.route"));
+app.use("/user", express.static(__dirname + '/user'));
+
 app.use("/", require("./controllers/authentification.route"));
 
 
 
 
-  
+
