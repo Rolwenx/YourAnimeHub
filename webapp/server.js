@@ -43,6 +43,13 @@ app.use("/user", express.static(__dirname + '/user'));
 app.use("/", require("./controllers/authentification.route"));
 
 
+app.use("/anime", require("./controllers/anime.route"));
+app.use("/manga", require("./controllers/manga.route"));
+app.use("/quote", require("./controllers/quote.route"));
+app.use("/review", require("./controllers/review.route"));
+app.use("/character", require("./controllers/character.route"));
+
+
 
 
 
