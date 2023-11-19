@@ -1,3 +1,16 @@
+CREATE DATABASE if not exists animeDb;
+USE animeDb;
+
+DROP TABLE if exists Character_Card;
+DROP TABLE if exists AnimeQuote;
+DROP TABLE if exists Anime;
+DROP TABLE if exists Appear_In;
+DROP TABLE if exists User_Profile;
+DROP TABLE if exists User_Favorite_Quote;
+DROP TABLE if exists User_Favorite_Anime;
+DROP TABLE if exists View_Anime;
+
+
 CREATE TABLE User_Profile(
    UserID INT AUTO_INCREMENT PRIMARY KEY,
    Username VARCHAR(50) NOT NULL,
@@ -15,27 +28,24 @@ CREATE TABLE User_Profile(
 );
 
 CREATE TABLE Anime(
-	 AnimeID INT PRIMARY KEY,
+   AnimeID INT PRIMARY KEY,
    TitleEnglish VARCHAR(100) NOT NULL,
    TitleRomaji VARCHAR(100),
    TitleNative VARCHAR(100),
    Genre VARCHAR(250) NOT NULL,
    ReleaseDate DATE,
-	 EndDate DATE,
-	 AnimeStatus VARCHAR(20),  -- status (e.g., Finished, Ongoing, Paused, Dropped)
+   EndDate DATE,
+   AnimeStatus VARCHAR(20),
    Synopsis TEXT,
-	 PopularityPosition INT DEFAULT 0,
-   CoverImageURL VARCHAR(255),  -- URL for the cover image
-   BackgroundImageURL VARCHAR(100),  -- URL for the background image
+   PopularityPosition INT DEFAULT 0,
+   CoverImageURL VARCHAR(255),
+   BackgroundImageURL VARCHAR(100),
    StreamingPlatformURL VARCHAR(100),
-	 AnimeFormat VARCHAR(50), -- TV, Manga, Movies
-	 EpisodeDuration INT,
--- Specifically For Anime
+   AnimeFormat VARCHAR(50),
+   EpisodeDuration INT,
    EpisodeCount INT,
--- Specifically For Manga
-	 Chapters INT,
-	 Volumes INT,
-	 UNIQUE(Title)
+   Chapters INT,
+   Volumes INT
 );
 
 CREATE TABLE Character_Card(
