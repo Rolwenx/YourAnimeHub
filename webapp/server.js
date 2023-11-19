@@ -1,13 +1,4 @@
-/* verifies if theres database connection or not
-const mysql = require('mysql2/promise');
-const conn = mysql.createConnection({
-    host:'localhost', user: 'root', database: 'carsdb', password: 'janelena17', debug: false
-});
-conn.then(function(conn) {
-    conn.execute('SELECT * FROM users').then(function(result){ const [rows, fields]=result; console.log(rows); });
-    conn.execute('SELECT * FROM cars').then(function(result){ const [rows, fields]=result; console.log(rows); process.exit(); });
-});    
-return;*/
+
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -36,6 +27,9 @@ app.use("/", require("./controllers/home.route"));
 
 app.use("/browse", require("./controllers/browse.route"));
 app.use("/browse", express.static(__dirname + '/browse'));
+
+app.use("/", require("./controllers/admin.route"));
+app.use("/admin", express.static(__dirname + '/admin'));
 
 app.use("/user", require("./controllers/user.route"));
 app.use("/user", express.static(__dirname + '/user'));
