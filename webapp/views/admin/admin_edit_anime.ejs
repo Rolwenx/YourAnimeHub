@@ -1,0 +1,76 @@
+<%
+const title = 'Admin - YourAnimeHub';
+%>
+<%- include('../partials/header.ejs', { title: title }) %>
+
+
+<section>
+  <h1 style="text-align: center;">This is the edit anime functionality of the admin page </h1>
+  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the admin will be able to edit an anime</h4>
+</section>
+
+<section>
+  <h1>Edit Anime</h1>
+
+<form action="/admin/anime/update/:animeId" method="post">
+
+  <label for="titleEnglish">Title (English):</label>
+  <input type="text" id="titleEnglish" name="titleEnglish" required />
+
+  <label for="titleRomaji">Title (Romaji):</label>
+  <input type="text" id="titleRomaji" name="titleRomaji" />
+
+  <label for="titleNative">Title (Native):</label>
+  <input type="text" id="titleNative" name="titleNative" />
+
+  <label for="genre">Genre:</label>
+  <input type="text" id="genre" name="genre" required />
+
+  <label for="releaseDate">Release Date:</label>
+  <input type="date" id="releaseDate" name="releaseDate" />
+
+  <label for="endDate">End Date:</label>
+  <input type="date" id="endDate" name="endDate" />
+
+  <label for="animeStatus">Anime Status:</label>
+  <input type="text" id="animeStatus" name="animeStatus" />
+
+  <label for="synopsis">Synopsis:</label>
+  <textarea id="synopsis" name="synopsis"></textarea>
+
+  <label for="popularityPosition">Popularity Position:</label>
+  <input type="number" id="popularityPosition" name="popularityPosition" />
+
+  <label for="coverImageURL">Cover Image URL:</label>
+  <input type="text" id="coverImageURL" name="coverImageURL" />
+
+  <label for="backgroundImageURL">Background Image URL:</label>
+  <input type="text" id="backgroundImageURL" name="backgroundImageURL" />
+
+  <label for="streamingPlatformURL">Streaming Platform URL:</label>
+  <input type="text" id="streamingPlatformURL" name="streamingPlatformURL" />
+
+  <label for="animeFormat">Anime Format:</label>
+  <input type="text" id="animeFormat" name="animeFormat" />
+
+  <label for="episodeDuration">Episode Duration:</label>
+  <input type="number" id="episodeDuration" name="episodeDuration" />
+
+  <label for="episodeCount">Episode Count:</label>
+  <input type="number" id="episodeCount" name="episodeCount" />
+
+  <label for="chapters">Chapters:</label>
+  <input type="number" id="chapters" name="chapters" />
+
+  <label for="volumes">Volumes:</label>
+  <input type="number" id="volumes" name="volumes" />
+
+  <button type="submit">Update Anime</button>
+</form>
+</section>
+
+
+<%- include('../partials/footer.ejs', { title: title }) %>
+
+</body>
+</html>

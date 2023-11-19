@@ -1,0 +1,30 @@
+<%
+const title = 'Admin - YourAnimeHub';
+%>
+<%- include('../partials/header.ejs', { title: title }) %>
+
+
+<section>
+  <h1 style="text-align: center;">This is the Admin dashboard page </h1>
+  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the admin will manage the database data</h4>
+</section>
+
+<h1 style="text-align: center;">
+  <a href="/admin/animes">Anime</a>
+</h1>
+<h1 style="text-align: center;">
+  <a href="/admin/mangas">Manga</a>
+</h1>
+<h1 style="text-align: center;">
+  <a href="/admin/quotes">Quote</a>
+</h1>
+<h1 style="text-align: center;">
+  <a href="/admin/characters">Character</a>
+</h1>
+
+
+<%- include('../partials/footer.ejs', { title: title }) %>
+
+
+</body>
+</html>

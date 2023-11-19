@@ -1,0 +1,24 @@
+<%
+const title = 'Admin - YourAnimeHub';
+%>
+<%- include('../partials/header.ejs', { title: title }) %>
+
+
+<section>
+  <h1 style="text-align: center;">This is the manga part of the admin page </h1>
+  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the admin will see all the manga of the website</h4>
+
+
+  <h1 style="text-align: center;">
+    <a href="/admin/mangas/edit">Edit</a>
+  </h1>
+  <h1 style="text-align: center;">
+    <a href="/admin/mangas/add">Add</a>
+  </h1>
+</section>
+
+
+<%- include('../partials/footer.ejs', { title: title }) %>
+
+</body>
+</html>
