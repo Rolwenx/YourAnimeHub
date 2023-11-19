@@ -1,0 +1,111 @@
+body{
+    object-fit: cover;
+    height: 100vh;
+}
+
+.add_wrapper{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding-bottom: 30px;
+}
+
+.container{
+    max-width: 700px;
+    width: 100%;
+    background-color: rgb(242, 239, 239);
+    padding: 25px 30px;
+    border-radius: 5px;
+}
+
+.container .title{
+    font-size: 25px;
+    font-weight: 600;
+    position: relative;
+}
+
+.container .title::before{
+    content:'';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background: linear-gradient(135deg, #71b7e6,#9b59b6);
+
+}
+
+.container form .user-details{
+    padding-top: 25px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: calc(100%/2 -20px);
+}
+
+.user-details .input-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.user-details .input-box input{
+    height: 30px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.2 ease;
+}
+
+.user-details .input-box textarea{
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.2 ease;
+}
+
+.user-details .input-box input,
+.user-details .input-box textarea {
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.2s ease;
+}
+
+.user-details .input-box input:focus,
+.user-details .input-box textarea:focus {
+    border-color: rgb(80, 157, 220);
+}
+
+
+form .button input{
+    height: 50px;
+    width: 100%;
+    outline: none;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg,rgb(80,157,220),rgb(101, 199, 196));
+}
+
+form .button input:hover{
+    background: linear-gradient(-135deg,rgb(80,157,220),rgb(101, 199, 196));
+}

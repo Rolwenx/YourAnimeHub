@@ -2,11 +2,81 @@
 const title = 'Admin - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title }) %>
+<link type="text/css" rel="stylesheet" href="/css/styleAdminAdd.css">
 
+<section class="add_wrapper">
+  <div class="container">
+    <div class="title">Add A Manga</div>
+    <form action="/admin/mangas/create" method="post">
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">Title (English)*:</span>
+                <input type="text" id="titleEnglish" name="titleEnglish" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Title (Romaji):</span>
+                <input type="text" id="titleRomaji" name="titleRomaji">
+            </div>
+            <div class="input-box">
+                <span class="details">Title (Native):</span>
+                <input type="text" id="titleNative" name="titleNative">
+            </div>
+            <div class="input-box">
+                <span class="details">Genre*:</span>
+                <input type="text" id="genre" name="genre" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Release Date*:</span>
+                <input type="text" id="releaseDate" name="releaseDate" placeholder="YYYY-MM-DD" required>
+            </div>
+            <div class="input-box">
+                <span class="details">End Date:</span>
+                <input type="text" id="endDate" name="endDate" placeholder="YYYY-MM-DD">
+            </div>
+            <div class="input-box">
+                <span class="details">Manga Status*:</span>
+                <input id="mangaStatus" name="mangaStatus" required>
+            </div>
+            
+            <div class="input-box">
+                <span class="details">Cover Image URL*:</span>
+                <input type="text" id="coverImageURL" name="coverImageURL" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Background Image URL*:</span>
+                <input type="text" id="backgroundImageURL" name="backgroundImageURL" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Streaming Platform URL:</span>
+                <input type="text" id="streamingPlatformURL" name="streamingPlatformURL">
+            </div>
+            <div class="input-box">
+                <span class="details">Episode/Movie Duration (in min):</span>
+                <input type="text" id="episodeDuration" name="episodeDuration" >
+            </div>
+            <div class="input-box">
+                <span class="details">Episode Count:</span>
+                <input type="number" id="episodeCount" name="episodeCount" >
+            </div>
+            <div class="input-box">
+                <span class="details">Chapters:</span>
+                <input type="number" id="chapters" name="chapters" >
+            </div>
+            <div class="input-box">
+                <span class="details">Volumes:</span>
+                <input type="number" id="volumes" name="volumes" >
+            </div>
+            <div class="input-box">
+                <span class="details">Synopsis:</span>
+                <textarea id="synopsis" rows="4" cols="50"name="synopsis"></textarea>
+            </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Add Manga">
 
-<section>
-  <h1 style="text-align: center;">This is the add manga functionality of the admin page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the admin will be able to add a manga</h4>
+        </div>
+    </form>
+</div>
 </section>
 
 
