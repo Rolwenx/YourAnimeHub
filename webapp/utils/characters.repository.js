@@ -119,4 +119,21 @@ module.exports = {
         }
     },
 
+    async getCharacterIdByName(charName) {
+        try {
+            let conn = await pool.getConnection();
+            let sql = "SELECT CharacterID FROM Character_Card WHERE CharName = ?";
+            const [rows, fields] = await conn.execute(sql, [charName]);
+            conn.release();
+            if (rows.length === 1) {
+                return rows[0].CharacterID;
+            } else {
+                return null; // Character not found
+            }
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    },
+
 };

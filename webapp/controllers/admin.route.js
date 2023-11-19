@@ -75,7 +75,25 @@ async function adminAnimeAddAction(request, response) {
 }
 
 async function adminAnimeCreateAction(request, response) {
-    var animeData = { /* Extract data from request.body */ };
+    var animeData = {
+        TitleEnglish: request.body.titleEnglish,
+        TitleRomaji: request.body.titleRomaji,
+        TitleNative: request.body.titleNative,
+        Genre: request.body.genre,
+        ReleaseDate: request.body.releaseDate,
+        EndDate: request.body.endDate,
+        AnimeStatus: request.body.animeStatus,
+        Synopsis: request.body.synopsis,
+        PopularityPosition: null,
+        CoverImageURL: request.body.coverImageURL,
+        BackgroundImageURL: request.body.backgroundImageURL,
+        StreamingPlatformURL: request.body.streamingPlatformURL,
+        AnimeFormat: "Anime",
+        EpisodeDuration: request.body.episodeDuration,
+        EpisodeCount: request.body.episodeCount,
+        Chapters: request.body.chapters,
+        Volumes: request.body.volumes
+    };
     var animeId = await animeRepo.addOneAnime(animeData);
     response.redirect("/admin/animes");
 }
@@ -110,8 +128,26 @@ async function adminMangaAddAction(request, response) {
 }
 
 async function adminMangaCreateAction(request, response) {
-    var mangaData = { /* Extract data from request.body */ };
-    var mangaId = await animeRepo.addOneManga(mangaData);
+    var mangaData = {
+        TitleEnglish: request.body.titleEnglish,
+        TitleRomaji: request.body.titleRomaji,
+        TitleNative: request.body.titleNative,
+        Genre: request.body.genre,
+        ReleaseDate: request.body.releaseDate,
+        EndDate: request.body.endDate,
+        AnimeStatus: request.body.mangaStatus,
+        Synopsis: request.body.synopsis,
+        PopularityPosition: null,
+        CoverImageURL: request.body.coverImageURL,
+        BackgroundImageURL: request.body.backgroundImageURL,
+        StreamingPlatformURL: request.body.streamingPlatformURL,
+        AnimeFormat: "Anime",
+        EpisodeDuration: request.body.episodeDuration,
+        EpisodeCount: request.body.episodeCount,
+        Chapters: request.body.chapters,
+        Volumes: request.body.volumes
+    };
+    var mangaId = await animeRepo.addOneAnime(mangaData);
     response.redirect("/admin/mangas");
 }
 
@@ -145,10 +181,40 @@ async function adminQuoteAddAction(request, response) {
 }
 
 async function adminQuoteCreateAction(request, response) {
-    var quoteData = { /* Extract data from request.body */ };
-    var quoteId = await quoteRepo.addOneQuote(quoteData);
-    response.redirect("/admin/quotes");
+    try {
+        var quoteData = {
+            QuoteText: request.body.quoteText,
+        };
+
+        // Check if the anime exists in the database
+        const animeTitle = request.body.animeTitle;
+        const anime = await animeRepo.getAnimeIdByName(animeTitle);
+        if (!anime) {
+            return response.send("alert('The anime does not exist in the database. Add the anime first before entering the quote.');");
+        }
+
+        // Check if the character exists in the database
+        const characterName = request.body.characterName;
+        const character = await characterRepo.getCharacterIdByName(characterName);
+        if (!character) {
+            // Character not found
+            return response.send("alert('The character does not exist in the database. Add the character first before entering the quote.');");
+        }
+
+        // Both anime and character exist in the database, add the quote
+        quoteData.CharacterID = character.CharacterID;
+        quoteData.AnimeID = anime.AnimeID;
+        var quoteId = await quoteRepo.addOneQuote(quoteData);
+
+        response.redirect("/admin/quotes");
+    } catch (error) {
+        console.log(error);
+        // Handle other errors as needed
+        response.status(500).send("Internal Server Error");
+    }
 }
+
+
 
 // Admin Character routes
 async function adminCharacterListAction(request, response) {
@@ -180,7 +246,22 @@ async function adminCharacterAddAction(request, response) {
 }
 
 async function adminCharacterCreateAction(request, response) {
-    var characterData = { /* Extract data from request.body */ };
+    var characterData = { 
+        CharName: request.body.charName,
+        Birthday: request.body.titleRomaji,
+        Age: request.body.charAge,
+        Gender: request.body.charGender,
+        BloodType: request.body.charBloodtype,
+        Height: request.body.charHeight,
+        Description: request.body.charDesc,
+        ImageURL: request.body.charImageUrl,
+        // Check if the checkbox is selected, set isMainCharacter to true, otherwise false
+        isMainCharacter: request.body.isMainCharacter === 'on',
+        Family: request.body.family,
+        NamesGiven: request.body.charNames,
+        HiddenSurnames: request.body.charHiddenNames,
+        SpecificField1: request.body.charMoreInfo
+     };
     var characterId = await characterRepo.addOneCharacter(characterData);
     response.redirect("/admin/characters");
 }

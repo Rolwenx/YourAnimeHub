@@ -164,5 +164,22 @@ module.exports = {
         }
     },
 
+    async getAnimeIdByName(titleEnglish) {
+        try {
+            let conn = await pool.getConnection();
+            let sql = "SELECT AnimeID FROM Anime WHERE TitleEnglish = ?";
+            const [rows, fields] = await conn.execute(sql, [titleEnglish]);
+            conn.release();
+            if (rows.length === 1) {
+                return rows[0].AnimeID;
+            } else {
+                return null; // Anime not found
+            }
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    },
+
 
 };
