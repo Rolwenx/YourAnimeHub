@@ -13,78 +13,7 @@
 
 <!-- =============== Navigation ================ -->
 <div class="container">
-  <div class="navigation">
-      <ul>
-          <li >
-              <a href="/">
-                  <img class="website_logo" src="/img/website_logo.png" alt="Logo image">
-
-              </a>
-          </li>
-
-          <li>
-            <a href="#">
-                <span class="icon">
-                    <ion-icon name="home-outline"></ion-icon>
-                </span>
-                <span class="title">Dashboard</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#">
-                <span class="icon">
-                    <ion-icon name="people-outline"></ion-icon>
-                </span>
-                <span class="title">Users</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="/admin/animes">
-                <span class="icon">
-                    <ion-icon name="list-outline"></ion-icon>
-                </span>
-                <span class="title">Anime</span>
-            </a>
-        </li>
-        <li>
-            <a href="/admin/mangas">
-                <span class="icon">
-                    <ion-icon name="list-outline"></ion-icon>
-                </span>
-                <span class="title">Mangas</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="/admin/quotes">
-                <span class="icon">
-                    <ion-icon name="list-outline"></ion-icon>
-                </span>
-                <span class="title">Quotes</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="/admin/characters">
-                <span class="icon">
-                    <ion-icon name="list-outline"></ion-icon>
-                </span>
-                <span class="title">Characters</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="#">
-                <span class="icon">
-                    <ion-icon name="log-out-outline"></ion-icon>
-                </span>
-                <span class="title">Sign Out</span>
-            </a>
-        </li>
-      </ul>
-  </div>
+  <%- include('../partials_admin/admin_navigation.ejs') %>
 
   <!-- ========================= Main ==================== -->
   <div class="main">
@@ -161,8 +90,8 @@
   </div>
 </div>
 
-<%- include('../partials/load_more_cards.ejs') %>
-<%- include('../partials/admin_toggle.ejs') %>
+<%- include('../partials_admin/load_more_quotes.ejs') %>
+<%- include('../partials_admin/admin_toggle.ejs') %>
 
 
 
