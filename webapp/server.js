@@ -5,6 +5,7 @@ dotenv.config();
 
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -13,13 +14,13 @@ app.listen(process.env.WEB_PORT, '0.0.0.0',
 );
 
 app.get('/', (request, response) => {
-    // Render the hello_views.ejs file for the root URL
-    response.render('home', { /* pass any data if needed */ });
+    response.render('home', {  });
 });
-// MIDDLEWARE REGISTRATIONS
-// app.use(callback1, callback2, callback3)
 
-// app.use(routeBase, callback);
+// Use body-parser middleware to parse incoming request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use("/css", express.static(__dirname + '/css'));
 app.use("/img", express.static(__dirname + '/img'));
 

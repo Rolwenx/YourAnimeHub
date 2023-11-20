@@ -1,6 +1,8 @@
 // quote.repository.js
 
 pool = require("../utils/db.js");
+const animeRepo = require('../utils/anime.repository.js');
+const characterRepo = require('../utils/characters.repository.js');
 
 module.exports = {
     getBlankQuote() {
@@ -18,9 +20,27 @@ module.exports = {
         try {
             let conn = await pool.getConnection();
             let sql = "SELECT * FROM AnimeQuote";
-            const [rows, fields] = await conn.execute(sql);
+    
+            // Ensure rows is an array
+            const quoteList = await conn.query(sql);
             conn.release();
-            return rows;
+
+            // Map through each quote and replace AnimeID and CharacterID with names
+            const updatedQuoteList = await Promise.all(quoteList.map(async (quote) => {
+                const animeName = await animeRepo.getAnimeNameByID(quote.AnimeID);
+                const characterName = await characterRepo.getCharacterNameByID(quote.CharacterID);
+
+                // Add the corresponding names to the quote object
+                return {
+                    ...quote,
+                    AnimeName: animeName,
+                    CharacterName: characterName,
+                };
+            }));
+
+        
+    
+            return updatedQuoteList;
         } catch (err) {
             console.log(err);
             throw err;
@@ -33,13 +53,15 @@ module.exports = {
             let sql = "SELECT * FROM AnimeQuote WHERE QuoteID = ?";
             const [rows, fields] = await conn.execute(sql, [quoteId]);
             conn.release();
-            if (rows.length === 1) {
-                return rows[0];
+
+            if (rows != null) {
+                return rows;
             } else {
+                console.log('Quote not found for quoteId:', characterId);
                 return false;
             }
         } catch (err) {
-            console.log(err);
+            console.error('Error in getOneQuote:', err);
             throw err;
         }
     },
@@ -47,27 +69,51 @@ module.exports = {
     async delOneQuote(quoteId) {
         try {
             let conn = await pool.getConnection();
+    
+    
             let sql = "DELETE FROM AnimeQuote WHERE QuoteID = ?";
             const [okPacket, fields] = await conn.execute(sql, [quoteId]);
             conn.release();
-            console.log("DELETE " + JSON.stringify(okPacket));
-            return okPacket.affectedRows;
+    
         } catch (err) {
             console.log(err);
             throw err;
         }
-    },
+    },    
+
 
     async addOneQuote(quoteData) {
+        
         try {
             let conn = await pool.getConnection();
-            let sql = "INSERT INTO AnimeQuote SET ?";
-            const [okPacket, fields] = await conn.execute(sql, [quoteData]);
+
+            const existingQuote = await conn.query(
+                'SELECT * FROM AnimeQuote WHERE QuoteText = ?',
+                [quoteData.QuoteText]
+            );
+        
+
+            if (existingQuote.length > 0) {
+                // Same quote already exist
+                return null; 
+            }
+    
+            const keys = Object.keys(quoteData);
+            const values = Object.values(quoteData);
+    
+            // Construct the SQL query with named placeholders
+            const placeholders = keys.map(key => `${key} = ?`).join(', ');
+            const sql = `INSERT INTO AnimeQuote SET ${placeholders}`;
+    
+
+            // Execute the query
+            const result = await conn.execute(sql, values);
+
+            const okPacket = result; 
             conn.release();
-            console.log("INSERT " + JSON.stringify(okPacket));
             return okPacket.insertId;
         } catch (err) {
-            console.log(err);
+            console.error("Error:", err);
             throw err;
         }
     },
@@ -75,17 +121,30 @@ module.exports = {
     async editOneQuote(quoteId, quoteData) {
         try {
             let conn = await pool.getConnection();
-            let sql = "UPDATE AnimeQuote SET ? WHERE QuoteID = ?";
-            const [okPacket, fields] = await conn.execute(sql, [quoteData, quoteId]);
+            
+            // Construct the SQL query with named placeholders for quoteData
+            const placeholders = Object.keys(quoteData).map(key => `${key} = ?`).join(', ');
+            const sql = `UPDATE AnimeQuote SET ${placeholders} WHERE QuoteID = ?`;
+            
+            
+            // Combine values from animeData and quoteId
+            const values = [...Object.values(quoteData), quoteId];
+    
+            // Execute the query
+            const result = await conn.execute(sql, values);
+        
+    
             conn.release();
-            console.log("UPDATE " + JSON.stringify(okPacket));
-            return okPacket.affectedRows;
+    
+            return result;
         } catch (err) {
-            console.log(err);
+            console.error('Error in editOneQuote:', err);
             throw err;
         }
     },
 
+
+    // NOT FUNCTIONAL
     async getQuotesByAnime(animeId) {
         try {
             let conn = await pool.getConnection();
