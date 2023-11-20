@@ -1,30 +1,317 @@
-<%
-const title = 'Admin - YourAnimeHub';
-%>
-<%- include('../partials/header.ejs', { title: title }) %>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Admin - YourAnimeHub</title>
+    <link type="text/css" rel="stylesheet" href="/css/styleAdminDash.css">
+</head>
 
-<section>
-  <h1 style="text-align: center;">This is the Admin dashboard page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the admin will manage the database data</h4>
-</section>
+<body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+        <div class="navigation">
+            <ul>
+              <li >
+                <a href="/">
+                    <img class="website_logo" src="/img/website_logo.png" alt="Logo image">
+  
+                </a>
+            </li>
 
-<h1 style="text-align: center;">
-  <a href="/admin/animes">Anime</a>
-</h1>
-<h1 style="text-align: center;">
-  <a href="/admin/mangas">Manga</a>
-</h1>
-<h1 style="text-align: center;">
-  <a href="/admin/quotes">Quote</a>
-</h1>
-<h1 style="text-align: center;">
-  <a href="/admin/characters">Character</a>
-</h1>
+                <li>
+                    <a href="/admin">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
 
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="people-outline"></ion-icon>
+                        </span>
+                        <span class="title">Users</span>
+                    </a>
+                </li>
 
-<%- include('../partials/footer.ejs', { title: title }) %>
+                <li>
+                    <a href="/admin/animes">
+                        <span class="icon">
+                            <ion-icon name="list-outline"></ion-icon>
+                        </span>
+                        <span class="title">Anime</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/mangas">
+                        <span class="icon">
+                            <ion-icon name="list-outline"></ion-icon>
+                        </span>
+                        <span class="title">Mangas</span>
+                    </a>
+                </li>
 
+                <li>
+                    <a href="/admin/quotes">
+                        <span class="icon">
+                            <ion-icon name="list-outline"></ion-icon>
+                        </span>
+                        <span class="title">Quotes</span>
+                    </a>
+                </li>
 
+                <li>
+                    <a href="/admin/characters">
+                        <span class="icon">
+                            <ion-icon name="list-outline"></ion-icon>
+                        </span>
+                        <span class="title">Characters</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ========================= Main ==================== -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+
+                <div class="user">
+                    <img src="assets/imgs/customer01.jpg" alt="">
+                </div>
+            </div>
+
+            <!-- ======================= Cards ================== -->
+            <div class="cardBox">
+
+                <div class="card">
+                    <div>
+                        <div class="numbers"><%= animeCount %></div>
+                        <div class="cardName">Anime</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="list-circle-outline"></ion-icon>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <div class="numbers"><%= MangaCount %></div>
+                        <div class="cardName">Manga</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="list-circle-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers"><%= quoteCount %></div>
+                        <div class="cardName">Quotes</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="chatbubbles-outline"></ion-icon>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="numbers"><%= characterCount %></div>
+                        <div class="cardName">Characters</div>
+                    </div>
+
+                    <div class="iconBx">
+                        <ion-icon name="people-circle-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================ Anime Details List ================= -->
+            <div class="details">
+                <div class="recentAnime">
+                    <div class="cardHeader">
+                      <h2>Recent Anime Added</h2>
+                    </div>
+                  
+                    <div class="animeCard">
+                      <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+                        <% const recentAnimeList = animeList.slice(-6).reverse(); %> 
+                        <% recentAnimeList.forEach(anime => { %>
+                          <div class="card">
+                            <img src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+                            <div class="animeName"><%= anime.TitleEnglish %></div>
+                          </div>
+                        <% }); %>
+                      <% } else { %>
+                        <p>No anime available in the database.</p>
+                      <% } %>
+                    </div>
+                  </div>
+                  
+
+                <!-- ================= New Customers ================ -->
+                <div class="recentCustomers">
+                    <div class="cardHeader">
+                        <h2>Recent Users</h2>
+                    </div>
+
+                    <table>
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>David <br> <span>Italy</span></h4>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td width="60px">
+                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                            </td>
+                            <td>
+                                <h4>Amit <br> <span>India</span></h4>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="recentAnime">
+                    <div class="cardHeader">
+                        <h2>Recent Character Added</h2>
+                    </div>
+        
+                    <div class="animeCard">
+                        <% if (characterList && Array.isArray(characterList) && characterList.length > 0) { %>
+                          <% const recentCharacterList = characterList.slice(-6).reverse(); %> 
+                          <% recentCharacterList.forEach(character => { %>
+                            <div class="card">
+                              <img src="<%= character.ImageURL %>" alt="<%= character.CharName %>">
+                              <div class="animeName"><%= character.CharName %></div>
+                            </div>
+                          <% }); %>
+                        <% } else { %>
+                          <p>No characters available in the database.</p>
+                        <% } %>
+                      </div>
+                    </div>
+                </div>
+                <div class="recentQuotes">
+                    <div>
+                        <h2 class="cardHeader">Recently Added Quotes</h2>
+                    </div>
+                    <div class="quoteCard">
+                        <% if (quoteList && Array.isArray(quoteList) && quoteList.length > 0) { %>
+                            <% const recentQuoteList = quoteList.slice(-3).reverse(); %> 
+                            <% recentQuoteList.forEach(quote => { %>
+                
+                                <div class="card">
+                                <a href="/admin/quotes/edit/<%= quote.QuoteID %>" class="edit-btn">
+                                    <blockquote class="quote_block"><%= quote.QuoteText %>
+                                        <div class="quoteDetails">
+                                            <span class="animeTitle"><b>Anime:</b> <%= quote.AnimeName %> |</span>
+                                            <span class="characterName"><b>Character:</b> <%= quote.CharacterName %></span>
+                                        </div>
+                                        <a href="/admin/quotes/delete/<%= quote.QuoteID %>" class="delete-btn">
+                                            <ion-icon name="close-outline"></ion-icon>
+                                        </a>
+                                    </blockquote>
+                                </a>
+                            </div>
+                          <% }); %>
+                        <% } else { %>
+                          <p>No quotes available in the database.</p>
+                        <% } %>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/admin_toggle.ejs') %>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>

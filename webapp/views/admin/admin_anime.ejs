@@ -1,23 +1,178 @@
-<%
-const title = 'Admin - YourAnimeHub';
-%>
-<%- include('../partials/header.ejs', { title: title }) %>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Admin - YourAnimeHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link type="text/css" rel="stylesheet" href="/css/styleAdminDash.css">
+  </head>
+  <body>
 
 
-<section>
-  <h1 style="text-align: center;">This is the anime part of the admin page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the admin will see all the anime of the website</h4>
+<!-- =============== Navigation ================ -->
+<div class="container">
+  <div class="navigation">
+      <ul>
+          <li >
+              <a href="/">
+                  <img class="website_logo" src="/img/website_logo.png" alt="Logo image">
 
-  <h1 style="text-align: center;">
-    <a href="/admin/animes/edit">Edit</a>
-  </h1>
-  <h1 style="text-align: center;">
-    <a href="/admin/animes/add">Add</a>
-  </h1>
-</section>
+              </a>
+          </li>
+
+          <li>
+            <a href="/admin">
+                <span class="icon">
+                    <ion-icon name="home-outline"></ion-icon>
+                </span>
+                <span class="title">Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <span class="icon">
+                    <ion-icon name="people-outline"></ion-icon>
+                </span>
+                <span class="title">Users</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/admin/animes">
+                <span class="icon">
+                    <ion-icon name="list-outline"></ion-icon>
+                </span>
+                <span class="title">Anime</span>
+            </a>
+        </li>
+        <li>
+            <a href="/admin/mangas">
+                <span class="icon">
+                    <ion-icon name="list-outline"></ion-icon>
+                </span>
+                <span class="title">Mangas</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/admin/quotes">
+                <span class="icon">
+                    <ion-icon name="list-outline"></ion-icon>
+                </span>
+                <span class="title">Quotes</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="/admin/characters">
+                <span class="icon">
+                    <ion-icon name="list-outline"></ion-icon>
+                </span>
+                <span class="title">Characters</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <span class="icon">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                </span>
+                <span class="title">Sign Out</span>
+            </a>
+        </li>
+      </ul>
+  </div>
+
+  <!-- ========================= Main ==================== -->
+  <div class="main">
+      <div class="topbar">
+          <div class="toggle">
+              <ion-icon name="menu-outline"></ion-icon>
+          </div>
+
+          <div class="search">
+              <label>
+                  <input type="text" placeholder="Search here">
+                  <ion-icon name="search-outline"></ion-icon>
+              </label>
+          </div>
+
+          <div class="user">
+              <img src="assets/imgs/customer01.jpg" alt="">
+          </div>
+      </div>
+
+      
+
+      <div class="add_edit_container">
+        <h3 class="edit_btn">To Edit Anime, click on its Title</h3>
+    </div>
+
+      <!-- ================ Anime Details List ================= -->
+      <div class="details">
+          <div class="recentAnime">
+              <div class="cardHeader">
+                  <h2>All Anime</h2>
+              
+              </div>
+  
+          
+              <div class="animeCard">
+                <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+                  <% animeList.forEach(anime => { %>
+                    <div class="card">
+                      <div class="image-container">
+                        <img src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+                      </div>
+                      <div class="title-container">
+                        <a href="/admin/animes/edit/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+                          <%= anime.TitleEnglish %>
+                        </a>
+                        <a href="/admin/animes/delete/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>" class="delete-btn">
+                          <ion-icon name="close-outline"></ion-icon>
+                        </a>
+                      </div>
+                    </div>
+                  <% }); %>
+                <% } else { %>
+                  <p>No anime available in the database.</p>
+                <% } %>
+              </div>
+              
+            
+            
+            
+            <div class="load-more-container">
+              <button id="load-more-button" class="load-more-button">Load More</button>
+            </div>
 
 
-<%- include('../partials/footer.ejs', { title: title }) %>
+          <div class="add_edit_container">
+              <a href="/admin/animes/add" class="add_btn">Click to add Anime</a>
+          </div>
+
+        </div>
+
+  
+      </div>
+  </div>
+</div>
+
+
+<%- include('../partials/load_more_cards.ejs') %>
+<%- include('../partials/admin_toggle.ejs') %>
+
+
+
+
+<!-- ====== ionicons ======= -->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
 
 </body>
 </html>

@@ -3,10 +3,74 @@ const title = 'Admin - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title }) %>
 
+<link type="text/css" rel="stylesheet" href="/css/styleAdminAdd.css">
 
-<section>
-  <h1 style="text-align: center;">This is the edit character functionality of the admin page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the admin will be able to edit a character</h4>
+<section class="add_wrapper">
+  <div class="container">
+    <div class="title">Edit A Character</div>
+    <form action="/admin/characters/update/<%= character.CharacterID %>/<%= character.CharName %>" method="post">
+        <div class="user-details">
+            <div class="input-box">
+              <span class="details">Character Name*:</span>
+              <input type="text" id="charName" name="charName" value="<%= character.CharName %>" required>
+          
+            </div>
+            <div class="input-box">
+              <span class="details">Birthday:</span>
+              <input type="text" id="charBirthday" name="charBirthday" placeholder="YYYY-MM-DD" value="<%= character.Birthday %>">
+            </div>
+            <div class="input-box">
+              <span class="details">Age:</span>
+              <input type="text" id="charAge" name="charAge" value="<%= character.Age %>">
+            </div>
+            <div class="input-box">
+              <span class="details">Gender:</span>
+              <input type="text" id="charGender" name="charGender" value="<%= character.Gender %>">
+            </div>
+            <div class="input-box">
+              <span class="details">Blood Type:</span>
+              <input type="text" id="charBloodtype" name="charBloodtype" value="<%= character.BloodType %>">
+            </div>
+            <div class="input-box">
+              <span class="details">Height (in cm):</span>
+              <input type="text" id="charHeight" name="charHeight" value="<%= character.Height %>">
+            </div>
+            <div class="input-box">
+              <span class="details">Description*:</span>
+              <textarea id="CharSynopsis" rows="4" cols="50"name="CharSynopsis" required><%= character.CharSynopsis %></textarea>
+            </div>
+            
+            <div class="input-box">
+              <span class="details">Image URL*:</span>
+              <input type="text" id="charImageUrl" name="charImageUrl" value="<%= character.ImageURL %>" required>
+            </div>
+            <div class="input-box">
+              <span class="details">Family:</span>
+              <textarea id="family" rows="4" cols="50"name="family"><%= character.Family %></textarea>
+          </div>
+          <div class="input-box">
+            <span class="details">Given Names:</span>
+            <textarea id="charNames" rows="4" cols="50"name="charNames"><%= character.NamesGiven %></textarea>
+        </div>
+        <div class="input-box">
+          <span class="details">Hidden Names:</span>
+          <textarea id="charHiddenNames" rows="4" cols="50"name="charHiddenNames"><%= character.HiddenSurnames %></textarea>
+      </div>
+      <div class="input-box">
+        <span class="details">More Information:</span>
+        <textarea id="charMoreInfo" rows="4" cols="50"name="charMoreInfo"><%= character.SpecificField1 %></textarea>
+    </div>
+    <div class="input-box">
+      <span class="details">Is Main Character:</span>
+      <input type="checkbox" id="isMainCharacter" name="isMainCharacter" <%= character.isMainCharacter === 1 ? 'checked' : '' %>>
+  </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Edit Character">
+
+        </div>
+    </form>
+</div>
 </section>
 
 

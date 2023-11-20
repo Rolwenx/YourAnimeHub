@@ -3,10 +3,69 @@ const title = 'Admin - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title }) %>
 
+<link type="text/css" rel="stylesheet" href="/css/styleAdminAdd.css">
 
-<section>
-  <h1 style="text-align: center;">This is the edit manga functionality of the admin page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the admin will be able to edit a manga</h4>
+<section class="add_wrapper">
+  <div class="container">
+    <div class="title">Edit A Manga</div>
+    <form action="/admin/mangas/update/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>" method="post">
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">Title (English)*:</span>
+                <input type="text" id="titleEnglish" name="titleEnglish" value="<%= manga.TitleEnglish %>" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Title (Romaji):</span>
+                <input type="text" id="titleRomaji" name="titleRomaji" value="<%= manga.TitleRomaji %>">
+            </div>
+            <div class="input-box">
+                <span class="details">Title (Native):</span>
+                <input type="text" id="titleNative" name="titleNative" value="<%= manga.TitleNative %>">
+            </div>
+            <div class="input-box">
+                <span class="details">Genre*:</span>
+                <input type="text" id="genre" name="genre" value="<%= manga.Genre %>" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Release Date*:</span>
+                <input type="text" id="releaseDate" name="releaseDate" placeholder="YYYY-MM-DD" value="<%= manga.ReleaseDate %>" required>
+            </div>
+            <div class="input-box">
+                <span class="details">End Date:</span>
+                <input type="text" id="endDate" name="endDate" placeholder="YYYY-MM-DD" value="<%= manga.EndDate %>">
+            </div>
+            <div class="input-box">
+                <span class="details">Anime Status*:</span>
+                <input id="animeStatus" name="animeStatus" value="<%= manga.AnimeStatus %>" required>
+            </div>
+            
+            <div class="input-box">
+                <span class="details">Cover Image URL*:</span>
+                <input type="text" id="coverImageURL" name="coverImageURL" value="<%= manga.CoverImageURL %>" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Background Image URL*:</span>
+                <input type="text" id="backgroundImageURL" name="backgroundImageURL" value="<%= manga.BackgroundImageURL %>" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Chapters:</span>
+                <input type="number" id="chapters" name="chapters" value="<%= manga.Chapters %>">
+            </div>
+            <div class="input-box">
+                <span class="details">Volumes:</span>
+                <input type="number" id="volumes" name="volumes" value="<%= manga.Volumes %>">
+            </div>
+            <div class="input-box">
+                <span class="details">Synopsis:</span>
+                <textarea id="synopsis" rows="4" cols="50" name="synopsis"><%= manga.Synopsis %></textarea>
+            </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Edit Manga">
+
+        </div>
+    </form>
+</div>
 </section>
 
 

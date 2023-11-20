@@ -1,0 +1,649 @@
+/* =========== Google Fonts ============ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+/* =============== Globals ============== */
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: rgb(8,14,31);
+  --white: #fff;
+  --gray: #f5f5f5;
+  --black1: #222;
+  --black2: #999;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+
+/* =============== logo ============== */
+.website_logo{
+  height: 80px;
+  width:80px;
+}
+
+.logo_container{
+  padding-top: 80px;
+  display: flex;
+  justify-content: flex-start; /* Align the logo to the left */
+  align-items: center; /* Vertically center the logo */
+
+}
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+/* =============== Dashboard Navigation ================ */
+.navigation {
+  position: fixed;
+  width: 300px;
+  height: 100%;
+  background: var(--blue);
+  border-left: 10px solid var(--blue);
+  transition: 0.5s;
+  overflow: hidden;
+}
+.navigation.active {
+  width: 80px;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.navigation ul li:hover,
+.navigation ul li.hovered {
+  background-color: var(--white);
+}
+
+.navigation ul li:nth-child(1) {
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+.navigation ul li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--white);
+}
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
+  color: var(--blue);
+}
+
+.navigation ul li a .icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 75px;
+  text-align: center;
+}
+.navigation ul li a .icon ion-icon {
+  font-size: 1.75rem;
+}
+
+.navigation ul li a .title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  text-align: start;
+  white-space: nowrap;
+}
+
+/* --------- curve outside ---------- */
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px 35px 0 10px var(--white);
+  pointer-events: none;
+}
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -50px;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: 35px -35px 0 10px var(--white);
+  pointer-events: none;
+}
+
+/* ===================== Main ===================== */
+.main {
+  position: absolute;
+  width: calc(100% - 300px);
+  left: 300px;
+  min-height: 100vh;
+  background: var(--white);
+  transition: 0.5s;
+}
+.main.active {
+  width: calc(100% - 80px);
+  left: 80px;
+}
+
+.topbar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.toggle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.search {
+  position: relative;
+  width: 400px;
+  margin: 0 10px;
+}
+
+.search label {
+  position: relative;
+  width: 100%;
+}
+
+.search label input {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  padding: 5px 20px;
+  padding-left: 35px;
+  font-size: 18px;
+  outline: none;
+  border: 1px solid var(--black2);
+}
+
+.search label ion-icon {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  font-size: 1.2rem;
+}
+
+.user {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.user img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ======================= Cards ====================== */
+.cardBox {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+}
+
+.cardBox .card {
+  position: relative;
+  background: var(--white);
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cardBox .card .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+.cardBox .card .cardName {
+  color: var(--black2);
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+.cardBox .card .iconBx {
+  font-size: 3.5rem;
+  color: var(--black2);
+}
+
+.cardBox .card:hover {
+  background: var(--blue);
+}
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx {
+  color: var(--white);
+}
+
+/* ================== Anime Details List ============== */
+.details {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 30px;
+  /* margin-top: 10px; */
+}
+
+.details .recentAnime {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+/* Add this CSS for the recent orders section */
+.recentAnime .animeCard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.recentAnime .animeCard .card {
+  width: calc(33.33% - 20px);
+  margin-bottom: 20px;
+}
+
+.recentAnime .animeCard .card img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* ====================== RECENT Users  ========================== */
+.recentCustomers {
+  position: relative;
+  display: grid;
+  min-height: 500px;
+  padding: 20px;
+  background: var(--white);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+.recentCustomers .imgBx {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  overflow: hidden;
+}
+.recentCustomers .imgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.recentCustomers table tr td {
+  padding: 12px 10px;
+}
+.recentCustomers table tr td h4 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2rem;
+}
+.recentCustomers table tr td h4 span {
+  font-size: 14px;
+  color: var(--black2);
+}
+.recentCustomers table tr:hover {
+  background: var(--blue);
+  color: var(--white);
+}
+.recentCustomers table tr:hover td h4 span {
+  color: var(--white);
+}
+
+
+
+/* =============== RECENT QUOTES SECTIONS ============== */
+
+.cardHeader{
+  margin-left: 30px;
+}
+
+.recentQuotes .quoteCard{
+  justify-content: space-between;
+  position: relative;
+  display: grid;
+  margin-left: 18px;
+  min-height: 500px;
+  background: var(--white);
+  padding: 20px;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+}
+
+.recentQuotes .quoteCard .card {
+  width: calc(50% - 20px);
+  margin-bottom: 20px;
+}
+
+.recentQuotes .quoteCard .card blockquote {
+  margin: 0;
+}
+
+.recentQuotes .quoteCard .card small {
+  margin-top: 5px;
+
+}
+
+
+/* ====================== Add/Edit Button Design ========================== */
+
+
+.add_edit_container{
+  display:grid ;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.add_edit_container a, add_edit_container button{
+  text-shadow: 2px 1px 3px rgba(0,0,0,0.2);
+  
+}
+
+.add_btn{
+  background: rgb(72,144,222);
+  padding: 8px;
+  height: 40px;
+  font-weight: 800;
+  border-radius: 5px;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgb(0, 0, 0);
+  list-style: none;
+  margin-left:18px;
+  color: white;
+}
+
+.edit_btn{
+
+  background: rgb(72,144,222);
+  width: 300px;
+  box-shadow: 0 2px 4px rgb(0, 0, 0);
+  padding-top: 5px;
+  margin-left:18px;
+  text-align: center;
+  font-weight: 800;
+  color: white;
+
+}
+
+/* ====================== ANIME/Manga/Character PAGE  ========================== */
+
+p{
+  font-size: 16px;
+  font-weight: 500;
+}
+
+h2{
+  margin-bottom: 10px;
+}
+
+
+.animeName a{
+  margin-top: 50px;
+  list-style: none;
+}
+
+
+.animeCard .card {
+  /* Add styles for each anime card */
+  width: 200px; 
+  height: 350px; 
+  overflow: hidden; /* Hide any overflow (crop images if necessary) */
+  display: flex;
+  flex-direction: column; 
+}
+
+.animeCard .card .image-container {
+  /* Container for the image */
+  flex: 1; 
+  overflow: hidden; /* Hide any overflow in case of unequal aspect ratios */
+}
+
+.animeCard .card .image-container img {
+  min-width: 200px;
+    min-height: 300px; 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+  display: block; 
+  max-width: 200px; 
+  max-height: 300px; 
+}
+
+
+.animeCard .card .title-container {
+  /* Container for the title and delete button */
+  background-color: rgb(229, 233, 237);
+  border-radius: 5px;
+  text-align: center;
+  padding: 4px;
+}
+
+
+.animeCard .card .title-container a {
+  margin-top: 10px; 
+  color: black;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.animeCard .card .title-container .delete-btn {
+  margin-top: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.animeCard .card .title-container .delete-btn ion-icon {
+  font-size: 20px; 
+  margin-left: 5px; 
+}
+
+
+
+.animeCard .animeName a {
+
+  color: black; 
+  font-weight: 600;
+  text-decoration: none; 
+}
+
+
+/* ====================== Quote PAGE  ========================== */
+
+.edit-btn {
+  text-decoration: none;
+  color: inherit; /* or specify the color you want */
+}
+
+
+.quote_h2{
+
+  margin-left: 40px;
+  margin-top: 40px;
+  
+}
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid rgb(72,144,222);
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+  font-size: 18px;
+
+}
+blockquote:before {
+  color: black;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
+  
+}
+
+blockquote .animeTitle b, blockquote .animeTitle{
+  font-size: 12px;
+}
+
+blockquote .characterName b, blockquote .characterName{
+  font-size: 12px;
+}
+
+/* =============== ANIME/MANGA/QUOTE - LOAD MORE BUTTON ============== */
+
+.load-more-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.load-more-button {
+  margin: 20px auto; 
+  display: block; /* Ensure it's a block-level element */
+  background-color: #808080;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+
+/* ====================== Responsive Design ========================== */
+@media (max-width: 991px) {
+  .navigation {
+    left: -300px;
+  }
+  .navigation.active {
+    width: 300px;
+    left: 0;
+  }
+  .main {
+    width: 100%;
+    left: 0;
+  }
+  .main.active {
+    left: 300px;
+  }
+  .cardBox {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .details {
+    grid-template-columns: 1fr;
+  }
+  .recentAnime {
+    overflow-x: auto;
+  }
+  .status.inProgress {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardBox {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .cardHeader h2 {
+    font-size: 20px;
+  }
+  .user {
+    min-width: 40px;
+  }
+  .navigation {
+    width: 100%;
+    left: -100%;
+    z-index: 1000;
+  }
+  .navigation.active {
+    width: 100%;
+    left: 0;
+  }
+  .toggle {
+    z-index: 10001;
+  }
+  .main.active .toggle {
+    color: #fff;
+    position: fixed;
+    right: 0;
+    left: initial;
+  }
+}
