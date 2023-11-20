@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Main Pages -->
+    <url>
+        <loc>http://localhost:9000</loc>
+    </url>
+
+    <!-- Anime Pages -->
+    <url>
+        <loc>http://localhost:9000/browse/anime</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/browse/anime/popular</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/browse/anime/recently_added</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/browse/anime/top-100</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/anime/{anime_id}/{anime_name}</loc>
+    </url>
+
+    <!-- Manga Pages -->
+    <url>
+        <loc>http://localhost:9000/browse/manga</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/browse/manga/popular</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/browse/manga/recently_added</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/browse/manga/top-100</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/manga/{manga_id}/{manga_name}</loc>
+    </url>
+
+    <!-- Character Pages -->
+    <url>
+        <loc>http://localhost:9000/browse/characters</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/character/{character_id}/{character_name}</loc>
+    </url>
+
+    <!-- Quote Pages -->
+    <url>
+        <loc>http://localhost:9000/browse/quotes</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/quote/{quote_id}</loc>
+    </url>
+
+    <!-- Review Pages -->
+    <url>
+        <loc>http://localhost:9000/browse/reviews</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/review/{review_id}</loc>
+    </url>
+
+    <!-- User Pages -->
+    <url>
+        <loc>http://localhost:9000/login</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/signup</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/terms</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/user/{user_name}</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/user/watchlist</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/user/favourites</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/user/settings</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/user/reviews</loc>
+    </url>
+
+    <!-- Admin Pages -->
+    <url>
+        <loc>http://localhost:9000/admin</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/animes</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/mangas</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/quotes</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/characters</loc>
+    </url>
+
+    <!-- Anime Admin Actions -->
+    <url>
+        <loc>http://localhost:9000/admin/animes/add</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/animes/create</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/animes/edit/:animeId/:animeName</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/animes/update/:animeId/:animeName</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/animes/delete/:animeId/:animeName</loc>
+    </url>
+
+    <!-- Manga Admin Actions -->
+    <url>
+        <loc>http://localhost:9000/admin/mangas/add</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/mangas/create</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/mangas/edit/:mangaId/:mangaName</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/mangas/update/:mangaId/:mangaName</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/mangas/delete/:mangaId/:mangaName</loc>
+    </url>
+
+    <!-- Quote Admin Actions -->
+    <url>
+        <loc>http://localhost:9000/admin/quotes/add</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/quotes/create</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/quotes/edit/:quoteId</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/quotes/update/:quoteId</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/quotes/delete/:quoteId</loc>
+    </url>
+
+    <!-- Character Admin Actions -->
+    <url>
+        <loc>http://localhost:9000/admin/characters/add</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/characters/create</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/characters/edit/:characterId/:characterName</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/characters/update/:characterId/:characterName</loc>
+    </url>
+    <url>
+        <loc>http://localhost:9000/admin/characters/delete/:characterId/:characterName</loc>
+    </url>
+
+</urlset>
