@@ -28,7 +28,7 @@ CREATE TABLE User_Profile(
 );
 
 CREATE TABLE Anime(
-   AnimeID INT PRIMARY KEY,
+   AnimeID INT AUTO_INCREMENT PRIMARY KEY,
    TitleEnglish VARCHAR(100) NOT NULL,
    TitleRomaji VARCHAR(100),
    TitleNative VARCHAR(100),
@@ -49,7 +49,7 @@ CREATE TABLE Anime(
 );
 
 CREATE TABLE Character_Card(
-	 CharacterID INT PRIMARY KEY,
+	 CharacterID INT AUTO_INCREMENT PRIMARY KEY,
 	 CharName VARCHAR(100) NOT NULL,
 	 Birthday VARCHAR(25),
 	 Age VARCHAR(150),
