@@ -3,13 +3,75 @@ const title = 'Recently Added Anime - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title }) %>
 
+<link type="text/css" rel="stylesheet" href="/css/styleBrowseAnime.css">
+
+
+<div class="background"></div>
+
+
+<div class="background_accent"></div>
+
 
 <section>
-  <h1 style="text-align: center;">This is the Recently Added Anime page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the user will see the recently added anime.</h4>
+  <div class="recently_added_block">
+      <div class="cardHeader">
+          <h2>Recently Added Anime</h2>
+      </div>
+
+    <div class="recentAnime">
+      <div class="animeCard">
+        <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+          <% const recentAnimeList = animeList.slice(-4).reverse(); %> 
+          <% recentAnimeList.forEach(anime => { %>
+            <div class="card">
+              <a href="/anime/<%= anime.id %>">
+                <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+              </a>
+              <div class="animeName">
+                <a href="/anime/<%= anime.id %>"><%= anime.TitleEnglish %></a>
+              </div>
+            </div>
+          <% }); %>
+          <% } else { %>
+          <p>No anime available in the database.</p>
+        <% } %>
+      </div>
+
+    </div>
+    <div class="load-more-container">
+      <button id="load-more-button" class="load-more-button">Load More</button>
+    </div>
+</div>
 </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      let displayedAnimeCount = 4;
 
+      const animeCards = document.querySelectorAll(".animeCard .card");
 
+      // Initially hide cards greater than 6
+      animeCards.forEach((card, index) => {
+          if (index >= displayedAnimeCount) {
+              card.style.display = "none";
+          }
+      });
+
+      document.getElementById("load-more-button").addEventListener("click", function () {
+          for (let i = displayedAnimeCount; i < displayedAnimeCount + 4; i++) {
+              if (i < animeCards.length) {
+                  animeCards[i].style.display = "inline";
+              }
+          }
+
+          displayedAnimeCount += 4;
+
+          // Hide load more button if all anime are displayed
+          if (displayedAnimeCount >= animeCards.length) {
+              document.getElementById("load-more-button").style.display = "none";
+          }
+      });
+  });
+</script>
 <%- include('../partials/footer.ejs', { title: title }) %>
 
 </body>

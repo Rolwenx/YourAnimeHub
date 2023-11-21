@@ -1,5 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
+
+/* --- BACKGROUND --- */
+
+.background {
+    position:fixed;
+    top:0px;
+    left:0px;
+    height:calc(100% - 1px);
+    width:100%;
+    background-image:url('');/* ---BACKGROUND IMAGE HERE--- */
+    background-position:top center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    image-rendering: pixelated;
+    z-index:-3;
+}
+
+.background_accent {
+    bottom:0px;
+    width:100%;
+    height:100px;
+    background-color:rgb(132, 177, 214);
+    z-index:-2;
+}
+
+
 /* ---------- GENERAL -----------*/
 *{
 
@@ -8,9 +34,7 @@
 
 }
 
-body{
-  background: rgb(255, 255, 255);
-}
+
 
 
 /* ---------- LOGO -----------*/

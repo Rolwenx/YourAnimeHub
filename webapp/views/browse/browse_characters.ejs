@@ -4,82 +4,75 @@ const title = 'Browse Characters - YourAnimeHub';
 <%- include('../partials/header.ejs', { title: title}) %>
 <link type="text/css" rel="stylesheet" href="../css/styleBrowseCharacter.css">
 
+<div class="background"></div>
+
+<div class="background_accent"></div>
+
 
 <h1 style="text-align: center;">
     <a href="/character/characterid/charactername">View A Character</a>
   </h1>
-<section class="section">
-  <div class="search_wrap search_wrap_1">
-      <h2>Which character are you looking for?</h2>
-      <h4>Search</h4>
-            <div class="search_box">
-                <input type="text" class="input">
-                <div class="btn btn_common">
-                    <i class="fa fa-search"></i>
-                </div>
+
+
+    <div class="characters_block">
+
+        <div class="Characters">
+            <div class="CharCard">
+                <% if (characterList && Array.isArray(characterList) && characterList.length > 0) { %>
+                    <% characterList.forEach(character => { %>
+                        <div class="card">
+                            <a href="/character/<%= character.CharacterID %>/<%= character.CharName %>">
+                                <img class="cover_image" src="<%= character.ImageURL %>" alt="<%= character.charName %>">
+                            </a>
+                            <div class="charName">
+                                <a href="/<%= character.CharacterID %>/<%= character.charName %>">
+                                    <%= character.CharName %>
+                                </a>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>No characters available in the database.</p>
+                <% } %>
             </div>
         </div>
-</section>
-<section class="characters_container">
-  <div class="card card0">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  
-  <div class="card card1">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <div class="card card2">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <div class="card card3">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <div class="card card4">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <div class="card card5">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <div class="card card6">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <div class="card card7">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <div class="card card8">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <div class="card card9">
-      <div class="border">
-          <h2>Eren Yeager</h2>
-      </div>
-  </div>
-  <!-- Add more cards here -->
-
-  </section>
+        
+    </div>
   <div class="load-more-container">
       <button id="load-more-button" class="load-more-button">Load More</button>
   </div>
 
 
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let displayedCharCount = 10;
+
+        const charCards = document.querySelectorAll(".CharCard .card");
+
+        // Initially hide cards greater than 10
+        charCards.forEach((card, index) => {
+            if (index >= displayedCharCount) {
+                card.style.display = "none";
+            }
+        });
+
+        document.getElementById("load-more-button").addEventListener("click", function () {
+            for (let i = displayedCharCount; i < displayedCharCount + 10; i++) {
+                if (i < charCards.length) {
+                    charCards[i].style.display = "block";
+                }
+            }
+
+            displayedCharCount += 10;
+
+            // Hide load more button if all anime are displayed
+            if (displayedCharCount >= charCards.length) {
+                document.getElementById("load-more-button").style.display = "none";
+            }
+        });
+    });
+</script>
 <%- include('../partials/footer.ejs') %>
 
 

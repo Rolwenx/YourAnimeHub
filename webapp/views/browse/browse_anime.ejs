@@ -2,120 +2,192 @@
 const title = 'Browse Anime - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title}) %>
+<link type="text/css" rel="stylesheet" href="/css/styleBrowseAnime.css">
 <link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
 
 
+
+<div class="background"></div>
+
+<div class="background_accent"></div>
+
 <section class="section">
-  <div class="search_wrap search_wrap_1">
-    <h4>Search</h4>
-    <div class="search_box">
-      <input type="text" class="input">
-      <div class="btn btn_common">
-        <i class="fa fa-search"></i>
+    <div class="search_wrap search_wrap_1">
+      <h4>Search</h4>
+      <div class="search_box">
+        <input type="text" class="input">
+        <div class="btn btn_common">
+          <i class="fa fa-search"></i>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="dropdown_filter">
-    <h4>Genre</h4>
-    <div class="select">
-      <span class="selected">Any</span>
-      <div class="caret"></div>
+    <div class="dropdown_filter">
+      <h4>Genre</h4>
+      <div class="select">
+        <span class="selected">Any</span>
+        <div class="caret"></div>
+      </div>
+      <ul class="menu">
+        <li class="active">Any</li>
+        <li>Action</li>
+        <li>Adventure</li>
+        <li>Romance</li>
+        <li>Sports</li>
+      </ul>
     </div>
-    <ul class="menu">
-      <li class="active">Any</li>
-      <li>Action</li>
-      <li>Adventure</li>
-      <li>Romance</li>
-      <li>Sports</li>
-    </ul>
-  </div>
-  <div class="dropdown_filter">
-    <h4>Year</h4>
-    <div class="select">
-      <span class="selected">Any</span>
-      <div class="caret"></div>
+    <div class="dropdown_filter">
+      <h4>Year</h4>
+      <div class="select">
+        <span class="selected">Any</span>
+        <div class="caret"></div>
+      </div>
+      <ul class="menu">
+        <li class="active">Any</li>
+        <li>1999</li>
+        <li>2002</li>
+        <li>2006</li>
+        <li>2015</li>
+      </ul>
     </div>
-    <ul class="menu">
-      <li class="active">Any</li>
-      <li>1999</li>
-      <li>2002</li>
-      <li>2006</li>
-      <li>2015</li>
-    </ul>
-  </div>
-  <div class="dropdown_filter">
-    <h4>Format</h4>
-    <div class="select">
-      <span class="selected">Any</span>
-      <div class="caret"></div>
+    <div class="dropdown_filter">
+      <h4>Format</h4>
+      <div class="select">
+        <span class="selected">Any</span>
+        <div class="caret"></div>
+      </div>
+      <ul class="menu">
+        <li class="active">Any</li>
+        <li>TV</li>
+        <li>Movie</li>
+        <li>Manga</li>
+      </ul>
     </div>
-    <ul class="menu">
-      <li class="active">Any</li>
-      <li>TV</li>
-      <li>Movie</li>
-      <li>Manga</li>
-    </ul>
-  </div>
-  <button id="filter-toggle" class="filter-button">
-    <i class="fa fa-filter"></i> Filter
-</button>
-<div class="popup-container" id="filter-popup">
-    <div class="filter-container">
-        <label for="airing-status">Airing Status:</label>
-        <select id="airing-status">
-            <option value="">Any</option>
-            <option value="airing">Airing</option>
-            <option value="finished">Finished</option>
-            <option value="not-aired">Not Aired</option>
-            <option value="cancelled">Cancelled</option>
-        </select>
-        
-        <label for="country-of-origin">Country of Origin:</label>
-        <select id="country-of-origin">
-            <option value="">Any</option>
-            <option value="Japan">Japan</option>
-            <option value="South Korea">South Korea</option>
-            <option value="China">China</option>
-            <option value="Taiwan">Taiwan</option>
-        </select>
-        
-        <label for="year-range">Year Range:</label>
-        <input type="range" id="year-range" min="1970" max="2023">
-        
-        <label for="episode-count">Episode Count:</label>
-        <input type="range" id="episode-count" min="0" max="1000">
-        
-        <label for="genre-filter">Genre:</label>
-        <select id="genre-filter" multiple>
-            <option value="romance">Romance</option>
-            <option value="action">Action</option>
-            <option value="adventure">Adventure</option>
-            <option value="fantasy">Fantasy</option>
-        </select>
+    <button id="filter-toggle" class="filter-button">
+      <i class="fa fa-filter"></i> Filter
+  </button>
+  <div class="popup-container" id="filter-popup">
+      <div class="filter-container">
+          <label for="airing-status">Airing Status:</label>
+          <select id="airing-status">
+              <option value="">Any</option>
+              <option value="airing">Airing</option>
+              <option value="finished">Finished</option>
+              <option value="not-aired">Not Aired</option>
+              <option value="cancelled">Cancelled</option>
+          </select>
+          
+          <label for="country-of-origin">Country of Origin:</label>
+          <select id="country-of-origin">
+              <option value="">Any</option>
+              <option value="Japan">Japan</option>
+              <option value="South Korea">South Korea</option>
+              <option value="China">China</option>
+              <option value="Taiwan">Taiwan</option>
+          </select>
+          
+          <label for="year-range">Year Range:</label>
+          <input type="range" id="year-range" min="1970" max="2023">
+          
+          <label for="episode-count">Episode Count:</label>
+          <input type="range" id="episode-count" min="0" max="1000">
+          
+          <label for="genre-filter">Genre:</label>
+          <select id="genre-filter" multiple>
+              <option value="romance">Romance</option>
+              <option value="action">Action</option>
+              <option value="adventure">Adventure</option>
+              <option value="fantasy">Fantasy</option>
+          </select>
+      </div>
+      <button type="button" onclick="popupDisappears()">OK</button>
+    <div class="results">
+        <!-- Display filtered results here -->
     </div>
-    <button type="button" onclick="popupDisappears()">OK</button>
-  <div class="results">
-      <!-- Display filtered results here -->
   </div>
-</div>
 </section>
 
-<h1 style="text-align: center;">
-  <a href="/browse/anime/popular">All-Time Popular</a>
-</h1>
-<h1 style="text-align: center;">
-  <a href="/browse/anime/recently_added">Recently Added</a>
-</h1>
-<h1 style="text-align: center;">
-  <a href="/browse/anime/top-100">Top 100</a>
-</h1>
+  <div class="recently_added_block">
+    <a class="cardHeader_a" href="/browse/anime/recently_added">
+      <div class="cardHeader">
+          <h2>Recently Added</h2>
+      </div>
+  </a>
+    <div class="recentAnime">
+      <div class="animeCard">
+        <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+          <% const recentAnimeList = animeList.slice(-4).reverse(); %> 
+          <% recentAnimeList.forEach(anime => { %>
+            <div class="card">
+              <a href="/anime/<%= anime.id %>">
+                <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+              </a>
+              <div class="animeName">
+                <a href="/anime/<%= anime.id %>"><%= anime.TitleEnglish %></a>
+              </div>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <p>No anime available in the database.</p>
+        <% } %>
+      </div>
+    </div>
+</div>
 
-<h1 style="text-align: center;">
-  <a href="/anime/animeid/animename">View An Anime</a>
-</h1>
+<div class="recently_added_block">
+    <a class="cardHeader_a" href="/browse/manga/recently_added">
+      <div class="cardHeader">
+          <h2>Popular These Week</h2>
+      </div>
+    </a>
+    <div class="animeCard">
+      <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+        <% const recentAnimeList = animeList.slice(-4).reverse(); %> 
+        <% recentAnimeList.forEach(anime => { %>
+          <div class="card">
+            <a href="/anime/<%= anime.id %>">
+              <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+            </a>
+            <div class="animeName">
+              <a href="/anime/<%= anime.id %>"><%= anime.TitleEnglish %></a>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No anime available in the database.</p>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<div class="recently_added_block">
+  <a class="cardHeader_a" href="/browse/manga/recently_added">
+    <div class="cardHeader">
+        <h2>Top 100</h2>
+    </div>
+</a>
+  <div class="animeCard">
+    <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+      <% const recentAnimeList = animeList.slice(-4).reverse(); %> 
+      <% recentAnimeList.forEach(anime => { %>
+        <div class="card">
+          <a href="/anime/<%= anime.id %>">
+            <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+          </a>
+          <div class="animeName">
+            <a href="/anime/<%= anime.id %>"><%= anime.TitleEnglish %></a>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No anime available in the database.</p>
+    <% } %>
+  </div>
+</div>
 
 
-<%- include('../partials/footer_home.ejs') %>
+
+
+<%- include('../partials/footer.ejs') %>
 <script>
   const dropdowns = document.querySelectorAll('.dropdown_filter');
 

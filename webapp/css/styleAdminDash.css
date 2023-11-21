@@ -31,10 +31,8 @@ body {
 }
 
 .logo_container{
-  padding-top: 80px;
-  display: flex;
-  justify-content: flex-start; /* Align the logo to the left */
-  align-items: center; /* Vertically center the logo */
+  margin-bottom: 30px;
+ 
 
 }
 
@@ -300,11 +298,13 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  
 }
 
 .recentAnime .animeCard .card {
   width: calc(33.33% - 20px);
   margin-bottom: 20px;
+  
 }
 
 .recentAnime .animeCard .card img {

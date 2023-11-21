@@ -1,58 +1,64 @@
+/* ====================== RECENTLY ADDED  ========================== */
 
+p{
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  h2{
+    margin-bottom: 10px;
+  }
   
   
-  .charName a{
+  .animeName a{
     margin-top: 50px;
     list-style: none;
   }
 
-  .characters_block {
+  .recently_added_block {
     position: relative;
     margin: auto; 
-    max-width: 1200px; 
+    max-width: 900px; 
 
   }
 
-  .characters_block .Characters {
+  .recently_added_block .recentAnime {
     position: relative;
     min-height: 150px;
+    background: var(--white);
     padding: 20px;
-
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
     display: flex;
     justify-content: center; 
     align-items: center; 
     text-align: center;
   }
   
-  .characters_block .CharCard {
+  .recently_added_block .animeCard {
     display: flex;
     flex-wrap: wrap;
-    
     justify-content: space-between;
   }
   
-  .CharCard .card {
+  .animeCard .card {
     width: 200px;
     height: 350px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     margin-right: 15px;
-    
-
   }
 
-  .characters_block .CharCard .card img {
+  .recently_added_block .animeCard .card img {
     max-width: 100%;
-    border-radius: 5px;
     
   }
 
   
-  .CharCard .charName {
+  .animeCard .animeName {
     background-color: rgb(229, 233, 237);
     border-radius: 5px;
-    
     text-align: center;
     padding: 4px;
     color: black;
@@ -61,11 +67,11 @@
   
   
   
-  .CharCard .charName:hover {
+  .animeCard .animeName:hover {
     text-decoration: underline;
   }
   
-  .CharCard .charName a {
+  .animeCard .animeName a {
     color: black;
     font-weight: 600;
     text-decoration: none;
@@ -73,7 +79,17 @@
     text-align: center;
   }
 
-  .CharCard .card .cover_image {
+  .cardHeader_a{
+    text-decoration: none;
+    color: black;
+    
+  }
+
+  .cardHeader{
+    margin-top: 50px;
+  }
+
+  .animeCard .card .cover_image {
     min-width: 200px;
       min-height: 300px; 
     width: 100%; 
@@ -82,7 +98,6 @@
     display: block; 
     max-width: 200px; 
     max-height: 300px; 
-    
   }
 
   /* =============== ANIME/MANGA/QUOTE - LOAD MORE BUTTON ============== */
@@ -107,3 +122,6 @@
     text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s;
   }
+
+
+  /* ====================== RECENTLY ADDED  ========================== */

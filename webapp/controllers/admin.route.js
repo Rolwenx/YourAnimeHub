@@ -1,8 +1,8 @@
 // Admin route.js
 const express = require('express');
 const router = express.Router();
-const animeRepo = require('../utils/anime.repository'); // Update the path
-const quoteRepo = require('../utils/quote.repository'); // Add quote repository import
+const animeRepo = require('../utils/anime.repository');
+const quoteRepo = require('../utils/quote.repository'); 
 const characterRepo = require('../utils/characters.repository');
 
 
