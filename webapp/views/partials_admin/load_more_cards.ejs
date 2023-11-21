@@ -1,29 +1,35 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        let displayedAnimeCount = 6;
-
-        const animeCards = document.querySelectorAll(".animeCard .card");
-
-        // Initially hide cards greater than 6
+      let displayedAnimeCount = 6;
+  
+      const animeCards = document.querySelectorAll(".animeCard .card");
+      const loadMoreButton = document.getElementById("load-more-button");
+  
+      // Initially hide cards greater than 6 if there are anime available
+      if (animeCards.length > 0) {
         animeCards.forEach((card, index) => {
-            if (index >= displayedAnimeCount) {
-                card.style.display = "none";
-            }
+          if (index >= displayedAnimeCount) {
+            card.style.display = "none";
+          }
         });
-
-        document.getElementById("load-more-button").addEventListener("click", function () {
-            for (let i = displayedAnimeCount; i < displayedAnimeCount + 6; i++) {
-                if (i < animeCards.length) {
-                    animeCards[i].style.display = "inline-block";
-                }
-            }
-
-            displayedAnimeCount += 6;
-
-            // Hide load more button if all anime are displayed
-            if (displayedAnimeCount >= animeCards.length) {
-                document.getElementById("load-more-button").style.display = "none";
-            }
-        });
+      } else {
+        // Hide the "Load More" button if there are no anime available
+        loadMoreButton.style.display = "none";
+      }
+  
+      loadMoreButton.addEventListener("click", function () {
+        for (let i = displayedAnimeCount; i < displayedAnimeCount + 6; i++) {
+          if (i < animeCards.length) {
+            animeCards[i].style.display = "inline-block";
+          }
+        }
+  
+        displayedAnimeCount += 6;
+  
+        // Hide load more button if all anime are displayed
+        if (displayedAnimeCount >= animeCards.length) {
+          loadMoreButton.style.display = "none";
+        }
+      });
     });
-</script>
+  </script>

@@ -1,29 +1,35 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        let displayedQuoteCount = 4;
-
-        const quoteCards = document.querySelectorAll(".quoteCard .card");
-
-        // Initially hide cards greater than 4
+      let displayedQuoteCount = 4;
+  
+      const quoteCards = document.querySelectorAll(".quoteCard .card");
+      const loadMoreButton = document.getElementById("load-more-button");
+  
+      // Initially hide cards greater than 4 if there are quotes available
+      if (quoteCards.length > 0) {
         quoteCards.forEach((card, index) => {
-            if (index >= displayedQuoteCount) {
-                card.style.display = "none";
-            }
+          if (index >= displayedQuoteCount) {
+            card.style.display = "none";
+          }
         });
-
-        document.getElementById("load-more-button").addEventListener("click", function () {
-            for (let i = displayedQuoteCount; i < displayedQuoteCount + 4; i++) {
-                if (i < quoteCards.length) {
-                    quoteCards[i].style.display = "inline";
-                }
-            }
-
-            displayedQuoteCount += 4;
-
-            // Hide load more button if all quotes are displayed
-            if (displayedQuoteCount >= quoteCards.length) {
-                document.getElementById("load-more-button").style.display = "none";
-            }
-        });
+      } else {
+        // Hide the "Load More" button if there are no quotes available
+        loadMoreButton.style.display = "none";
+      }
+  
+      loadMoreButton.addEventListener("click", function () {
+        for (let i = displayedQuoteCount; i < displayedQuoteCount + 4; i++) {
+          if (i < quoteCards.length) {
+            quoteCards[i].style.display = "inline";
+          }
+        }
+  
+        displayedQuoteCount += 4;
+  
+        // Hide load more button if all quotes are displayed
+        if (displayedQuoteCount >= quoteCards.length) {
+          loadMoreButton.style.display = "none";
+        }
+      });
     });
-</script>
+  </script>
