@@ -1,0 +1,23 @@
+<script type="module">
+    document.addEventListener('DOMContentLoaded', function () {
+      // We get all the delete buttons since they all have the class 'delete-btn'
+      const deleteButtons = document.querySelectorAll('.delete-btn');
+  
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+          event.preventDefault(); 
+  
+          // We get the href attribute from the clicked delete button
+          const deleteUrl = this.getAttribute('href');
+  
+          // Display a confirmation dialog
+          const confirmation = confirm("Are you sure you want to delete this anime?");
+  
+          // If the user confirms, redirect to the delete URL
+          if (confirmation) {
+            window.location.href = deleteUrl;
+          }
+        });
+      });
+    });
+  </script>
