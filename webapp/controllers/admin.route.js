@@ -146,7 +146,6 @@ async function adminAnimeDelAction(request, response) {
 
     try {
         await animeRepo.delOneAnime(animeId);
-        response.redirect("/admin/animes");
     } catch (error) {
         response.redirect("/admin/animes");
     }
