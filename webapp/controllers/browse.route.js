@@ -1,36 +1,116 @@
 // controllers/hello.route.js
 const express = require('express');
 const router = express.Router();
+const animeRepo = require('../utils/anime.repository');
+const quoteRepo = require('../utils/quote.repository'); 
+const characterRepo = require('../utils/characters.repository');
 
-router.get('/my/:name', mynameAction);
-router.get('/myy', mynameAction);
-async function mynameAction(request, response) {
-    response.send("MYNAME ACTION "+request.params.name);
+// Main routes
+router.get('/anime', browseAnimeAction);
+router.get('/manga', browseMangaAction);
+router.get('/characters', browseCharacterAction);
+router.get('/quotes', browseQuoteAction);
+//router.get('/browse/reviews', browseReviewsAction);
+
+router.get('/anime/recently_added', browseAnimeRecentlyAddedAction);
+
+router.get('/manga/recently_added', browseMangaRecentlyAddedAction);
+
+
+async function browseAnimeAction(request, res) {
+    
+    try {
+        const animeList = await animeRepo.getAllAnime();
+
+
+        res.render('browse/browse_anime', {
+            animeList,
+        });
+    } catch (error) {
+        console.error('Error in browseAnimeAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
 }
 
-// http://localhost:9000/browse/anime
-router.get('/anime', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/browse_anime', { favourites: [] });
-});
+async function browseMangaAction(request, res) {
+    
+    try {
+        const mangaList = await animeRepo.getAllMangas();
+        res.render('browse/browse_manga', {
+            mangaList,
+        });
+    } catch (error) {
+        console.error('Error in browseMangaAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
 
-// http://localhost:9000/browse/manga
-router.get('/manga', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/browse_manga', { favourites: [] });
-});
+async function browseCharacterAction(request, res) {
+    
+    try {
+        const characterList = await characterRepo.getAllCharacters();
+        res.render('browse/browse_characters', {
+            characterList,
+        });
 
-// http://localhost:9000/browse/character
-router.get('/characters', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/browse_characters', { favourites: [] });
-});
+    } catch (error) {
+        console.error('Error in browseCharacterAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
 
-// http://localhost:9000/browse/quote
-router.get('/quotes', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/browse_quotes', { favourites: [] });
-});
+async function browseQuoteAction(request, res) {
+    
+    try {
+        const quoteList = await quoteRepo.getAllQuotes();
+
+
+        res.render('browse/browse_quotes', {
+            quoteList,
+        });
+    } catch (error) {
+        console.error('Error in browseQuoteAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
+
+async function browseAnimeRecentlyAddedAction(request, res) {
+    
+    try {
+        const animeList = await animeRepo.getAllAnime();
+
+
+        res.render('browse/anime_recently', {
+            animeList,
+        });
+    } catch (error) {
+        console.error('Error in browseAnimeRecentlyAddedAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
+
+async function browseMangaRecentlyAddedAction(request, res) {
+    
+    try {
+        const mangaList = await animeRepo.getAllMangas();
+
+
+        res.render('browse/manga_recently', {
+            mangaList,
+        });
+    } catch (error) {
+        console.error('Error in browseMangaRecentlyAddedAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
+
+
 
 // http://localhost:9000/browse/reviews
 router.get('/reviews', (req, res) => {
@@ -44,11 +124,6 @@ router.get('/anime/popular', (req, res) => {
     res.render('browse/anime_popular', { favourites: [] });
 });
 
-// http://localhost:9000/browse/anime/recently_added
-router.get('/anime/recently_added', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/anime_recently', { favourites: [] });
-});
 
 // http://localhost:9000/browse/anime/top-100
 router.get('/anime/top-100', (req, res) => {

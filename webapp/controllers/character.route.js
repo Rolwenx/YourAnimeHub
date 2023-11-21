@@ -1,17 +1,26 @@
 // controllers/hello.route.js
 const express = require('express');
 const router = express.Router();
+const characterRepo = require('../utils/characters.repository');
 
-router.get('/my/:name', mynameAction);
-router.get('/myy', mynameAction);
-async function mynameAction(request, response) {
-    response.send("MYNAME ACTION "+request.params.name);
+
+router.get('/:characterId/:charName', adminCharacterViewAction);
+
+
+async function adminCharacterViewAction(request, response) {
+    var characterId = request.params.characterId;
+    var charName = request.params.charName;
+
+    try {
+        // Fetch the character data
+        var character = await characterRepo.getOneCharacter(characterId);
+        console.log(character);
+
+        response.render("single_view/single_character", { "character": character });
+    } catch (error) {
+        console.error('Error in adminCharacterViewAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
 }
-
-// http://localhost:9000/character/characterid/charactername
-router.get('/characterid/charactername', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('single_view/single_character', { favourites: [] });
-});
 
 module.exports = router;
