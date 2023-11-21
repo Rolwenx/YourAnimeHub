@@ -56,7 +56,7 @@ CREATE TABLE Character_Card(
 	 Gender VARCHAR(15),
 	 BloodType VARCHAR(8),
 	 Height VARCHAR(25),
-	 Description TEXT,
+	 CharSynopsis TEXT,
    ImageURL VARCHAR(100),
    isMainCharacter BOOLEAN NOT NULL,
 	 Likes INT DEFAULT 0,
