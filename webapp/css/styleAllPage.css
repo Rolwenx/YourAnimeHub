@@ -1,15 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 
+.my_h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+.my_p{
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+body{
+    background:white !important;
+}
 /* --- BACKGROUND --- */
 
-.background {
+.colored_background {
     position:fixed;
     top:0px;
     left:0px;
     height:calc(100% - 1px);
     width:100%;
-    background-image:url('');/* ---BACKGROUND IMAGE HERE--- */
     background-position:top center;
     background-repeat:no-repeat;
     background-size:cover;
@@ -17,8 +37,8 @@
     z-index:-3;
 }
 
-.background_accent {
-    bottom:0px;
+.colored_background_accent {
+    margin-top:-10px;
     width:100%;
     height:100px;
     background-color:rgb(132, 177, 214);
@@ -31,6 +51,7 @@
 
     font-family: 'Poppins', sans-serif;
     margin: 0;
+    padding:0;
 
 }
 
@@ -47,7 +68,7 @@
 
 .logo_container{
     display: flex;
-    justify-content: flex-start; /* Align the logo to the left */
+    justify-content: flex-start;
     align-items: center; /* Vertically center the logo */
 
 }
@@ -55,7 +76,7 @@
 /* ---------- NAVBAR -----------*/
 
 
-.navbar{
+.home_navbar{
    
     /*height: 80px;*/
     margin: 0 auto;
@@ -67,14 +88,14 @@
 
 }
 
-.navbar li{
+.home_navbar li{
     list-style: none;
     /* Allows the small line under the navbar tab*/
     position: relative;
 }
 
 /* Manages the lines that appears when you hover on the navbar*/
-.navbar li::after{
+.home_navbar li::after{
     content:'';
     height: 3px;
     width: 0;
@@ -89,14 +110,14 @@
     width: 100%;
 }
 
-.navbar li a{
+.home_navbar li a{
     text-decoration: none;
     color: white;
     font-weight: 500;
     text-transform: uppercase;
 }
 
-.navbar a, .drop_down li{
+.home_navbar a, .drop_down li{
     text-decoration: none;
     color: white;
 }
@@ -205,9 +226,9 @@
 
 /* ---------- FOOTER -----------*/
 
-.footer{
+.home_footer{
     background: rgb(8,14,31);
-    width: 100%;
+    width: auto;
     bottom: 0;
     background: linear-gradient(to right, #00093c);
     color: #fff;
@@ -216,20 +237,7 @@
     font-size: 13px;
     line-height: 20px;
 }
-    
-.footer_home{
-    background: rgb(8,14,31);
-    margin-top: 600px;
-    width: 100%;
-    bottom: 0;
-    background: linear-gradient(to right, #00093c);
-    color: #fff;
-    padding: 25px 0 30px;
-    border-top-left-radius: 125px;
-    font-size: 13px;
-    line-height: 20px;
-    
-}
+
 
 .row_footer{
     width: 85%;
@@ -256,7 +264,7 @@
 
 }
 
-.col_footer h3{
+.col_footer h4{
     width: fit-content;
     position: relative;
     margin-bottom: 40px;
@@ -315,3 +323,4 @@ hr{
         left: 100%;
     }
 }
+
