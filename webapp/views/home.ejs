@@ -1,4 +1,3 @@
-
 <%
 const title = 'Home - YourAnimeHub';
 %>
@@ -7,11 +6,7 @@ const title = 'Home - YourAnimeHub';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <link type="text/css" rel="stylesheet" href="/css/styleHome.css">
 
-
-
-
 <div class="colored_background"></div>
-
 
 <div class="colored_background_accent"></div>
 
@@ -43,57 +38,300 @@ const title = 'Home - YourAnimeHub';
         
     </section>
     
-    <section class="filter_section d-flex justify-content-evenly">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">Search</button>
+    <section class="filter_section d-flex justify-content-evenly mb-3">
+        <div class="row">
+            <div class="col">
+                <h6 class="mb-1">Genres</h6>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example</button>
+                    <ul class="dropdown-menu overflow-scroll">
+                        <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+                        <li><hr class="dropdown-divider"></hr></li>
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Adventure</a></li>
+                        <li><a class="dropdown-item" href="#">Superpower</a></li>
+                        <li><a class="dropdown-item" href="#">Comedy</a></li>
+                        <li><a class="dropdown-item" href="#">Fantasy</a></li>
+                        <li><a class="dropdown-item" href="#">Historical</a></li>
+                        <li><a class="dropdown-item" href="#">Drama</a></li>
+                        <li><a class="dropdown-item" href="#">Supernatural</a></li>
+                        <li><a class="dropdown-item" href="#">Martial Arts</a></li>
+                        <li><a class="dropdown-item" href="#">Dark Fantasy</a></li>
+                        <li><a class="dropdown-item" href="#">Shounen</a></li>
+                        <li><a class="dropdown-item" href="#">Shojo</a></li>
+                        <li><a class="dropdown-item" href="#">Romance</a></li>
+                        <li><a class="dropdown-item" href="#">Horror</a></li>
+                        <li><a class="dropdown-item" href="#">Psychological</a></li>
+                        <li><a class="dropdown-item" href="#">Thriller</a></li>
+                    </ul>
+                </div>
             </div>
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example
-            </button>
-            <ul class="dropdown-menu">
-                <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
-                <li><hr class="dropdown-divider"></hr></li>
-                <li><a class="dropdown-item" href="#">HTML</a></li>
-                <li><a class="dropdown-item" href="#">CSS</a></li>
-                <li><a class="dropdown-item" href="#">JavaScript</a></li>
-                <li><a class="dropdown-item" href="#">jQuery</a></li>
-                <li><a class="dropdown-item" href="#">Bootstrap</a></li>
-                <li><a class="dropdown-item" href="#">Angular</a></li>
-            </ul>
         </div>
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example
-            </button>
-            <ul class="dropdown-menu">
-                <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
-                <li><hr class="dropdown-divider"></hr></li>
-                <li><a class="dropdown-item" href="#">HTML</a></li>
-                <li><a class="dropdown-item" href="#">CSS</a></li>
-                <li><a class="dropdown-item" href="#">JavaScript</a></li>
-                <li><a class="dropdown-item" href="#">jQuery</a></li>
-                <li><a class="dropdown-item" href="#">Bootstrap</a></li>
-                <li><a class="dropdown-item" href="#">Angular</a></li>
-            </ul>
+    
+        <div class="row">
+            <div class="col">
+                <h6 class="mb-1 mt-0 fs-10">Year</h6>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example</button>
+                    <ul class="dropdown-menu">
+                        <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+                        <li><hr class="dropdown-divider"></hr></li>
+                        <li><a class="dropdown-item" href="#">2020</a></li>
+                        <li><a class="dropdown-item" href="#">2021</a></li>
+                        <li><a class="dropdown-item" href="#">2022</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">HTML</a></li>
-                <li><a class="dropdown-item" href="#">CSS</a></li>
-                <li><a class="dropdown-item" href="#">JavaScript</a></li>
-                <li><a class="dropdown-item" href="#">jQuery</a></li>
-                <li><a class="dropdown-item" href="#">Bootstrap</a></li>
-                <li><a class="dropdown-item" href="#">Angular</a></li>
-            </ul>
+    
+        <div class="row">
+            <div class="col">
+                <h6 class="mb-1">Status</h6>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Ongoing</a></li>
+                        <li><a class="dropdown-item" href="#">Finished</a></li>
+                        <li><a class="dropdown-item" href="#">Hiatus</a></li>
+                        <li><a class="dropdown-item" href="#">Planned</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
-</div>
-    <%- include('partials/footer.ejs') %>
-
+    <section>
+            <div class="header_title_anime one">
+                <h2 class="my_h2" style="margin-left: 70px !important;">POPULAR NOW</h2>
+            </div>
+    </section>
     
+    <div class='popular_now_block'>
+        <div class="recentAnime">
+          <div class="animeCard">
+            <% if (animeMangaList && Array.isArray(animeMangaList) && animeMangaList.length > 0) { %>
+                <% const recentAnimeList = animeMangaList.slice(0, 5).reverse(); %>
+                <% recentAnimeList.forEach(anime => { %>
+
+                <div class="card" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+                    data-bs-content="
+                            <% const score = 40; %>
+                            <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                                <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                            </span>
+
+                        <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+                        <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+                        <p><strong>Genres:</strong><br>
+                            <% const genres = anime.Genre.split(','); %>
+                            <% genres.forEach(genre => { %>
+                              <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                            <% }); %>
+                        </p>">
+                  
+                  <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+                    <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+                  </a>
+                  <div class="animeName">
+                    <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+                  </div>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <p>No anime available in the database.</p>
+            <% } %>
+          </div>
+        </div>
+    </div>
+    <section>
+        <div class="header_title_anime one">
+            <h2 class="my_h2" style="margin-left: 70px !important;">RECENTLY ADDED</h2>
+        </div>
+    </section>
+    <div class='popular_now_block'>
+        <div class="recentAnime">
+          <div class="animeCard">
+            <% if (animeMangaList && Array.isArray(animeMangaList) && animeMangaList.length > 0) { %>
+                <% const recentAnimeList = animeMangaList.slice(-5).reverse(); %> 
+                <% recentAnimeList.forEach(anime => { %>
+
+                <div class="card" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+                    data-bs-content="
+                            <% const score = 40; %>
+                            <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                                <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                            </span>
+
+                        <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+                        <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+                        <p><strong>Genres:</strong><br>
+                            <% const genres = anime.Genre.split(','); %>
+                            <% genres.forEach(genre => { %>
+                              <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                            <% }); %>
+                        </p>">
+                  
+                  <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+                    <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+                  </a>
+                  <div class="animeName">
+                    <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+                  </div>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <p>No anime available in the database.</p>
+            <% } %>
+          </div>
+        </div>
+    </div>
+    <section>
+        <div class="reviews_header_title">
+            <h2 class="my_h2" style="margin-left: 70px !important;">Make Your Own Reviews </h2>
+        </div>
+    </section>
+    <section class="review_box">
+        <div class="slide_container active">
+            <div class="slide">
+                <i class="fa fa-quote-right icon"></i>
+                <div class="user">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User profile picture">
+                    <div class="user-info">
+                        <h3>john deo 1</h3>
+                        <div class="stars">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p id="text" class="spoiler">TEXT</p>
+               
+            </div>
+        </div>
+        <div class="slide_container active">
+            <div class="slide">
+                <i class="fa fa-quote-right icon"></i>
+                <div class="user">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/020/911/732/small/profile-icon-avatar-icon-user-icon-person-icon-free-png.png" alt="User profile picture">
+                    <div class="user-info">
+                        <h3>john deo 2</h3>
+                        <div class="stars">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p id="text" class="spoiler">TEXT</p>
+                
+            </div>
+        </div>
+        <div class="slide_container">
+            <div class="slide">
+                <i class="fa fa-quote-right icon"></i>
+                <div class="user">
+                    <img src="/img/website_logo.png" alt="User profile picture">
+                    <div class="user-info">
+                        <h3>john deo 3</h3>
+                        <div class="stars">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p id="text" class="spoiler">TEXT</p>
+                
+            </div>
+        </div>
+        <div class="slide_container">
+            <div class="slide">
+                <i class="fa fa-quote-right icon"></i>
+                <div class="user">
+                    <img src="/img/website_logo.png" alt="User profile picture">
+                    <div class="user-info">
+                        <h3>john deo 4</h3>
+                        <div class="stars">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p id="text" class="spoiler">TEXT</p>
+                
+            </div>
+        </div>
+        <div id="next_arrow" class="fa fa-chevron-right" onclick="next()"></div>
+        <div id="prev_arrow" class="fa fa-chevron-left" onclick="prev()"></div>
+    </section>
+    
+</div>
+
+
+<div class="colored_background"></div>
+
+<div class="colored_background_accent"></div>
+
+<div class="container">
+    <section>
+        <div class="header_title_anime one">
+            <h2 class="my_h2" style="margin-left: 70px !important;">TOP 100</h2>
+        </div>
+    </section>
+    <div class='top_100'>
+        <div class="top_100_card">
+            <div class="individual_card">
+                <p>#1</p>
+                <p>Anime Name</p>
+                <p>Format</p>
+                <p>Rating</p>
+                <p>Likes</p>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('partials/footer.ejs') %>
+<script>
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl)
+    })
+    </script>
+   <script>
+    let reviews_slides = document.querySelectorAll('.slide_container');
+    let index = 0;
+
+    function updateActiveClass() {
+        for (let i = 0; i < reviews_slides.length; i++) {
+            reviews_slides[i].classList.remove('active');
+        }
+        reviews_slides[index].classList.add('active');
+        reviews_slides[(index + 1) % reviews_slides.length].classList.add('active');
+    }
+
+    function next() {
+        index = (index + 2) % reviews_slides.length;
+        updateActiveClass();
+    }
+
+    function prev() {
+        index = (index - 2 + reviews_slides.length) % reviews_slides.length;
+        updateActiveClass();
+    }
+
+    // Initial setup for the first two cards
+    updateActiveClass();
+</script>
+
 
 </body>
 </html>

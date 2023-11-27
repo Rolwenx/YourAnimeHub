@@ -46,6 +46,23 @@ module.exports = {
             throw err;
         }
     },
+
+    async getAllAnimeManga() {
+        try {
+            let conn = await pool.getConnection();
+            let sql = "SELECT * FROM Anime";
+    
+            // Ensure rows is an array
+            const animeMangaList = await conn.query(sql);
+            conn.release();
+    
+    
+            return animeMangaList;
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    },
     
     async getAllMangas() {
         try {
@@ -181,14 +198,13 @@ module.exports = {
     
             if (quoteCount > 0) {
                 console.log("Anime has dependencies in the quotes table. Cannot delete.");
-
-                return;
+                return false;
             }
     
             let sql = "DELETE FROM Anime WHERE AnimeId = ?";
             const [okPacket, fields] = await conn.execute(sql, [animeId]);
             conn.release();
-            console.log("DELETE " + JSON.stringify(okPacket));
+            return true;
     
         } catch (err) {
             console.log(err);

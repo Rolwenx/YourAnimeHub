@@ -1,46 +1,49 @@
 h3{
     cursor: auto;
 }
+
+h4 {
+    margin-bottom: 0;
+}
+
+
 /* ---------- 4 CARDS AT THE BEGINNING -----------*/
 
-.row {
+.row_in_card {
     display: flex;
     justify-content: center;
     margin: 10px;
+
 }
 
 .card_section{
+    position: relative;
     margin-top: 50px;
     background: rgb(8,14,31);
     border-radius: 30px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: -140px;
+    left: 130px;
+    width: 1028px;
     max-width: 1200px;
-    height: auto;
     justify-content: center;
-    flex-wrap: wrap;
-    position: absolute;
-    z-index: 1;
 }
 
-.card{
+.homecard{
     position: relative;
     background: white;
     border: 1px solid #eee;
     border-radius: 20px;
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
     color: slate;
-    
     flex-basis: calc(33%-40px);
     margin: 20px;
     padding: 30px;
     overflow: hidden;
     transition: 0.2s ease all;
-    width: 400px;
+    width: 600px;
 }
 
-.card:before{
+.homecard:before{
     content:"";
     position: absolute;
     top: 20px;
@@ -68,20 +71,22 @@ h3{
     margin: 10px 0 0;
 }
 
-.card.one:before{
+/* Allows to put the bar above each card*/
+.homecard.one:before{
     background-image: linear-gradient(153deg, blue 0%, green 95%);
 }
-.card.two:before {
+.homecard.two:before {
     background-image: linear-gradient(153deg, red 0%, yellow 95%);
 }
-.card.three:before{
+.homecard.three:before{
     background-image: linear-gradient(153deg, rgb(135, 192, 235) 0%, rgb(155, 206, 242) 95%);
 }
-.card.four:before{
+.homecard.four:before{
     background-image: linear-gradient(153deg, rgb(255, 180, 180) 0%, rgb(255, 230, 153) 95%);
 }
 
-.card:hover{
+/* Hovers the card (without the text)*/
+.homecard:hover{
     border:0;
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     color: #fff;
@@ -89,7 +94,8 @@ h3{
     z-index: 2;
 }
 
-.card:hover:before{
+/* Allows to make the color of the bar fill the card with animation*/
+.homecard:hover:before{
     border-radius: 20px;
     top: 0;
     right: 0;
@@ -98,16 +104,17 @@ h3{
     z-index: 1;
 }
 
-.card:hover h3, .card:hover p{
+/* Hovers the text too now*/
+.homecard:hover h3, .homecard:hover p{
     text-shadow: 2px 1px 3px rgba(0,0,0,0.2);
     position: relative;
     z-index: 2;
 }
 
-.card:hover p{
+.homecard:hover p{
     font-size: 14px;
 }
-.card:hover h3{
+.homecard:hover h3{
     font-size: 24px;
 }
 
@@ -116,20 +123,21 @@ h3{
 
 .join-button-container {
     flex-direction: column;
-    margin-bottom: 20px;
+    
     display: flex;
     text-align: center;
     align-items: center;
     justify-content: center;
     position: absolute;
-    bottom: -50px; 
-    left: 41.5%; 
+    bottom: -60px; 
+    height: 60px;
+    left: 41.4%; 
     transform: translateY(-50%); 
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
-    border-radius: 30px; 
+    border-radius: 15px; 
     padding: 10px 20px;
     background: rgb(72,144,222);
-    width: 120px;
+    width: 160px;
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
@@ -151,6 +159,273 @@ h3{
     transform: scale(1.4);
 }
 
+/* ---------- ANIME SECTION -----------*/
 
 
- 
+.header_title_anime{
+    position: relative;
+    margin-top: 70px;
+    margin-bottom: 10px;
+    
+}
+
+.header_title_anime:before{
+    content:"";
+    position: absolute;
+    top: 35px;
+    right: 20px;
+    left: 70px;
+    height: 2px;
+    background: #fff;
+    border-radius: 20px;
+}
+
+/* Allows to put the bar above each card*/
+.header_title_anime.one:before{
+    background-image: linear-gradient(153deg, black 0%, black 95%);
+}
+
+.popular_now_block, top_100 {
+    position: relative;
+    margin: auto; 
+    max-width: 900px; 
+
+  }
+
+  .popular_now_block .recentAnime {
+    position: relative;
+    min-height: 150px;
+    background: var(--white);
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+  }
+
+  
+  .popular_now_block .animeCard {
+    display: flex;
+  }
+  
+  .animeCard .card {
+    width: 200px;
+    height: 345px;
+    overflow: hidden;
+    display: flex;
+    margin-right: 30px;
+  }
+
+  .popular_now_block .animeCard .card img {
+    max-width: 100%;
+    
+  }
+
+  
+  .animeCard .animeName {
+    background-color: rgb(229, 233, 237);
+    border-radius: 5px;
+    text-align: center;
+    padding: 4px;
+    color: black;
+    font-weight: 600;
+  }
+  
+  
+  
+  .animeCard .animeName:hover {
+    text-decoration: underline;
+  }
+  
+  .animeCard .animeName a {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .cardHeader_a{
+    text-decoration: none;
+    color: black;
+    
+  }
+
+  .cardHeader{
+    margin-top: 50px;
+  }
+
+  .animeCard .card .cover_image {
+    min-width: 200px;
+      min-height: 310px; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    display: block; 
+    max-width: 200px; 
+    max-height: 310px; 
+  }
+  
+
+  /* ---------- REVIEWS SECTION -----------*/
+
+  .reviews_header_title{
+    text-align: center;
+    font-size: 30px !important;
+
+  }
+  .review_box{
+    position: relative;
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .review_box .slide_container .slide{
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 5px 10px #3337;
+    width: 450px;
+    padding: 20px;
+    margin: 10px;
+    margin-left: 80px;
+    margin-bottom: 50px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: slide .4s linear backwards;
+  }
+
+  @keyframes slide{
+    0%{
+        transform:rotateX(90deg);
+    }
+  }
+
+  .review_box .slide_container .slide > *{
+    animation: slideContent .2s linear .4s;
+  }
+
+  @keyframes slideContent{
+    0%{
+        opacity:0;
+        transform:scale(.5);
+    }
+  }
+
+  .review_box .slide_container .slide .icon{
+    top: 10px; right: 15px;
+    font-size: 90px;
+    position: absolute;
+    color: rgb(80,157,220);
+  }
+
+  .review_box .slide_container .slide .user{
+    display: flex;
+    align-items: center;
+  }
+
+
+  .review_box .slide_container .slide img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+
+  .review_box .slide_container .slide .user .user-info h3{
+    color: #333;
+    font-size: 20px;
+  }
+
+  .review_box .slide_container .slide .user .user-info .stars i{
+    color: rgb(80,157,220);
+    font-size: 15px;
+  }
+
+  .review_box .slide_container .slide #text {
+    color: #333;
+    font-size: 14px;
+    padding-top:15px;
+    font-style: italic;
+  }
+
+  .review_box .slide_container{
+    display: none;
+  }
+
+  .review_box .slide_container.active{
+    display: block;
+  }
+
+  .review_box #next_arrow, .review_box #prev_arrow{
+    top: 50%;
+    height: 50px;
+    width:50px;
+    position: absolute;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+    background: white;
+    color: #333;
+    transform: translateY(-50%);
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 5px 10px #3337;
+  }
+
+  .review_box #next_arrow{
+    right: -70px;
+  }
+
+  .review_box #prev_arrow{
+    left: -70px;
+  }
+
+  .review_box #prev_arrow:hover, .review_box #next_arrow:hover{
+    background-color: #333;
+    color: white;
+  }
+
+
+/* SHOW/HIDE Reviews*/
+.spoiler {
+    filter: blur(5px); /* Apply blur effect initially */
+    cursor: pointer; /* Set cursor to pointer on hover */
+    position: relative;
+    display: inline-block;
+  }
+
+  .spoiler-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 12px;
+    display: none;
+    z-index: 1;
+  }
+
+
+    /* ---------- TOP 100 SECTION -----------*/
+
+  
+  .top_100{
+    display: flex;
+  }
+
+  .top_100 .top_100_card {
+    display: flex;
+  }
+  
+  .top_100 .individual_card {
+    width: 200px;
+    height: 345px;
+    overflow: hidden;
+    display: flex;
+    margin-right: 30px;
+  }
