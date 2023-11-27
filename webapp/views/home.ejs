@@ -281,23 +281,45 @@ const title = 'Home - YourAnimeHub';
 
 <div class="colored_background_accent"></div>
 
-<div class="container">
+<div class="container mb-5">
     <section>
         <div class="header_title_anime one">
             <h2 class="my_h2" style="margin-left: 70px !important;">TOP 100</h2>
         </div>
     </section>
     <div class='top_100'>
-        <div class="top_100_card">
-            <div class="individual_card">
-                <p>#1</p>
-                <p>Anime Name</p>
-                <p>Format</p>
-                <p>Rating</p>
-                <p>Likes</p>
-            </div>
-        </div>
+        <% if (animeMangaList && Array.isArray(animeMangaList) && animeMangaList.length > 0) { %>
+            <% const recentAnimeList = animeMangaList.slice(-5).reverse(); %> 
+            <% recentAnimeList.forEach((anime, index) => { %>
+                <div class="individual_card">
+                    <div class="number"><strong>#<%= index + 1 %></strong></div>
+                    <div class="the_three">
+                        <div class="name_box">
+                            <img src="<%= anime.CoverImageURL %>" alt="Anime Image">
+                            <div>
+                                <p><a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><strong><%= anime.TitleEnglish %></strong></a></p>
+                                <% const genres = anime.Genre.split(','); %>
+                                <div>
+                                    <% genres.forEach(genre => { %>
+                                        <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                                    <% }); %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <p class="status"><strong>TV Show</strong></p>
+                            <p class="tv-details"><%= anime.EpisodeCount %> Episodes</p>
+                            <p class="rating">30 <%= 30 >= 50 ? '😊' : '😞' %></p>
+                            <p class="likes"><i class="fa fa-thumbs-up"></i> <%= anime.EpisodeCount %></p>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No anime available in the database.</p>
+        <% } %>
     </div>
+    
 </div>
 <%- include('partials/footer.ejs') %>
 <script>
