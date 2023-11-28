@@ -20,7 +20,8 @@
 
             <ul class="nav_bar_links">
                 <li class="nav_bar_link">
-                    <a href="/">Home</a></li>
+                    <a href="/">Home</a>
+                </li>
                 <li class="nav_bar_link browse">
                     <a href="">Browse
                         <span class="material-icons drop_down-icon">
@@ -35,16 +36,41 @@
                         <li><a href="/browse/reviews" class="drop_down_li">Reviews</a></li>
                     </ul>
                 </li>
-                <li class="nav_bar_link">
-                    <a href="/user">Profile</a>
-                </li>
-                <li class="nav_bar_link">
-                    <a href="/admin">Admin</a>
-                </li>
-            </ul>
-            <div class="login_signup_container">
-                <a href="/login" class="login_btn">Log In</a>
-                <a href="/signup" class="signup_btn">Sign Up</a>
-            </div>
+            
+                <% if (user && user.UserRole === 'Admin') { %>
+                    <li class="nav_bar_link">
+                        <a href="/user">Profile</a>
+                    </li>
+                    <li class="nav_bar_link">
+                        <a href="/user/watchlist">Your Lists</a>
+                    </li>
+                    <li class="nav_bar_link">
+                        <a href="/admin">Admin</a>
+                    </li>
+                </ul>
+                <div class="login_signup_container">
+                    <a href="" style="opacity: 0;">Log In</a>
+                    <a  href="" style="opacity: 0;">Sign Up</a>
+                </div>
+                <% } else if (user && user.UserRole === 'User') { %>
+                    <li class="nav_bar_link">
+                        <a href="/user">Profile</a>
+                    </li>
+                    <li class="nav_bar_link">
+                        <a href="/user/watchlist">Your Lists</a>
+                    </li>
+                </ul>
+                <div class="login_signup_container">
+                    <a href="" style="opacity: 0;cursor: default;">Log In</a>
+                    <a  href="" style="opacity: 0; cursor: default;">Sign Up</a>
+                </div>
+                <% } else { %>
+                </ul>
+                    <div class="login_signup_container">
+                        <a href="/login" class="login_btn">Log In</a>
+                        <a href="/signup" class="signup_btn">Sign Up</a>
+                    </div>
+                <% } %>
+            
         </nav>
     </header>
