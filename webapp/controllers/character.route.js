@@ -16,7 +16,7 @@ async function adminCharacterViewAction(request, response) {
         var character = await characterRepo.getOneCharacter(characterId);
         console.log(character);
 
-        response.render("single_view/single_character", { "character": character });
+        response.render("single_view/single_character", { "character": character, user: req.user });
     } catch (error) {
         console.error('Error in adminCharacterViewAction:', error);
         response.status(500).send('Internal Server Error');

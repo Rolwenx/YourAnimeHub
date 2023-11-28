@@ -45,7 +45,6 @@ router.post('/admin/characters/create', adminCharacterCreateAction);
 
 // Admin Home route
 async function adminHomeAction(request, res) {
-    
     try {
 
     
@@ -69,7 +68,8 @@ async function adminHomeAction(request, res) {
             animeList,
             characterList,
             mangaList,
-            quoteList,
+            quoteList,  
+            user: request.user,
         });
     } catch (error) {
         console.error('Error in adminHomeAction:', error);
@@ -82,7 +82,7 @@ async function adminAnimeListAction(request, response) {
     try {
         var animeList = await animeRepo.getAllAnime();
         
-        response.render("admin/admin_anime", { "animeList": animeList });
+        response.render("admin/admin_anime", { "animeList": animeList,  user: request.user});
     } catch (error) {
         console.error('Error in adminAnimeListAction:', error);
         response.status(500).send('Internal Server Error');
@@ -98,7 +98,7 @@ async function adminAnimeEditAction(request, response) {
         // Fetch the anime data
         var anime = await animeRepo.getOneAnime(animeId);
 
-        response.render("admin/admin_edit_anime", { "anime": anime });
+        response.render("admin/admin_edit_anime", { "anime": anime,  user: request.user });
     } catch (error) {
         console.error('Error in adminAnimeEditAction:', error);
         response.status(500).send('Internal Server Error');
@@ -143,9 +143,12 @@ async function adminAnimeUpdateAction(request, response) {
 async function adminAnimeDelAction(request, response) {
     var animeId = request.params.animeId;
     var animeName = request.params.animeName;
+    console.log("hey")
 
     try {
-        await animeRepo.delOneAnime(animeId);
+        has_anime_been_deleted = await animeRepo.delOneAnime(animeId);
+        console.log("has been deleted",has_anime_been_deleted);
+        response.redirect("/admin/animes?deleted=" + has_anime_been_deleted.toString());
     } catch (error) {
         response.redirect("/admin/animes");
     }
@@ -153,7 +156,7 @@ async function adminAnimeDelAction(request, response) {
 
 
 async function adminAnimeAddAction(request, response) {
-    response.render("admin/admin_add_anime", { /* Additional data if needed */ });
+    response.render("admin/admin_add_anime", {  user: request.user });
 }
 
 async function adminAnimeCreateAction(request, response) {
@@ -196,7 +199,7 @@ async function adminMangaListAction(request, response) {
     try {
         var mangaList = await animeRepo.getAllMangas();
         
-        response.render("admin/admin_manga", { "mangaList": mangaList });
+        response.render("admin/admin_manga", { "mangaList": mangaList,  user: request.user });
     } catch (error) {
         console.error('Error in adminMangaListAction:', error);
         response.status(500).send('Internal Server Error');
@@ -211,7 +214,7 @@ async function adminMangaEditAction(request, response) {
         // Fetch the anime data
         var manga = await animeRepo.getOneManga(mangaId);
 
-        response.render("admin/admin_edit_manga", { "manga": manga });
+        response.render("admin/admin_edit_manga", { "manga": manga,  user: request.user });
     } catch (error) {
         console.error('Error in adminAnimeEditAction:', error);
         response.status(500).send('Internal Server Error');
@@ -258,7 +261,14 @@ async function adminMangaDelAction(request, response) {
 
     try {
    
-        await animeRepo.delOneAnime(mangaId);
+        has_been_deleted = await animeRepo.delOneAnime(mangaId);
+        if (has_been_deleted == true){
+            // add something to say that anime has been deleted
+
+        }
+        else{
+            // add something to say that anime has not been deleted
+        }
  
         response.redirect("/admin/mangas");
     } catch (error) {
@@ -267,7 +277,7 @@ async function adminMangaDelAction(request, response) {
 }
 
 async function adminMangaAddAction(request, response) {
-    response.render("admin/admin_add_manga", { /* Additional data if needed */ });
+    response.render("admin/admin_add_manga", {  user: request.user });
 }
 
 async function adminMangaCreateAction(request, response) {
@@ -310,7 +320,7 @@ async function adminQuoteListAction(request, response) {
     try {
         var quoteList = await quoteRepo.getAllQuotes();
         
-        response.render("admin/admin_quote", { "quoteList": quoteList });
+        response.render("admin/admin_quote", { "quoteList": quoteList,  user: request.user });
     } catch (error) {
         console.error('Error in adminQuoteListAction:', error);
         response.status(500).send('Internal Server Error');
@@ -324,7 +334,7 @@ async function adminQuoteEditAction(request, response) {
         // Fetch the anime data
         var quote = await quoteRepo.getOneQuote(quoteId);
 
-        response.render("admin/admin_edit_quote", { "quote": quote });
+        response.render("admin/admin_edit_quote", { "quote": quote,  user: request.user });
     } catch (error) {
         console.error('Error in adminQuoteEditAction:', error);
         response.status(500).send('Internal Server Error');
@@ -363,7 +373,7 @@ async function adminQuoteDelAction(request, response) {
 }
 
 async function adminQuoteAddAction(request, response) {
-    response.render("admin/admin_add_quote", { /* Additional data if needed */ });
+    response.render("admin/admin_add_quote", {  user: request.user });
 }
 
 async function adminQuoteCreateAction(request, response) {
@@ -425,7 +435,7 @@ async function adminCharacterListAction(request, response) {
     try {
         var characterList = await characterRepo.getAllCharacters();
         
-        response.render("admin/admin_character", { "characterList": characterList });
+        response.render("admin/admin_character", { "characterList": characterList,  user: request.user });
     } catch (error) {
         console.error('Error in adminCharacterListAction:', error);
         response.status(500).send('Internal Server Error');
@@ -440,7 +450,7 @@ async function adminCharacterEditAction(request, response) {
         // Fetch the character data
         var character = await characterRepo.getOneCharacter(characterId);
 
-        response.render("admin/admin_edit_character", { "character": character });
+        response.render("admin/admin_edit_character", { "character": character,  user: request.user });
     } catch (error) {
         console.error('Error in adminCharacterEditAction:', error);
         response.status(500).send('Internal Server Error');
@@ -495,7 +505,7 @@ async function adminCharacterDelAction(request, response) {
 }
 
 async function adminCharacterAddAction(request, response) {
-    response.render("admin/admin_add_character", { /* Additional data if needed */ });
+    response.render("admin/admin_add_character", {  user: request.user });
 }
 
 async function adminCharacterCreateAction(request, response) {

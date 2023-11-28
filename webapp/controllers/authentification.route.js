@@ -7,13 +7,13 @@ const userRepo = require("../utils/users.repository");
 // http://localhost:9000/login
 router.get('/login', (req, res) => {
     //res.send('Hello, from controller...');
-    res.render('authentification_login', { favourites: [] });
+    res.render('authentification_login', { user: req.user });
 });
 
 // http://localhost:9000/terms
 router.get('/terms', (req, res) => {
     //res.send('Hello, from controller...');
-    res.render('terms_conditions', { favourites: [] });
+    res.render('terms_conditions', { user: req.user });
 });
 
 // Authentication routes
@@ -93,7 +93,7 @@ async function userAction(request, response) {
 
 
   async function SignUpHomeAction(req, res){
-    res.render("authentification_signup", { /* Additional data if needed */ });
+    res.render("authentification_signup", { user: req.user });
 
   }
   

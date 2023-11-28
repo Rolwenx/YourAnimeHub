@@ -15,7 +15,7 @@ async function adminAnimeViewAction(request, response) {
         var anime = await animeRepo.getOneAnime(animeId);
         console.log(anime);
 
-        response.render("single_view/single_anime", { "anime": anime });
+        response.render("single_view/single_anime", { "anime": anime, user: request.user  });
     } catch (error) {
         console.error('Error in adminAnimeViewAction:', error);
         response.status(500).send('Internal Server Error');
