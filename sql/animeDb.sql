@@ -20,10 +20,12 @@ CREATE TABLE User_Profile(
    UserPassword VARCHAR(50) NOT NULL,
    ProfilePictureURL VARCHAR(100),
    TitleDisplayLanguage VARCHAR(20),  -- English, Japanese, Romaji
-   isAdmin BOOLEAN NOT NULL,
+   UserRole VARCHAR(50),
    Birthday DATE,
-	 Bio TEXT,
-	 UNIQUE(Username),
+	Bio TEXT,
+   -- Active, suspended, banned
+   AccountStatus VARCHAR(50),
+	UNIQUE(Username),
    UNIQUE(Email)
 );
 
@@ -41,7 +43,10 @@ CREATE TABLE Anime(
    CoverImageURL VARCHAR(255),
    BackgroundImageURL VARCHAR(100),
    StreamingPlatformURL VARCHAR(100),
+   -- Is it Anime or Manga
    AnimeFormat VARCHAR(50),
+    -- Is it TV SHOW or MOVIE
+   TypeFormat  VARCHAR(50),
    EpisodeDuration INT,
    EpisodeCount INT,
    Chapters INT,

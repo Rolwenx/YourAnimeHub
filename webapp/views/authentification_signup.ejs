@@ -8,29 +8,31 @@ const title = 'Sign Up for YourAnimeHub';
 <section class="login_wrapper_signup">
   <div class="form-box login">
       <h2>Register To YourAnimeHub</h2>
-      <form action="#">
+      <form action="/signup/auth" method="POST">
           <div class="input-box">
               <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-              <input type="text" required>
+              <input type="text" name="username" required>
               <label>Username</label>
           </div>
           <div class="input-box">
               <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
-              <input type="email" required>
+              <input type="email" name="email" required>
               <label>Email</label>
           </div>
           <div class="input-box">
               <span class="icon" id="password_span"><i class="fa fa-eye" aria-hidden="true" id="eye1" onclick="toggle('password1', 'eye1')"></i></span>
-              <input type="password" id="password1" required>
+              <input type="password" name="userPassword" id="password1" required>
+
               <label>Password</label>
           </div>
           <div class="input-box">
               <span class="icon" id="password_span"><i class="fa fa-eye" aria-hidden="true" id="eye2" onclick="toggle('password2', 'eye2')"></i></span>
-              <input type="password" id="password2" required>
+              <input type="password" name="confirmPassword" id="password2" required oninput="checkPasswordMatch()">
               <label>Confirm Password</label>
+              <p id="passwordMatchMessage"></p>
           </div>
           <div class="remember_forgot">
-              <label><input type="checkbox">I agree to the <a href="/terms">terms & conditions</a></label>
+              <label><input type="checkbox" required>I agree to the <a href="/terms">terms & conditions</a></label>
           </div>
           <button type="submit" class="btn">Register</button>
           <div class="login_register">
@@ -56,6 +58,19 @@ const title = 'Sign Up for YourAnimeHub';
                 eyeIcon.classList.remove("fa-eye-slash");
                 eyeIcon.classList.add("fa-eye");
             }
+        }
+    </script>
+    <script>
+        function validateForm() {
+        var password1 = document.getElementById("password1").value;
+        var password2 = document.getElementById("password2").value;
+
+        if (password1 !== password2) {
+            alert("Passwords do not match!");
+            return false;
+        }
+
+        return true;
         }
     </script>
 

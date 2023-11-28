@@ -13,11 +13,19 @@ app.listen(process.env.WEB_PORT, '0.0.0.0',
     function() { console.log("Listening on "+process.env.WEB_PORT); }
 );
 
-app.get('/', (request, response) => {
-    response.render('home', {  });
-});
 
-// Use body-parser middleware to parse incoming request bodies
+const session = require("express-session");
+app.use(session({
+    secret: "SecretRandomStringDskghadslkghdlkghdghaksdghdksh",
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day in msec
+    resave: false
+})); 
+
+
+const auth = require("./utils/users.auth");
+auth.initialization(app);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
