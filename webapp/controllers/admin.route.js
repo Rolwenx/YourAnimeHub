@@ -4,9 +4,12 @@ const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 const quoteRepo = require('../utils/quote.repository'); 
 const characterRepo = require('../utils/characters.repository');
+const { checkAdminAuthentication } = require('../utils/users.auth');
 
 
 // Admin routes
+//all routes starting with "/admin" will go through this middleware.
+router.use('/admin', checkAdminAuthentication);
 router.get('/admin', adminHomeAction);
 router.get('/admin/animes', adminAnimeListAction);
 router.get('/admin/mangas', adminMangaListAction);
@@ -97,6 +100,7 @@ async function adminAnimeEditAction(request, response) {
     try {
         // Fetch the anime data
         var anime = await animeRepo.getOneAnime(animeId);
+        console.log(anime);
 
         response.render("admin/admin_edit_anime", { "anime": anime,  user: request.user });
     } catch (error) {
@@ -505,7 +509,7 @@ async function adminCharacterDelAction(request, response) {
 }
 
 async function adminCharacterAddAction(request, response) {
-    response.render("admin/admin_add_character", {  user: request.user });
+    response.render("admin/admin_add_character", {  user: request.usercdsfdecdfccfd });
 }
 
 async function adminCharacterCreateAction(request, response) {
