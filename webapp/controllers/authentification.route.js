@@ -4,17 +4,14 @@ const router = express.Router();
 const auth = require("../utils/users.auth");
 const userRepo = require("../utils/users.repository");
 
-// http://localhost:9000/login
 router.get('/login', (req, res) => {
-    //res.send('Hello, from controller...');
     res.render('authentification_login', { user: req.user });
 });
 
-// http://localhost:9000/terms
 router.get('/terms', (req, res) => {
-    //res.send('Hello, from controller...');
     res.render('terms_conditions', { user: req.user });
 });
+
 
 // Authentication routes
 router.get('/auth', (req, res) => {
@@ -23,43 +20,22 @@ router.get('/auth', (req, res) => {
         return res.redirect("/auth/admin");
       } else {
         // Redirect to the user's profile page (or home page)
-        return res.redirect("/user"); // Adjust the path as needed
+        return res.redirect("/user"); 
       }
     } else {
       // User is not authenticated, redirect to the login page
-      return res.redirect("/login"); // Adjust the path to your login page
+      return res.redirect("/login"); 
     }
   })
-router.get('/auth/user', auth.checkAuthentication("User"), userAction);
-router.get('/auth/admin', auth.checkAuthentication("Admin"), userAction);
-router.get('/auth/protected', protectedGetAction);
+
+
+router.get('/logout', logoutAction);
 
 router.post('/login', loginPostAction);
-router.get('/auth/logout', logoutAction);
-
 router.get('/signup', SignUpHomeAction);
 router.post('/signup/auth',SignUpPostAction);
 
 
-async function userAction(request, response) {
-    console.log("User Role:", request.user.UserRole); 
-    let userData = await userRepo.getOneUser(request.user.Username);
-    let userJson = JSON.stringify(userData);
-    response.render('/', { "extraContent": userJson });
-  }
-  
-  async function protectedGetAction(request, response) {
-    console.log("User Role:", request.user.UserRole); // Log user role
-    if (request.isAuthenticated()) {
-      if (request.user.UserRole === "Admin") {
-        response.redirect("/admin");
-      } else {
-        response.redirect("/");
-      }
-    } else {
-      response.redirect("/");
-    }
-  }
   
   async function loginPostAction(request, response) {
     console.log(request.body.username);
@@ -75,19 +51,24 @@ async function userAction(request, response) {
           if (err) {
               console.log("ERROR");
               console.log(err);
-              // return next(err); // <-- Remove this line
           }
 
           console.log("Logged In User Role:", request.user.UserRole);
 
           if (request.user.UserRole === "Admin") {
-              return response.redirect("/auth/admin");
+              return response.redirect("/");
           } else {
               return response.redirect("/");
           }
       });
   } else {
-      response.send("Invalid credentials provided");
+      response.send(`
+          <script>
+            alert('Invalid credentials provided');
+            window.location.href = '/login';
+          </script>
+        `);
+        return response.end(); 
   }
   }
 
@@ -136,4 +117,13 @@ async function userAction(request, response) {
     });
   }
 
+  router.get('/404', (req, res) => {
+    res.render('404_error', { user: req.user });
+  });
+  
+  // Catch-all route for any undefined routes
+  router.get('*', (req, res) => {
+    // Render the terms_conditions page
+    res.render('404_error', { user: req.user });
+  });
 module.exports = router;
