@@ -5,6 +5,7 @@ const characterRepo = require('../utils/characters.repository');
 
 
 router.get('/:characterId/:charName', adminCharacterViewAction);
+router.get('/:characterId', adminCharacterViewAction);
 
 
 async function adminCharacterViewAction(request, response) {

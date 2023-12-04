@@ -4,6 +4,7 @@ const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 
 router.get('/:mangaId/:mangaName', adminMangaViewAction);
+router.get('/:mangaId', adminMangaViewAction);
 
 
 async function adminMangaViewAction(request, response) {

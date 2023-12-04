@@ -3,7 +3,9 @@ const express = require('express');
 const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 
+
 router.get('/:animeId/:animeName', adminAnimeViewAction);
+router.get('/:animeId', adminAnimeViewAction);
 
 
 async function adminAnimeViewAction(request, response) {

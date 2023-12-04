@@ -57,7 +57,6 @@ module.exports = {
             if (rows != null) {
                 return rows;
             } else {
-                console.log('Quote not found for quoteId:', characterId);
                 return false;
             }
         } catch (err) {
