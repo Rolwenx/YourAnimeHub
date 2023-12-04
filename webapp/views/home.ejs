@@ -6,37 +6,51 @@ const title = 'Home - YourAnimeHub';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <link type="text/css" rel="stylesheet" href="/css/styleHome.css">
 
+
 <div class="colored_background"></div>
 
 <div class="colored_background_accent"></div>
 
 <div class="container">
-    <section class="card_section">
-        <div class="row_in_card">
-            <div class="homecard one">
-                <h3 class="my_h3">Explore a World of Anime</h3>
-                <p class="my_p">Dive into a captivating collection of anime shows, memorable quotes, and beloved characters. Uncover hidden gems and relive your favorite classics.</p>
-            </div>
-            <div class="homecard two">
-                <h3 class="my_h3">Personalized Watchlist</h3>
-                <p class="my_p">Create a watchlist tailored to your tastes. Organize your anime viewing and never miss out on your must-watch shows.</p>
-            </div>
+    <% if (user && user.UserRole === 'Admin') { %>
+
+        <div class="access_container">
+            <a  href="/admin" class="acces_btn">Access Admin Dashboard</a>
         </div>
-        <div class="row_in_card">
-            <div class="homecard three">
-                <h3 class="my_h3">Review and Rate</h3>
-                <p class="my_p">Share your thoughts on beloved anime and manga characters. Provide ratings and engage in lively character discussions with the community.</p>
-            </div>
-            <div class="homecard four">
-                <h3 class="my_h3">Progress Tracking</h3>
-                <p class="my_p">Effortlessly monitor your anime journey. Never lose your place in ongoing series, and continue your adventures without interruption.<p>
-            </div>
-        </div>
-        <div class="join-button-container">
-            <a href="/signup" class="join-button">Join Now</a>
-        </div>
+
+        <%- include('partials/home_UserAdmin.ejs') %>
         
-    </section>
+    <% } else if (user && user.UserRole === 'User') { %>
+        
+        <%- include('partials/home_UserAdmin.ejs') %>
+
+    <% } else { %>
+        <section class="card_section">
+            <div class="row_in_card">
+                <div class="homecard one">
+                    <h3 class="my_h3">Explore a World of Anime</h3>
+                    <p class="my_p">Dive into a captivating collection of anime shows, memorable quotes, and beloved characters. Uncover hidden gems and relive your favorite classics.</p>
+                </div>
+                <div class="homecard two">
+                    <h3 class="my_h3">Personalized Watchlist</h3>
+                    <p class="my_p">Create a watchlist tailored to your tastes. Organize your anime viewing and never miss out on your must-watch shows.</p>
+                </div>
+            </div>
+            <div class="row_in_card">
+                <div class="homecard three">
+                    <h3 class="my_h3">Review and Rate</h3>
+                    <p class="my_p">Share your thoughts on beloved anime and manga characters. Provide ratings and engage in lively character discussions with the community.</p>
+                </div>
+                <div class="homecard four">
+                    <h3 class="my_h3">Progress Tracking</h3>
+                    <p class="my_p">Effortlessly monitor your anime journey. Never lose your place in ongoing series, and continue your adventures without interruption.<p>
+                </div>
+            </div>
+            <div class="join-button-container">
+                <a href="/signup" class="join-button">Join Now</a>
+            </div>
+        </section>
+    <% } %>
     
     <section class="filter_section d-flex justify-content-evenly mb-3">
         <div class="row">
