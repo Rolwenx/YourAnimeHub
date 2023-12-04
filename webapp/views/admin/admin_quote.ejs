@@ -3,20 +3,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Admin - YourAnimeHub</title>
+    <title>Manage Quotes - YourAnimeHub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link type="text/css" rel="stylesheet" href="/css/styleAdminDash.css">
+    
   </head>
   <body>
 
 
 <!-- =============== Navigation ================ -->
-<div class="container">
+<div class="container_wb">
     <%- include('../partials_admin/admin_navigation.ejs') %>
 
   <!-- ========================= Main ==================== -->
-  <div class="main">
+  <div class="main_wb">
       <div class="topbar">
           <div class="toggle">
               <ion-icon name="menu-outline"></ion-icon>
@@ -64,7 +65,7 @@
             </div>
             <% }); %>
           <% } else { %>
-            <p>No quotes available in the database.</p>
+            <p class="nothing_here">No quotes available in the database.</p>
           <% } %>
         </div>
               
@@ -76,6 +77,7 @@
       <div class="add_edit_container">
         <a href="/admin/quotes/add" class="add_btn">Click to add Quote</a>
       </div>
+
 
 
 

@@ -116,14 +116,4 @@ router.post('/signup/auth',SignUpPostAction);
       response.redirect('/');
     });
   }
-
-  router.get('/404', (req, res) => {
-    res.render('404_error', { user: req.user });
-  });
-  
-  // Catch-all route for any undefined routes
-  router.get('*', (req, res) => {
-    // Render the terms_conditions page
-    res.render('404_error', { user: req.user });
-  });
 module.exports = router;

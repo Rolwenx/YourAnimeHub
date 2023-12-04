@@ -3,461 +3,124 @@ const title = 'Browse Characters - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title}) %>
 
-<!-- SCRIPTS-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<!-- Your custom CSS -->
 <link rel="stylesheet" href="https://unpkg.com/jam-icons/css/jam.min.css">
+<link type="text/css" rel="stylesheet" href="/css/styleViewCharacter.css">
 
-<!-- STYLESHEET-->
-<style type="text/css">
-
-/* --- BODY --- */
-
-body {
-    margin: 0px;
-    padding: 0px;
-    font-family: 'Poppins', sans-serif;
-    color:#000000;
-  
-    line-height:145%;
-    font-weight:normal;
-    
-    text-align:left;
-    background:#eceff0;
-}
-
-a {
-    color:#000000;
-    text-decoration:none;
-    cursor:help;
-    border:0px;
-    margin:0px;
-    padding:0px;
-    transition:0.2s ease-in-out;
-
-}
-
-b,strong {font-weight:700;}
-
-/* --- BACKGROUND --- */
-
-.background {
-    position:fixed;
-    top:0px;
-    left:0px;
-    height:calc(100% - 1px);
-    width:100%;
-    background-position:top center;
-    background-repeat:no-repeat;
-    background-size:cover;
-    image-rendering: pixelated;
-    z-index:-3;
-}
-
-.background_accent {
-
-    bottom:0px;
-    width:100%;
-    height:100px;
-    background-color:rgb(132, 177, 214);
-    z-index:-2;
-}
-
-
-
-/* --- CONTAINER --- */
-
-.container {
-    margin:0 auto;
-    width:96%;
-    height:500px;
-    text-align:center;
-    margin-top: 30px;
-}
-
-.character_cont {
-    background-image:url('https://static.tumblr.com/zvesamf/B6Uqnkw0s/container.jpg');
-    background-repeat:repeat;
-    background-position:top left;
-    border:1px solid #e7e7e7;
-    box-shadow:5px 5px rgba(0,0,0,0.05);
-}
-
-
-/* --- CHARACTERS --- */
-
-.character_cont {
-    position:relative;
-    left:50%;
-    width:640px;
-    margin-left:-340px;
-    height:430px;
-    height: auto;
-    padding:20px;
-    text-align:left;
-    margin-bottom:75px;
-}
-
-.character_cont:hover .character_image {opacity:1;}
-
-.character_image {
-    position:relative;
-    opacity:1;
-    height:350px;
-    width:640px;
-    margin-bottom:-355px;
-    transition:0.2s ease-in-out;
-  
-}
-
-
-.character_cont:nth-of-type(2n+1) .character_image {background-color:rgb(132, 177, 214);}
-.character_cont:nth-of-type(2n+2) .character_image {background-color:rgb(97, 165, 221);}
-
-
-.character_image img {
-    height:350px;
-    width:640px;
-    /* --- TO REMOVE COLOR OVERLAY DELTETE BELOW --- */
-    mix-blend-mode: multiply;
-}
-
-/* --- CHARACTER NAME --- */
-
-.character_name {
-    position:relative;
-    top:-20px;
-    left:-35px;
-    color:transparent;
-	 text-shadow:2px 2px 0px transparent;	
-    font-weight:700;
-    font-size:40pt;
-
-}
-
-.character_cont .character_name {
-    top:-45px;
-    left:-25px;
-    text-shadow:3px -3px 0px rgba(0,0,0,0.7);
-}
-
-.character_cont:nth-of-type(2n+1) .character_name {color:rgb(132, 177, 214);}
-.character_cont:nth-of-type(2n+2) .character_name {color:rgb(80,157,220);}
-
-/* --- CHARACTER PORTRAT --- */
-
-.portrait {position:absolute;}
-
-.portrait img {
-    width:200px;
-    height:280px;
-}
-
-/* --- CHARACTER QUICK STATS --- */
-
-.quick_stats {
-    position:relative;
-    left:219px;
-    top:10px;
-    width:380px;
-    height:50px;
-    padding:10px;
-    height: auto; /* Allow the container to expand based on content */
-}
-
-.quick_stats {background:#ffffff;border:1px solid #e7e7e7;}
-
-.zodiac {
-    position:relative;
-    top:8px;
-    left:0px;
-    height:34px;
-    width:34px;
-    background-color:white;
-    z-index:1;
-}
-
-.zodiac img {height:34px;width:34px;}
-
-
-.stat_cont {
-    position:relative;
-    top:-25px;
-    left:-5px;
-    height:61px;
-    width:385px;
-    padding:0px;
-    margin:0px;
-    height: auto; /* Allow the container to expand based on content */
-}
-
-ul.stats {list-style:none;
- 
-  width: 100%;}
-
-ul.stats li {
-    font-size:9pt;
-    display:inline-block;
-    margin:0px 5px 5px 0px;
-}
-
-ul.stats li b {
-    font-weight:500;
-    border-radius:2px;
-    margin:0px;
-    color:#a4b088;
-}
-
-/* --- CHARACTER LINKS --- */
-
-.character_links {
-    position:relative;
-    top:100px;
-    left:0px;
-    width:208px;
-    height:75px;
-}
-
-.character_links a {
-    display:inline-block;
-    text-align:center;
-    text-transform:lowercase;
-    width:40%;
-    padding:2px 5px;
-    margin:0px 5px 5px 0px;
-    font-size:9pt;
-    background:#ffffff;
-    border:1px solid #e7e7e7;
-}
-
-.character_links a:hover:nth-child(4n+1) {color:#ffffff;background:#a4b088;}
-.character_links a:hover:nth-child(4n+2) {color:#ffffff;background:#789897;}
-.character_links a:hover:nth-child(4n+3) {color:#ffffff;background:#789897;}
-.character_links a:hover:nth-child(4n+4) {color:#ffffff;background:#a4b088;}
-
-/* --- CHARACTER BIOGRAPHY --- */
-
-/* SHOW/HIDE HIDDEN SURNAMES*/
-.spoiler {
-    filter: blur(5px); /* Apply blur effect initially */
-    cursor: pointer; /* Set cursor to pointer on hover */
-    position: relative;
-    display: inline-block;
-  }
-
-  .spoiler-tooltip {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #ccc;
-    padding: 5px;
-    font-size: 12px;
-    display: none;
-    z-index: 1;
-  }
-
-.biography_cont {
-    position:relative;
-    top:-47px;
-    left:219px;
-    width:400px;
-    height:214px;
-    background:#ffffff;
-    border:1px solid #e7e7e7;
-
-}
-
-.biography {
-    width:360px;
-    height:169px;
-    padding:20px;
-    line-height:160%;
-    overflow-y:scroll;
-}
-
-.biography h1 {
-    font-weight:700;
-  
-    font-size:14pt;
-    margin:0px 0px 5px 0px;
-}
-
-.biography h2 {
-    font-weight:700;
-    font-size:10pt;
-    margin:0px 0px 0px 0px;
-}
-
-.biography img {margin:12px 10px 0px 5px;}
-
-.biography p {margin:20px 0px;}
-
-.biography b {font-weight:700;color:#779796;}
-
-.biography i {color:#a4b088;}
-
-.biography em {border-bottom:1px solid #a4b088;padding:0px;}
-
-.biography a {font-weight:700;opacity:0.5;}
-
-ul.bio {
-    list-style:none;
-    width:calc(100% - 20px);
-    margin:20px 0px 20px -30px;
-}
-
-ul.bio li {
-    color:#ffffff;
-    padding:4px 3px;
-    margin:0px 0px 3px 0px;
-}
-
-ul.bio li:nth-child(odd) {background:#a5b189;}
-ul.bio li:nth-child(even) {background:#789897;}
-
-</style>
 </head>
 <body>
 
-<div class="background"></div>
+  <div class="background"></div>
 
 <div class="background_accent"></div>
 
+<div class="container">
+  <div class="character_cont">
 
-<div class="container">	
+    <div class="row">
 
+        <div class="col-md-12 character_hover">
 
+            <div class="portrait">
+                <img class="cover_image img-fluid" src="<%= character.ImageURL %>" alt="<%= character.charName %>">
+            </div>
 
-<div class="character_cont">
+            <div class="character_name">
+                <%= character.CharName %>
+            </div>
 
+            <div class="quick_stats text-center">
 
-<!------------------------
-START CHARACTER HOVER
--------------------------> 
-<div class="character_hover">
+                <div class="stat_cont">
+                    <ul class="stats list-unstyled">
+                        <% if (character.Birthday) { %>
+                            <li><b>Birthday:</b> <%= character.Birthday %></li><br>
+                        <% } %>
+                        <% if (character.Age) { %>
+                          <li><b>Age:</b> <%= character.Age %> </li>
+                        <% } %>
+                        <% if (character.Height) { %>
+                            <li><b>Height:</b> <%= character.Height %></li><br>
+                        <% } %>
+                        <% if (character.Gender) { %>
+                            <li><b>Gender:</b> <%= character.Gender %></li>
+                        <% } %>
+                    </ul>
+                </div>
 
+            </div>
 
-    <!---- 200X230 Character Portrait ---->
-    <div class="portrait">
-      <img class="cover_image" src="<%= character.ImageURL %>" alt="<%= character.charName %>">
-    </div>
-
-
-<!---- Character Name ----> 
-<div class="character_name">
-  <%= character.CharName %>
-</div>
-
-
-<!---- Start Character Quick Stats ---->
-<div class="quick_stats">
-    
-        
-        <div class="zodiac">
-            <img src="https://static.tumblr.com/zvesamf/Nteqnl75l/zodiac_leo.png" />
-        </div>
-        
-        
-    <!---- Start Stats ---->
-    <div class="stat_cont"><ul class="stats">
-    
-      <% if (character.Birthday) { %>
-        <li><b>Birthday: </b> <%= character.Birthday %> </li><br>
-      <% } %>
-      <% if (character.Age) { %>
-        <li><b>Age: </b> <%= character.Age %> </li><br>
-    <% } %>
-    <% if (character.Height) { %>
-      <li><b>Height: </b><%= character.Height %></li><br>
-  <% } %>
-
-  <% if (character.Gender) { %>
-      <li><b>Gender: </b> <%= character.Gender %></li>
-  <% } %>
+            <div class="character_links">
+                <a href="#" class="btn btn-light">Related Manga:</a>
+                <a href="#" class="btn btn-light heart-btn">&#10084;</a>
+            </div>
             
-        </ul></div>
-        
+            <div class="biography_cont">
+                <div class="biography">
+
+                    <% if (character.NamesGiven) { %>
+                        <h2>Given Names</h2>
+                        <p style="font-size:10px !important; margin: 0 !important;"><%- character.NamesGiven%></p>
+                    <% } %>
+
+                    <% if (character.HiddenSurnames) { %>
+                        <h2>Hidden Names</h2>
+                        <p style="font-size:10px !important; margin: 0 !important; padding:0;" class="spoiler" id="HiddenSurnames">
+                            <%- character.HiddenSurnames%>
+                        </p>
+                    <% } %>
+
+                    <div class="spoiler-tooltip" id="spoilerTooltip">This section could contain spoilers.</div>
+
+                    <h1>Description</h1>
+                    <%- character.CharSynopsis.replace(/\\n\\n/g, '<br><br>') %>
+
+                    <% if (character.Family) { %>
+                        <h1>Family</h1>
+                        <p style="font-size:12px !important; margin: 0 !important;"><%- character.Family %></p>
+                    <% } %>
+
+                    <% if (character.SpecificField1) { %>
+                        <h1>More</h1>
+                        <p style="font-size:10px !important; margin: 0 !important;"><%- character.SpecificField1 %></p>
+                    <% } %>
+
+                </div>
+            </div>
+
+        </div>
+
     </div>
-    <!---- End Character Quick Stats ---->
-    
-    
-    
-    <!---- Start Links ---->
-    <div class="character_links">
-        <a href="#">Related Manga:</a>
-        <a href="#">Related Anime:</a>
+  </div>
+  <div class="character_cont">
+
+    <div class="row">
+
+
     </div>
-    <!---- End Links ---->
-    
-    
-<!---- Start Biography ---->
-<div class="biography_cont"><div class="biography">
-
-  <% if (character.NamesGiven) { %>
-    <h2>Given Names</h2>
-  <p style="font-size:10px !important; margin: 0 !important;"><%- character.NamesGiven%></p>
-
-  <% } %>
-
-  <% if (character.HiddenSurnames) { %>
-    <h2>Hidden Names (spoil)</h2>
-  <p style="font-size:10px !important; margin: 0 !important; padding:0;" class="spoiler" id="HiddenSurnames">
-    <%- character.HiddenSurnames%>
-  </p>
-  <% } %>
-
-  <!-- Tooltip for spoiler content -->
-  <div class="spoiler-tooltip" id="spoilerTooltip">This section could contain spoilers.</div>
-
-
-    <h1>Description</h1>
-    
-    <%- character.CharSynopsis.replace(/\\n\\n/g, '<br><br>') %>
-
-
-    <% if (character.Family) { %>
-      <h1>Family</h1>
-      <p style="font-size:12px !important; margin: 0 !important;"><%- character.Family %></p>
-      
-    <% } %>
-<% if (character.SpecificField1) { %>
-  <h1>More</h1>
-<p style="font-size:10px !important; margin: 0 !important;"><%- character.SpecificField1 %></p>
-  
-<% } %>
-
-
- 
-</div></div>
-
-
-</div>
+  </div>
 </div>
 
-
-</div>
-<!-- END CONTAINER --------------------------->
 <%- include('../partials/footer.ejs', { title: title }) %>
 
-
 <script>
-  const spoilerText = document.getElementById('HiddenSurnames');
-  const tooltip = document.getElementById('spoilerTooltip');
+    const spoilerText = document.getElementById('HiddenSurnames');
+    const tooltip = document.getElementById('spoilerTooltip');
 
-  spoilerText.addEventListener('mouseover', () => {
-    tooltip.style.display = 'block';
-  });
+    spoilerText.addEventListener('mouseover', () => {
+        tooltip.style.display = 'block';
+    });
 
-  spoilerText.addEventListener('mouseout', () => {
-    tooltip.style.display = 'none';
-  });
+    spoilerText.addEventListener('mouseout', () => {
+        tooltip.style.display = 'none';
+    });
 
-  spoilerText.addEventListener('click', () => {
-    spoilerText.style.filter = 'none'; /* Remove blur effect on click */
-    tooltip.style.display = 'none';
-  });
+    spoilerText.addEventListener('click', () => {
+        spoilerText.style.filter = 'none';
+        tooltip.style.display = 'none';
+    });
 </script>
 </body>
 </html>

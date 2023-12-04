@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 
+
 // http://localhost:9000/user
 router.get('/', (req, res) => {
     //res.send('Hello, from controller...');

@@ -116,11 +116,11 @@ const title = 'Browse Manga - YourAnimeHub';
           <% const recentMangaList = mangaList.slice(-4).reverse(); %> 
           <% recentMangaList.forEach(manga => { %>
             <div class="card">
-              <a href="/manga/<%= manga.id %>">
+              <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
                 <img class="cover_image" src="<%= manga.CoverImageURL %>" alt="<%= manga.TitleEnglish %>">
               </a>
               <div class="animeName">
-                <a href="/manga/<%= manga.id %>"><%= manga.TitleEnglish %></a>
+                <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>"><%= manga.TitleEnglish %></a>
               </div>
             </div>
           <% }); %>
@@ -132,7 +132,7 @@ const title = 'Browse Manga - YourAnimeHub';
 </div>
 
 <div class="recently_added_block">
-  <a class="cardHeader_a" href="/browse/manga/recently_added">
+  <a class="cardHeader_a" href="/browse/manga/popular">
     <div class="cardHeader">
         <h2>Popular This Week</h2>
     </div>
@@ -143,11 +143,11 @@ const title = 'Browse Manga - YourAnimeHub';
       <% const recentMangaList = mangaList.slice(-4).reverse(); %> 
       <% recentMangaList.forEach(manga => { %>
         <div class="card">
-          <a href="/manga/<%= manga.id %>">
+          <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
             <img class="cover_image" src="<%= manga.CoverImageURL %>" alt="<%= manga.TitleEnglish %>">
           </a>
           <div class="animeName">
-            <a href="/manga/<%= manga.id %>"><%= manga.TitleEnglish %></a>
+            <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>"><%= manga.TitleEnglish %></a>
           </div>
         </div>
       <% }); %>
@@ -159,7 +159,7 @@ const title = 'Browse Manga - YourAnimeHub';
 </div>
 
 <div class="recently_added_block">
-  <a class="cardHeader_a" href="/browse/manga/recently_added">
+  <a class="cardHeader_a" href="/browse/manga/top-100">
     <div class="cardHeader">
         <h2>Top 100</h2>
     </div>
@@ -170,11 +170,11 @@ const title = 'Browse Manga - YourAnimeHub';
       <% const recentMangaList = mangaList.slice(-4).reverse(); %> 
       <% recentMangaList.forEach(manga => { %>
         <div class="card">
-          <a href="/manga/<%= manga.id %>">
+          <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
             <img class="cover_image" src="<%= manga.CoverImageURL %>" alt="<%= manga.TitleEnglish %>">
           </a>
           <div class="animeName">
-            <a href="/manga/<%= manga.id %>"><%= manga.TitleEnglish %></a>
+            <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>"><%= manga.TitleEnglish %></a>
           </div>
         </div>
       <% }); %>

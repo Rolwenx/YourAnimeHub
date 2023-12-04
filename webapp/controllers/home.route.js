@@ -11,13 +11,17 @@ router.get('/', GuestHomeAction);
 async function GuestHomeAction(request, res) {
     try {
         const animeMangaList = await animeRepo.getAllAnimeManga();
+        const animeList = await animeRepo.getAllAnime();
+        const mangaList = await animeRepo.getAllMangas();
 
         // Log user role in the console
         console.log("User Role:", request.user ? request.user.UserRole : "Guest");
 
         res.render('home', { 
             animeMangaList,
-            user: request.user, // Pass the user object to the view
+            user: request.user,
+            animeList,
+            mangaList, // Pass the user object to the view
             favourites: [] });
     } catch (error) {
         console.error('Error in GuestHomeAction:', error);

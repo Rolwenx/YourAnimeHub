@@ -55,8 +55,8 @@ module.exports = {
     if (request.isAuthenticated() && checkRoleHierarchy(request.user.UserRole, "Admin")) {
       return next();
     } else {
-      // Redirect unauthorized users to the login page or another appropriate page
-      return response.redirect("/");
+      // Redirect unauthorized users to the 404 error page
+      return response.redirect("/404");
     }
   },
 };

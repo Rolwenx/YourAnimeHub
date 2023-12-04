@@ -2,224 +2,49 @@
 const title = 'Browse Anime - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title}) %>
-<link type="text/css" rel="stylesheet" href="/css/styleBrowseAnime.css">
-<link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
-
-
+<link type="text/css" rel="stylesheet" href="/css/styleBrowseA.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <div class="background"></div>
 
 <div class="background_accent"></div>
 
-<section class="section">
-    <div class="search_wrap search_wrap_1">
-      <h4>Search</h4>
-      <div class="search_box">
-        <input type="text" class="input">
-        <div class="btn btn_common">
-          <i class="fa fa-search"></i>
-        </div>
-      </div>
+<section class="anime_list">
+  <a href="/browse/anime/recently_added">
+    <div>
+      <h2 class="heading">Recently Added</h2>
     </div>
-    <div class="dropdown_filter">
-      <h4>Genre</h4>
-      <div class="select">
-        <span class="selected">Any</span>
-        <div class="caret"></div>
-      </div>
-      <ul class="menu">
-        <li class="active">Any</li>
-        <li>Action</li>
-        <li>Adventure</li>
-        <li>Romance</li>
-        <li>Sports</li>
-      </ul>
-    </div>
-    <div class="dropdown_filter">
-      <h4>Year</h4>
-      <div class="select">
-        <span class="selected">Any</span>
-        <div class="caret"></div>
-      </div>
-      <ul class="menu">
-        <li class="active">Any</li>
-        <li>1999</li>
-        <li>2002</li>
-        <li>2006</li>
-        <li>2015</li>
-      </ul>
-    </div>
-    <div class="dropdown_filter">
-      <h4>Format</h4>
-      <div class="select">
-        <span class="selected">Any</span>
-        <div class="caret"></div>
-      </div>
-      <ul class="menu">
-        <li class="active">Any</li>
-        <li>TV</li>
-        <li>Movie</li>
-        <li>Manga</li>
-      </ul>
-    </div>
-    <button id="filter-toggle" class="filter-button">
-      <i class="fa fa-filter"></i> Filter
-  </button>
-  <div class="popup-container" id="filter-popup">
-      <div class="filter-container">
-          <label for="airing-status">Airing Status:</label>
-          <select id="airing-status">
-              <option value="">Any</option>
-              <option value="airing">Airing</option>
-              <option value="finished">Finished</option>
-              <option value="not-aired">Not Aired</option>
-              <option value="cancelled">Cancelled</option>
-          </select>
-          
-          <label for="country-of-origin">Country of Origin:</label>
-          <select id="country-of-origin">
-              <option value="">Any</option>
-              <option value="Japan">Japan</option>
-              <option value="South Korea">South Korea</option>
-              <option value="China">China</option>
-              <option value="Taiwan">Taiwan</option>
-          </select>
-          
-          <label for="year-range">Year Range:</label>
-          <input type="range" id="year-range" min="1970" max="2023">
-          
-          <label for="episode-count">Episode Count:</label>
-          <input type="range" id="episode-count" min="0" max="1000">
-          
-          <label for="genre-filter">Genre:</label>
-          <select id="genre-filter" multiple>
-              <option value="romance">Romance</option>
-              <option value="action">Action</option>
-              <option value="adventure">Adventure</option>
-              <option value="fantasy">Fantasy</option>
-          </select>
-      </div>
-      <button type="button" onclick="popupDisappears()">OK</button>
-    <div class="results">
-        <!-- Display filtered results here -->
-    </div>
-  </div>
-</section>
-
-  <div class="recently_added_block">
-    <a class="cardHeader_a" href="/browse/anime/recently_added">
-      <div class="cardHeader">
-          <h2>Recently Added</h2>
-      </div>
   </a>
-    <div class="recentAnime">
-      <div class="animeCard">
-        <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-          <% const recentAnimeList = animeList.slice(-4).reverse(); %> 
-          <% recentAnimeList.forEach(anime => { %>
-            <div class="card">
-              <a href="/anime/<%= anime.id %>">
-                <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
-              </a>
-              <div class="animeName">
-                <a href="/anime/<%= anime.id %>"><%= anime.TitleEnglish %></a>
-              </div>
-            </div>
-          <% }); %>
-        <% } else { %>
-          <p>No anime available in the database.</p>
-        <% } %>
-      </div>
-    </div>
-</div>
 
-<div class="recently_added_block">
-    <a class="cardHeader_a" href="/browse/manga/recently_added">
-      <div class="cardHeader">
-          <h2>Popular These Week</h2>
-      </div>
-    </a>
-    <div class="animeCard">
+  <div class="anime_container">
       <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
         <% const recentAnimeList = animeList.slice(-4).reverse(); %> 
         <% recentAnimeList.forEach(anime => { %>
-          <div class="card">
-            <a href="/anime/<%= anime.id %>">
-              <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+          <div class="anime_box">
+            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+              <div class="box-img">
+                <img src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+              </div>
+              <h3 data-toggle="popover" data-trigger="hover" data-placement="right" data-content="<%= anime.Description %>"><%= anime.TitleEnglish %></h3>
+              <span><%= anime.EpisodeDuration %> min | <%= anime.EpisodeCount %></span>
             </a>
-            <div class="animeName">
-              <a href="/anime/<%= anime.id %>"><%= anime.TitleEnglish %></a>
-            </div>
           </div>
         <% }); %>
       <% } else { %>
         <p>No anime available in the database.</p>
       <% } %>
-    </div>
   </div>
-</div>
 
-<div class="recently_added_block">
-  <a class="cardHeader_a" href="/browse/manga/recently_added">
-    <div class="cardHeader">
-        <h2>Top 100</h2>
-    </div>
-</a>
-  <div class="animeCard">
-    <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-      <% const recentAnimeList = animeList.slice(-4).reverse(); %> 
-      <% recentAnimeList.forEach(anime => { %>
-        <div class="card">
-          <a href="/anime/<%= anime.id %>">
-            <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
-          </a>
-          <div class="animeName">
-            <a href="/anime/<%= anime.id %>"><%= anime.TitleEnglish %></a>
-          </div>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <p>No anime available in the database.</p>
-    <% } %>
-  </div>
-</div>
+</section>
 
-
-
-
-<%- include('../partials/footer.ejs') %>
 <script>
-  const dropdowns = document.querySelectorAll('.dropdown_filter');
-
-// We now loop through all the dropdown elements
-dropdowns.forEach(dropdown => {
-    const select = dropdown.querySelector('.select');
-    const caret = dropdown.querySelector('.caret');
-    const menu = dropdown.querySelector('.menu');
-    const options = dropdown.querySelectorAll('.menu li');
-    const selected = dropdown.querySelector('.selected');
-
-    select.addEventListener('click', () => {
-        select.classList.toggle('select-clicked');
-        caret.classList.toggle('caret-rotate');
-        menu.classList.toggle('menu-open');
-    });
-
-    options.forEach(option => {
-        option.addEventListener('click', () => {
-            selected.innerText = option.innerText;
-            select.classList.remove('select-clicked');
-            caret.classList.remove('caret-rotate');
-            menu.classList.remove('menu-open');
-
-            options.forEach(option => {
-                option.classList.remove('active');
-            });
-
-            option.classList.add('active');
-        });
-    });
-});
+  // Enable Bootstrap Popover on hover
+  $(function () {
+    $('[data-toggle="popover"]').popover();
+  });
 </script>
 
 </body>
