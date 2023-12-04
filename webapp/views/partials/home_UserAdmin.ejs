@@ -93,7 +93,7 @@
             <dd>
                 <a class="quote_day_anime_box" href="/anime/<%= quote_of_the_day.AnimeID %>">
                     <%= quote_of_the_day && quote_of_the_day.AnimeName
-                        ? '[' + quote_of_the_day.AnimeName+']'
+                        ? '[ ' + quote_of_the_day.AnimeName+' ]'
                         : 'No Anime available' %>
                 </a>
             </dd>
@@ -101,3 +101,47 @@
     </div>
 </div>
 
+
+<section>
+    <div class="header_title_anime one">
+        <h2 class="my_h2" style="margin-left: 70px !important;">BIRTHDAYS</h2>
+    </div>
+</section>
+
+<div class='birthdays_section'>
+    <div class="recentBirthday">
+        <div class="BirthdayCard">
+            <% if (characterList && Array.isArray(characterList) && characterList.length > 0) { %>
+                <% const today = new Date(); %>
+                <% const upcomingBirthdays = characterList.filter(character => {
+                        const birthday = new Date(character.Birthday);
+                        return (
+                            birthday.getMonth() === today.getMonth() &&
+                            birthday.getDate() >= today.getDate() &&
+                            birthday.getDate() <= today.getDate() + 7
+                        );
+                    });
+                %>
+
+                <% if (upcomingBirthdays.length > 0) { %>
+                    <% upcomingBirthdays.slice(0, 5).forEach(character => { %>
+                        <div class="card" title="<strong><%= character.CharName %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+                            data-bs-content="
+                                <p><strong>Birthday:</strong><br>
+                                    <span class='badge bg-danger me-1'>🎂 <%= character.Birthday %></span>
+                                </p>">
+                            <a href="/character/<%= character.CharacterID %>/<%= character.CharacterName %>">
+                                <img class="cover_image" src="<%= character.ImageURL %>" alt="<%= character.CharacterName %>">
+                            </a>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p>No characters with upcoming birthdays in the next 7 days.</p>
+                <% } %>
+
+            <% } else { %>
+                <p>No characters available in the database.</p>
+            <% } %>
+        </div>
+    </div>
+</div>

@@ -480,7 +480,7 @@ async function adminCharacterUpdateAction(request, response) {
     var charName = request.params.charName;
     var characterData = {
         CharName: request.body.charName,
-        Birthday: request.body.titleRomaji || null,
+        Birthday: request.body.charBirthday || null,
         Age: request.body.charAge || null,
         Gender: request.body.charGender || null,
         BloodType: request.body.charBloodtype || null,
@@ -529,7 +529,7 @@ async function adminCharacterAddAction(request, response) {
 async function adminCharacterCreateAction(request, response) {
     var characterData = { 
         CharName: request.body.charName,
-        Birthday: request.body.titleRomaji || null,
+        Birthday: request.body.charBirthday || null,
         Age: request.body.charAge || null,
         Gender: request.body.charGender || null,
         BloodType: request.body.charBloodtype || null,
@@ -543,6 +543,7 @@ async function adminCharacterCreateAction(request, response) {
         HiddenSurnames: request.body.charHiddenNames || null,
         SpecificField1: request.body.charMoreInfo || null
      };
+     console.log("char data ",characterData)
     var characterId = await characterRepo.addOneCharacter(characterData);
     if (characterId == null) {
         response.send(`

@@ -80,7 +80,8 @@ CREATE TABLE AnimeQuote(
    QuoteText TEXT,
    CharacterID INT NOT NULL,
    AnimeID INT NOT NULL,
-	 QuoteLikes INT DEFAULT 0,
+	QuoteLikes INT DEFAULT 0,
+   isQuoteOfDay VARCHAR(5),
    FOREIGN KEY(CharacterID) REFERENCES Character_Card(CharacterID),
    FOREIGN KEY(AnimeID) REFERENCES Anime(AnimeID)
 );

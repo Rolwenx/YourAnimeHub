@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 const quoteRepo = require('../utils/quote.repository');
+const characterRepo = require('../utils/characters.repository');
 
 
 router.get('/', GuestHomeAction);
@@ -12,6 +13,7 @@ router.get('/', GuestHomeAction);
 async function GuestHomeAction(request, res) {
     try {
         const animeMangaList = await animeRepo.getAllAnimeManga();
+        const characterList = await characterRepo.getAllCharacters();
         const animeList = await animeRepo.getAllAnime();
         const mangaList = await animeRepo.getAllMangas();
         const quote_of_the_day = await quoteRepo.transformQuoteOfDay();
@@ -24,6 +26,7 @@ async function GuestHomeAction(request, res) {
             animeList,
             mangaList,
             quote_of_the_day,
+            characterList,
             favourites: [] });
     } catch (error) {
         console.error('Error in GuestHomeAction:', error);
