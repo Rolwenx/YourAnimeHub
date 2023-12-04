@@ -181,4 +181,66 @@ module.exports = {
             throw err;
         }
     },
+
+    async getQuoteOfTheDay() {
+        try {
+            let conn = await pool.getConnection();
+            // Step 1: Set isQuoteOfDay to false for all rows
+            let updateSql = "UPDATE AnimeQuote SET isQuoteOfDay = 'False' WHERE isQuoteOfDay = 'True'";
+            await conn.execute(updateSql);
+
+
+            // Step 2: Select a random quote and update its isQuoteOfDay to true
+            let selectSql = "SELECT * FROM AnimeQuote ORDER BY RAND() LIMIT 1";
+            const [rows, fields] = await conn.execute(selectSql);
+    
+            if (rows != null) {
+                const quote = rows;
+                // We update the isQuoteOfDay attribute to "True"
+                let updateSql = "UPDATE AnimeQuote SET isQuoteOfDay = 'True' WHERE QuoteID = ?";
+                await conn.execute(updateSql, [quote.QuoteID]);
+    
+                conn.release();
+            } else {
+                conn.release();
+                return null;
+            }
+        } catch (err) {
+            console.error(err);
+            throw err;
+        }
+    },
+
+    // The quote of day currently is available thanks to its boolean, but only with AnimeID and CharacterID
+    // This function will transform those ID into real names
+
+    async transformQuoteOfDay() {
+        try {
+            let conn = await pool.getConnection();
+            let selectSql = "SELECT * FROM AnimeQuote WHERE isQuoteOfDay = 'True'";
+            const [rows, fields] = await conn.execute(selectSql);
+
+            if (rows != null) {
+                const quote = rows;
+                const animeName = await animeRepo.getAnimeNameByID(quote.AnimeID);
+                const characterName = await characterRepo.getCharacterNameByID(quote.CharacterID);
+
+                // Add the corresponding names to the quote object
+                const updatedQuote = {
+                    ...quote,
+                    AnimeName: animeName,
+                    CharacterName: characterName,
+                };
+                conn.release();
+                return updatedQuote;
+            } else {
+                conn.release();
+                return null;
+            }
+        } catch (err) {
+            console.error(err);
+            throw err;
+        }
+    },    
+    
 };

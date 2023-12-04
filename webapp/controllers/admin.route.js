@@ -29,6 +29,8 @@ router.get('/admin/quotes/edit/:quoteId', adminQuoteEditAction);
 router.post('/admin/quotes/update/:quoteId', adminQuoteUpdateAction);
 router.get('/admin/quotes/delete/:quoteId', adminQuoteDelAction);
 
+router.get('/admin/quotes/quote_of_the_day', adminQuoteDailyAction);
+
 router.get('/admin/characters/edit/:characterId/:characterName', adminCharacterEditAction);
 router.post('/admin/characters/update/:characterId/:characterName', adminCharacterUpdateAction);
 router.get('/admin/characters/delete/:characterId/:characterName', adminCharacterDelAction);
@@ -100,7 +102,6 @@ async function adminAnimeEditAction(request, response) {
     try {
         // Fetch the anime data
         var anime = await animeRepo.getOneAnime(animeId);
-        console.log(anime);
 
         response.render("admin/admin_edit_anime", { "anime": anime,  user: request.user });
     } catch (error) {
@@ -133,7 +134,7 @@ async function adminAnimeUpdateAction(request, response) {
         Volumes: parseInt(request.body.volumes) || null
     };
 
-    console.log(animeData);
+
 
     try {
         var numRows = await animeRepo.editOneAnime(animeId, animeData);
@@ -147,11 +148,11 @@ async function adminAnimeUpdateAction(request, response) {
 async function adminAnimeDelAction(request, response) {
     var animeId = request.params.animeId;
     var animeName = request.params.animeName;
-    console.log("hey")
+
 
     try {
         has_anime_been_deleted = await animeRepo.delOneAnime(animeId);
-        console.log("has been deleted",has_anime_been_deleted);
+
         response.redirect("/admin/animes?deleted=" + has_anime_been_deleted.toString());
     } catch (error) {
         response.redirect("/admin/animes");
@@ -383,6 +384,7 @@ async function adminQuoteAddAction(request, response) {
 async function adminQuoteCreateAction(request, response) {
         var quoteData = {
             QuoteText: request.body.quoteText,
+            isQuoteOfDay: "False",
         };
         // Check if the anime exists in the database
         const animeTitle = request.body.animeTitle;
@@ -431,6 +433,18 @@ async function adminQuoteCreateAction(request, response) {
         }
 
 }
+
+
+async function adminQuoteDailyAction(request, response) {
+    try {
+        quote_of_the_day = await quoteRepo.getQuoteOfTheDay();
+        response.redirect("/admin");
+    } catch (error) {
+        console.error('Error in adminQuoteDailyAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
 
 
 

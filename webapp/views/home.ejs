@@ -18,11 +18,14 @@ const title = 'Home - YourAnimeHub';
             <a  href="/admin" class="acces_btn">Access Admin Dashboard</a>
         </div>
 
-        <%- include('partials/home_UserAdmin.ejs') %>
+        <%- include('partials/home_UserAdmin.ejs', { quote_of_the_day: quote_of_the_day }) %>
+
+ 
         
     <% } else if (user && user.UserRole === 'User') { %>
         
-        <%- include('partials/home_UserAdmin.ejs') %>
+        <%- include('partials/home_UserAdmin.ejs', { quote_of_the_day: quote_of_the_day }) %>
+
 
     <% } else { %>
         <section class="card_section">

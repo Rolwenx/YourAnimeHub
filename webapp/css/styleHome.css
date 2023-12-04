@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Sanchez:wght@200;300;400;500;600;700&display=swap');
+
 h3{
   cursor: auto;
 }
@@ -590,7 +593,7 @@ h4 {
   color: black;
   font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 2px 2px rgb(0, 0, 0);
+  box-shadow: 0 1px 4px rgb(0, 0, 0);
   border: 1px solid black;
   list-style: none;
   transition: background-color 0.3s ease;
@@ -599,4 +602,65 @@ h4 {
 .acces_btn:hover {
   background-color: rgb(72,144,222);
   color: white;
+}
+
+  /* ---------- QUOTE SECTION -----------*/
+
+.quote_of_day_header{
+  text-shadow: 1px 1px 1px #aaa;
+  color:black;
+  font-size:2.5em;
+  font-weight:bold;
+  margin-top:20px;
+  letter-spacing:2px;
+  margin-bottom: 20px;
+}
+
+.quote_of_day_bg{
+    height: 300px;  
+    text-align: center;
+
+    background-size: cover;
+}
+
+
+#quote {
+  border: 1px solid black;
+  box-shadow: 0 1px 4px rgb(0, 0, 0);
+  height: 120px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#quote a{
+  text-decoration: none;
+  list-style-type: none;
+  color: black;
+}
+#quote dt {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#quote dd {
+  font-size: 1em; 
+}
+
+#quote a:hover{
+  color: rgb(72,144,222);
+}
+
+.quote_day_anime_box{
+  background-color: rgb(72,144,222,0.2);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.quote_day_anime_box{
+  font-family: 'Poppins', serif !important;
+  font-weight: 600;
 }
