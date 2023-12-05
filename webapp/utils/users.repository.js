@@ -42,22 +42,32 @@ module.exports = {
     }
   },
 
+  async isUsernameValid(username) {
+    try {
+      let conn = await pool.getConnection();
+  
+      let sql = "SELECT * FROM User_Profile WHERE Username = ?";
+      const [rows, fields] = await conn.execute(sql, [username]);
+      conn.release();
+  
+      // Check if the query returned any rows
+      return rows != null;
+    } catch (err) {
+      console.error('Error in isUsernameValid:', err);
+      throw err;
+    }
+  },
+  
   
   async areValidCredentials(username, userEnteredPassword) {
     try {
         let conn = await pool.getConnection();
-        console.log("Entering areValidCredentials");
-        console.log(username);
-        console.log(userEnteredPassword);
 
         let sql = "SELECT * FROM User_Profile WHERE Username = ?";
         const [rows, fields] = await conn.execute(sql, [username]);
         conn.release();
-        console.log(rows);
 
         if (rows != null) {
-            console.log("Entering");
-            // Hashed password retrieved from the database
             const hashedPasswordFromDatabase = rows.UserPassword;
 
             // Use the promisified bcrypt.compare function
@@ -65,10 +75,10 @@ module.exports = {
 
             if (isMatch) {
                 console.log('Password match! hey');
-                return true;
+                return "True";
             } else {
                 console.log('Password does not match!');
-                return false;
+                return "False";
             }
         }
     } catch (err) {

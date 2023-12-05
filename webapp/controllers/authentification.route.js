@@ -11,7 +11,7 @@ router.use('/login', checkGuestAuthentication);
 router.use('/signup', checkGuestAuthentication);
 
 router.get('/login', (req, res) => {
-    res.render('authentification_login', { user: req.user });
+    res.render('authentification_login', { user: req.user, passwordNotMatch: false, usernameNotMatch:false });
 });
 
 
@@ -48,42 +48,38 @@ router.get('/signup', SignUpHomeAction);
 router.post('/signup/auth',SignUpPostAction);
 
 
-  
-  async function loginPostAction(request, response) {
-    console.log(request.body.username);
-    console.log(request.body.userPassword);
-    const areValid = await userRepo.areValidCredentials(request.body.username, request.body.userPassword);
-    console.log("Back to loginPostAction");
-    console.log(areValid);
-    if (areValid) {
-      const user = await userRepo.getOneUser(request.body.username);
+async function loginPostAction(request, response) {
+  const isUsernameValid = await userRepo.isUsernameValid(request.body.username);
 
-      console.log(user);
-      // Manually log in the user
-      request.logIn(user, function (err) {
+  if (isUsernameValid) {
+    const areValid = await userRepo.areValidCredentials(request.body.username, request.body.userPassword);
+
+      if (areValid == "True") {
+        const user = await userRepo.getOneUser(request.body.username);
+
+        request.logIn(user, function (err) {
           if (err) {
-              console.log("ERROR");
-              console.log(err);
+            console.log("ERROR");
+            console.log(err);
           }
 
           console.log("Logged In User Role:", request.user.UserRole);
 
           if (request.user.UserRole === "Admin") {
-              return response.redirect("/");
+            return response.redirect("/");
           } else {
-              return response.redirect("/");
+            return response.redirect("/");
           }
-      });
+        });
+    } else {
+      response.render('authentification_login', { user: request.user, passwordNotMatch: true, usernameNotMatch: false });
+    }
   } else {
-      response.send(`
-          <script>
-            alert('Invalid credentials provided');
-            window.location.href = '/login';
-          </script>
-        `);
-        return response.end(); 
+    // Username is not valid
+    response.render('authentification_login', { user: request.user, passwordNotMatch: false, usernameNotMatch: true });
   }
-  }
+}
+
 
 
   async function SignUpHomeAction(req, res){

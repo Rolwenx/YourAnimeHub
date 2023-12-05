@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
+.my_h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
 
 .my_h2 {
     display: block;
@@ -73,7 +82,8 @@ body{
 .website_logo{
     height: 80px;
     width:80px;
-    box-shadow: 0 2px 4px rgb(255, 255, 255);
+    box-shadow: 0 2px 4px white;
+    
 }
 
 .logo_container{
