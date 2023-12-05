@@ -124,6 +124,28 @@ module.exports = {
       console.error('Error creating user:', error);
       throw error;
     }
-  }
+  },
+
+  async editOneUser(userId, userData) {
+    try {
+        let conn = await pool.getConnection();
+        
+        const placeholders = Object.keys(userData).map(key => `${key} = ?`).join(', ');
+        const sql = `UPDATE User_Profile SET ${placeholders} WHERE UserID = ?`;
+        
+        
+        const values = [...Object.values(userData), userId];
+
+        const result = await conn.execute(sql, values);
+    
+
+        conn.release();
+
+        return result;
+    } catch (err) {
+        console.error('Error in editOneAnime:', err);
+        throw err;
+    }
+},
 
 }; 

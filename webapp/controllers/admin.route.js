@@ -18,6 +18,9 @@ router.get('/admin/quotes', adminQuoteListAction);
 router.get('/admin/characters', adminCharacterListAction);
 router.get('/admin/users', adminUserListAction);
 
+router.get('/admin/users/edit/:userId/:userName', adminUserEditAction);
+router.post('/admin/users/update/:userId/:userName', adminUserUpdateAction);
+
 
 router.get('/admin/animes/edit/:animeId/:animeName', adminAnimeEditAction);
 router.post('/admin/animes/update/:animeId/:animeName', adminAnimeUpdateAction);
@@ -609,6 +612,48 @@ async function adminUserCreateAction(request, response) {
     }
     else{
         response.redirect("/admin/users");
+    }
+}
+
+
+async function adminUserEditAction(request, response) {
+    var userName = request.params.userName;
+
+    try {
+        // Fetch the user data
+        var fetched_user = await userRepo.getOneUser(userName);
+        console.log(fetched_user);
+
+        response.render("admin/admin_edit_user", { "fetched_user": fetched_user,  user: request.user });
+    } catch (error) {
+        console.error('Error in adminUserEditAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+
+async function adminUserUpdateAction(request, response) {
+    var userId = request.params.userId;
+    var userName = request.params.userName;
+    var userData = {
+        Username: request.body.username,
+        Email: request.body.email,
+        FirstName: request.body.firstname || null,
+        LastName: request.body.lastname || null,
+        ProfilePictureURL: request.body.profilepictureurl || null,
+        UserRole: request.body.userole || null,
+        Birthday: request.body.birthday || null,
+        Bio: request.body.bio || null,
+        AccountStatus: request.body.lastname,
+    };
+
+
+    try {
+        var numRows = await userRepo.editOneUser(userId, userData);
+        response.redirect("/admin/users");
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send("here Internal Server Error");
     }
 }
 

@@ -1,0 +1,58 @@
+<%
+const title = 'Admin - YourAnimeHub';
+%>
+<%- include('../partials/header.ejs', { title: title }) %>
+
+<link type="text/css" rel="stylesheet" href="/css/styleAdminAdd.css">
+
+<section class="add_wrapper">
+  <div class="container">
+    <div class="title">Edit A User</div>
+    <form action="/admin/users/update/<%= fetched_user.UserID %>/<%= fetched_user.Username %>" method="post">
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">Username*:</span>
+                <input type="text" id="username" name="username" value="<%= fetched_user.Username %>" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Email*:</span>
+                <input type="email" id="email" name="email" value="<%= fetched_user.Email %>" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Birthday:</span>
+                <input type="date" id="birthday" name="birthday" value="<%= fetched_user.Birthday %>" placeholder="YYYY-MM-DD">
+            </div>
+            <div class="input-box">
+                <span class="details">First Name:</span>
+                <input type="text" id="firstname" name="firstname" value="<%= fetched_user.FirstName %>">
+            </div>
+            <div class="input-box">
+                <span class="details">Last Name:</span>
+                <input type="text" id="lastname" name="lastname" value="<%= fetched_user.LastName %>">
+            </div>
+            <div class="input-box">
+                <span class="details">Profile Picture URL:</span>
+                <input type="text" id="profilepictureurl" name="profilepictureurl" value="<%= fetched_user.ProfilePictureURL %>">
+            </div>
+            <div class="input-box">
+                <span class="details">User Role*:</span>
+                <input type="text" id="userole" name="userole" value="<%= fetched_user.UserRole %>" required>
+            </div>
+            <div class="input-box">
+                <span class="details">Bio:</span>
+                <textarea id="bio" rows="4" cols="50"name="bio"><%= fetched_user.Bio %></textarea>
+            </div>
+        </div>
+        <div class="button">
+            <input type="submit" value="Edit User">
+
+        </div>
+    </form>
+</div>
+</section>
+
+
+<%- include('../partials/footer.ejs', { title: title }) %>
+
+</body>
+</html>
