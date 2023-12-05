@@ -1,8 +1,10 @@
 // controllers/hello.route.js
 const express = require('express');
 const router = express.Router();
+const { checkUserAuthentication, checkAdminAuthentication } = require('../utils/users.auth');
 
-
+router.use('/', checkUserAuthentication);
+router.use('/', checkAdminAuthentication);
 
 // http://localhost:9000/user
 router.get('/', (req, res) => {
