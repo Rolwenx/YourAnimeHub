@@ -4,6 +4,7 @@ const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 const quoteRepo = require('../utils/quote.repository'); 
 const characterRepo = require('../utils/characters.repository');
+const userRepo = require('../utils/users.repository');
 const { checkAdminAuthentication } = require('../utils/users.auth');
 
 
@@ -15,6 +16,7 @@ router.get('/admin/animes', adminAnimeListAction);
 router.get('/admin/mangas', adminMangaListAction);
 router.get('/admin/quotes', adminQuoteListAction);
 router.get('/admin/characters', adminCharacterListAction);
+router.get('/admin/users', adminUserListAction);
 
 
 router.get('/admin/animes/edit/:animeId/:animeName', adminAnimeEditAction);
@@ -48,6 +50,9 @@ router.post('/admin/quotes/create', adminQuoteCreateAction);
 router.get('/admin/characters/add', adminCharacterAddAction);
 router.post('/admin/characters/create', adminCharacterCreateAction);
 
+router.get('/admin/users/add', adminUserAddAction);
+router.post('/admin/users/create', adminUserCreateAction);
+
 // Admin Home route
 async function adminHomeAction(request, res) {
     try {
@@ -58,9 +63,11 @@ async function adminHomeAction(request, res) {
         const mangaList = await animeRepo.getAllMangas(); 
         const quoteList = await quoteRepo.getAllQuotes();
         const characterList = await characterRepo.getAllCharacters();
+        const userList = await userRepo.getAllUsers();
 
         // We feth the number of anime in database
         const animeCount = animeList.length;
+        const userCount = userList.length;
         MangaCount = mangaList.length;
         const quoteCount = quoteList.length;
         const characterCount = characterList.length;
@@ -69,11 +76,13 @@ async function adminHomeAction(request, res) {
             animeCount,
             MangaCount,
             quoteCount,
+            userCount,
             characterCount,
             animeList,
             characterList,
             mangaList,
-            quoteList,  
+            quoteList, 
+            userList,
             user: request.user,
         });
     } catch (error) {
@@ -523,7 +532,7 @@ async function adminCharacterDelAction(request, response) {
 }
 
 async function adminCharacterAddAction(request, response) {
-    response.render("admin/admin_add_character", {  user: request.usercdsfdecdfccfd });
+    response.render("admin/admin_add_character", {  user: request.user });
 }
 
 async function adminCharacterCreateAction(request, response) {
@@ -556,6 +565,50 @@ async function adminCharacterCreateAction(request, response) {
     }
     else{
         response.redirect("/admin/characters");
+    }
+}
+
+
+async function adminUserListAction(request, response) {
+    try {
+        var userList = await userRepo.getAllUsers();
+        
+        response.render("admin/admin_user", { "userList": userList,  user: request.user});
+    } catch (error) {
+        console.error('Error in adminAnimeListAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+async function adminUserAddAction(request, response) {
+    response.render("admin/admin_add_user", {  user: request.user });
+}
+
+async function adminUserCreateAction(request, response) {
+    var userData = { 
+        Username: request.body.username,
+        Email: request.body.email,
+        FirstName: request.body.firstname || null,
+        LastName: request.body.lastname || null,
+        UserPassword: request.body.password,
+        ProfilePictureURL: request.body.profilepictureurl || null,
+        UserRole: request.body.userole || null,
+        Birthday: request.body.birthday || null,
+        Bio: request.body.bio || null,
+        AccountStatus: "Active"
+     };
+    var userId = await userRepo.createUser(userData);
+    if (userId == null) {
+        response.send(`
+          <script>
+            alert('This User already exists in the database.');
+            window.location.href = '/admin/users';
+          </script>
+        `);
+        return response.end(); 
+    }
+    else{
+        response.redirect("/admin/users");
     }
 }
 

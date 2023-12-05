@@ -2,11 +2,18 @@
 const express = require('express');
 const router = express.Router();
 const auth = require("../utils/users.auth");
-const userRepo = require("../utils/users.repository");
+const userRepo = require('../utils/users.repository');
+const { checkGuestAuthentication } = require('../utils/users.auth');
+
+
+
+router.use('/login', checkGuestAuthentication);
+router.use('/signup', checkGuestAuthentication);
 
 router.get('/login', (req, res) => {
     res.render('authentification_login', { user: req.user });
 });
+
 
 router.get('/terms', (req, res) => {
     res.render('terms_conditions', { user: req.user });
@@ -16,9 +23,14 @@ router.get('/terms', (req, res) => {
 // Authentication routes
 router.get('/auth', (req, res) => {
     if (req.isAuthenticated()) {
-      if (req.user.UserRole === "ADMIN") {
-        return res.redirect("/auth/admin");
-      } else {
+      if (req.user.UserRole === "Admin") {
+        return res.redirect("/admin");
+      } 
+      if (req.user.UserRole === "User") {
+        // Redirect to the user's profile page (or home page)
+        return res.redirect("/user"); 
+      }
+      if (req.user.UserRole === "Guest") {
         // Redirect to the user's profile page (or home page)
         return res.redirect("/user"); 
       }
@@ -46,6 +58,7 @@ router.post('/signup/auth',SignUpPostAction);
     if (areValid) {
       const user = await userRepo.getOneUser(request.body.username);
 
+      console.log(user);
       // Manually log in the user
       request.logIn(user, function (err) {
           if (err) {

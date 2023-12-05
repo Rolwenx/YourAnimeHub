@@ -6,6 +6,23 @@ const compareAsync = util.promisify(bcrypt.compare);
 
 module.exports = {
 
+  async getAllUsers() {
+    try {
+        let conn = await pool.getConnection();
+        let sql = "SELECT UserID,Username,Email,FirstName, LastName, ProfilePictureURL, TitleDisplayLanguage, UserRole, Birthday, Bio,AccountStatus FROM User_Profile";
+
+        // Ensure rows is an array
+        const userList = await conn.query(sql);
+        conn.release();
+
+
+        return userList;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+},
+
   async getOneUser(username) {
     try {
       let conn = await pool.getConnection();

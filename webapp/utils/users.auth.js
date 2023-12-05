@@ -29,25 +29,6 @@ module.exports = {
     });
   },
 
-  checkAuthentication(role) {
-    return function (request, response, next) {
-      if (request.isAuthenticated()) {
-        if (role) {
-          if (checkRoleHierarchy(request.user.UserRole, role)) {
-            return next();
-          } else {
-            return response.status(401).send("Unauthorized (insufficient role)");
-          }
-        } else { // No special role needed for the page -> next middleware
-          return next();
-        }
-      } else {
-        // Redirect unauthenticated users to the login page
-        return response.redirect("/");
-      }
-    };
-  },
-
   checkRoleHierarchy,
 
   checkAdminAuthentication(request, response, next) {
@@ -59,4 +40,25 @@ module.exports = {
       return response.redirect("/404");
     }
   },
+
+  checkUserAuthentication(request, response, next) {
+    // Middleware to check if the user is authenticated and has the "User" role
+    if (request.isAuthenticated() && checkRoleHierarchy(request.user.UserRole, "User")) {
+      return next();
+    } else {
+      // Redirect unauthorized users to the 404 error page
+      return response.redirect("/404");
+    }
+  },
+
+  checkGuestAuthentication(request, response, next) {
+    // Middleware to check if the user is unauthenticated (guest)
+    if (!request.isAuthenticated()) {
+      // User is not authenticated, allow access to the route
+      return next();
+    } else {
+      // Redirect authenticated users to a different page, for example, the home page "/"
+      return response.redirect("/404");
+    }
+  }
 };
