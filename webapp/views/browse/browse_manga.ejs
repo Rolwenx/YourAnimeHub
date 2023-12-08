@@ -6,9 +6,9 @@ const title = 'Browse Manga - YourAnimeHub';
 <link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
 
 
-<div class="background"></div>
+<div class="colored_background"></div>
 
-<div class="background_accent"></div>
+<div class="colored_background_accent"></div>
 <section class="section">
     <div class="search_wrap search_wrap_1">
       <h4>Search</h4>
@@ -113,9 +113,23 @@ const title = 'Browse Manga - YourAnimeHub';
     <div class="recentAnime">
       <div class="animeCard">
         <% if (mangaList && Array.isArray(mangaList) && mangaList.length > 0) { %>
-          <% const recentMangaList = mangaList.slice(-4).reverse(); %> 
+          <% const recentMangaList = mangaList.slice(-8).reverse(); %> 
           <% recentMangaList.forEach(manga => { %>
-            <div class="card">
+            <div class="card" style="margin-bottom: 20px;" title="<strong><%= manga.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+              data-bs-content="
+                      <% const score = 40; %>
+                      <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                          <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                      </span>
+    
+                  <p><strong>Number of Chapters:</strong> <%= manga.Chapters %></p>
+                  <p><strong>Status:</strong> <%= manga.AnimeStatus %></p>
+                  <p><strong>Genres:</strong><br>
+                      <% const genres = manga.Genre.split(','); %>
+                      <% genres.forEach(genre => { %>
+                        <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                      <% }); %>
+                  </p>">
               <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
                 <img class="cover_image" src="<%= manga.CoverImageURL %>" alt="<%= manga.TitleEnglish %>">
               </a>
@@ -130,6 +144,9 @@ const title = 'Browse Manga - YourAnimeHub';
       </div>
     </div>
 </div>
+<button  id="load-more-button" class="load-more-button" onclick="window.location.href='/browse/manga/recently_added';">
+  View All
+</button>
 
 <div class="recently_added_block">
   <a class="cardHeader_a" href="/browse/manga/popular">
@@ -140,9 +157,23 @@ const title = 'Browse Manga - YourAnimeHub';
 <div class="recentAnime">
   <div class="animeCard">
     <% if (mangaList && Array.isArray(mangaList) && mangaList.length > 0) { %>
-      <% const recentMangaList = mangaList.slice(-4).reverse(); %> 
+      <% const recentMangaList = mangaList.slice(-8).reverse(); %> 
       <% recentMangaList.forEach(manga => { %>
-        <div class="card">
+        <div class="card" style="margin-bottom: 20px;" title="<strong><%= manga.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+          data-bs-content="
+                  <% const score = 40; %>
+                  <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                      <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                  </span>
+
+              <p><strong>Number of Chapters:</strong> <%= manga.Chapters %></p>
+              <p><strong>Status:</strong> <%= manga.AnimeStatus %></p>
+              <p><strong>Genres:</strong><br>
+                  <% const genres = manga.Genre.split(','); %>
+                  <% genres.forEach(genre => { %>
+                    <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                  <% }); %>
+              </p>">
           <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
             <img class="cover_image" src="<%= manga.CoverImageURL %>" alt="<%= manga.TitleEnglish %>">
           </a>
@@ -157,6 +188,9 @@ const title = 'Browse Manga - YourAnimeHub';
   </div>
 </div>
 </div>
+<button  id="load-more-button" class="load-more-button" onclick="window.location.href='/browse/manga/popular';">
+  View All
+</button>
 
 <div class="recently_added_block">
   <a class="cardHeader_a" href="/browse/manga/top-100">
@@ -167,9 +201,23 @@ const title = 'Browse Manga - YourAnimeHub';
 <div class="recentAnime">
   <div class="animeCard">
     <% if (mangaList && Array.isArray(mangaList) && mangaList.length > 0) { %>
-      <% const recentMangaList = mangaList.slice(-4).reverse(); %> 
+      <% const recentMangaList = mangaList.slice(-8).reverse(); %> 
       <% recentMangaList.forEach(manga => { %>
-        <div class="card">
+        <div class="card" style="margin-bottom: 20px;" title="<strong><%= manga.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+          data-bs-content="
+                  <% const score = 40; %>
+                  <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                      <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                  </span>
+
+              <p><strong>Number of Chapters:</strong> <%= manga.Chapters %></p>
+              <p><strong>Status:</strong> <%= manga.AnimeStatus %></p>
+              <p><strong>Genres:</strong><br>
+                  <% const genres = manga.Genre.split(','); %>
+                  <% genres.forEach(genre => { %>
+                    <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                  <% }); %>
+              </p>">
           <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
             <img class="cover_image" src="<%= manga.CoverImageURL %>" alt="<%= manga.TitleEnglish %>">
           </a>
@@ -184,6 +232,9 @@ const title = 'Browse Manga - YourAnimeHub';
   </div>
 </div>
 </div>
+<button  id="load-more-button" class="load-more-button" onclick="window.location.href='/browse/manga/top-100';">
+  View All
+</button>
 
 
 
@@ -222,6 +273,12 @@ dropdowns.forEach(dropdown => {
     });
 });
 </script>
+<script>
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  })
+  </script>
 
 </body>
 </html>

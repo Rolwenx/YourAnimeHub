@@ -1,51 +1,212 @@
-<%
-const title = 'Browse Anime - YourAnimeHub';
-%>
+
 <%- include('../partials/header.ejs', { title: title}) %>
-<link type="text/css" rel="stylesheet" href="/css/styleBrowseA.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/css/styleHome.css">
+<link type="text/css" rel="stylesheet" href="/css/styleBrowseAnime.css">
+<link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
 
-<div class="background"></div>
+<div class="colored_background"></div>
 
-<div class="background_accent"></div>
+<div class="colored_background_accent"></div>
 
-<section class="anime_list">
-  <a href="/browse/anime/recently_added">
-    <div>
-      <h2 class="heading">Recently Added</h2>
-    </div>
-  </a>
-
-  <div class="anime_container">
-      <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-        <% const recentAnimeList = animeList.slice(-4).reverse(); %> 
-        <% recentAnimeList.forEach(anime => { %>
-          <div class="anime_box">
-            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
-              <div class="box-img">
-                <img src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
-              </div>
-              <h3 data-toggle="popover" data-trigger="hover" data-placement="right" data-content="<%= anime.Description %>"><%= anime.TitleEnglish %></h3>
-              <span><%= anime.EpisodeDuration %> min | <%= anime.EpisodeCount %></span>
-            </a>
+<section class="filter_section d-flex justify-content-evenly mb-3">
+  <div class="row">
+      <div class="col">
+          <h6 class="mb-1 text-light">Genres</h6>
+          <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example</button>
+              <ul class="dropdown-menu overflow-scroll">
+                  <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+                  <li><hr class="dropdown-divider"></hr></li>
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Adventure</a></li>
+                  <li><a class="dropdown-item" href="#">Superpower</a></li>
+                  <li><a class="dropdown-item" href="#">Comedy</a></li>
+                  <li><a class="dropdown-item" href="#">Fantasy</a></li>
+                  <li><a class="dropdown-item" href="#">Historical</a></li>
+                  <li><a class="dropdown-item" href="#">Drama</a></li>
+                  <li><a class="dropdown-item" href="#">Supernatural</a></li>
+                  <li><a class="dropdown-item" href="#">Martial Arts</a></li>
+                  <li><a class="dropdown-item" href="#">Dark Fantasy</a></li>
+                  <li><a class="dropdown-item" href="#">Shounen</a></li>
+                  <li><a class="dropdown-item" href="#">Shojo</a></li>
+                  <li><a class="dropdown-item" href="#">Romance</a></li>
+                  <li><a class="dropdown-item" href="#">Horror</a></li>
+                  <li><a class="dropdown-item" href="#">Psychological</a></li>
+                  <li><a class="dropdown-item" href="#">Thriller</a></li>
+              </ul>
           </div>
-        <% }); %>
-      <% } else { %>
-        <p>No anime available in the database.</p>
-      <% } %>
+      </div>
   </div>
 
+  <div class="row">
+      <div class="col">
+          <h6 class="mb-1 mt-0 fs-10 text-light">Year</h6>
+          <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example</button>
+              <ul class="dropdown-menu">
+                  <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+                  <li><hr class="dropdown-divider"></hr></li>
+                  <li><a class="dropdown-item" href="#">2020</a></li>
+                  <li><a class="dropdown-item" href="#">2021</a></li>
+                  <li><a class="dropdown-item" href="#">2022</a></li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col">
+          <h6 class="mb-1 text-light">Status</h6>
+          <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Dropdown Example</button>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Ongoing</a></li>
+                  <li><a class="dropdown-item" href="#">Finished</a></li>
+                  <li><a class="dropdown-item" href="#">Hiatus</a></li>
+                  <li><a class="dropdown-item" href="#">Planned</a></li>
+              </ul>
+          </div>
+      </div>
+  </div>
 </section>
 
-<script>
-  // Enable Bootstrap Popover on hover
-  $(function () {
-    $('[data-toggle="popover"]').popover();
-  });
-</script>
+<div class="recently_added_block">
+  <a class="cardHeader_a" href="/browse/anime/recently_added">
+    <div class="cardHeader">
+        <h2 class="my_h2 text-light">Recently Added</h2>
+    </div>
+  </a>
+<div class="recentAnime">
+  <div class="animeCard">
+    <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+      <% const recentAnimeList = animeList.slice(-8).reverse(); %> 
+      <% recentAnimeList.forEach(anime => { %>
+        <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+          data-bs-content="
+                  <% const score = 40; %>
+                  <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                      <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                  </span>
+
+              <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+              <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+              <p><strong>Genres:</strong><br>
+                  <% const genres = anime.Genre.split(','); %>
+                  <% genres.forEach(genre => { %>
+                    <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                  <% }); %>
+              </p>">
+          <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+            <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+          </a>
+          <div class="animeName">
+            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No anime available in the database.</p>
+    <% } %>
+  </div>
+</div>
+<button  id="load-more-button" class="load-more-button" onclick="window.location.href='/browse/anime/recently_added';">
+  View All
+</button>
+
+
+<div class="recently_added_block">
+  <a class="cardHeader_a" href="/browse/anime/popular">
+    <div class="cardHeader">
+        <h2 class="my_h2 text-light">Popular Now</h2>
+    </div>
+</a>
+<div class="recentAnime">
+  <div class="animeCard">
+    <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+      <% const recentAnimeList = animeList.slice(-8).reverse(); %> 
+      <% recentAnimeList.forEach(anime => { %>
+        <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+          data-bs-content="
+                  <% const score = 40; %>
+                  <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                      <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                  </span>
+
+              <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+              <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+              <p><strong>Genres:</strong><br>
+                  <% const genres = anime.Genre.split(','); %>
+                  <% genres.forEach(genre => { %>
+                    <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                  <% }); %>
+              </p>">
+          <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+            <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+          </a>
+          <div class="animeName">
+            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No anime available in the database.</p>
+    <% } %>
+  </div>
+</div>
+<button  id="load-more-button" class="load-more-button" onclick="window.location.href='/browse/anime/popular';">
+  View All
+</button>
+
+<div class="recently_added_block">
+  <a class="cardHeader_a" href="/browse/anime/top-100">
+    <div class="cardHeader">
+        <h2 class="my_h2 text-light">Top 100</h2>
+    </div>
+</a>
+<div class="recentAnime">
+  <div class="animeCard">
+    <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+      <% const recentAnimeList = animeList.slice(-8).reverse(); %> 
+      <% recentAnimeList.forEach(anime => { %>
+        <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+          data-bs-content="
+                  <% const score = 40; %>
+                  <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                      <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                  </span>
+
+              <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+              <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+              <p><strong>Genres:</strong><br>
+                  <% const genres = anime.Genre.split(','); %>
+                  <% genres.forEach(genre => { %>
+                    <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                  <% }); %>
+              </p>">
+          <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+            <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+          </a>
+          <div class="animeName">
+            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No anime available in the database.</p>
+    <% } %>
+  </div>
+</div>
+<button  id="load-more-button" class="load-more-button" onclick="window.location.href='/browse/anime/top-100';">
+  View All
+</button>
+
 
 </body>
+
+<script>
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  })
+  </script>
 </html>
