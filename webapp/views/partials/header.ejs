@@ -21,7 +21,7 @@
             <!--If the activePage is the correct one, the class becomes "active"-->
             <a class="<%= activePage === 'home' ? 'active' : '' %>" href="/">Home</a>
             <li class="nav-item dropdown">
-                <a style="margin-bottom:34px; color:white;" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/browse/anime">Browse</a>
+                <a style="margin-bottom:34px; color:white;" class="nav-link dropdown-toggle <%= activePage === 'browse' ? 'active' : '' %>" data-bs-toggle="dropdown" href="/browse/anime">Browse</a>
                 <ul style=" padding: 0;" class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item text-dark" href="/browse/anime">Animes</a></li>
                   <li><a class="dropdown-item text-dark" href="/browse/manga">Mangas</a></li>

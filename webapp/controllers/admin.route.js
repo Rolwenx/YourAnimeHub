@@ -87,6 +87,7 @@ async function adminHomeAction(request, res) {
             quoteList, 
             userList,
             user: request.user,
+            activePage: 'admin',
         });
     } catch (error) {
         console.error('Error in adminHomeAction:', error);

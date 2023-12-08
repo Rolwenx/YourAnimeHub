@@ -27,7 +27,7 @@ async function browseAnimeAction(request, res) {
             animeList,
             user: request.user,
             title: 'Browse Anime - YourAnimeHub',
-            activePage: 'browse_anime',
+            activePage: 'browse',
         });
     } catch (error) {
         console.error('Error in browseAnimeAction:', error);
@@ -42,7 +42,7 @@ async function browseMangaAction(request, res) {
         const mangaList = await animeRepo.getAllMangas();
         res.render('browse/browse_manga', {
             mangaList,user: request.user,
-            activePage: 'browse_anime',
+            activePage: 'browse',
         });
     } catch (error) {
         console.error('Error in browseMangaAction:', error);
@@ -57,7 +57,7 @@ async function browseCharacterAction(request, res) {
         const characterList = await characterRepo.getAllCharacters();
         res.render('browse/browse_characters', {
             characterList,user: request.user,
-            activePage: 'browse_anime',
+            activePage: 'browse',
         });
 
     } catch (error) {
@@ -75,7 +75,7 @@ async function browseQuoteAction(request, res) {
 
         res.render('browse/browse_quotes', {
             quoteList,user: request.user,
-            activePage: 'browse_anime',
+            activePage: 'browse',
         });
     } catch (error) {
         console.error('Error in browseQuoteAction:', error);
@@ -92,7 +92,7 @@ async function browseAnimeRecentlyAddedAction(request, res) {
 
         res.render('browse/anime_recently', {
             animeList,user: request.user,
-            activePage: 'browse_anime',
+            activePage: 'browse',
         });
     } catch (error) {
         console.error('Error in browseAnimeRecentlyAddedAction:', error);
@@ -109,7 +109,7 @@ async function browseMangaRecentlyAddedAction(request, res) {
 
         res.render('browse/manga_recently', {
             mangaList, user: request.user,
-            activePage: 'browse_anime',
+            activePage: 'browse',
         });
     } catch (error) {
         console.error('Error in browseMangaRecentlyAddedAction:', error);
@@ -123,38 +123,38 @@ async function browseMangaRecentlyAddedAction(request, res) {
 // http://localhost:9000/browse/reviews
 router.get('/reviews', (req, res) => {
     //res.send('Hello, from controller...');
-    res.render('browse/browse_reviews', { user: req.user, activePage: 'browse_anime', });
+    res.render('browse/browse_reviews', { user: req.user, activePage: 'browse', });
 });
 
 // http://localhost:9000/browse/anime/popular
 router.get('/anime/popular', (req, res) => {
     //res.send('Hello, from controller...');
-    res.render('browse/anime_popular', { user: req.user, activePage: 'browse_anime', });
+    res.render('browse/anime_popular', { user: req.user, activePage: 'browse', });
 });
 
 
 // http://localhost:9000/browse/anime/top-100
 router.get('/anime/top-100', (req, res) => {
     //res.send('Hello, from controller...');
-    res.render('browse/anime_top100', { user: req.user,activePage: 'browse_anime', });
+    res.render('browse/anime_top100', { user: req.user,activePage: 'browse', });
 });
 
 // http://localhost:9000/browse/manga/popular
 
 router.get('/manga/popular', (req, res) => {
     //res.send('Hello, from controller...');
-    res.render('browse/manga_popular', { user: req.user,activePage: 'browse_anime', });
+    res.render('browse/manga_popular', { user: req.user,activePage: 'browse', });
 });
 
 // http://localhost:9000/browse/manga/recently_added
 router.get('/manga/recently_added', (req, res) => {
     //res.send('Hello, from controller...');
-    res.render('browse/manga_recently', { user: req.user,activePage: 'browse_anime', });
+    res.render('browse/manga_recently', { user: req.user,activePage: 'browse', });
 });
 
 // http://localhost:9000/browse/manga/top-100
 router.get('/manga/top-100', (req, res) => {
     //res.send('Hello, from controller...');
-    res.render('browse/manga_top100', { user: req.user,activePage: 'browse_anime', });
+    res.render('browse/manga_top100', { user: req.user,activePage: 'browse', });
 });
 module.exports = router;

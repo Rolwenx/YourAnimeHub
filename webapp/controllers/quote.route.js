@@ -12,7 +12,7 @@ async function adminQuoteViewAction(request, response) {
         // Fetch the quote data
         var quote = await quoteRepo.getOneQuote(quoteId);
 
-        response.render("single_view/single_quote", { "quote": quote, user: request.user});
+        response.render("single_view/single_quote", { "quote": quote, user: request.user, activePage: 'browse'});
     } catch (error) {
         console.error('Error in adminQuoteViewAction:', error);
         response.status(500).send('Internal Server Error');

@@ -11,12 +11,12 @@ router.use('/login', checkGuestAuthentication);
 router.use('/signup', checkGuestAuthentication);
 
 router.get('/login', (req, res) => {
-    res.render('authentification_login', { user: req.user, passwordNotMatch: false, usernameNotMatch:false });
+    res.render('authentification_login', { user: req.user, passwordNotMatch: false, usernameNotMatch:false, title: 'Login into YourAnimeHub', activePage: 'login' });
 });
 
 
 router.get('/terms', (req, res) => {
-    res.render('terms_conditions', { user: req.user });
+    res.render('terms_conditions', { user: req.user, activePage:'none' });
 });
 
 
@@ -83,7 +83,7 @@ async function loginPostAction(request, response) {
 
 
   async function SignUpHomeAction(req, res){
-    res.render("authentification_signup", { user: req.user });
+    res.render("authentification_signup", { user: req.user, title: 'Sign Up for YourAnimeHub', activePage: 'login' });
 
   }
   
