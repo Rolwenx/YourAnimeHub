@@ -1,7 +1,4 @@
-body{
-    background-image: url(https://img.freepik.com/free-photo/abstract-surface-textures-white-concrete-stone-wall_74190-8189.jpg);
-    object-fit: cover;
-}
+
 .login_wrapper_signup, .login_wrapper_login{
     position: relative;
     background: transparent;
@@ -29,7 +26,7 @@ body{
 .form-box h2{
     text-align: center;
     font-size: 28px;
-    color: rgb(72,144,222);
+    color: white;
 }
 
 .input-box{
@@ -37,7 +34,7 @@ body{
     height: 50px;
     margin: 30px 0;
     position: relative;
-    border-bottom: 2px solid #162938;
+    border-bottom: 2px solid white;
 
 }
 
@@ -47,7 +44,7 @@ body{
     left: 5px;
     transform: translateY(-50%);
     font-size: 1em;
-    color: #162938;
+    color: white;
     font-weight: 500;
 
 }
@@ -61,7 +58,7 @@ body{
     outline: none;
     background: transparent;
     font-size: 1em;
-    color: #162938;
+    color: white;
     font-weight: 600;
     padding: 7px 35px 0 5px;
     
@@ -72,7 +69,7 @@ body{
     position: absolute;
     right: 8px;
     font-size: 1.2em;
-    color: #162938;
+    color: white;
     line-height: 70px;
     padding-left: 100px;
 }
@@ -83,16 +80,16 @@ body{
     display: flex;
     margin: -15px 0 15px;
     font-weight: 500;
-    color: #162938
+    color: white;
 }
 
 .remember_forgot label input{
-    accent-color: #162938;
+    accent-color: white;
     margin-right: 3px;
 }
 
 .remember_forgot a{
-    color: #162938;
+    color: white;
     text-decoration: none;
 }
 
@@ -101,7 +98,7 @@ body{
 }
 
 .btn{
-    background-color: rgb(72,144,222);
+    background-color: rgb(41, 81, 135);
     border-radius: 5px;
     cursor: pointer;
     color: #fff;
@@ -112,16 +109,21 @@ body{
     outline: none;
 }
 
+.btn:hover{
+    background-color: white;
+    
+}
+
 .login_register{
     text-align: center;
     margin: 25px 0 10px;
     font-weight: 500;
-    color: #162938;
+    color: white;
     font-size: .9em;
 }
 
 .login_register p a{
-    color:#162938;
+    color:white;
     text-decoration: none;
     font-weight: 600;
 
@@ -144,5 +146,5 @@ body{
 
 .fa{
     font-size: 20px;
-    color: #7a797e;
+    color: white;
 }
