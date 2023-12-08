@@ -72,11 +72,11 @@ async function loginPostAction(request, response) {
           }
         });
     } else {
-      response.render('authentification_login', { user: request.user, passwordNotMatch: true, usernameNotMatch: false });
+      response.render('authentification_login', { user: request.user, passwordNotMatch: true, usernameNotMatch: false, activePage:true });
     }
   } else {
     // Username is not valid
-    response.render('authentification_login', { user: request.user, passwordNotMatch: false, usernameNotMatch: true });
+    response.render('authentification_login', { user: request.user, passwordNotMatch: false, usernameNotMatch: true,activePage:true });
   }
 }
 

@@ -34,6 +34,7 @@
                 
             <% if (user && user.UserRole === 'Admin') { %>
                 <a class="<%= activePage === 'profile' ? 'active' : '' %>" href="/user">Profile</a>
+                <a class="<%= activePage === 'your_list' ? 'active' : '' %>" href="/user/watchlist">Your Lists</a>
                 <a class="<%= activePage === 'admin' ? 'active' : '' %>" href="/admin">Admin</a>
             
         </nav>
@@ -56,7 +57,8 @@
         </div>
             <% } else if (user && user.UserRole === 'User') { %>
                 <a class="<%= activePage === 'profile' ? 'active' : '' %>" href="/user">Profile</a>
-                <a class="<%= activePage === 'your_list' ? 'active' : '' %>" href="/user/Your Lists">Your Lists</a>
+                <a class="<%= activePage === 'your_list' ? 'active' : '' %>" href="/user/watchlist">Your Lists</a>
+            </nav>
                 <div class="icons">
                     <span class="icon"><i class="fa fa-bars" id="menu-bars"></i></span>
                     <span class="icon"><i class="fa fa-search" id="search-icon"></i></span>
