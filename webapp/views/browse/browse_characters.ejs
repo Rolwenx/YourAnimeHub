@@ -2,14 +2,24 @@
 const title = 'Browse Characters - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title}) %>
-<link type="text/css" rel="stylesheet" href="../css/styleBrowseCharacter.css">
+<link type="text/css" rel="stylesheet" href="../css/styleBrowse.css">
 
 <div class="colored_background"></div>
 
 <div class="colored_background_accent"></div>
 
+  
 
     <div class="characters_block">
+        <div style="margin: auto;" >
+            <h1 class="my_h1 text-light" style="margin-left: 20px !important;">CHARACTERS</h1>
+          </div>
+
+          <div class="d-flex justify-content-center h-100">
+            <div class="search" style="width: 520px !important;border: none;">
+                <input type="text" class="search-input" placeholder="Search.." name="">
+            </div>
+          </div>
 
         <div class="Characters">
             <div class="CharCard">

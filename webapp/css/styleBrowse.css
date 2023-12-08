@@ -1,194 +1,434 @@
-.filter-button {
-    background: #3498db;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
+/* ====================== RECENTLY ADDED  ========================== */
 
-.popup-container {
-    display: none;
-    background: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    position: absolute;
-    top: 50px;
-    left: 50px;
-    padding: 20px;
-}
-
-/* Add more styles as needed */
-
-.filter-container {
-    margin: 20px;
-}
-
-label, select, input {
-    margin-right: 10px;
-}
-
-.results {
-    margin: 20px;
-}
-
-
-/* SEARCH BAR */
-
-.section{
-    display: flex;
-    align-items: center;
-}
-
-
-.search_wrap{
-	min-width: 15em;
-    position: relative;
-    margin-top: -21px;
-    margin-left: 160px;
-
-}
-
-.search_wrap .search_box{
-	position: relative;
-	width: 102px;
-	height: 8px;
-}
-
-.search_wrap .search_box .input{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	padding: 10px 20px;
-	border-radius: 3px;
-	font-size: 16px;
-}
-
-.search_wrap .search_box .btn{
-	position: absolute;
-	left: 145px;
-	width: 59px;
-	height: 30px;
-	background: rgb(72,144,222);
-	cursor: pointer;
-}
-
-.search_wrap .search_box .btn:hover{
-	background: rgb(72,144,222);
-}
-
-.search_wrap .search_box .btn.btn_common .fa{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	color: #fff;
-	font-size: 20px;
-}
-
-
-
-.search_wrap.search_wrap_1 .search_box .input{
-	padding-right: 80px;
-}
-
-.search_wrap.search_wrap_2 .search_box .btn{
-	left: 0;
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-}
-
-
-/* DROPDOWN SEARCH MENUS */
-
-.dropdown_filter{
-    min-width: 15em;
-    position: relative;
-    margin: 2em;
-}
-
-
-
-.select{
-    background: white;
-    box-shadow: 0 0 3px rgba(0,0,0,0.2);
-    color: black;
+p{
+    font-size: 16px;
     font-weight: 500;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 2px grey solid;
-    border-radius: 3px;
-    height: 30px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.selected{
-    margin-left: 10px;
-}
-
-.select-clicked{
-    border: 2px grey solid;
-    box-shadow: 0 0 0.8em rgba(0,0,0,0.2);
-    
-}
-/*
-.caret{
-    width: 0;
-    height: 5px;
-    border-left: 5px solid black;
-    border-right: 5px solid black;
-    transition: 0.3s;
-    border-top: 10px solid white;
-
-}
-
-.caret-rotate{
-    transform: rotate(180deg);
-
-}*/
-
-.menu{
+  }
+  
+  h2{
+    margin-bottom: 10px;
+  }
+  
+  
+  .animeName a{
+    margin-top: 50px;
     list-style: none;
+  }
+
+  .recently_added_block {
+    position: relative;
+    margin: auto; 
+    max-width: 900px; 
+
+  }
+
+  .recently_added_block .recentAnime {
+    position: relative;
+    min-height: 150px;
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
     background: transparent;
-    border: 1px rgba(0,0,0,0.2) solid;
-    box-shadow: 0 0.5em 1em rgba(0,0,0,0.2);
-    border-radius: 3px;
-    position: absolute;
-    top: 69px;
-    left: 52%;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+  }
+  
+  .recently_added_block .animeCard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .animeCard .card {
+    width: 200px;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    border:none;
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+
+  .recently_added_block .animeCard .card img {
+    max-width: 100%;
+    
+  }
+
+  
+  .animeCard .animeName {
+    background-color: rgb(229, 233, 237);
+    border-radius: 5px;
+    text-align: center;
+    padding: 4px;
     color: black;
-    padding: 0.2em 0.5em;
+    font-weight: 600;
+  }
+  
+  
+  
+  .animeCard .animeName:hover {
+    text-decoration: underline;
+  }
+  
+  .animeCard .animeName a {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .cardHeader_a{
+    text-decoration: none;
+    color: black;
+    
+  }
+
+  .cardHeader{
+    margin-top: 50px;
+  }
+
+  .animeCard .card .cover_image {
+    min-width: 200px;
+      min-height: 300px; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    display: block; 
+    max-width: 200px; 
+    max-height: 300px; 
+  }
+
+  /* =============== ANIME/MANGA/QUOTE - LOAD MORE BUTTON ============== */
+
+.load-more-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .load-more-button {
+    margin: 20px auto; 
+    display: block; /* Ensure it's a block-level element */
+    background-color: rgb(41, 81, 135);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+  }
+
+
+  /* ====================== RECENTLY ADDED  ========================== */
+
+
+
+.anime_list a{
+  text-decoration: none;
+  color: black;
+
+}
+
+.heading{
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+  max-width: 950px;
+  border-bottom: 1px solid var(yellow);
+}
+
+.anime_container{
+  max-width: 950px;
+  margin-right: auto;
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px, auto));
+  gap: 1rem;
+  margin-top: 2rem;
+
+}
+
+.anime_box .box-img{
+  width: 100%;
+  height: 270px;
+}
+
+.anime_box .box-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ------ OVERRIDE OF THE HOME STYLES CLASS -----*/
+
+.header_title_anime:before{
+  left: 20px !important;
+}
+
+.individual_card {
+  margin-left: 20px !important;
+}
+
+/* ------ SEARCH BAR -----*/
+
+
+.search{
+  height: 50px;
+  background-color: #fff;
+  width: 220px;
+  border: none;
+  box-shadow: 0 12px 35px 0 rgba(255,235,167,.15);
+  border-radius: 4px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.search-input{
+
+  color: white;
+  border:0;
+  outline: 0;
+  background: none;
+  width: 0;
+  margin-top:5px;
+  caret-color:transparent;
+  line-height: 40px;
+
+}
+
+.search .search-input{
+
+  width: 550px;
+  caret-color: rgb(41, 81, 135);
+  font-size: 21px;
+  font-weight: 300;
+  color: black;
+}
+
+a:link{
+  text-decoration: none;
+}
+
+
+
+
+  /* ---------- BROWSE REVIEWS -----------*/
+
+
+  #review_card{
+    background-color: white;
+    width: 250px;
+  }
+
+
+  #review_one_card{
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-decoration: none;
+  }
+  
+  #review_one_card:hover {
+    transform: scale(1.02);
+  }
+  
+  #review-image {
+   
+    object-fit: cover;
+    transition: filter 0.3s; /* Add transition for smooth effect */
+  }
+  
+  #review-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    transform: translateX(-50%);
+    height: 100px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     opacity: 0;
-    display: none;
-    transition: 0.2s;
-    z-index: 1;
-}
-
-.menu li:hover{
-    background: rgba(0,0,0,0.1);
-    color: rgb(72,144,222);
-}
-
-.menu li{
-    margin: 8px 8px 8px 8px;
-    padding: 3px;
-    cursor:pointer;
-    
-}
-
-.active{
-    background: rgba(0,0,0,0.1);
-    color: rgb(72,144,222);
-    padding: 3px;
-    
-}
-
-.menu-open{
-    display:block;
+    transition: opacity 0.3s;
+  }
+  
+  #review_one_card:hover #review-overlay {
     opacity: 1;
-}
+  }
+  
+  #review_one_card:hover #review-image {
+    filter: brightness(70%);
+  }
+  
+  #review-image-container {
+    position: relative;
+  }
+  
+  #review-image-container:hover #review-overlay {
+    opacity: 1;
+  }
+  
+  #review-image-container:hover #review-image {
+    filter: brightness(70%);
+  }
+  
+
+  #review-title {
+    font-weight: bold;
+    margin-top: 10px;
+    color: black; /* Set text color to white */
+  }
+  
+  #review-summary {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 13px;
+  }
+  
+ 
+  #like-button {
+    cursor: pointer;
+  }
+
+  #like-count {
+    margin-left: 5px;
+  }
+
+  /* ---------- BROWSE CHARACTERS -------*/
+
+
+  
+  
+  .charName a{
+    margin-top: 50px;
+    list-style: none;
+  }
+
+  .characters_block {
+    position: relative;
+    margin: auto; 
+    max-width: 1200px; 
+
+  }
+
+  .characters_block .Characters {
+    position: relative;
+    min-height: 150px;
+    padding: 20px;
+
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+  }
+  
+  .characters_block .CharCard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .CharCard .card {
+    width: 200px;
+    height: auto;
+    overflow: hidden;
+    border:none;
+    display: flex;
+    margin-right: 15px;
+    margin-bottom: 50px;
+    
+
+  }
+
+  .characters_block .CharCard .card img {
+    max-width: 100%;
+    border-radius: 5px;
+  }
+
+  
+  .CharCard .charName {
+    background-color: rgb(229, 233, 237);
+    border-radius: 5px;
+    text-align: center;
+    color: black;
+    font-weight: 600;
+  }
+  
+  
+  
+  .CharCard .charName:hover {
+    text-decoration: underline;
+  }
+  
+  .CharCard .charName a {
+    color: black;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .CharCard .card .cover_image {
+    min-width: 200px;
+      min-height: 300px; 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+    display: block; 
+    max-width: 200px; 
+    max-height: 300px; 
+    
+  }
+  
+  /* ---------- BROWSE QUOTES -----------*/
+
+  .big_section{
+    margin-bottom:1000px;
+  }
+   
+  #quote_author {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 15px;
+  }
+  
+  #quote_anime {
+    font-style: italic;
+    font-size: 15px;
+    
+  }
+
+  #quote-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+
+  #review_one_card:hover #quote-overlay {
+    opacity: 1;
+  }
+
+  #review-image-container:hover #quote-overlay {
+    opacity: 1;
+  }

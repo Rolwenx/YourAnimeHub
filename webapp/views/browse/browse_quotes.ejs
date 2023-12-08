@@ -5,12 +5,10 @@ const title = 'Browse Quotes - YourAnimeHub';
 <link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
 
 
-<div class="colored_background"></div>
-
-<div class="colored_background_accent"></div>
-
 <section id="packages" class="pt-2 ms-5">
-  <h1 class="my_h1">Quotes</h1>
+  <div style="margin: auto;" >
+    <h1 class="my_h1 text-light" style="margin-left: 20px !important;">QUOTES</h1>
+  </div>
   <div class="row" >
     <% if (quoteList && Array.isArray(quoteList) && quoteList.length > 0) { %>
       <% quoteList.forEach(quote => { %>
@@ -43,6 +41,42 @@ const title = 'Browse Quotes - YourAnimeHub';
 
   </div>
 </section>
+<div class="load-more-container">
+  <button id="load-more-button" class="load-more-button">Load More</button>
+</div>
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      let displayedCharCount = 10;
+
+      const charCards = document.querySelectorAll(".CharCard .card");
+
+      // Initially hide cards greater than 10
+      charCards.forEach((card, index) => {
+          if (index >= displayedCharCount) {
+              card.style.display = "none";
+          }
+      });
+
+      document.getElementById("load-more-button").addEventListener("click", function () {
+          for (let i = displayedCharCount; i < displayedCharCount + 10; i++) {
+              if (i < charCards.length) {
+                  charCards[i].style.display = "block";
+              }
+          }
+
+          displayedCharCount += 10;
+
+          // Hide load more button if all anime are displayed
+          if (displayedCharCount >= charCards.length) {
+              document.getElementById("load-more-button").style.display = "none";
+          }
+      });
+  });
+</script>
 
 <script>
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

@@ -2,113 +2,92 @@
 const title = 'Browse Manga - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title}) %>
-<link type="text/css" rel="stylesheet" href="/css/styleBrowseAnime.css">
+<link type="text/css" rel="stylesheet" href="/css/styleHome.css">
 <link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
 
 
 <div class="colored_background"></div>
 
-<div class="colored_background_accent"></div>
-<section class="section">
-    <div class="search_wrap search_wrap_1">
-      <h4>Search</h4>
-      <div class="search_box">
-        <input type="text" class="input">
-        <div class="btn btn_common">
-          <i class="fa fa-search"></i>
+<div style="height:80px !important;" class="colored_background_accent"></div>
+
+
+<section class="filter_section d-flex justify-content-evenly mb-3">
+  <div class="row">
+    <div class="d-flex justify-content-center h-100">
+      <div class="search">
+          <input type="text" class="search-input" placeholder="Search.." name="">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="sec-center"> 	
+      <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+      <label class="for-dropdown" for="dropdown">Genres<i class="fa fa-arrow-down"></i></label>
+      <div class="section-dropdown"> 
+          <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+          <a href="#">Action<i class="fa fa-arrow-right"></i></a>
+          <a href="#">Adventure <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Superpower <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Comedy<i class="fa fa-arrow-right"></i></a>
+          <a href="#">Fantasy <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Historical <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Drama<i class="fa fa-arrow-right"></i></a>
+          <a href="#">Supernatural <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Martial Arts <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Dark Fantasy<i class="fa fa-arrow-right"></i></a>
+          <a href="#">Shounen <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Superpower <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Shojo<i class="fa fa-arrow-right"></i></a>
+          <a href="#">Romance <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Horror <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Psychological <i class="fa fa-arrow-right"></i></a>
+          <a href="#">Thriller <i class="fa fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="sec-center"> 	
+        <input class="dropdown" type="checkbox" id="dropdown_2" name="dropdown"/>
+        <label class="for-dropdown" for="dropdown_2">Year<i class="fa fa-arrow-down"></i></label>
+        <div class="section-dropdown"> 
+            <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+            <a href="#">2020<i class="fa fa-arrow-right"></i></a>
+            <a href="#">2021 <i class="fa fa-arrow-right"></i></a>
+            <a href="#">2022 <i class="fa fa-arrow-right"></i></a>
         </div>
-      </div>
     </div>
-    <div class="dropdown_filter">
-      <h4>Genre</h4>
-      <div class="select">
-        <span class="selected">Any</span>
-        <div class="caret"></div>
-      </div>
-      <ul class="menu">
-        <li class="active">Any</li>
-        <li>Action</li>
-        <li>Adventure</li>
-        <li>Romance</li>
-        <li>Sports</li>
-      </ul>
+</div>
+  <div class="row">
+    <div class="sec-center"> 	
+        <input class="dropdown" type="checkbox" id="dropdown_3" name="dropdown"/>
+        <label class="for-dropdown" for="dropdown_3">Status<i class="fa fa-arrow-down"></i></label>
+        <div class="section-dropdown"> 
+            <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+            <a href="#">Ongoing<i class="fa fa-arrow-right"></i></a>
+            <a href="#">Finished <i class="fa fa-arrow-right"></i></a>
+            <a href="#">Hiatus <i class="fa fa-arrow-right"></i></a>
+            <a href="#">Planned <i class="fa fa-arrow-right"></i></a>
+        </div>
     </div>
-    <div class="dropdown_filter">
-      <h4>Year</h4>
-      <div class="select">
-        <span class="selected">Any</span>
-        <div class="caret"></div>
-      </div>
-      <ul class="menu">
-        <li class="active">Any</li>
-        <li>1999</li>
-        <li>2002</li>
-        <li>2006</li>
-        <li>2015</li>
-      </ul>
-    </div>
-    <div class="dropdown_filter">
-      <h4>Format</h4>
-      <div class="select">
-        <span class="selected">Any</span>
-        <div class="caret"></div>
-      </div>
-      <ul class="menu">
-        <li class="active">Any</li>
-        <li>TV</li>
-        <li>Movie</li>
-        <li>Manga</li>
-      </ul>
-    </div>
-    <button id="filter-toggle" class="filter-button">
-      <i class="fa fa-filter"></i> Filter
-  </button>
-  <div class="popup-container" id="filter-popup">
-      <div class="filter-container">
-          <label for="airing-status">Airing Status:</label>
-          <select id="airing-status">
-              <option value="">Any</option>
-              <option value="airing">Airing</option>
-              <option value="finished">Finished</option>
-              <option value="not-aired">Not Aired</option>
-              <option value="cancelled">Cancelled</option>
-          </select>
-          
-          <label for="country-of-origin">Country of Origin:</label>
-          <select id="country-of-origin">
-              <option value="">Any</option>
-              <option value="Japan">Japan</option>
-              <option value="South Korea">South Korea</option>
-              <option value="China">China</option>
-              <option value="Taiwan">Taiwan</option>
-          </select>
-          
-          <label for="year-range">Year Range:</label>
-          <input type="range" id="year-range" min="1970" max="2023">
-          
-          <label for="episode-count">Episode Count:</label>
-          <input type="range" id="episode-count" min="0" max="1000">
-          
-          <label for="genre-filter">Genre:</label>
-          <select id="genre-filter" multiple>
-              <option value="romance">Romance</option>
-              <option value="action">Action</option>
-              <option value="adventure">Adventure</option>
-              <option value="fantasy">Fantasy</option>
-          </select>
-      </div>
-      <button type="button" onclick="popupDisappears()">OK</button>
-    <div class="results">
-        <!-- Display filtered results here -->
+  </div>
+  <div class="row">
+    <div class="sec-center"> 	
+        <input class="dropdown" type="checkbox" id="dropdown_4" name="dropdown"/>
+        <label class="for-dropdown" for="dropdown_4">Format<i class="fa fa-arrow-down"></i></label>
+        <div class="section-dropdown"> 
+            <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
+            <a href="#">TV<i class="fa fa-arrow-right"></i></a>
+            <a href="#">Movie <i class="fa fa-arrow-right"></i></a>
+        </div>
     </div>
   </div>
 </section>
 
   <div class="recently_added_block">
-      <a class="cardHeader_a" href="/browse/manga/recently_added">
-        <div class="cardHeader">
-            <h2>Recently Added</h2>
-        </div>
+    <a class="cardHeader_a" href="/browse/manga/recently_added">
+      <div class="header_title_anime one">
+        <h2 class="my_h2 text-light" style="margin-left: 20px !important;">RECENTLY ADDED</h2>
+      </div>
     </a>
     <div class="recentAnime">
       <div class="animeCard">
@@ -150,10 +129,10 @@ const title = 'Browse Manga - YourAnimeHub';
 
 <div class="recently_added_block">
   <a class="cardHeader_a" href="/browse/manga/popular">
-    <div class="cardHeader">
-        <h2>Popular This Week</h2>
+    <div class="header_title_anime one">
+      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">POPULAR NOW</h2>
     </div>
-</a>
+  </a>
 <div class="recentAnime">
   <div class="animeCard">
     <% if (mangaList && Array.isArray(mangaList) && mangaList.length > 0) { %>
@@ -192,87 +171,53 @@ const title = 'Browse Manga - YourAnimeHub';
   View All
 </button>
 
-<div class="recently_added_block">
+<div class="container mb-5">
   <a class="cardHeader_a" href="/browse/manga/top-100">
-    <div class="cardHeader">
-        <h2>Top 100</h2>
+    <div class="header_title_anime one">
+      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">TOP 100 MANGA</h2>
     </div>
-</a>
-<div class="recentAnime">
-  <div class="animeCard">
-    <% if (mangaList && Array.isArray(mangaList) && mangaList.length > 0) { %>
-      <% const recentMangaList = mangaList.slice(-8).reverse(); %> 
-      <% recentMangaList.forEach(manga => { %>
-        <div class="card" style="margin-bottom: 20px;" title="<strong><%= manga.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
-          data-bs-content="
-                  <% const score = 40; %>
-                  <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                      <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                  </span>
+  </a>
+  <div class='top_100'>
+      <% if (mangaList && Array.isArray(mangaList) && mangaList.length > 0) { %>
+          <% const recentMangaList = mangaList.slice(-10).reverse(); %> 
+          <% recentMangaList.forEach((manga, index) => { %>
+              <div class="individual_card">
+                  <div class="number text-light"><strong>#<%= index + 1 %></strong></div>
+                  <div class="the_three">
+                      <div class="name_box">
+                          <img src="<%= manga.CoverImageURL %>" alt="Manga Image">
+                          <div>
+                              <p><a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>"><strong><%= manga.TitleEnglish %></strong></a></p>
+                              <% const genres = manga.Genre.split(','); %>
+                              <div>
+                                  <% genres.forEach(genre => { %>
+                                      <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                                  <% }); %>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="details">
 
-              <p><strong>Number of Chapters:</strong> <%= manga.Chapters %></p>
-              <p><strong>Status:</strong> <%= manga.AnimeStatus %></p>
-              <p><strong>Genres:</strong><br>
-                  <% const genres = manga.Genre.split(','); %>
-                  <% genres.forEach(genre => { %>
-                    <span class='badge bg-danger me-1'><%= genre.trim() %></span>
-                  <% }); %>
-              </p>">
-          <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
-            <img class="cover_image" src="<%= manga.CoverImageURL %>" alt="<%= manga.TitleEnglish %>">
-          </a>
-          <div class="animeName">
-            <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>"><%= manga.TitleEnglish %></a>
-          </div>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <p>No manga available in the database.</p>
-    <% } %>
+                          <p class="status"><strong>TV Show</strong></p>
+                          <p class="tv-details"><%= manga.Chapters %> Chapters</p>
+                          <p class="rating">30 <%= 30 >= 50 ? '😊' : '😞' %></p>
+                          <p class="likes"><i class="fa fa-thumbs-up"></i> 40</p>
+                      </div>
+                  </div>
+              </div>
+          <% }); %>
+      <% } else { %>
+          <p>No anime available in the database.</p>
+      <% } %>
   </div>
+  
 </div>
-</div>
-<button  id="load-more-button" class="load-more-button" onclick="window.location.href='/browse/manga/top-100';">
-  View All
-</button>
+
 
 
 
 
 <%- include('../partials/footer.ejs') %>
-<script>
-  const dropdowns = document.querySelectorAll('.dropdown_filter');
-
-// We now loop through all the dropdown elements
-dropdowns.forEach(dropdown => {
-    const select = dropdown.querySelector('.select');
-    const caret = dropdown.querySelector('.caret');
-    const menu = dropdown.querySelector('.menu');
-    const options = dropdown.querySelectorAll('.menu li');
-    const selected = dropdown.querySelector('.selected');
-
-    select.addEventListener('click', () => {
-        select.classList.toggle('select-clicked');
-        caret.classList.toggle('caret-rotate');
-        menu.classList.toggle('menu-open');
-    });
-
-    options.forEach(option => {
-        option.addEventListener('click', () => {
-            selected.innerText = option.innerText;
-            select.classList.remove('select-clicked');
-            caret.classList.remove('caret-rotate');
-            menu.classList.remove('menu-open');
-
-            options.forEach(option => {
-                option.classList.remove('active');
-            });
-
-            option.classList.add('active');
-        });
-    });
-});
-</script>
 <script>
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
