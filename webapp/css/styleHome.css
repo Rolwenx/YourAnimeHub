@@ -17,12 +17,12 @@ h4 {
   justify-content: center;
   margin: 10px;
 
-}
+} 
 
 .card_section{
   position: relative;
   margin-top: 50px;
-  background: rgb(8,14,31);
+  background: rgb(41, 81, 135);
   border-radius: 30px;
   top: -140px;
   left: 130px;
@@ -76,16 +76,16 @@ h4 {
 
 /* Allows to put the bar above each card*/
 .homecard.one:before{
-  background-image: linear-gradient(153deg, blue 0%, green 95%);
+  background-image: linear-gradient(153deg, rgb(135, 206, 250) 0%, rgb(176, 224, 230) 95%);
 }
 .homecard.two:before {
-  background-image: linear-gradient(153deg, red 0%, yellow 95%);
+  background-image: linear-gradient(153deg, rgb(255, 180, 180) 0%, rgb(255, 230, 153) 95%);
 }
 .homecard.three:before{
-  background-image: linear-gradient(153deg, rgb(135, 192, 235) 0%, rgb(155, 206, 242) 95%);
+  background-image: linear-gradient(153deg, rgb(255, 180, 180) 0%, rgb(255, 230, 153) 95%);
 }
 .homecard.four:before{
-  background-image: linear-gradient(153deg, rgb(255, 180, 180) 0%, rgb(255, 230, 153) 95%);
+  background-image: linear-gradient(153deg, rgb(135, 206, 250) 0%, rgb(176, 224, 230) 95%);
 }
 
 /* Hovers the card (without the text)*/
@@ -169,7 +169,14 @@ h4 {
   position: relative;
   margin-top: 70px;
   margin-bottom: 10px;
-  
+  text-decoration: none;
+  list-style: none;
+  color: white;
+}
+
+.header_title_anime_a a{
+  text-decoration: none;
+  list-style: none;
 }
 
 .header_title_anime:before{
@@ -185,7 +192,7 @@ h4 {
 
 /* Allows to put the bar above each card*/
 .header_title_anime.one:before{
-  background-image: linear-gradient(153deg, black 0%, black 95%);
+  background-image: linear-gradient(153deg, white 0%, white 95%);
 }
 
 .popular_now_block, top_100 {
@@ -214,10 +221,11 @@ h4 {
 
 .animeCard .card {
   width: 200px;
-  height: 345px;
+  height: 350px;
   overflow: hidden;
   display: flex;
   margin-right: 30px;
+  border:none;
 }
 
 .popular_now_block .animeCard .card img {
@@ -227,7 +235,7 @@ h4 {
 
 
 .animeCard .animeName {
-  background-color: rgb(229, 233, 237);
+  background-color: white;
   border-radius: 5px;
   text-align: center;
   padding: 4px;
@@ -268,6 +276,7 @@ h4 {
   display: block; 
   max-width: 200px; 
   max-height: 310px; 
+
 }
 
 
@@ -287,12 +296,12 @@ h4 {
 
 .review_box .slide_container .slide{
   border-radius: 5px;
-  background: white;
+  background: #ffeba7;
   box-shadow: 0 5px 10px #3337;
   width: 450px;
   padding: 20px;
   margin: 10px;
-  margin-left: 80px;
+  margin-left: 40px;
   margin-bottom: 50px;
   position: relative;
   transform-style: preserve-3d;
@@ -320,7 +329,7 @@ h4 {
   top: 10px; right: 15px;
   font-size: 90px;
   position: absolute;
-  color: rgb(80,157,220);
+  color: rgb(0, 0, 0,0.8);
 }
 
 .review_box .slide_container .slide .user{
@@ -343,7 +352,7 @@ h4 {
 }
 
 .review_box .slide_container .slide .user .user-info .stars i{
-  color: rgb(80,157,220);
+  color: rgb(255, 191, 0);
   font-size: 15px;
 }
 
@@ -363,7 +372,7 @@ h4 {
 }
 
 .review_box #next_arrow, .review_box #prev_arrow{
-  top: 50%;
+  top: 43%;
   height: 50px;
   width:50px;
   position: absolute;
@@ -378,12 +387,13 @@ h4 {
   box-shadow: 0 5px 10px #3337;
 }
 
+
 .review_box #next_arrow{
-  right: -70px;
+  right: 20px;
 }
 
 .review_box #prev_arrow{
-  left: -70px;
+  left: 90px;
 }
 
 .review_box #prev_arrow:hover, .review_box #next_arrow:hover{
@@ -429,8 +439,8 @@ h4 {
       justify-content: space-between;
       align-items: stretch;
       margin-bottom: 20px;
-      width: 100%;
-      margin-left: 30px;
+      width: 94%;
+      margin-left: 50px;
   }
   
     .top_100 p {
@@ -450,7 +460,6 @@ h4 {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      /* Set the desired height */
       width: 100%;
       background-color: white;
       padding-right: 20px;
@@ -529,6 +538,7 @@ h4 {
     margin-left:20px;
     margin-top: 20px;
     margin-bottom: 30px;
+    background:rgb(41, 81, 135);
     
 }
 
@@ -560,7 +570,7 @@ h4 {
 .anime_box a{
   text-decoration: none;
     list-style: none;
-    color:black;
+    color:white;
     font-weight:500;
 }
 
@@ -580,6 +590,7 @@ h4 {
 }
 
 .animeName {
+  
     margin-top: 5px; /* Adjust the margin as needed */
 
 }
@@ -620,8 +631,8 @@ h4 {
   /* ---------- QUOTE SECTION -----------*/
 
 .quote_of_day_header{
-  text-shadow: 1px 1px 1px #aaa;
-  color:black;
+  text-shadow: 1px 1px 1px rgb(255, 255, 255);
+  color:white;
   font-size:2.5em;
   font-weight:bold;
   margin-top:20px;
@@ -632,14 +643,13 @@ h4 {
 .quote_of_day_bg{
     height: 230px;  
     text-align: center;
-
     background-size: cover;
 }
 
 
 #quote {
-  border: 1px solid black;
-  box-shadow: 0 1px 4px rgb(0, 0, 0);
+  border: 1px solid white;
+  box-shadow: 0 1px 4px rgb(255, 255, 255);
   height: 120px;
   text-align: center;
   display: flex;
@@ -651,7 +661,7 @@ h4 {
 #quote a{
   text-decoration: none;
   list-style-type: none;
-  color: black;
+  color: white;
 }
 #quote dt {
   font-size: 1.2em;
@@ -668,7 +678,7 @@ h4 {
 }
 
 .quote_day_anime_box{
-  background-color: rgb(72,144,222,0.2);
+  background-color: rgba(33, 137, 255, 0.4);
   border-radius: 10px;
   padding: 10px;
 }
@@ -727,4 +737,155 @@ h4 {
   display: block; 
   max-width: 200px; 
   max-height: 310px; 
+}
+
+
+  /* ---------- DROP DOWN SECTION -----------*/
+
+
+.sec-center {
+  position: relative;
+  max-width: 100%;
+  text-align: center;
+  z-index: 200;
+}
+
+
+/* We hide the checkbox input by putting far off the screen and making it transparent*/
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked){
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+/* Defines the style of the whole checkbox*/
+.dropdown:checked + label,
+.dropdown:not(:checked) + label{
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  height: 50px;
+  border-radius: 4px;
+  width: 220px;
+  letter-spacing: 1px;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -ms-flex-pack: center;
+  text-align: center;
+  border: none;
+  background-color: #ffeba7;
+  cursor: pointer;
+  color: rgb(41, 81, 135);
+  box-shadow: 0 12px 35px 0 rgba(255,235,167,.15);
+}
+
+.dropdown:checked + label:before,
+.dropdown:not(:checked) + label:before{
+  position: fixed;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  cursor: auto;
+  pointer-events: none;
+}
+
+.dropdown:checked + label:before{
+  pointer-events: auto;
+}
+
+/* Defines the appearance of the inside dropdown menu*/
+.section-dropdown {
+  position: absolute;
+  padding: 5px;
+  background-color: #111;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  box-shadow: 0 14px 35px 0 rgba(9,9,12,0.4);
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 200ms linear;
+}
+
+/* Without it, you can't see the dropdown when checkbox is clicked*/
+.dropdown:checked ~ .section-dropdown{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.section-dropdown:before {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  content: '';
+  display: block;
+  z-index: 1;
+}
+.section-dropdown:after {
+  position: absolute;
+  top: -7px;
+  left: 30px;
+  width: 0; 
+  height: 0; 
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent; 
+  border-bottom: 8px solid #111;
+  content: '';
+  display: block;
+  z-index: 2;
+  transition: all 200ms linear;
+}
+
+.section-dropdown a {
+  position: relative;
+  color: #fff;
+  transition: all 200ms linear;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 2px;
+  padding: 5px 0;
+  padding-left: 20px;
+  padding-right: 15px;
+  margin: 2px 0;
+  text-align: left;
+  text-decoration: none;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: space-between;
+    -ms-flex-pack: distribute;
+}
+.section-dropdown a:hover {
+  color: #102770;
+  background-color: #ffeba7;
+}
+
+.section-dropdown a .uil {
+  font-size: 22px;
 }

@@ -27,7 +27,9 @@ async function GuestHomeAction(request, res) {
             mangaList,
             quote_of_the_day,
             characterList,
-            favourites: [] });
+            title: 'Home - YourAnimeHub',
+            activePage: 'home',
+            });
     } catch (error) {
         console.error('Error in GuestHomeAction:', error);
         res.status(500).send('Internal Server Error');

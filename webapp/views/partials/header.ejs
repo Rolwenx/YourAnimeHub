@@ -10,82 +10,110 @@
   <body>
 
     <header>
-        <nav class="home_navbar">
-            <div class="logo_container">
-                <a href="/">
-                    <img class="website_logo" src="/img/website_logo.png" alt="Logo image">
-
-                </a>
-            </div>
-
-            <ul class="nav_bar_links">
-                <li class="nav_bar_link">
-                    <a href="/">Home</a>
-                </li>
-                <li class="nav_bar_link browse">
-                    <a href="">Browse
-                        <span class="material-icons drop_down-icon">
-                            arrow_drop_down
-                        </span>
-                    </a>
-                    <ul class="drop_down">
-                        <li><a href="/browse/anime" class="drop_down_li">Anime</a></li>
-                        <li><a href="/browse/manga" class="drop_down_li">Manga</a></li>
-                        <li><a href="/browse/characters" class="drop_down_li">Characters</a></li>
-                        <li><a href="/browse/quotes" class="drop_down_li">Quotes</a></li>
-                        <li><a href="/browse/reviews" class="drop_down_li">Reviews</a></li>
-                    </ul>
-                </li>
-            
-                <% if (user && user.UserRole === 'Admin') { %>
-                    <li class="nav_bar_link">
-                        <a href="/user">Profile</a>
-                    </li>
-                    <li class="nav_bar_link">
-                        <a href="/admin">Admin</a>
-                    </li>
+        <div class="logo_container">
+            <a href="/">
+                <img class="website_logo" src="/img/website_logo.png" alt="Logo image">
+            </a>
+        </div>
+        <nav class="navbar">
+            <!--If the activePage is the correct one, the class becomes "active"-->
+            <a class="<%= activePage === 'home' ? 'active' : '' %>" href="/">Home</a>
+            <li class="nav-item dropdown">
+                <a style="margin-bottom:34px; color:white;" class="nav-link dropdown-toggle <%= activePage === 'browse_anime' ? 'active' : '' %>" aria-expanded="false" data-bs-toggle="dropdown" role="button" href="/browse/anime">Browse</a>
+                <ul style=" padding: 0;" class="dropdown-menu">
+                  <li><a class="dropdown-item text-dark drop_text" href="/browse/animes">Animes</a></li>
+                  <li><a class="dropdown-item text-dark" href="/browse/mangas">Mangas</a></li>
+                  <li><a class="dropdown-item text-dark" href="/browse/characters">Characters</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item text-dark" href="/browse/quotes">Quotes</a></li>
+                  <li><a class="dropdown-item text-dark" href="/browse/reviews">Reviews</a></li>
                 </ul>
-                <div class="login_signup_container">
-                    <a href="" style="opacity: 0;">Log In</a>
-                    <div class="profile-dropdown">
-                        <div class="triangle-clip-path">
-                            <img class="profile-picture" src="<%= user.ProfilePictureURL %>" alt="Profile Picture">
-                        </div>
-                        <div class="dropdown-content">
-                            <a href="/user">Profile</a>
-                            <a href="/user/settings">Settings</a>
-                            <a href="/logout">Logout</a>
-                        </div>
-                    </div>
-                </div>
-                <% } else if (user && user.UserRole === 'User') { %>
-                    <li class="nav_bar_link">
-                        <a href="/user">Profile</a>
-                    </li>
-                    <li class="nav_bar_link">
-                        <a href="/user/watchlist">Your Lists</a>
-                    </li>
-                </ul>
-                <div class="login_signup_container">
-                    <a href="" style="opacity: 0;cursor: default;">Log In</a>
-                    <div class="profile-dropdown">
-                        <div class="triangle-clip-path">
-                            <img class="profile-picture" src="<%= user.ProfilePictureURL %>" alt="Profile Picture">
-                        </div>
-                        <div class="dropdown-content">
-                            <a href="/user">Profile</a>
-                            <a href="/user/settings">Settings</a>
-                            <a href="/logout">Logout</a>
-                        </div>
-                    </div>
-                </div>
-                <% } else { %>
-                </ul>
-                    <div class="login_signup_container">
-                        <a href="/login" class="login_btn">Log In</a>
-                        <a href="/signup" class="signup_btn">Sign Up</a>
-                    </div>
-                <% } %>
+              </li>
+                
+            <% if (user && user.UserRole === 'Admin') { %>
+                <a class="<%= activePage === 'profile' ? 'active' : '' %>" href="/user">Profile</a>
+                <a class="<%= activePage === 'admin' ? 'active' : '' %>" href="/admin">Admin</a>
             
         </nav>
+        <div class="icons">
+            <span class="icon"><i class="fa fa-bars" id="menu-bars"></i></span>
+            <span class="icon"><i class="fa fa-search" id="search-icon"></i></span>
+        </div>
+        <div class="login_signup_container">
+
+            <div class="profile-dropdown">
+                <div class="triangle-clip-path">
+                    <img class="profile-picture" src="<%= user.ProfilePictureURL %>" alt="Profile Picture">
+                </div>
+                <div class="dropdown-content">
+                    <a href="/user">Profile</a>
+                    <a href="/user/settings">Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+            <% } else if (user && user.UserRole === 'User') { %>
+                <a class="<%= activePage === 'profile' ? 'active' : '' %>" href="/user">Profile</a>
+                <a class="<%= activePage === 'your_list' ? 'active' : '' %>" href="/user/Your Lists">Your Lists</a>
+                <div class="icons">
+                    <span class="icon"><i class="fa fa-bars" id="menu-bars"></i></span>
+                    <span class="icon"><i class="fa fa-search" id="search-icon"></i></span>
+                </div>
+                <div class="login_signup_container">
+
+                    <div class="profile-dropdown">
+                        <div class="triangle-clip-path">
+                            <img class="profile-picture" src="<%= user.ProfilePictureURL %>" alt="Profile Picture">
+                        </div>
+                        <div class="dropdown-content">
+                            <a href="/user">Profile</a>
+                            <a href="/user/settings">Settings</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+        </nav>
+            <% } else { %>
+                <a style="background: rgb(72,144,222, 0.2); margin-right: 10px;" href="/login">Log In</a>
+                <a style="background: rgb(72,144,222, 0.2);" href="/signup">Sign Up</a>
+        </nav>
+        <div class="icons">
+            <span class="icon"><i class="fa fa-bars" id="menu-bars"></i></span>
+            <span class="icon"><i class="fa fa-search" id="search-icon"></i></span>
+        </div>
+            <% } %>
+
     </header>
+
+<form action="" id="search-form">
+    <input type="search" placeholder="Search here..." name="" id="search-box">
+    <label for=search-box" class="fa fa-search"></label>
+    <i class="fa fa-times" id="close"></i>
+</form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let menu = document.getElementById('menu-bars');
+            let navbar = document.querySelector('.navbar');
+    
+            menu.addEventListener('click', function () {
+                menu.classList.toggle('fa-times');
+                navbar.classList.toggle('active');
+            });
+
+            menu.addEventListener('scroll', function () {
+                menu.classList.remove('fa-times');
+                navbar.classList.remove('active');
+            });
+
+            document.querySelector('#search-icon').onclick =() =>{
+                document.querySelector('#search-form').classList.toggle('active');
+            }
+            document.querySelector('#close').onclick =() =>{
+                document.querySelector('#search-form').classList.toggle('active');
+            }
+            
+            
+        });
+    </script>
+    
+    

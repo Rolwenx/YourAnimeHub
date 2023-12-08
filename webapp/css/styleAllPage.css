@@ -39,7 +39,7 @@
 }
 
 body{
-    background:white !important;
+    background:rgb(8, 14, 31, 0.9) !important;
 }
 /* --- BACKGROUND --- */
 
@@ -60,7 +60,7 @@ body{
     margin-top:-10px;
     width:100%;
     height:100px;
-    background-color:rgb(132, 177, 214);
+    background-color:rgb(8, 14, 31, 0.1);
     z-index:-2;
 }
 
@@ -72,6 +72,7 @@ body{
     margin: 0;
     padding:0;
 
+
 }
 
 
@@ -80,9 +81,9 @@ body{
 /* ---------- LOGO -----------*/
 
 .website_logo{
-    height: 80px;
-    width:80px;
-    box-shadow: 0 2px 4px white;
+    height: 90px;
+    width:90px;
+    box-shadow: 0 2px 4px rgb(8,14,31);
     
 }
 
@@ -95,66 +96,257 @@ body{
 
 /* ---------- NAVBAR -----------*/
 
+drop_down {
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    border-radius: 0.5rem;
+    background: rgb(8,14,31);
+    margin: 13.5px 0 0 -20px;
+    padding: 5px 0 0 5px;
+    left: 28px;
+    width: auto;
+    display: none;
+    z-index: 2;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
 
-.home_navbar{
-   
-    /*height: 80px;*/
-    margin: 0 auto;
+.browse:hover .drop_down {
+    display: block;
+}
+
+header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgb(8,14,31);
+    padding: 5px 7%;
     display: flex;
     align-items: center;
-    justify-content:space-evenly;
-    margin-top: 10px;
-    margin-bottom: 50px;
-
-}
-
-.home_navbar li{
-    list-style: none;
-    /* Allows the small line under the navbar tab*/
+    justify-content: space-between;
+    z-index: 1000;
+    text-transform: capitalize;
+    box-shadow: 3px 4px 2px rgba(255, 255, 255, 0.1);
     position: relative;
+    margin-bottom: 20px;
 }
 
-/* Manages the lines that appears when you hover on the navbar*/
-.home_navbar li::after{
-    content:'';
-    height: 3px;
-    width: 0;
-    background:rgb(80,157,220);
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    transition: 0.5s;
-}
 
-.nav_bar_links > .nav_bar_link:hover::after {
-    width: 100%;
-}
-
-.home_navbar li a{
-    text-decoration: none;
+.drop_text:hover{
     color: white;
+}
+header .navbar a, header .navbar li a{
+    font-size: 15px;
+    margin-bottom: 10px;
     font-weight: 500;
-    text-transform: uppercase;
-}
-
-.home_navbar a, .drop_down li{
-    text-decoration: none;
+    border-radius: .5rem;
+    padding: .5rem 1.5rem;
     color: white;
+    text-decoration: none;
+    list-style: none;
+}
+
+header .navbar a:hover,header .navbar a.active{
+    color: #fff;
+    /*background: #3498db;*/
+    background: rgb(41, 81, 135);
+    margin-right: 6px;
+}
+
+header .icons i, header .icons a, header .icons p{
+    cursor: pointer;
+    margin-left: .5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    width: 2.5rem;
+    text-align: center;
+    font-size: 20px;
+    color: #192a56;
+    border-radius: 50%;
+    background: #eee;
+}
+
+header .icons i:hover, header .icons a:hover, header .icons p:hover{
+    color: #fff;
+    transition: all .3s linear;
+    background: rgb(72,144,222);
+    transform: rotate(360deg);
 }
 
 
-.nav_bar_links{
+header .icons #menu-bars{
+    display: none;
+}
+
+header .navbar .nav-item ul{
+    margin-top: -30px;
+}
+
+.typewriter {
+    text-align: center; /* Center the text within the .typewriter container */
+  }
+  
+  .typewriter h1 {
+    color: white;
+    overflow: hidden;
+    border-right: .15em solid rgb(72,144,222); 
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: 
+      typing 2.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+  }
+  
+  /* The typing effect */
+  @keyframes typing {
+    from { width: 0 }
+  to { width: 80% } /* Adjusted to 100% to fill the container */
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: rgb(72,144,222); }
+  }
+  
+  @media (max-width:991px){
+
+    header{
+        padding: 1rem 2rem;
+    }
+
+    header .navbar .nav-item ul{
+        margin-top: 5px;
+    }
+
+
+  }
+
+  @media (max-width:768px){
+    header .icons #menu-bars{
+        display: inline-block;
+    }
+    header .navbar .nav-item ul{
+        margin-top: 5px;
+    }
+    
+    header .navbar{
+        position: absolute;
+        top: 100%; left: 0; right: 0;
+        background: rgb(8,14,31);
+        border-top: .1rem solid rgba(0,0,0,.2);
+        border-bottom: .1rem solid rgba(0,0,0,.2);
+        padding: 1rem;
+        display: none;
+        z-index: 999;
+    }
+
+    header .navbar a {
+        display: block;
+        padding: 10px;
+        background:rgb(72,144,222, 0.1) ;
+        text-decoration: none;
+    }
+
+    header .navbar a:hover {
+        color: white; /* inactive links */
+    }
+
+    header .navbar.active{
+        display: block;
+    }
+
+    .typewriter {
+        text-align: center;
+        position: relative;
+        z-index: 998; /* Ensure the typewriter is above the navbar */
+    }
+
+    .typewriter h1 {
+        white-space: wrap;
+    }
+
+    #search-form #search-box{
+        width: 90%;
+        margin: 0 1rem; 
+    }
+ 
+  }
+
+  @media (min-width: 769px) and (max-width: 991px) {
+    .typewriter h1 {
+
+        white-space: wrap;
+    }
+    header .navbar .nav-item ul{
+        margin-top: 5px;
+    }
+
+}
+
+/* ---------- SEARCH BAR -----------*/
+#search-form{
+    top: -110%; left: 0;
+    position: fixed;
+    height: 100%; width: 100%;
     display: flex;
-    gap: 30px;
-    max-width: 500px;
+    align-items: center;
+    z-index: 1004;
+    padding: 0 1rem;
     justify-content: center;
-    background-color: rgb(8,14,31);
-    margin-left: 80px;
-    padding: 1.5vw 0; 
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgb(0, 0, 0);
-    flex-grow: 1; /* Allow this container to expand and take the available space */
+    background: rgba(0,0,0,.8);
 }
+
+#search-form.active{
+    top:0;
+}
+#search-form input:focus{
+    outline:none;
+}
+
+
+#search-form #search-box{
+    width: 50rem;
+    border-bottom: .1rem solid #fff;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-size: 26px;
+    padding: 1rem 0;
+    background: none;
+    text-transform: none;
+    color: #fff;
+}
+
+#search-form #search-box::placeholder{
+    color: #c8c8c8;
+}
+
+#search-form #search-box::-webkit-search-cancel-button{
+    -webkit-appearance: none;
+}
+
+#search-form label{
+    color: #fff;
+    cursor: pointer;
+    font-size: 27px;
+}
+
+#search-form label:hover{
+    color: rgb(41, 81, 135);
+}
+
+#search-form #close{
+    position: absolute;
+    color: #fff;
+    cursor: pointer;
+    top: 2rem; right: 3rem;
+    font-size: 1.8rem;
+}
+
+
+/* ---------- BOUTONS -----------*/
 
 .signup_btn, .login_btn{
     background: rgb(72,144,222);
@@ -392,5 +584,15 @@ hr{
         left: 100%;
     }
 }
+
+
+
+
+
+
+
+
+
+
 
 
