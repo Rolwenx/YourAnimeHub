@@ -116,7 +116,7 @@ async function adminAnimeEditAction(request, response) {
         // Fetch the anime data
         var anime = await animeRepo.getOneAnime(animeId);
 
-        response.render("admin/admin_edit_anime", { "anime": anime,  user: request.user });
+        response.render("admin/admin_edit_anime", { "anime": anime,  user: request.user,activePage: 'admin' });
     } catch (error) {
         console.error('Error in adminAnimeEditAction:', error);
         response.status(500).send('Internal Server Error');
@@ -141,6 +141,7 @@ async function adminAnimeUpdateAction(request, response) {
         BackgroundImageURL: request.body.backgroundImageURL,
         StreamingPlatformURL: request.body.streamingPlatformURL || null,
         AnimeFormat: "Anime",
+        TypeFormat: request.body.typeFormat,
         EpisodeDuration: parseInt(request.body.episodeDuration) || null,
         EpisodeCount: parseInt(request.body.episodeCount) || null,
         Chapters: parseInt(request.body.chapters) || null,
@@ -174,7 +175,7 @@ async function adminAnimeDelAction(request, response) {
 
 
 async function adminAnimeAddAction(request, response) {
-    response.render("admin/admin_add_anime", {  user: request.user });
+    response.render("admin/admin_add_anime", {  user: request.user, activePage: 'admin' });
 }
 
 async function adminAnimeCreateAction(request, response) {
@@ -192,6 +193,7 @@ async function adminAnimeCreateAction(request, response) {
         BackgroundImageURL: request.body.backgroundImageURL,
         StreamingPlatformURL: request.body.streamingPlatformURL || null,
         AnimeFormat: "Anime",
+        TypeFormat: request.body.typeFormat,
         EpisodeDuration: parseInt(request.body.episodeDuration) || null,
         EpisodeCount: parseInt(request.body.episodeCount) || null,
         Chapters: parseInt(request.body.chapters) || null,
@@ -232,7 +234,7 @@ async function adminMangaEditAction(request, response) {
         // Fetch the anime data
         var manga = await animeRepo.getOneManga(mangaId);
 
-        response.render("admin/admin_edit_manga", { "manga": manga,  user: request.user });
+        response.render("admin/admin_edit_manga", { "manga": manga,  user: request.user,activePage: 'admin' });
     } catch (error) {
         console.error('Error in adminAnimeEditAction:', error);
         response.status(500).send('Internal Server Error');
@@ -257,6 +259,7 @@ async function adminMangaUpdateAction(request, response) {
         BackgroundImageURL: request.body.backgroundImageURL,
         StreamingPlatformURL: request.body.streamingPlatformURL || null,
         AnimeFormat: "Manga",
+        TypeFormat: request.body.typeFormat,
         EpisodeDuration: parseInt(request.body.episodeDuration) || null,
         EpisodeCount: parseInt(request.body.episodeCount) || null,
         Chapters: parseInt(request.body.chapters) || null,
@@ -295,7 +298,7 @@ async function adminMangaDelAction(request, response) {
 }
 
 async function adminMangaAddAction(request, response) {
-    response.render("admin/admin_add_manga", {  user: request.user });
+    response.render("admin/admin_add_manga", {  user: request.user, activePage: 'admin' });
 }
 
 async function adminMangaCreateAction(request, response) {
@@ -313,6 +316,7 @@ async function adminMangaCreateAction(request, response) {
         BackgroundImageURL: request.body.backgroundImageURL,
         StreamingPlatformURL: request.body.streamingPlatformURL || null,
         AnimeFormat: "Manga",
+        TypeFormat: request.body.typeFormat,
         EpisodeDuration: parseInt(request.body.episodeDuration) || null,
         EpisodeCount: parseInt(request.body.episodeCount) || null,
         Chapters: parseInt(request.body.chapters) || null,
@@ -352,7 +356,7 @@ async function adminQuoteEditAction(request, response) {
         // Fetch the anime data
         var quote = await quoteRepo.getOneQuote(quoteId);
 
-        response.render("admin/admin_edit_quote", { "quote": quote,  user: request.user });
+        response.render("admin/admin_edit_quote", { "quote": quote,  user: request.user,activePage: 'admin' });
     } catch (error) {
         console.error('Error in adminQuoteEditAction:', error);
         response.status(500).send('Internal Server Error');
@@ -391,7 +395,7 @@ async function adminQuoteDelAction(request, response) {
 }
 
 async function adminQuoteAddAction(request, response) {
-    response.render("admin/admin_add_quote", {  user: request.user });
+    response.render("admin/admin_add_quote", {  user: request.user,activePage: 'admin' });
 }
 
 async function adminQuoteCreateAction(request, response) {
@@ -481,7 +485,7 @@ async function adminCharacterEditAction(request, response) {
         // Fetch the character data
         var character = await characterRepo.getOneCharacter(characterId);
 
-        response.render("admin/admin_edit_character", { "character": character,  user: request.user });
+        response.render("admin/admin_edit_character", { "character": character,  user: request.user,activePage: 'admin' });
     } catch (error) {
         console.error('Error in adminCharacterEditAction:', error);
         response.status(500).send('Internal Server Error');
@@ -536,7 +540,7 @@ async function adminCharacterDelAction(request, response) {
 }
 
 async function adminCharacterAddAction(request, response) {
-    response.render("admin/admin_add_character", {  user: request.user });
+    response.render("admin/admin_add_character", {  user: request.user, activePage: 'admin' });
 }
 
 async function adminCharacterCreateAction(request, response) {
@@ -585,7 +589,7 @@ async function adminUserListAction(request, response) {
 }
 
 async function adminUserAddAction(request, response) {
-    response.render("admin/admin_add_user", {  user: request.user });
+    response.render("admin/admin_add_user", {  user: request.user,activePage: 'admin' });
 }
 
 async function adminUserCreateAction(request, response) {
@@ -625,7 +629,7 @@ async function adminUserEditAction(request, response) {
         var fetched_user = await userRepo.getOneUser(userName);
         console.log(fetched_user);
 
-        response.render("admin/admin_edit_user", { "fetched_user": fetched_user,  user: request.user });
+        response.render("admin/admin_edit_user", { "fetched_user": fetched_user,  user: request.user,activePage: 'admin' });
     } catch (error) {
         console.error('Error in adminUserEditAction:', error);
         response.status(500).send('Internal Server Error');

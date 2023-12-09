@@ -36,11 +36,11 @@
             <!-- ======================= Cards ================== -->
             <div class="cardBox">
 
-                <a href="/admin/animes" class="card-link">
+                <a href="/admin/users" class="card-link">
                     <div class="card">
                         <div>
-                            <div class="numbers"><%= animeCount %></div>
-                            <div class="cardName">Anime</div>
+                            <div class="numbers"><%= userCount %></div>
+                            <div class="cardName">Users</div>
                         </div>
 
                         <div class="iconBx">
@@ -48,13 +48,19 @@
                         </div>
                     </div>
                 </a>
-                <a href="/admin/mangas" class="card-link">
+                <a href="/admin/animes" class="card-link">
                     <div class="card">
                         <div>
-                            <div class="numbers"><%= MangaCount %></div>
-                            <div class="cardName">Manga</div>
-                        </div>
+                            <div>
+                                <div class="numbers"><%= animeCount %></div>
+                                <div class="cardName">Anime</div>
+                            </div>
+                            <div>
+                                <div class="numbers"><%= MangaCount %></div>
+                                <div class="cardName">Manga</div>
+                            </div>
 
+                        </div>
                         <div class="iconBx">
                             <ion-icon name="list-circle-outline"></ion-icon>
                         </div>
@@ -117,77 +123,21 @@
                     </div>
 
                     <table>
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
+                        <% if (userList && Array.isArray(userList) && userList.length > 0) { %>
+                            <% const recentUserList = userList.slice(-6).reverse(); %> 
+                            <% recentUserList.forEach(users => { %>
+                              <tr>
+                                <td width="60px">
+                                    <div class="imgBx"><img src="<%= users.ProfilePictureURL %>" alt="User Profile Picture"></div>
+                                </td>
+                                <td>
+                                    <h4><%= users.Username %> <br> <span><%= users.UserRole %></span></h4>
+                                </td>
+                            </tr>
+                            <% }); %>
+                          <% } else { %>
+                            <p>No users available in the database.</p>
+                          <% } %>
                     </table>
                 </div>
 

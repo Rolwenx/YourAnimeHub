@@ -60,9 +60,9 @@ app.use("/character", require("./controllers/character.route"));
 
 // Catch-all route for any undefined routes
 app.get('/404', (req, res) => {
-  res.render('404_error', { user: req.user, activePage: 'none' });
+  res.render('404_error', { user: req.user, activePage: true });
 });
 
 app.get('*', (req, res) => {
-  res.render('404_error', { user: req.user,activePage: 'none' });
+  res.render('404_error', { user: req.user,activePage: true });
 });
