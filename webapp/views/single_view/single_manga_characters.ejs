@@ -63,8 +63,8 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 
 <!-- Menus text above the hr -->
 <div class="menus">
-  <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>"><p>Overall</p></a>
-  <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/characters#char"><p>Characters</p></a>
+    <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>"><p>Overall</p></a>
+    <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href=""><p>Reviews</p></a>
   <hr class="rounded">
 </div>
@@ -129,7 +129,6 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <p class="answer_of_menu"><%= manga.TitleNative %></p>
       </div>
 
-
     </div>
 
     
@@ -139,60 +138,22 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
    
     <div class="characters_section">
       <a href="">
-          <div>
-              <h2 class="my_h2 text-light" style="margin-left: 20px !important;">CHARACTERS</h2>
-          </div>
-      </a>
-      <% if (charactersDetails && charactersDetails.length > 0) { %>
-          <div class="character_grid">
-              <% for (let i = 0; i < Math.min(6, charactersDetails.length); i++) { %>
-                  <div class="character_item">
-                      <a href="/character/<%= charactersDetails[i].CharacterID %>/<%= charactersDetails[i].CharName %>">
-                          <img src="<%= charactersDetails[i].ImageURL %>" alt="<%= charactersDetails[i].CharName %>">
-                          <p style="color: white; font-weight: 600; margin-top: 10px;"><%= charactersDetails[i].CharName %></p>
-                      </a>
-                  </div>
-              <% } %>
-          </div>
-      <% } else { %>
-          <p style="color:white;">No characters added yet in the database</p>
-      <% } %>
-  </div>
-  
-    
-    
-    
-    
-    </div>
-  
-    <div class="status_distribution">
-      <a href="">
         <div>
-          <h2 class="my_h2 text-light" style="margin-left: 20px !important;">STATS</h2>
+          <h2 class="my_h2 text-light" style="margin-left: 20px !important;">CHARACTERS</h2>
         </div>
       </a>
-      <div class="status_box all_status">
-        <div class="status_item planning">
-          <p>Planning</p>
-          <p>X Users</p>
-        </div>
-        <div class="status_item current">
-          <p>Current</p>
-          <p>X Users</p>
-        </div>
-        <div class="status_item completed">
-          <p>Completed</p>
-          <p>X Users</p>
-        </div>
-        <div class="status_item likes">
-          <p>Favourited</p>
-          <p>X Users</p>
-        </div>
-        <div class="status_item dropped">
-          <p>Dropped</p>
-          <p>X Users</p>
-        </div>
-      </div>
+      <div class="character_grid" id="char">
+        <% for (const character of charactersDetails) { %>
+            <div class="character_item">
+                <a href="/character/<%= character.CharacterID %>/<%= character.CharName %>">
+                    <img src="<%= character.ImageURL %>" alt="<%= character.CharName %>">
+                    <p style="color: white; font-weight: 600; margin-top: 10px;"><%= character.CharName %></p>
+                </a>
+            </div>
+        <% } %>
+    </div>
+    
+    
     </div>
     
   </div>
