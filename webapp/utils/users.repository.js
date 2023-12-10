@@ -30,9 +30,14 @@ module.exports = {
       // must leave out the password+hash
       const [rows, fields] = await conn.execute(sql, [ username ]);
       conn.release();
+      if (rows && rows.Birthday !== undefined) {
+        rows.Birthday = await this.formatDate(rows.Birthday);
+      }
+      
+    
 
       if (rows != null) {
-        return rows;
+        return rows; 
       } else {
         return false;
       }
@@ -41,6 +46,42 @@ module.exports = {
       throw err;
     }
   },
+
+  async getOneUserByID(userId) {
+    try {
+      
+      console.log(userId);
+      let conn = await pool.getConnection();
+      let sql = "SELECT Username,Email,FirstName, LastName, ProfilePictureURL, TitleDisplayLanguage, UserRole, Birthday, Bio,AccountStatus FROM User_Profile WHERE UserID = ? "; 
+      // must leave out the password+hash
+      const [rows, fields] = await conn.execute(sql, [ userId ]);
+      console.log(rows);
+      conn.release();
+
+      if (rows && rows.Birthday !== undefined) {
+        rows.Birthday = await this.formatDate(rows.Birthday);
+      }
+      
+    
+
+      if (rows != null) {
+        return rows; 
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.error('Error in getOneUserByID:', err);
+      throw err;
+    }
+  },
+
+  async formatDate(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+},
 
   async isUsernameValid(username) {
     try {

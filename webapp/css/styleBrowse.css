@@ -53,6 +53,10 @@ p{
     margin-bottom: 10px;
   }
 
+p {
+    color: black;
+  }
+
   .recently_added_block .animeCard .card img {
     max-width: 100%;
     
