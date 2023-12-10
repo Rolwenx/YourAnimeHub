@@ -4,6 +4,7 @@ const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 const quoteRepo = require('../utils/quote.repository');
 const characterRepo = require('../utils/characters.repository');
+const userRepo = require('../utils/users.repository');
 
 
 router.get('/', GuestHomeAction);
@@ -12,11 +13,15 @@ router.get('/', GuestHomeAction);
 // Admin Home route
 async function GuestHomeAction(request, res) {
     try {
+        var userId = request.user.UserID;
         const animeMangaList = await animeRepo.getAllAnimeManga();
         const characterList = await characterRepo.getAllCharacters();
         const animeList = await animeRepo.getAllAnime();
         const mangaList = await animeRepo.getAllMangas();
         const quote_of_the_day = await quoteRepo.transformQuoteOfDay();
+
+        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
+        var ReadingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
         // Log user role in the console
         console.log("User Role:", request.user ? request.user.UserRole : "Guest");
 
@@ -27,6 +32,8 @@ async function GuestHomeAction(request, res) {
             mangaList,
             quote_of_the_day,
             characterList,
+            WatchingAnimeList,
+            ReadingMangaList,
             title: 'Home - YourAnimeHub',
             activePage: 'home',
             });

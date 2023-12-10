@@ -1,76 +1,62 @@
 <div class="big_top_three">
     <div class="top_header">
-        <h3 class="my_h3 text-light" style="margin-left:20px; text-decoration: underline;text-underline-position: under;">Currently Watching</h3>
+        <h3 class="my_h3 text-light" style="margin-left:20px; text-decoration: underline;text-underline-position: under;">
+            <a style="color:white;" href="/user/watchlist/anime">Anime Currently Watching</a>
+        </h3>
         <div class="anime_container">
-            <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-            <% const recentAnimeList = animeList.slice(-3).reverse(); %>
-            <div class="anime_boxes">
-                <% recentAnimeList.forEach(anime => { %>
-                <div class="anime_box">
-                    <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
-                        <div class="box-img">
-                            <img src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+            <% if (WatchingAnimeList && Array.isArray(WatchingAnimeList) && WatchingAnimeList.length > 0) { %>
+                <% WatchingAnimeList.slice(0, 3).forEach((animeEntry) => { %>
+                    <% const animeDetails = animeEntry['0']; %>
+                    <div class="anime_boxes">
+                        <div class="anime_box">
+                            <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                                <div class="box-img">
+                                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>">
+                                </div>
+                                <div class="animeName">
+                                    <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                                        <%= animeDetails.TitleEnglish %>
+                                    </a>
+                                </div>
+                            </a>
                         </div>
-                        <div class="animeName">
-                            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
-                        </div>
-                    </a>
-                </div>
+                    </div>
                 <% }); %>
-            </div>
             <% } else { %>
-            <p>You are currently watching nothing.</p>
+                <p style="color:white; margin-left: 30px;">You are currently watching nothing.</p>
             <% } %>
         </div>
     </div>
-    <div class="top_header"> 
-        <h3 class="my_h3 text-light" style="margin-left:20px; text-decoration: underline;text-underline-position: under;">Your Top 3 Anime</h3>
+    
+    <div class="top_header">
+        <h3 class="my_h3 text-light" style="margin-left:20px; text-decoration: underline;text-underline-position: under;">
+            <a style="color:white;" href="/user/watchlist/manga">Manga Currently Watching</a>
+        </h3>
         <div class="anime_container">
-            <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-            <% const recentAnimeList = animeList.slice(-3).reverse(); %>
-            <div class="anime_boxes">
-                <% recentAnimeList.forEach(anime => { %>
-                <div class="anime_box">
-                    <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
-                        <div class="box-img">
-                            <img src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+            <% if (ReadingMangaList && Array.isArray(ReadingMangaList) && ReadingMangaList.length > 0) { %>
+                <% ReadingMangaList.slice(0, 3).forEach((animeEntry) => { %>
+                    <% const animeDetails = animeEntry['0']; %>
+                    <div class="anime_boxes">
+                        <div class="anime_box">
+                            <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                                <div class="box-img">
+                                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>">
+                                </div>
+                                <div class="animeName">
+                                    <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                                        <%= animeDetails.TitleEnglish %>
+                                    </a>
+                                </div>
+                            </a>
                         </div>
-                        <div class="animeName">
-                            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
-                        </div>
-                    </a>
-                </div>
+                    </div>
                 <% }); %>
-            </div>
             <% } else { %>
-            <p>You have no anime in your top 3.</p>
+                <p style="color:white; margin-left: 30px;">You are currently reading nothing.</p>
             <% } %>
         </div>
     </div>
-    <div class="top_header"> 
-        <h3 class="my_h3 text-light" style="margin-left:20px; text-decoration: underline;text-underline-position: under;">Your Top 3 Manga</h3>
-        <div class="anime_container">
-            <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-            <% const recentAnimeList = animeList.slice(-3).reverse(); %>
-            <div class="anime_boxes">
-                <% recentAnimeList.forEach(anime => { %>
-                <div class="anime_box">
-                    <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
-                        <div class="box-img">
-                            <img src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
-                        </div>
-                        <div class="animeName">
-                            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
-                        </div>
-                    </a>
-                </div>
-                <% }); %>
-            </div>
-            <% } else { %>
-            <p>You have no manga in your top 3.</p>
-            <% } %>
-        </div>
-    </div>
+    
 </div>
 <div class="quote_of_day_bg">
     <h1 class="quote_of_day_header">Quote of The Day</h1>
