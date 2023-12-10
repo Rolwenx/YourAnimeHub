@@ -13,8 +13,12 @@ router.get('/quotes', browseQuoteAction);
 //router.get('/browse/reviews', browseReviewsAction);
 
 router.get('/anime/recently_added', browseAnimeRecentlyAddedAction);
+router.get('/anime/popular', browseAnimePopularAction);
+router.get('/anime/top-100', browseAnimeTopAction);
 
 router.get('/manga/recently_added', browseMangaRecentlyAddedAction);
+router.get('/manga/popular', browseMangaPopularAction);
+router.get('/manga/top-100', browseMangaTopAction);
 
 
 async function browseAnimeAction(request, res) {
@@ -101,6 +105,40 @@ async function browseAnimeRecentlyAddedAction(request, res) {
     
 }
 
+async function browseAnimePopularAction(request, res) {
+    
+    try {
+        const animeList = await animeRepo.getAllAnime();
+
+
+        res.render('browse/anime_popular', {
+            animeList,user: request.user,
+            activePage: 'browse',
+        });
+    } catch (error) {
+        console.error('Error in browseAnimePopularAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
+
+async function browseAnimeTopAction(request, res) {
+    
+    try {
+        const animeList = await animeRepo.getAllAnime();
+
+
+        res.render('browse/anime_top100', {
+            animeList,user: request.user,
+            activePage: 'browse',
+        });
+    } catch (error) {
+        console.error('Error in browseAnimeTopAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
+
 async function browseMangaRecentlyAddedAction(request, res) {
     
     try {
@@ -108,7 +146,7 @@ async function browseMangaRecentlyAddedAction(request, res) {
 
 
         res.render('browse/manga_recently', {
-            mangaList, user: request.user,
+            mangaList,user: request.user,
             activePage: 'browse',
         });
     } catch (error) {
@@ -118,25 +156,45 @@ async function browseMangaRecentlyAddedAction(request, res) {
     
 }
 
+async function browseMangaPopularAction(request, res) {
+    
+    try {
+        const mangaList = await animeRepo.getAllMangas();
+
+
+        res.render('browse/manga_popular', {
+            mangaList,user: request.user,
+            activePage: 'browse',
+        });
+    } catch (error) {
+        console.error('Error in browseMangaPopularAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
+
+async function browseMangaTopAction(request, res) {
+    
+    try {
+        const mangaList = await animeRepo.getAllMangas();
+
+
+        res.render('browse/manga_top100', {
+            mangaList,user: request.user,
+            activePage: 'browse',
+        });
+    } catch (error) {
+        console.error('Error in browseMangaTopAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
 
 
 // http://localhost:9000/browse/reviews
 router.get('/reviews', (req, res) => {
     //res.send('Hello, from controller...');
     res.render('browse/browse_reviews', { user: req.user, activePage: 'browse', });
-});
-
-// http://localhost:9000/browse/anime/popular
-router.get('/anime/popular', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/anime_popular', { user: req.user, activePage: 'browse', });
-});
-
-
-// http://localhost:9000/browse/anime/top-100
-router.get('/anime/top-100', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/anime_top100', { user: req.user,activePage: 'browse', });
 });
 
 // http://localhost:9000/browse/manga/popular

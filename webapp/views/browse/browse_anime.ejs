@@ -97,8 +97,13 @@
                         <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
                     </span>
 
-                <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
-                <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+                    <% if (anime.EpisodeCount) { %>
+                      <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+                      <% } %>
+                      <% if (anime.AnimeStatus) { %>
+                        <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+                      <% } %>
+                <p><strong>Format:</strong> <%= anime.TypeFormat %></p>
                 <p><strong>Genres:</strong><br>
                     <% const genres = anime.Genre.split(','); %>
                     <% genres.forEach(genre => { %>
@@ -114,7 +119,7 @@
           </div>
         <% }); %>
       <% } else { %>
-        <p>No anime available in the database.</p>
+        <p style="color:white;">No anime available in the database.</p>
       <% } %>
     </div>
   </div>
@@ -130,38 +135,44 @@
       <h2 class="my_h2 text-light" style="margin-left: 20px !important;">POPULAR NOW</h2>
     </div>
   </a>
-<div class="recentAnime">
-  <div class="animeCard">
-    <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-      <% const recentAnimeList = animeList.slice(-8).reverse(); %> 
-      <% recentAnimeList.forEach(anime => { %>
-        <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
-          data-bs-content="
-                  <% const score = 40; %>
-                  <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                      <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                  </span>
+  <div class="recentAnime">
+    <div class="animeCard">
+      <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
+        <% const recentAnimeList = animeList.slice(0, 8); %>
 
-              <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
-              <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
-              <p><strong>Genres:</strong><br>
-                  <% const genres = anime.Genre.split(','); %>
-                  <% genres.forEach(genre => { %>
-                    <span class='badge bg-danger me-1'><%= genre.trim() %></span>
-                  <% }); %>
-              </p>">
-          <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
-            <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
-          </a>
-          <div class="animeName">
-            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+        <% recentAnimeList.forEach(anime => { %>
+          <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
+            data-bs-content="
+                    <% const score = 40; %>
+                    <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
+                        <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
+                    </span>
+
+                    <% if (anime.EpisodeCount) { %>
+                      <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+                      <% } %>
+                      <% if (anime.AnimeStatus) { %>
+                        <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+                      <% } %>
+                <p><strong>Format:</strong> <%= anime.TypeFormat %></p>
+                <p><strong>Genres:</strong><br>
+                    <% const genres = anime.Genre.split(','); %>
+                    <% genres.forEach(genre => { %>
+                      <span class='badge bg-danger me-1'><%= genre.trim() %></span>
+                    <% }); %>
+                </p>">
+            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+              <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+            </a>
+            <div class="animeName">
+              <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+            </div>
           </div>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <p>No anime available in the database.</p>
-    <% } %>
-  </div>
+        <% }); %>
+      <% } else { %>
+        <p style="color:white;">No anime available in the database.</p>
+      <% } %>
+    </div>
 </div>
 <button  id="load-more-button" class="load-more-button" onclick="window.location.href='/browse/anime/popular';">
   View All
@@ -175,7 +186,7 @@
   </a>
   <div class='top_100'>
       <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-          <% const recentAnimeList = animeList.slice(-10).reverse(); %> 
+        <% const recentAnimeList = animeList.slice(0,10); %>
           <% recentAnimeList.forEach((anime, index) => { %>
               <div class="individual_card">
                   <div class="number text-light"><strong>#<%= index + 1 %></strong></div>
@@ -202,19 +213,20 @@
               </div>
           <% }); %>
       <% } else { %>
-          <p>No anime available in the database.</p>
+          <p style="color:white;">No anime available in the database.</p>
       <% } %>
   </div>
   
 </div>
 
-
-</body>
-
+</div>
 <script>
   var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)
   })
   </script>
+  <%- include('../partials/footer.ejs') %>
+
+</body>
 </html>
