@@ -1,17 +1,106 @@
 <%
-const title = "{Username's Review} - YourAnimeHub";
-
+const score = 100
 %>
-<%- include('../partials/header.ejs', { title: title }) %>
+
+<%- include('../partials/header.ejs', { title: "TEST" }) %>
+
+<link type="text/css" rel="stylesheet" href="/css/styleViewReview.css">
+
+<style>
+  .review-container {
+    position: relative;
+    height: 270px;
+    background: url("https://i.imgur.com/zAeODYu.png");
+    overflow: hidden;
+}
 
 
-<section>
-  <h1 style="text-align: center;">This is the View Review page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page that will apear when user wants to view a review.</h4>
-</section>
+.review-rate {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 150px;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        margin-top: 35px;
+    }
+
+    /* Additional styles for dynamic background color */
+    .red-bg {
+        background-color: #FF5733; /* Red */
+    }
+
+    .orange-bg {
+        background-color: #FFA500; /* Orange */
+    }
+
+    .green-bg {
+        background-color: #4CAF50; /* Green */
+    }
+
+    .rate-btn{
+      font-weight: 900;
+      font-size: 30px;
+    }
+</style>
+
+<div class="review-container">
+  <div class="overlay"></div>
+  <div class="content">
+      <h2><a href="#">Anime Title</a></h2>
+      <h4>A Review made by User</h4>
+    
+  </div>
+  
+</div>
+
+<div class="review-text">
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vulputate et est vitae gravida. Duis ex eros, facilisis quis facilisis ut, semper ac nisl. Morbi congue, risus non luctus lacinia, dui lectus tempor neque, nec placerat est dolor sed nunc. Donec consectetur enim quis justo ultricies, a laoreet turpis porttitor. Nullam nisi dui, laoreet mattis ligula et, malesuada euismod erat. Morbi justo erat, condimentum non erat eu, ultrices blandit metus. In sed justo orci. Quisque elit enim, tincidunt eget tincidunt sit amet, venenatis non lorem. Sed diam odio, aliquet ac cursus porttitor, porta sed diam. Integer viverra facilisis leo, imperdiet pellentesque diam cursus at. Curabitur lobortis tempus pretium. Aenean viverra venenatis metus, ut ullamcorper nibh scelerisque quis. Praesent sodales rhoncus ex. Aenean viverra, quam sed feugiat sollicitudin, orci sem feugiat odio, et tristique ante nisl eu felis.
+
+    Vivamus nunc ex, accumsan sed arcu eu, facilisis ultricies felis. Nullam egestas dolor sit amet feugiat bibendum. Donec sed felis dictum, vehicula arcu in, dictum augue. Fusce elementum semper risus, nec aliquam ante placerat nec. Quisque et orci sollicitudin, vulputate turpis vel, porttitor lectus. Nam turpis lectus, sagittis vitae nisl at, dictum porta ex. Nunc nec egestas tellus. In dapibus nisl vitae libero fermentum cursus. Nullam a urna cursus, mattis felis in, venenatis justo. Donec et est non enim consequat luctus id a nibh. Mauris orci nisi, aliquam quis porttitor eu, accumsan non arcu.
+    
+    Sed sed interdum ipsum, eu molestie justo. Pellentesque molestie sem interdum magna blandit pulvinar. Aliquam ultricies ipsum sed sem euismod pellentesque. Maecenas iaculis laoreet congue. Aliquam semper enim ac posuere sodales. Etiam vitae dapibus orci. Fusce non porta nulla, aliquam sodales turpis.
+    
+    Nulla venenatis massa ut metus mattis fermentum. Maecenas a aliquet urna, at pretium massa. Aenean in nisl ac nisi posuere molestie vitae non sapien. Phasellus lobortis leo maximus ex sollicitudin, in volutpat lectus dignissim. Nam quis turpis nec magna ornare porta. In at eros nulla. Morbi condimentum aliquam sapien a pretium. Nulla in blandit est, ac congue nisl. Ut consectetur dolor est, nec varius enim efficitur vel. Sed sit amet pellentesque est. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nunc est, luctus quis vulputate at, sodales et justo. Phasellus blandit, ante a lobortis convallis, massa neque rhoncus urna, non consequat orci augue at elit.
+    
+    Pellentesque a nunc feugiat, blandit odio a, ornare purus. Aliquam gravida at mi quis semper. Maecenas lorem arcu, posuere a est a, aliquam posuere ipsum. Quisque molestie lorem sem, at sodales justo tristique at. Nam porttitor sem non mi sagittis lobortis. Nulla porttitor ligula sed congue commodo. Suspendisse dui purus, accumsan eget ipsum id, pellentesque lobortis massa. Phasellus tempus libero est, vel placerat nibh condimentum nec. Curabitur interdum arcu nulla, eget maximus ante vulputate nec.</p>
+</div>
 
 
-<%- include('../partials/footer.ejs', { title: title }) %>
+<!--i want that if score between 0 - 35 - background is red
+if between 35 - 60 its orange
+if between 70 - 100
+-->
+
+<% if (score >= 0 && score <= 35) { %>
+  <div class="review-rate">
+    <div class="review-rate" style="background-color: #FF5733;"> <!-- Example score: 20 -->
+      <p class="rate-btn"><%= score %>/100</p>
+  </div>
+<% } %>
+<% if (score >= 36 && score <= 65) { %>
+  <div class="review-rate" style="background-color: #FFA500;"> <!-- Example score: 50 -->
+    <p class="rate-btn"><%= score %>/100</p>
+  </div>
+<% } %>
+<% if (score >= 66 && score <= 100) { %>
+  <div class="review-rate" style="background-color: #4CAF50;"> <!-- Example score: 80 -->
+    <p class="rate-btn"><%= score %>/100</p>
+  </div>
+<% } %>
+
+</div>
+
+<div class="review-like">
+  <div class="like-dislike">
+    <button class="like-btn">Like</button>
+    <button class="dislike-btn">Dislike</button>
+    <p>10 out of 12 users liked this review</p>
+  </div>
+</div>
+
+<%- include('../partials/footer.ejs') %>
 
 </body>
 </html>
