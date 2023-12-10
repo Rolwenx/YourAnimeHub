@@ -1,5 +1,6 @@
+
 <%
-const title = 'Browse Characters - YourAnimeHub';
+const title = character ? `${character.CharName} - YourAnimeHub` : 'YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title}) %>
 

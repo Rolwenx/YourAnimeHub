@@ -1,16 +1,57 @@
 <%
-const title = '{AnimeName Quote} - YourAnimeHub';
+const title = quote ? `Quote #${quote.QuoteID} - YourAnimeHub` : 'YourAnimeHub';
 %>
+
+
+
 <%- include('../partials/header.ejs', { title: title }) %>
 
+<link type="text/css" rel="stylesheet" href="/css/styleViewReview.css">
 
-<section>
-  <h1 style="text-align: center;">This is the View Quote page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page that will apear when user wants to view a quote from an anime</h4>
-</section>
+<style>
+  .review-container {
+    position: relative;
+    height: 270px;
+    background: url("<%= quote.BackgroundImageURL %>");
+    overflow: hidden;
+  }
+
+  .review-text{
+    text-align: center;
+  }
+</style>
+
+<div class="review-container">
+  <div class="overlay"></div>
+  <div class="content">
+      <h2><a href="#"><%= quote.TitleEnglish %></a></h2>
+      <h4>A Quote By <%= quote.CharName %></h4>
+    
+  </div>
+  
+</div>
+
+<div class="review-text">
+  <p><%= quote.QuoteText %></p>
+</div>
 
 
-<%- include('../partials/footer.ejs', { title: title }) %>
+<div class="review-like">
+  <div class="like-dislike">
+    <form action="/quote/<%= quote.QuoteID %>/like" method="post">
+      <button class="like-btn" type="submit" name="action" value="like">Like</button>
+    </form>
+    <form action="/quote/<%= quote.QuoteID %>/like" method="post">
+      <button class="dislike-btn" type="submit" name="action" value="dislike">Dislike</button>
+    </form>
+    <p><%= likeArray[1] %> out of <%= likeArray[0] %> users liked this quote</p>
+  </div>
+</div>
+
+
+
+
+<%- include('../partials/footer.ejs') %>
 
 </body>
 </html>

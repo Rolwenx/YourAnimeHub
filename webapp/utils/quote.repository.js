@@ -5,16 +5,6 @@ const animeRepo = require('../utils/anime.repository.js');
 const characterRepo = require('../utils/characters.repository.js');
 
 module.exports = {
-    getBlankQuote() {
-        // Return a template object representing a quote with default values
-        return {
-            "QuoteID": 0,
-            "QuoteText": "",
-            "CharacterID": 0,
-            "AnimeID": 0,
-            "QuoteLikes": 0
-        };
-    },
 
     async getAllQuotes() {
         try {
@@ -46,24 +36,29 @@ module.exports = {
             throw err;
         }
     },
-    
     async getOneQuote(quoteId) {
         try {
             let conn = await pool.getConnection();
-            let sql = "SELECT * FROM AnimeQuote WHERE QuoteID = ?";
+            let sql = `
+                SELECT quote.*, anime_char.CharName, anime.TitleEnglish, anime.BackgroundImageURL
+                FROM AnimeQuote AS quote
+                INNER JOIN Character_Card AS anime_char ON quote.CharacterID = anime_char.CharacterID
+                INNER JOIN Anime AS anime ON quote.AnimeID = anime.AnimeID
+                WHERE quote.QuoteID = ?;
+            `;
             const [rows, fields] = await conn.execute(sql, [quoteId]);
             conn.release();
-
-            if (rows != null) {
-                return rows;
+    
+            if (rows!= null) {
+                return rows; 
             } else {
-                return false;
+                return null;
             }
         } catch (err) {
             console.error('Error in getOneQuote:', err);
             throw err;
         }
-    },
+    },    
 
     async delOneQuote(quoteId) {
         try {
