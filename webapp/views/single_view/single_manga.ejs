@@ -44,11 +44,21 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
       Add to List
     </button>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Set as Complete</a></li>
-      <li><a class="dropdown-item" href="#">Set as Watching</a></li>
-      <li><a class="dropdown-item" href="#">Set as Planning</a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#">Add Manually</a></li>
+      <form action="/anime/<%=anime.AnimeID%>/set-complete" method="post">
+        <li>
+          <button type="submit" name="action" value="set-complete" class="dropdown-item">Set as Complete</button>
+        </li>
+        <li>
+          <button type="submit" name="action" value="set-reading" class="dropdown-item">Set as Reading</button>
+        </li>
+        <li>
+          <button type="submit" name="action" value="set-planning" class="dropdown-item">Set as Planning</button>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+          <button type="submit" name="action" value="add-manually" class="dropdown-item">Add Manually</button>
+        </li>
+      </form>
     </ul>
     <button id="like_btn" class="like_btn" onclick="window.location.href='';">
       <i class="fa fa-thumbs-up"><%= manga.Likes%></i>

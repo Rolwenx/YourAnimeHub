@@ -1,5 +1,6 @@
 pool = require("../utils/db.js");
 const util = require('util');
+const animeRepo = require('../utils/anime.repository.js');
 const bcrypt = require('bcrypt');
 // Promisify the bcrypt.compare function
 const compareAsync = util.promisify(bcrypt.compare);
@@ -216,5 +217,34 @@ module.exports = {
         throw err;
     }
 },
+
+async getAllAnimeForWatchlist(userId, action,type) {
+  try {
+    let conn = await pool.getConnection();
+    let sql = "SELECT * FROM View_Anime WHERE UserID = ? AND AnimeStatus = ?";
+    let rows = await conn.execute(sql, [userId, action]);
+
+
+    let newList = [];
+    for (let i = 0; i < rows.length; i++) {
+      const animeInfo = await animeRepo.getAllAnimeInfoByID(rows[i].AnimeID,type);
+      if(animeInfo == 'Nothing'){
+        break;
+      }
+      // Combine the information from rows and animeInfo
+      const combinedInfo = { ...rows[i], ...animeInfo };
+
+      // Push the combinedInfo into the newList array
+      newList.push(combinedInfo);
+    }
+
+    conn.release();
+    return newList;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
 
 }; 

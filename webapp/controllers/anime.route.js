@@ -7,6 +7,52 @@ const animeRepo = require('../utils/anime.repository');
 router.get('/:animeId/:animeName', AnimeViewAction);
 router.get('/:animeId', AnimeViewAction);
 
+router.post('/:animeId/set-complete', async (req, res) => {
+    try {
+        const { action } = req.body;
+        var animeId = req.params.animeId;
+        const userId = req.user.UserID;
+  
+        if (action === 'set-complete' || action === 'set-watching' || action === 'set-planning') {
+            // Extract animeId from the form data or request parameters
+            const animeId = req.body.animeId || req.params.animeId;
+            const userId = req.user.UserID;
+      
+            
+            console.log("Going into update function");
+            await animeRepo.updateAnimeStatus(userId, animeId, action);
+      
+            res.send(`
+          <script>
+            alert('Anime status updated successfully.');
+            window.location.href = '/browse/anime';
+          </script>
+        `);
+        return res.end();
+          } else {
+            
+        
+            res.send(`
+          <script>
+            alert('Invalid action.');
+            window.location.href = '/browse/anime';
+          </script>
+        `);
+        return res.end();
+          }
+
+        } catch (error) {
+        console.error('Error:', error);
+        res.send(`
+          <script>
+            alert('Internal Server Error');
+            window.location.href = '/browse/anime';
+          </script>
+        `);
+        return res.end();
+        }
+  });
+
 router.get('/:animeId/:animeName/characters', AnimeViewActionCharacters);
 router.get('/:animeId/characters', AnimeViewActionCharacters);
 

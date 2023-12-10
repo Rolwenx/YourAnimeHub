@@ -7,15 +7,152 @@ const userRepo = require('../utils/users.repository');
 router.use('/', checkUserAuthentication);
 router.use('/', checkAdminAuthentication);
 
-// http://localhost:9000/user
 router.get('/', (req, res) => {
     res.render('user/user', { user: req.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
 });
 
-// http://localhost:9000/user/watchlist
-router.get('/watchlist', (req, res) => {
-    res.render('user/user_watchlist', { user: req.user, title: 'Profile - YourAnimeHub', activePage: 'your_list' });
-});
+
+router.get('/watchlist/anime', UserAnimeWatchlistAction);
+router.get('/watchlist/anime/complete', UserAnimeCompleteWatchlistAction);
+router.get('/watchlist/anime/watching', UserAnimeWatchingWatchlistAction);
+router.get('/watchlist/anime/planning', UserAnimePlanningWatchlistAction);
+
+
+
+async function UserAnimeWatchlistAction(request, response) {
+    var userId = request.user.UserID;
+
+    try {
+        var CompleteAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Anime');
+        var PlanningAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Anime');
+        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
+
+        
+        response.render("user/user_watchlist_anime", {"WatchingAnimeList":WatchingAnimeList,
+        "CompleteAnimeList": CompleteAnimeList,
+        "PlanningAnimeList":PlanningAnimeList,
+         user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
+    } catch (error) {
+        console.error('Error in UserAnimeCompleteWatchlistAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+async function UserAnimeCompleteWatchlistAction(request, response) {
+    var userId = request.user.UserID;
+
+    try {
+        var CompleteAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Anime');
+
+
+        response.render("user/user_watchlist_anime_complete", {"CompleteAnimeList": CompleteAnimeList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
+    } catch (error) {
+        console.error('Error in UserAnimeCompleteWatchlistAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+async function UserAnimeWatchingWatchlistAction(request, response) {
+    var userId = request.user.UserID;
+
+    try {
+        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
+
+
+        response.render("user/user_watchlist_anime_watching", {"WatchingAnimeList": WatchingAnimeList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
+    } catch (error) {
+        console.error('Error in UserAnimeWatchingWatchlistAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+
+
+async function UserAnimePlanningWatchlistAction(request, response) {
+    var userId = request.user.UserID;
+
+    try {
+        var PlanningAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Anime');
+
+
+        response.render("user/user_watchlist_anime_planning", {"PlanningAnimeList": PlanningAnimeList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
+    } catch (error) {
+        console.error('Error in UserAnimeWatchingWatchlistAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+router.get('/watchlist/manga', UserMangaWatchlistAction);
+router.get('/watchlist/manga/complete', UserMangaCompleteWatchlistAction);
+router.get('/watchlist/manga/reading', UserMangaReadingWatchlistAction);
+router.get('/watchlist/manga/planning', UserMangaPlanningWatchlistAction);
+
+
+
+async function UserMangaWatchlistAction(request, response) {
+    var userId = request.user.UserID;
+
+    try {
+        var CompleteMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Manga');
+        var PlanningMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Manga');
+        var ReadingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
+
+        
+        response.render("user/user_watchlist_manga", {"ReadingMangaList":ReadingMangaList,
+        "CompleteMangaList": CompleteMangaList,
+        "PlanningMangaList":PlanningMangaList,
+         user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
+    } catch (error) {
+        console.error('Error in UserMangaWatchlistAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+async function UserMangaCompleteWatchlistAction(request, response) {
+    var userId = request.user.UserID;
+
+    try {
+        var CompleteMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Manga');
+
+
+
+        response.render("user/user_watchlist_manga_complete", {"CompleteMangaList": CompleteMangaList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
+    } catch (error) {
+        console.error('Error in UserMangaCompleteWatchlistAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+async function UserMangaReadingWatchlistAction(request, response) {
+    var userId = request.user.UserID;
+
+    try {
+        var ReadingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
+
+
+        response.render("user/user_watchlist_manga_reading", {"ReadingMangaList": ReadingMangaList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
+    } catch (error) {
+        console.error('Error in UserMangaReadingWatchlistAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+
+
+async function UserMangaPlanningWatchlistAction(request, response) {
+    var userId = request.user.UserID;
+
+    try {
+        var PlanningMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Manga');
+
+
+        response.render("user/user_watchlist_manga_planning", {"PlanningMangaList": PlanningMangaList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
+    } catch (error) {
+        console.error('Error in UserMangaPlanningWatchlistAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
 
 router.get('/settings', UserEditAction);
 router.post('/settings/update/profile', UserUpdateProfileAction);

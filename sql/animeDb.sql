@@ -81,6 +81,7 @@ CREATE TABLE AnimeQuote(
    CharacterID INT NOT NULL,
    AnimeID INT NOT NULL,
 	QuoteLikes INT DEFAULT 0,
+   QuoteDislikes INT DEFAULT 0,
    isQuoteOfDay VARCHAR(5),
    FOREIGN KEY(CharacterID) REFERENCES Character_Card(CharacterID),
    FOREIGN KEY(AnimeID) REFERENCES Anime(AnimeID)
@@ -117,14 +118,17 @@ CREATE TABLE View_Anime(
    AnimeID INT,
    UserID INT,
    ReviewText TEXT,
-	 ReviewDate TIMESTAMP, -- Date and time of the review
+	ReviewDate TIMESTAMP, -- Date and time of the review
    RateGrade SMALLINT,
-	 EpisodeProgress INT, -- to track episodes watched
-	 AnimeStatus VARCHAR(50), -- Completed, Ongoing, Planning, Paused
-	 TotalRewatch INT,   -- how many times the user watched anime
-	 ChaptersRead INT,   -- to track chapters read
-	 StartDate DATE,
+   LikesOnReview INT,
+   DislikesOnReview INT,
+	EpisodeProgress INT, -- to track episodes watched
+	AnimeStatus VARCHAR(50), -- Watching, Planning, Completed, Rewatching, Paused, Dropped
+	TotalRewatch INT,   -- how many times the user watched anime
+	ChaptersRead INT,   -- to track chapters read
+	StartDate DATE,
    EndDate DATE,
+   Notes TEXT,
    PRIMARY KEY(AnimeID, UserID),
    FOREIGN KEY(AnimeID) REFERENCES Anime(AnimeID),
    FOREIGN KEY(UserID) REFERENCES User_Profile(UserID)

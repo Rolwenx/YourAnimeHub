@@ -1,0 +1,59 @@
+body {
+    background-color: #f8f9fa;
+  }
+
+  a{
+    text-decoration: none;
+    color: black;
+  }
+
+  h2{
+    color: white;
+  }
+  .anime-block {
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .anime_title_box{
+    display: flex;
+  }
+  .anime_title_box img{
+    margin-right: 20px;
+  }
+
+  .anime_title_box p{
+    margin-top: 20px;
+  }
+
+  .anime_title_box p{
+    margin-top: 20px;
+  }
+
+  .elements{
+    margin-top: 20px;
+  }
+  .anime-row:hover td {
+  background-color: rgb(186, 32, 45);
+  color:white; 
+
+}
+
+.anime_title_box:hover p{
+  color:white; 
+}
+
+.view_all_btn{
+  margin: 20px auto; 
+    display: block; /* Ensure it's a block-level element */
+    background-color: rgb(41, 81, 135);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}

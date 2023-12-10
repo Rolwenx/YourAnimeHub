@@ -332,6 +332,29 @@ module.exports = {
             throw err;
         }
     },
+
+    async getAllAnimeInfoByID(animeID,type) {
+        try {
+            let conn = await pool.getConnection();
+            let sql = "SELECT * FROM Anime WHERE AnimeID = ? AND AnimeFormat = ?";
+            const rows = await conn.query(sql, [animeID, type]);
+
+            conn.release();
+
+            
+            if (rows.length == 0) {
+
+                return 'Nothing';
+            } else {
+
+                return rows
+            }
+        } catch (err) {
+            console.error('Error executing query:', err);
+            throw err;
+        }
+    },
+    
     
     //nOT FUNCTIONAL
     async searchAnimeByTitle(searchTerm) {
@@ -347,5 +370,31 @@ module.exports = {
     },
     
 
+    async updateAnimeStatus(userId, animeId, status) {
+        console.log("i'm in the update funct");
+        let conn = await pool.getConnection();
+        console.log(userId);
+        console.log(animeId);
+      
+        // Check if a row exists for the given animeId and userId
+        let checkSql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+        let [rows] = await conn.execute(checkSql, [animeId, userId]);
+        console.log(rows);
+      
+        if (rows == null) {
+          // If no row exists, insert a new row
+          let insertSql = 'INSERT INTO View_Anime (AnimeID, UserID, AnimeStatus) VALUES (?, ?, ?)';
+          await conn.execute(insertSql, [animeId, userId, status]);
+        } else {
+          // If a row exists, update the status
+          let updateSql = 'UPDATE View_Anime SET AnimeStatus = ? WHERE AnimeID = ? AND UserID = ?';
+          await conn.execute(updateSql, [status, animeId, userId]);
+        }
+      
+        conn.release();
+      
+        return true;
+      },
+      
 
 };
