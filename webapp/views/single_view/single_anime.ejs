@@ -146,20 +146,27 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
    
     <div class="characters_section">
       <a href="">
-        <div>
-          <h2 class="my_h2 text-light" style="margin-left: 20px !important;">CHARACTERS</h2>
-        </div>
+          <div>
+              <h2 class="my_h2 text-light" style="margin-left: 20px !important;">CHARACTERS</h2>
+          </div>
       </a>
-      <div class="character_grid">
-        <% for (let i = 0; i < Math.min(6, charactersDetails.length); i++) { %>
-            <div class="character_item">
-                <a href="/character/<%= charactersDetails[i].CharacterID %>/<%= charactersDetails[i].CharName %>">
-                    <img src="<%= charactersDetails[i].ImageURL %>" alt="<%= charactersDetails[i].CharName %>">
-                    <p style="color: white; font-weight: 600; margin-top: 10px;"><%= charactersDetails[i].CharName %></p>
-                </a>
-            </div>
-        <% } %>
-    </div>
+      <% if (charactersDetails && charactersDetails.length > 0) { %>
+          <div class="character_grid">
+              <% for (let i = 0; i < Math.min(6, charactersDetails.length); i++) { %>
+                  <div class="character_item">
+                      <a href="/character/<%= charactersDetails[i].CharacterID %>/<%= charactersDetails[i].CharName %>">
+                          <img src="<%= charactersDetails[i].ImageURL %>" alt="<%= charactersDetails[i].CharName %>">
+                          <p style="color: white; font-weight: 600; margin-top: 10px;"><%= charactersDetails[i].CharName %></p>
+                      </a>
+                  </div>
+              <% } %>
+          </div>
+      <% } else { %>
+          <p style="color:white;">No characters added yet in the database</p>
+      <% } %>
+  </div>
+  
+    
     
     
     

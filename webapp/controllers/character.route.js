@@ -4,22 +4,23 @@ const router = express.Router();
 const characterRepo = require('../utils/characters.repository');
 
 
-router.get('/:characterId/:charName', adminCharacterViewAction);
-router.get('/:characterId', adminCharacterViewAction);
+router.get('/:characterId/:charName', CharacterViewAction);
+router.get('/:characterId', CharacterViewAction);
 
 
-async function adminCharacterViewAction(request, response) {
+
+async function CharacterViewAction(request, response) {
     var characterId = request.params.characterId;
     var charName = request.params.charName;
 
     try {
         // Fetch the character data
         var character = await characterRepo.getOneCharacter(characterId);
-        console.log(character);
+        var related_anime = await characterRepo.getAnimeByCharacterID(characterId);
 
-        response.render("single_view/single_character", { "character": character, user: request.user,  activePage: 'browse' });
+        response.render("single_view/single_character", { "related_anime":related_anime, "character": character, user: request.user,  activePage: 'browse' });
     } catch (error) {
-        console.error('Error in adminCharacterViewAction:', error);
+        console.error('Error in CharacterViewAction:', error);
         response.status(500).send('Internal Server Error');
     }
 }

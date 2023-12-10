@@ -4,123 +4,148 @@ const title = 'Browse Characters - YourAnimeHub';
 <%- include('../partials/header.ejs', { title: title}) %>
 
 <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<!-- Your custom CSS -->
 <link rel="stylesheet" href="https://unpkg.com/jam-icons/css/jam.min.css">
 <link type="text/css" rel="stylesheet" href="/css/styleViewCharacter.css">
+<link type="text/css" rel="stylesheet" href="/css/styleViewAnime.css">
 
-</head>
-<body>
 
-  <div class="background"></div>
+<style>
+    .hero:before {
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+      background: white;
+      z-index: -1;
+      transform: skewY(-2.2deg);
+      transform-origin: 0 0;
+    }
+  </style>
+  
+  
+  <div class="anime_card">
+    
+      
+      <img src="<%= character.ImageURL %>" alt="cover" class="cover" />
+          
+      <div class="hero">
+        <div class="overlay"></div>
+        <div class="details">
+        
+          <div class="title1"><%= character.CharName %></div>
+          <% if (character.NamesGiven) { %>
+            <p class="names_given"><%- character.NamesGiven%></p>
+            <% } %>
 
-<div class="background_accent"></div>
-
-<div class="container">
-  <div class="character_cont">
-
-    <div class="row">
-
-        <div class="col-md-12 character_hover">
-
-            <div class="portrait">
-                <img class="cover_image img-fluid" src="<%= character.ImageURL %>" alt="<%= character.charName %>">
-            </div>
-
-            <div class="character_name">
-                <%= character.CharName %>
-            </div>
-
-            <div class="quick_stats text-center">
-
-                <div class="stat_cont">
-                    <ul class="stats list-unstyled">
-                        <% if (character.Birthday) { %>
-                            <li><b>Birthday:</b> <%= character.Birthday %></li><br>
-                        <% } %>
-                        <% if (character.Age) { %>
-                          <li><b>Age:</b> <%= character.Age %> </li>
-                        <% } %>
-                        <% if (character.Height) { %>
-                            <li><b>Height:</b> <%= character.Height %></li><br>
-                        <% } %>
-                        <% if (character.Gender) { %>
-                            <li><b>Gender:</b> <%= character.Gender %></li>
-                        <% } %>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="character_links">
-                <a href="#" class="btn btn-light">Related Manga:</a>
-                <a href="#" class="btn btn-light heart-btn">&#10084;</a>
-            </div>
+            <% if (character.HiddenSurnames) { %>
+                <p class="spoiler" id="HiddenSurnames">
+                    <%- character.HiddenSurnames%>
+                </p>
+            <% } %>
+            <div class="spoiler-tooltip" id="spoilerTooltip">This section could contain spoilers.</div>
+          
+        </div> <!-- end details -->
+      </div>
+  </div> <!-- end movie-card -->
+  
+  <div class="add_like_description_container">
+    <div class="add_like_container">
+      <button id="like_btn" class="like_btn" onclick="window.location.href='';">
+        <i class="fa fa-thumbs-up"><%= character.Likes%></i>
+      </button>
+    </div>
+    <div class="description">
+      <p style="color:white;"><%= character.CharSynopsis %></p>
+    </div>
+    
+  </div>
+  <div class="more_inf_cont">
+      <div>
+        <h2 class="my_h2" style="color: #ffeba7;">MORE INFORMATION</h2>
+      </div>  
+        <div class="more_inf_content">
+            <% if (character.Birthday) { %>
+                <li><b>Birthday:</b> <%= character.Birthday %></li>
+            <% } %>
+            <% if (character.Age) { %>
+            <li><b>Age:</b> <%= character.Age %> </li>
+            <% } %>
+            <% if (character.Height) { %>
+                <li><b>Height:</b> <%= character.Height %></li>
+            <% } %>
+            <% if (character.Gender) { %>
+                <li><b>Gender:</b> <%= character.Gender %></li>
+            <% } %>
             
-            <div class="biography_cont">
-                <div class="biography">
+            <% if (character.Family) { %>
+                <h5 style="margin-top:20px; color:#ffeba7;">Family</h5>
+                <p style="width: 850px;"><%- character.Family %></p>
+            <% } %>
 
-                    <% if (character.NamesGiven) { %>
-                        <h2>Given Names</h2>
-                        <p style="font-size:10px !important; margin: 0 !important;"><%- character.NamesGiven%></p>
-                    <% } %>
-
-                    <% if (character.HiddenSurnames) { %>
-                        <h2>Hidden Names</h2>
-                        <p style="font-size:10px !important; margin: 0 !important; padding:0;" class="spoiler" id="HiddenSurnames">
-                            <%- character.HiddenSurnames%>
-                        </p>
-                    <% } %>
-
-                    <div class="spoiler-tooltip" id="spoilerTooltip">This section could contain spoilers.</div>
-
-                    <h1>Description</h1>
-                    <%- character.CharSynopsis.replace(/\\n\\n/g, '<br><br>') %>
-
-                    <% if (character.Family) { %>
-                        <h1>Family</h1>
-                        <p style="font-size:12px !important; margin: 0 !important;"><%- character.Family %></p>
-                    <% } %>
-
-                    <% if (character.SpecificField1) { %>
-                        <h1>More</h1>
-                        <p style="font-size:10px !important; margin: 0 !important;"><%- character.SpecificField1 %></p>
-                    <% } %>
-
-                </div>
-            </div>
-
+            <% if (character.SpecificField1) { %>
+                <h5 style="margin-top:20px; color:#ffeba7;">More Info</h5>
+                <p><%- character.SpecificField1 %></p>
+            <% } %>
         </div>
 
     </div>
+    <hr class="rounded">
+    <div class="more_inf_cont">
+        <div>
+          <h2 class="my_h2" style="margin-top: 20px; color: #ffeba7;">RELATED ANIME</h2>
+        </div>  
+          <div class="more_inf_content">
+            <div class="character_grid">
+                <% for (let i = 0; i < Math.min(6, related_anime.length); i++) { %>
+                    <div class="character_item">
+                        <a href="/anime/<%= related_anime[i].AnimeID %>/<%= related_anime[i].TitleEnglish %>">
+                            <img src="<%= related_anime[i].CoverImageURL %>" alt="<%= related_anime[i].TitleEnglish %>">
+                            <p style="color: white; font-weight: 600; margin-top: 10px;"><%= related_anime[i].TitleEnglish %></p>
+                        </a>
+                    </div>
+                <% } %>
+            </div>
+          </div>
+  
+      </div>
+     
+    
   </div>
-  <div class="character_cont">
-
-    <div class="row">
-
-
-    </div>
-  </div>
-</div>
-
-<%- include('../partials/footer.ejs', { title: title }) %>
-
-<script>
+  
+  
+  
+  <%- include('../partials/footer.ejs') %>
+  <script>
     const spoilerText = document.getElementById('HiddenSurnames');
     const tooltip = document.getElementById('spoilerTooltip');
+
+    let isSpoilerVisible = false;
 
     spoilerText.addEventListener('mouseover', () => {
         tooltip.style.display = 'block';
     });
 
     spoilerText.addEventListener('mouseout', () => {
-        tooltip.style.display = 'none';
+        if (!isSpoilerVisible) {
+            tooltip.style.display = 'none';
+        }
     });
 
     spoilerText.addEventListener('click', () => {
-        spoilerText.style.filter = 'none';
-        tooltip.style.display = 'none';
+        if (isSpoilerVisible) {
+            spoilerText.style.filter = 'blur(5px)';
+            tooltip.style.display = 'none';
+        } else {
+            spoilerText.style.filter = 'none';
+            tooltip.style.display = 'block';
+        }
+
+        isSpoilerVisible = !isSpoilerVisible;
     });
 </script>
+
 </body>
 </html>

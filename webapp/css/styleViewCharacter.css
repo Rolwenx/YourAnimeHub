@@ -1,223 +1,35 @@
-body {
-    margin: 0px;
-    padding: 0px;
-    font-family: 'Poppins', sans-serif;
-    color:#000000;
+.add_like_description_container {
+    display: flex;
+    margin-left: 230px !important;
+  }
+
+  .like_btn{
+    width: auto !important;
+  }
+
+  .overlay {
+    background: rgba(0, 0, 0, 0.1) !important;
+  }
+
+
+.details {
   
-    line-height:145%;
-    font-weight:normal;
-    
-    text-align:left;
-    background:#eceff0;
-}
+  .title1 {
+    top: 5px !important;
+    font-weight: 900 !important;
+    color: black !important;
+    text-shadow: 2px 1px 3px rgba(62, 62, 62, 0.2) !important;
+  }
 
-a {
-    color:#000000;
-    text-decoration:none;
-    cursor:help;
-    border:0px;
-    margin:0px;
-    padding:0px;
-    transition:0.2s ease-in-out;
-
-}
-
-b,strong {font-weight:700;}
-
-/* --- BACKGROUND --- */
-
-.background {
-    position:fixed;
-    top:0px;
-    left:0px;
-    height:calc(100% - 1px);
-    width:100%;
-    background-position:top center;
-    background-repeat:no-repeat;
-    background-size:cover;
-    image-rendering: pixelated;
-    z-index:-3;
-}
-
-.background_accent {
-
-    bottom:0px;
-    width:100%;
-    height:100px;
-    background-color:rgb(132, 177, 214);
-    z-index:-2;
-}
-
-
-
-/* --- CONTAINER --- */
-
-.container {
-    margin:0 auto;
-    width:96%;
-    height:900px;
-    text-align:center;
-    margin-top: 30px;
-}
-
-.character_cont {
-    background-image:url('https://static.tumblr.com/zvesamf/B6Uqnkw0s/container.jpg');
-    background-repeat:repeat;
-    background-position:top left;
-    border:1px solid #e7e7e7;
-    box-shadow:5px 5px rgba(0,0,0,0.05);
-}
-
-
-/* --- CHARACTERS --- */
-
-
-
-.character_cont {
-    position:relative;
-    left:50%;
-    width:640px;
-    margin-left:-340px;
-    height:430px;
-    height: auto;
-    padding:20px;
-    text-align:left;
-    margin-bottom:75px;
-}
-
-.character_cont:hover .character_image {opacity:1;}
-
-.character_image {
-    position:relative;
-    opacity:1;
-    height:350px;
-    width:640px;
-    margin-bottom:-355px;
-    transition:0.2s ease-in-out;
-  
-}
-
-
-.character_cont:nth-of-type(2n+1) .character_image {background-color:rgb(132, 177, 214);}
-.character_cont:nth-of-type(2n+2) .character_image {background-color:rgb(97, 165, 221);}
-
-
-.character_image img {
-    height:350px;
-    width:640px;
-    /* --- TO REMOVE COLOR OVERLAY DELTETE BELOW --- */
-    mix-blend-mode: multiply;
-}
-
-/* --- CHARACTER NAME --- */
-
-.character_name {
-    position:relative;
-    top:-20px;
-    left:-35px;
-    color:transparent;
-	 text-shadow:2px 2px 0px transparent;	
-    font-weight:700;
-    font-size:40pt;
-
-}
-
-.character_cont .character_name {
-    top:-45px;
-    left:-25px;
-    text-shadow:3px -3px 0px rgba(0,0,0,0.7);
-}
-
-.character_cont:nth-of-type(2n+1) .character_name {color:rgb(132, 177, 214);}
-.character_cont:nth-of-type(2n+2) .character_name {color:rgb(80,157,220);}
-
-/* --- CHARACTER PORTRAT --- */
-
-.portrait {position:absolute;}
-
-.portrait img {
-    width:200px;
-    height:280px;
-}
-
-/* --- CHARACTER QUICK STATS --- */
-
-.quick_stats {
-    position:relative;
-    left:219px;
-    top:10px;
-    width:380px;
-    height:50px;
-    padding:10px;
-    height: auto; /* Allow the container to expand based on content */
-}
-
-.quick_stats {background:#ffffff;border:1px solid #e7e7e7;}
-
-
-
-.stat_cont {
-    position:relative;
-    top:2px;
-    left:-5px;
-    height:61px;
-    width:385px;
-    padding:0px;
-    margin:0px;
-    height: auto; /* Allow the container to expand based on content */
-}
-
-ul.stats {list-style:none;
- 
-  width: 100%;}
-
-ul.stats li {
-    font-size:9pt;
-    display:inline-block;
-    margin:0px 5px 5px 0px;
-}
-
-ul.stats li b {
-    font-weight:500;
-    border-radius:2px;
-    margin:0px;
-    color:#a4b088;
-}
-
-/* --- CHARACTER LINKS --- */
-
-.character_links {
+  .names_given{
+    top: 20px !important;
     position: relative;
-    top: 100px;
-    left: 0px;
-    width: 208px;
-    height: 75px;
-}
+    font-weight: 600;
+  }
 
-.character_links a {
-    display: inline-block;
-    text-align: center;
-    text-transform: lowercase;
-    width: 40%;
-    padding: 2px 5px;
-    margin: 0px 5px 5px 0px;
-    font-size: 9pt;
-    background: #ffffff;
-    border: 1px solid #e7e7e7;
-}
-
-.character_links a.btn-light:hover {
-    color: #ffffff;
-    background: #ff0000; /* Red background on hover */
-}
-
-.character_links a.heart-btn {
-    color: #ff0000; /* Red heart color */
-}
-
-.character_links a.heart-btn:hover {
-    color: #ffffff; /* White heart color on hover */
-    background: #ff0000; /* Red background on hover */
+  .spoiler{
+    top: 10px !important;
+  }
 }
 
 
@@ -226,77 +38,24 @@ ul.stats li b {
     filter: blur(5px); /* Apply blur effect initially */
     cursor: pointer; /* Set cursor to pointer on hover */
     position: relative;
+    font-weight: 900;
     display: inline-block;
-  }
-
-  .spoiler-tooltip {
+  }.spoiler-tooltip {
     position: absolute;
-    top: 100%;
-    left: 50%;
+    left: 500px;
     transform: translateX(-50%);
     background-color: rgba(255, 255, 255, 0.9);
     border: 1px solid #ccc;
     padding: 5px;
     font-size: 12px;
     display: none;
-    z-index: 1;
+    z-index: 1000; /* Adjust the z-index value */
   }
 
-.biography_cont {
-    position:relative;
-    top:-47px;
-    left:219px;
-    width:400px;
-    height:214px;
-    background:#ffffff;
-    border:1px solid #e7e7e7;
-
-}
-
-.biography {
-    width:360px;
-    height:169px;
-    padding:20px;
-    line-height:160%;
-    overflow-y:scroll;
-}
-
-.biography h1 {
-    font-weight:700;
+  .more_inf_cont{
+    margin-left: 150px
+  }
   
-    font-size:14pt;
-    margin:0px 0px 5px 0px;
-}
-
-.biography h2 {
-    font-weight:700;
-    font-size:10pt;
-    margin:0px 0px 0px 0px;
-}
-
-.biography img {margin:12px 10px 0px 5px;}
-
-.biography p {margin:20px 0px;}
-
-.biography b {font-weight:700;color:#779796;}
-
-.biography i {color:#a4b088;}
-
-.biography em {border-bottom:1px solid #a4b088;padding:0px;}
-
-.biography a {font-weight:700;opacity:0.5;}
-
-ul.bio {
-    list-style:none;
-    width:calc(100% - 20px);
-    margin:20px 0px 20px -30px;
-}
-
-ul.bio li {
-    color:#ffffff;
-    padding:4px 3px;
-    margin:0px 0px 3px 0px;
-}
-
-ul.bio li:nth-child(odd) {background:#a5b189;}
-ul.bio li:nth-child(even) {background:#789897;}
+  .more_inf_content{
+    color:white;
+  }

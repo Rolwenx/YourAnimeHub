@@ -13,14 +13,12 @@ module.exports = {
                 [animeId]
             );
 
-            console.log(charactersIdsResult);
 
     
             const charactersDetails = [];
             
             for (const row of charactersIdsResult) {
                 const characterId = row.CharacterID;
-                console.log(characterId);
     
                 const [characterResult] = await conn.query(
                     'SELECT CharacterID, CharName, ImageURL FROM Character_Card WHERE CharacterID = ?',
@@ -28,13 +26,11 @@ module.exports = {
                 );
 
     
-                charactersDetails.push(characterResult); // Assuming there's only one character for each ID
-                console.log(charactersDetails);
+                charactersDetails.push(characterResult);
             }
 
     
             conn.release();
-            console.log(charactersDetails);
     
             return charactersDetails;
         } catch (err) {

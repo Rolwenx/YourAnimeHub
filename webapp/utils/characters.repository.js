@@ -3,31 +3,38 @@
 pool = require("../utils/db.js");
 
 module.exports = {
-    getBlankCharacter() {
-        // Return a template object representing a character with default values
-        return {
-            "CharacterID": 0,
-            "CharName": "",
-            "Birthday": "",
-            "Age": "",
-            "Gender": "",
-            "BloodType": "",
-            "Height": "",
-            "Description": "",
-            "ImageURL": "",
-            "isMainCharacter": false,
-            "Likes": 0,
-            "Family": "",
-            "NamesGiven": "",
-            //  Hidden Spoiler Surnames field (can be hidden by the user)
-            "HiddenSurnames": "",
-            //some character cards need more info than others. 
-            // this will allow to store the
-            // if needed
-            "SpecificField1": ""
-        
-        };
-    },
+    async getAnimeByCharacterID(characterId) {
+        try {
+            let conn = await pool.getConnection();
+    
+            // We get Anime IDs related to the current character 
+            const AnimeIdsResult = await conn.query(
+                'SELECT AnimeID FROM Appear_In WHERE CharacterID = ?',
+                [characterId]
+            );
+    
+            const AnimeDetails = [];
+            
+            for (const row of AnimeIdsResult) {
+                const animeId = row.AnimeID;
+                const [AnimeResult] = await conn.query(
+                    'SELECT AnimeID, TitleEnglish, CoverImageURL FROM Anime WHERE AnimeID = ?',
+                    [animeId]
+                );
+
+    
+                AnimeDetails.push(AnimeResult);
+            }
+
+    
+            conn.release();
+    
+            return AnimeDetails;
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    },    
 
 
     async getAllCharacters() {
