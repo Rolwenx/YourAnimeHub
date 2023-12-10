@@ -128,6 +128,24 @@ module.exports = {
     }
 },
 
+  async updatePassword(userId, newPassword) {
+    try {
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update the hashed password in the database
+      let conn = await pool.getConnection();
+      let sql = 'UPDATE User_Profile SET UserPassword = ? WHERE UserID = ?';
+      await conn.execute(sql, [hashedPassword, userId]);
+      conn.release();
+
+      return true; 
+    } catch (error) {
+      console.error('Error in updatePassword:', error);
+      throw error;
+    }
+  },
+
    async createUser(userData) {
     try {
 

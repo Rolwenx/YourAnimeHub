@@ -63,12 +63,14 @@ async function UserUpdatePersonalAction(request, response) {
         Username: request.body.username,
         Email: request.body.email,
         Birthday: request.body.birthday,
+        UserPassword: request.body.userPassword,
     };
 
     try {
         var numRows = await userRepo.editOneUser(userId, userData);
+        console.log(userData.UserPassword);
+        await userRepo.updatePassword(userId,userData.UserPassword);
 
-        console.log("modif userna");
         response.redirect("/user/settings");
     } catch (error) {
         console.error('Error:', error);
