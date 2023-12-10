@@ -19,26 +19,26 @@ module.exports = {
     async getAllQuotes() {
         try {
             let conn = await pool.getConnection();
-            let sql = "SELECT * FROM AnimeQuote";
+            let sql = `
+                SELECT AnimeQuote.*, Anime.BackgroundImageURL
+                FROM AnimeQuote
+                JOIN Anime ON AnimeQuote.AnimeID = Anime.AnimeID
+            `;
     
             // Ensure rows is an array
             const quoteList = await conn.query(sql);
             conn.release();
 
-            // Map through each quote and replace AnimeID and CharacterID with names
             const updatedQuoteList = await Promise.all(quoteList.map(async (quote) => {
                 const animeName = await animeRepo.getAnimeNameByID(quote.AnimeID);
                 const characterName = await characterRepo.getCharacterNameByID(quote.CharacterID);
-
-                // Add the corresponding names to the quote object
+    
                 return {
                     ...quote,
                     AnimeName: animeName,
                     CharacterName: characterName,
                 };
             }));
-
-        
     
             return updatedQuoteList;
         } catch (err) {
@@ -46,7 +46,7 @@ module.exports = {
             throw err;
         }
     },
-
+    
     async getOneQuote(quoteId) {
         try {
             let conn = await pool.getConnection();

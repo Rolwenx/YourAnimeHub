@@ -72,11 +72,11 @@ async function loginPostAction(request, response) {
           }
         });
     } else {
-      response.render('authentification_login', { user: request.user, passwordNotMatch: true, usernameNotMatch: false, activePage:true });
+      response.render('authentification_login', { user: request.user, passwordNotMatch: true, usernameNotMatch: false, activePage:true, title: 'Login into YourAnimeHub'});
     }
   } else {
     // Username is not valid
-    response.render('authentification_login', { user: request.user, passwordNotMatch: false, usernameNotMatch: true,activePage:true });
+    response.render('authentification_login', { user: request.user, passwordNotMatch: false, usernameNotMatch: true,activePage:true, title: 'Login into YourAnimeHub' });
   }
 }
 

@@ -75,31 +75,35 @@
 <div class="quote_of_day_bg">
     <h1 class="quote_of_day_header">Quote of The Day</h1>
     <div>
-        <dl id="quote">
-            <dt>
-                <a href="/quote/<%= quote_of_the_day.AnimeID %>">
-                    <%= quote_of_the_day && quote_of_the_day.QuoteText
-                        ? quote_of_the_day.QuoteText
-                        : 'No quote of the day yet' %>
-                </a>
-            </dt>
-            <dd>
-                <a href="/character/<%= quote_of_the_day.CharacterID %>"">
-                    <%= quote_of_the_day && quote_of_the_day.CharacterName
-                        ? '-- ' + quote_of_the_day.CharacterName
-                        : 'No author available' %>
-                </a>
-            </dd>
-            <dd>
-                <a class="quote_day_anime_box" href="/anime/<%= quote_of_the_day.AnimeID %>">
-                    <%= quote_of_the_day && quote_of_the_day.AnimeName
-                        ? '[ ' + quote_of_the_day.AnimeName+' ]'
-                        : 'No Anime available' %>
-                </a>
-            </dd>
-        </dl>
+        <% if (quote_of_the_day && quote_of_the_day.AnimeID) { %>
+            <dl id="quote">
+                <dt>
+                    <a href="/quote/<%= quote_of_the_day.AnimeID %>">
+                        <%= quote_of_the_day.QuoteText || 'No quote of the day yet' %>
+                    </a>
+                </dt>
+                <dd>
+                    <a href="/character/<%= quote_of_the_day.CharacterID %>">
+                        <%= quote_of_the_day.CharacterName
+                            ? '-- ' + quote_of_the_day.CharacterName
+                            : 'No author available' %>
+                    </a>
+                </dd>
+                <dd>
+                    <a class="quote_day_anime_box" href="/anime/<%= quote_of_the_day.AnimeID %>">
+                        <%= quote_of_the_day.AnimeName
+                            ? '[ ' + quote_of_the_day.AnimeName + ' ]'
+                            : 'No Anime available' %>
+                    </a>
+                </dd>
+            </dl>
+        <% } else { %>
+            <dl id="quote"><p style="color:white;">No quote of the day today.</p></dl>
+            
+        <% } %>
     </div>
 </div>
+
 
 
 <section>
@@ -136,11 +140,11 @@
                         </div>
                     <% }); %>
                 <% } else { %>
-                    <p>No characters with upcoming birthdays in the next 7 days.</p>
+                    <p style="color:white;">No characters with upcoming birthdays in the next 7 days.</p>
                 <% } %>
 
             <% } else { %>
-                <p>No characters available in the database.</p>
+                <p style="color:white;">No characters available in the database.</p>
             <% } %>
         </div>
     </div>

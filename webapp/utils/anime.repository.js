@@ -3,33 +3,46 @@
 pool = require("../utils/db.js");
 
 module.exports = {
-    getBlankAnime() {
-        // Return a template object representing an anime/manga with default values
-        return {
-            "AnimeID": 0,
-            "TitleEnglish": "",
-            "TitleRomaji": "",
-            "TitleNative": "",
-            "Genre": "",
-            "ReleaseDate": null,
-            "EndDate": null,
-            // status (e.g., Finished, Ongoing, Paused, Dropped)
-            "AnimeStatus": "",
-            "Synopsis": "",
-            "PopularityPosition": 0,
-            // URL for the cover image
-            "CoverImageURL": "",
-            // URL for the background image
-            "BackgroundImageURL": "",
-            "StreamingPlatformURL": "",
-            "AnimeFormat": "", // TV, Manga, Movies
-            "EpisodeDuration": 0,
-            "EpisodeCount": 0, // For anime
-            "Chapters": 0, // For manga
-            "Volumes": 0, // For manga
-        };
-    },
+    async getCharactersByAnimeID(animeId) {
+        try {
+            let conn = await pool.getConnection();
+    
+            // We get character IDs related to the current Anime 
+            const charactersIdsResult = await conn.query(
+                'SELECT CharacterID FROM Appear_In WHERE AnimeID = ?',
+                [animeId]
+            );
 
+            console.log(charactersIdsResult);
+
+    
+            const charactersDetails = [];
+            
+            for (const row of charactersIdsResult) {
+                const characterId = row.CharacterID;
+                console.log(characterId);
+    
+                const [characterResult] = await conn.query(
+                    'SELECT CharacterID, CharName, ImageURL FROM Character_Card WHERE CharacterID = ?',
+                    [characterId]
+                );
+
+    
+                charactersDetails.push(characterResult); // Assuming there's only one character for each ID
+                console.log(charactersDetails);
+            }
+
+    
+            conn.release();
+            console.log(charactersDetails);
+    
+            return charactersDetails;
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    },    
+    
     async getAllAnime() {
         try {
             let conn = await pool.getConnection();

@@ -1,16 +1,214 @@
 <%
-const title = '{Manga Name} - YourAnimeHub';
+const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 %>
+
 <%- include('../partials/header.ejs', { title: title }) %>
 
+<link type="text/css" rel="stylesheet" href="/css/styleViewAnime.css">
+<style>
+  .hero:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    background: red;
+    background: url("<%= manga.BackgroundImageURL %>");
+    z-index: -1;
+    transform: skewY(-2.2deg);
+    transform-origin: 0 0;
+  }
+</style>
 
-<section>
-  <h1 style="text-align: center;">This is the View Manga page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page that will apear when user wants to view an manga</h4>
-</section>
+
+<div class="anime_card">
+  
+    
+    <img src="<%= manga.CoverImageURL %>" alt="cover" class="cover" />
+        
+    <div class="hero">
+      <div class="overlay"></div>
+      <div class="details">
+      
+        <div class="title1"><%= manga.TitleEnglish %></div>
+        
+      </div> <!-- end details -->
+    </div>
+</div> <!-- end movie-card -->
+
+<div class="add_like_description_container">
+  <div class="add_like_container">
+    <button id="add_btn" class="add_btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false";>
+      Add to List
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#">Set as Complete</a></li>
+      <li><a class="dropdown-item" href="#">Set as Watching</a></li>
+      <li><a class="dropdown-item" href="#">Set as Planning</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="#">Add Manually</a></li>
+    </ul>
+    <button id="like_btn" class="like_btn" onclick="window.location.href='';">
+      <i class="fa fa-thumbs-up"><%= manga.Likes%></i>
+    </button>
+  </div>
+  <div class="description">
+    <p style="color:white;"><%= manga.Synopsis %></p>
+  </div>
+  <!-- Add Review and Propose Edit buttons -->
+</div>
 
 
-<%- include('../partials/footer.ejs', { title: title }) %>
+<!-- Menus text above the hr -->
+<div class="menus">
+  <a href=""><p>Characters</p></a>
+  <a href=""><p>Reviews</p></a>
+  <a href=""><p>Stats</p></a>
+  <hr class="rounded">
+</div>
+
+<div class="anime_page_container">
+  
+  <div class="left_column">
+    <!-- Information about the manga -->
+    <div class="anime_info">
+      <button class="write_review_button">Write Review</button>
+      <button class="propose_edit_button">Propose Edit Request</button>
+
+      <div>
+        <p class="title_of_menu"><strong>Format:</strong> </p>
+        <p class="answer_of_menu"><%= manga.TypeFormat %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Status:</strong> </p>
+        <p class="answer_of_menu"><%= manga.AnimeStatus %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Number of Chapters:</strong> </p>
+        <p class="answer_of_menu"><%= manga.Chapters %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Number of Volumes:</strong> </p>
+        <p class="answer_of_menu"><%= manga.Volumes %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Popularity Position:</strong> </p>
+        <p class="answer_of_menu"><%= manga.PopularityPosition %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Favourited:</strong> </p>
+        <p class="answer_of_menu"><%= manga.Likes %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Start Date:</strong> </p>
+        <p class="answer_of_menu"><%= manga.ReleaseDate %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>End Date:</strong> </p>
+        <p class="answer_of_menu"><%= manga.EndDate %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Genres:</strong> </p>
+        <% const genres = manga.Genre.split(','); %>
+                    <% genres.forEach(genre => { %>
+                      <p class='genres'><%= genre.trim() %></p>
+                    <% }); %>
+        </div>
+      <div>
+        <p class="title_of_menu"><strong>English:</strong> </p>
+        <p class="answer_of_menu"><%= manga.TitleEnglish %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Romaji:</strong> </p>
+        <p class="answer_of_menu"><%= manga.TitleRomaji %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Native:</strong> </p>
+        <p class="answer_of_menu"><%= manga.TitleNative %></p>
+      </div>
+
+    </div>
+
+    
+  </div>
+
+  <div class="right_column">
+   
+    <div class="characters_section">
+      <a href="">
+        <div>
+          <h2 class="my_h2 text-light" style="margin-left: 20px !important;">CHARACTERS</h2>
+        </div>
+      </a>
+      <div class="character_grid">
+        <!-- First row -->
+        <div class="character_item">
+          <img src="https://i.imgur.com/dG3jIEC.png" alt="NAME 1">
+          <p style="color: white">NAME 1</p>
+        </div>
+        <div class="character_item">
+          <img src="https://i.imgur.com/dG3jIEC.png" alt="NAME 1">
+          <p style="color: white">NAME 1</p>
+        </div>
+  
+        <!-- Second row -->
+        <div class="character_item">
+          <img src="https://i.imgur.com/dG3jIEC.png" alt="NAME 1">
+          <p style="color: white">NAME 1</p>
+        </div>
+        <div class="character_item">
+          <img src="https://i.imgur.com/dG3jIEC.png" alt="NAME 1">
+          <p style="color: white">NAME 1</p>
+        </div>
+        <div class="character_item">
+          <img src="https://i.imgur.com/dG3jIEC.png" alt="NAME 1">
+          <p style="color: white">NAME 1</p>
+        </div>
+        <div class="character_item">
+          <img src="https://i.imgur.com/dG3jIEC.png" alt="NAME 1">
+          <p style="color: white">NAME 1</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="status_distribution">
+      <a href="">
+        <div>
+          <h2 class="my_h2 text-light" style="margin-left: 20px !important;">STATS</h2>
+        </div>
+      </a>
+      <div class="status_box all_status">
+        <div class="status_item planning">
+          <p>Planning</p>
+          <p>X Users</p>
+        </div>
+        <div class="status_item current">
+          <p>Current</p>
+          <p>X Users</p>
+        </div>
+        <div class="status_item completed">
+          <p>Completed</p>
+          <p>X Users</p>
+        </div>
+        <div class="status_item likes">
+          <p>Favourited</p>
+          <p>X Users</p>
+        </div>
+        <div class="status_item dropped">
+          <p>Dropped</p>
+          <p>X Users</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+
+<%- include('../partials/footer.ejs') %>
 
 </body>
 </html>
