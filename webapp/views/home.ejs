@@ -176,13 +176,23 @@
                               <span class='badge bg-danger me-1'><%= genre.trim() %></span>
                             <% }); %>
                         </p>">
-                  
-                  <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
-                    <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
-                  </a>
-                  <div class="animeName">
-                    <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
-                  </div>
+                    <% if (anime.AnimeFormat === 'Anime') { %>
+                        <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+                            <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+                          </a>
+                          <div class="animeName">
+                            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+                          </div>
+                        <% } %>
+                        <% if (anime.AnimeFormat === 'Manga') { %>
+                            <a href="/manga/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+                                <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+                              </a>
+                              <div class="animeName">
+                                <a href="/manga/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+                              </div>
+                            <% } %>
+                
                 </div>
               <% }); %>
             <% } else { %>
