@@ -60,6 +60,7 @@ router.get('/:animeId/characters', AnimeViewActionCharacters);
 async function AnimeViewAction(request, response) {
     var animeId = request.params.animeId;
     var charName = request.params.animeName;
+    var userId = request.user.UserID;
 
     try {
         // Fetch the anime data
@@ -68,8 +69,10 @@ async function AnimeViewAction(request, response) {
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
         const animeStatus = await animeRepo.getAnimeStatus(request.user.UserID, animeId);
+        var user_info_about_anime = await animeRepo.getUserAnime(animeId,userId);
+        response.render("single_view/single_anime", { "user_info_about_anime":user_info_about_anime, "animeStatus":animeStatus,"charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
+    
 
-        response.render("single_view/single_anime", { "animeStatus":animeStatus,"charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
     } catch (error) {
         console.error('Error in AnimeViewAction:', error);
         response.status(500).send('Internal Server Error');
@@ -79,6 +82,7 @@ async function AnimeViewAction(request, response) {
 
 async function AnimeViewActionCharacters(request, response) {
     var animeId = request.params.animeId;
+    var userId = request.user.UserID;
 
     try {
         // Fetch the anime data
@@ -86,11 +90,75 @@ async function AnimeViewActionCharacters(request, response) {
         var anime = await animeRepo.getOneAnime(animeId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
-        response.render("single_view/single_anime_characters", { "charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
+        const animeStatus = await animeRepo.getAnimeStatus(request.user.UserID, animeId);
+        var user_info_about_anime = await animeRepo.getUserAnime(animeId,userId);
+        response.render("single_view/single_anime_characters", { "user_info_about_anime":user_info_about_anime, "animeStatus":animeStatus,"charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
     } catch (error) {
         console.error('Error in AnimeViewActionCharacters:', error);
         response.status(500).send('Internal Server Error');
     }
 }
+
+
+router.get('/:animeId/:animeName/user-info', AnimeViewActionUserInfo);
+router.get('/:animeId/user-info', AnimeViewActionUserInfo);
+
+
+async function AnimeViewActionUserInfo(request, response) {
+  var animeId = request.params.animeId;
+  var userId = request.user.UserID;
+
+  try {
+      // Fetch the anime data
+      // Awaits makes sure the promise is resolved before continuing with the execution
+      var anime = await animeRepo.getOneAnime(animeId);
+      var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
+
+      const animeStatus = await animeRepo.getAnimeStatus(request.user.UserID, animeId);
+      var user_info_about_anime = await animeRepo.getUserAnime(animeId,userId);
+      response.render("single_view/single_anime_userInfo", { "user_info_about_anime":user_info_about_anime, "animeStatus":animeStatus,"charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
+  } catch (error) {
+      console.error('Error in AnimeViewActionCharacters:', error);
+      response.status(500).send('Internal Server Error');
+  }
+}
+
+router.post('/:animeId/edit', async (req, res) => {
+  try {
+  
+      var animeId = req.params.animeId;
+      var userId = req.user.UserID;
+
+      var mangaData = {
+        AnimeStatus: req.body.status || null,
+        EpisodeProgress: req.body.episodeProgress || null,
+        TotalRewatch: req.body.totalRewatches || null,
+        StartDate: req.body.startDate || null,
+        EndDate: req.body.finishDate || null,
+        Notes: req.body.notes || null,
+        RateGrade:req.body.rate || null,
+    };
+
+    var numRows = await animeRepo.editAnimeFromList(animeId, userId, mangaData);
+        res.send(`
+        <script>
+          alert('Anime information updated successfully.');
+          window.location.href = '/browse/anime';
+        </script>
+      `);
+      return res.end();
+
+      } catch (error) {
+      console.error('Error:', error);
+      res.send(`
+        <script>
+          alert('Internal Server Error');
+          window.location.href = '/browse/anime';
+        </script>
+      `);
+      return res.end();
+      }
+});
+
 
 module.exports = router;

@@ -143,7 +143,7 @@ module.exports = {
         }
     },
 
-
+ 
     async addOneAnime(animeData) {
         
         try {
@@ -231,7 +231,6 @@ module.exports = {
             let sql = "SELECT * FROM Anime WHERE AnimeID = ? AND AnimeFormat = 'Anime'";
             const [rows, fields] = await conn.execute(sql, [animeId]);
             conn.release();
-
 
 
             rows.ReleaseDate = await this.formatDate(rows.ReleaseDate);
@@ -396,6 +395,89 @@ module.exports = {
         return rows.length > 0 ? rows[0].AnimeStatus : null;
     },
     
+    async editAnimeFromList(animeId, userId, animeData) {
+        try {
+            let conn = await pool.getConnection();
+            
+            // Check if a row exists for the given animeId and userId
+        let checkSql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+        let [rows] = await conn.execute(checkSql, [animeId, userId]);
       
+        if (rows == null) {
+            
+          // If no row exists, insert a new row
+          const keys = ['AnimeID', 'UserID', ...Object.keys(animeData)];
+          const values = [animeId, userId, ...Object.values(animeData)]; 
+
+          // Construct the SQL query with named placeholders
+          const placeholders = keys.map(key => `${key} = ?`).join(', ');
+          const sql = `INSERT INTO View_Anime SET ${placeholders}`;
+
+          const result = await conn.execute(sql, values);
+
+            conn.release();
+            console.log(result);
+    
+            return result;
+        } else {
+            
+            // Construct the SQL query with named placeholders for animeData
+            const placeholders = Object.keys(animeData).map(key => `${key} = ?`).join(', ');
+            const sql = `UPDATE View_Anime SET ${placeholders} WHERE AnimeID = ? AND UserID = ?`;
+            
+            
+            // Combine values from animeData and animeId
+            const values = [...Object.values(animeData), animeId, userId];
+    
+            // Execute the query
+            const result = await conn.execute(sql, values);
+        
+    
+            conn.release();
+    
+            return result;
+          
+        }
+        } catch (err) {
+            console.error('Error in editAnimeFromList:', err);
+            throw err;
+        }
+    },
+
+    async getUserAnime(animeId,userId) {
+        try {
+
+            let conn = await pool.getConnection();
+
+                // Check if a row exists for the given animeId and userId
+            let checkSql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+            let [rows] = await conn.execute(checkSql, [animeId, userId]);
+      
+
+            let newList = [];
+            if (rows == null) {
+                return null;
+            }else{
+                let sql = "SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ?";
+                const [rows, fields] = await conn.execute(sql, [animeId,userId]);
+                conn.release();
+                console.log(rows);
+    
+                rows.StartDate = await this.formatDate(rows.StartDate);
+                rows.EndDate = await this.formatDate(rows.EndDate);
+    
+                if (rows != null) {
+                    return rows;
+                } else {
+                    return false;
+                }
+            }
+
+
+        } catch (err) {
+            console.error('Error in getOneAnime:', err);
+            throw err;
+        }
+    },
 
 };
