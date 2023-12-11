@@ -7,7 +7,7 @@ const animeRepo = require('../utils/anime.repository');
 router.get('/:animeId/:animeName', AnimeViewAction);
 router.get('/:animeId', AnimeViewAction);
 
-router.post('/:animeId/set-complete', async (req, res) => {
+router.post('/:animeId/set', async (req, res) => {
     try {
         const { action } = req.body;
         var animeId = req.params.animeId;
@@ -18,8 +18,7 @@ router.post('/:animeId/set-complete', async (req, res) => {
             const animeId = req.body.animeId || req.params.animeId;
             const userId = req.user.UserID;
       
-            
-            console.log("Going into update function");
+          
             await animeRepo.updateAnimeStatus(userId, animeId, action);
       
             res.send(`
@@ -68,7 +67,9 @@ async function AnimeViewAction(request, response) {
         var anime = await animeRepo.getOneAnime(animeId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
-        response.render("single_view/single_anime", { "charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
+        const animeStatus = await animeRepo.getAnimeStatus(request.user.UserID, animeId);
+
+        response.render("single_view/single_anime", { "animeStatus":animeStatus,"charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
     } catch (error) {
         console.error('Error in AnimeViewAction:', error);
         response.status(500).send('Internal Server Error');

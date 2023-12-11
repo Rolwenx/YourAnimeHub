@@ -125,18 +125,14 @@ module.exports = {
             const placeholders = Object.keys(mangaData).map(key => `${key} = ?`).join(', ');
             const sql = `UPDATE Anime SET ${placeholders} WHERE AnimeID = ? AND AnimeFormat = 'Manga'`;
             
-            // Log the SQL query and values
-            console.log("SQL Query:", sql);
+
             
             // Combine values from mangaData and mangaData
             const values = [...Object.values(mangaData), mangaId];
-            console.log("SQL Values:", values);
     
             // Execute the query
             const result = await conn.execute(sql, values);
             
-            // Log the result
-            console.log("Result:", result);
     
             conn.release();
     
@@ -180,11 +176,9 @@ module.exports = {
 
             const okPacket = result; // No need for destructuring
 
-            // Log the okPacket
-            console.log("OkPacket:", okPacket);
+
 
             conn.release();
-            console.log("INSERT " + okPacket.insertId.toString()); // or +okPacket.insertId to convert to a regular number
 
             return okPacket.insertId;
         } catch (err) {
@@ -201,9 +195,9 @@ module.exports = {
     
             // Check if there are dependencies in the quotes table
             const [result] = await conn.execute("SELECT COUNT(*) AS count FROM AnimeQuote WHERE AnimeId = ?", [animeId]);
-            console.log("result:",result);
+    
             const quoteCount = result.count;
-            console.log("quoteCount:",quoteCount);
+      
     
             if (quoteCount > 0) {
                 console.log("Anime has dependencies in the quotes table. Cannot delete.");
@@ -262,10 +256,7 @@ module.exports = {
             let sql = "SELECT * FROM Anime WHERE AnimeID = ? AND AnimeFormat = 'Manga'";
             const [rows, fields] = await conn.execute(sql, [mangaId]);
             conn.release();
-            console.log("mangaID",mangaId);
-            console.log("rows",rows);
-            console.log("end date",rows.EndDate);
-            console.log("release date",rows.ReleaseDate);
+
 
 
 
@@ -371,15 +362,13 @@ module.exports = {
     
 
     async updateAnimeStatus(userId, animeId, status) {
-        console.log("i'm in the update funct");
+
         let conn = await pool.getConnection();
-        console.log(userId);
-        console.log(animeId);
+
       
         // Check if a row exists for the given animeId and userId
         let checkSql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
         let [rows] = await conn.execute(checkSql, [animeId, userId]);
-        console.log(rows);
       
         if (rows == null) {
           // If no row exists, insert a new row
@@ -395,6 +384,18 @@ module.exports = {
       
         return true;
       },
+
+      async getAnimeStatus(userId, animeId) {
+        let conn = await pool.getConnection();
+    
+        let sql = 'SELECT AnimeStatus FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+        let rows = await conn.execute(sql, [animeId, userId]);
+    
+        conn.release();
+    
+        return rows.length > 0 ? rows[0].AnimeStatus : null;
+    },
+    
       
 
 };

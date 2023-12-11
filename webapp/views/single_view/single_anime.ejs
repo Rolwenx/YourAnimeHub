@@ -44,22 +44,23 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
       Add to List
     </button>
     <ul class="dropdown-menu">
-      <form action="/anime/<%=anime.AnimeID%>/set-complete" method="post">
-        <li>
-          <button type="submit" name="action" value="set-complete" class="dropdown-item">Set as Complete</button>
-        </li>
-        <li>
-          <button type="submit" name="action" value="set-watching" class="dropdown-item">Set as Watching</button>
-        </li>
-        <li>
-          <button type="submit" name="action" value="set-planning" class="dropdown-item">Set as Planning</button>
-        </li>
-        <li><hr class="dropdown-divider"></li>
-        <li>
-          <button type="submit" name="action" value="add-manually" class="dropdown-item">Add Manually</button>
-        </li>
+      <form action="/anime/<%= anime.AnimeID %>/set" method="post">
+         <li>
+            <button type="submit" name="action" value="set-complete" class="dropdown-item" <% if (animeStatus === 'set-complete') { %>disabled<% } %>>Set as Complete</button>
+         </li>
+         <li>
+            <button type="submit" name="action" value="set-watching" class="dropdown-item" <% if (animeStatus === 'set-watching') { %>disabled<% } %>>Set as Watching</button>
+         </li>
+         <li>
+            <button type="submit" name="action" value="set-planning" class="dropdown-item" <% if (animeStatus === 'set-planning') { %>disabled<% } %>>Set as Planning</button>
+         </li>
+         <li><hr class="dropdown-divider"></li>
+         <li>
+            <button type="submit" name="action" value="add-manually" class="dropdown-item">Add Manually</button>
+         </li>
       </form>
-    </ul>
+   </ul>
+   
     
     <button id="like_btn" class="like_btn" onclick="window.location.href='';">
       <i class="fa fa-thumbs-up"><%= anime.Likes%></i>

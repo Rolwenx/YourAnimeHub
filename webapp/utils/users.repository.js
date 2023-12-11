@@ -224,12 +224,12 @@ async getAllAnimeForWatchlist(userId, action,type) {
     let sql = "SELECT * FROM View_Anime WHERE UserID = ? AND AnimeStatus = ?";
     let rows = await conn.execute(sql, [userId, action]);
 
-
+    console.log("initial",rows);
     let newList = [];
     for (let i = 0; i < rows.length; i++) {
       const animeInfo = await animeRepo.getAllAnimeInfoByID(rows[i].AnimeID,type);
       if(animeInfo == 'Nothing'){
-        break;
+        continue;
       }
       // Combine the information from rows and animeInfo
       const combinedInfo = { ...rows[i], ...animeInfo };

@@ -144,6 +144,7 @@ async function UserMangaPlanningWatchlistAction(request, response) {
 
     try {
         var PlanningMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Manga');
+        console.log(PlanningMangaList);
 
 
         response.render("user/user_watchlist_manga_planning", {"PlanningMangaList": PlanningMangaList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
