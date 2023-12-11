@@ -70,7 +70,21 @@ async function AnimeViewAction(request, response) {
 
         const animeStatus = await animeRepo.getAnimeStatus(request.user.UserID, animeId);
         var user_info_about_anime = await animeRepo.getUserAnime(animeId,userId);
-        response.render("single_view/single_anime", { "user_info_about_anime":user_info_about_anime, "animeStatus":animeStatus,"charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
+
+        // To do the stats of an anime, we're gonna fetch those stats from our View_Anime table
+        const StatsCount = {};
+
+        StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('set-planning'))[0]?.statusCount || 0;
+        StatsCount.CompleteCount = (await animeRepo.getAllStatusAnime('set-complete'))[0]?.statusCount || 0;
+        StatsCount.WatchingCount = (await animeRepo.getAllStatusAnime('set-watching'))[0]?.statusCount || 0;
+        StatsCount.DroppedCount = (await animeRepo.getAllStatusAnime('set-dropped'))[0]?.statusCount || 0;
+        StatsCount.PausedCount = (await animeRepo.getAllStatusAnime('set-paused'))[0]?.statusCount || 0;
+        StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('set-rewatching'))[0]?.statusCount || 0;
+  
+        
+
+        
+        response.render("single_view/single_anime", { "StatsCount":StatsCount, "user_info_about_anime":user_info_about_anime, "animeStatus":animeStatus,"charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
     
 
     } catch (error) {

@@ -284,23 +284,21 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     </div>
   
     <div class="status_distribution">
-      <a href="">
         <div>
           <h2 class="my_h2 text-light" style="margin-left: 20px !important;">STATS</h2>
         </div>
-      </a>
       <div class="status_box all_status">
         <div class="status_item planning">
           <p>Planning</p>
-          <p>X Users</p>
+          <p><%= StatsCount.PlanningCount %> Users</p>
         </div>
         <div class="status_item current">
-          <p>Current</p>
-          <p>X Users</p>
+          <p>Watching</p>
+          <p><%= StatsCount.WatchingCount %> Users</p>
         </div>
         <div class="status_item completed">
           <p>Completed</p>
-          <p>X Users</p>
+          <p><%= StatsCount.CompleteCount %> Users</p>
         </div>
         <div class="status_item likes">
           <p>Favourited</p>
@@ -308,7 +306,15 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         </div>
         <div class="status_item dropped">
           <p>Dropped</p>
-          <p>X Users</p>
+          <p><%= StatsCount.DroppedCount %> Users</p>
+        </div>
+        <div class="status_item dropped">
+          <p>Paused</p>
+          <p><%= StatsCount.PausedCount %> Users</p>
+        </div>
+        <div class="status_item current">
+          <p>Rewatching</p>
+          <p><%= StatsCount.RewatchCount %> Users</p>
         </div>
       </div>
     </div>

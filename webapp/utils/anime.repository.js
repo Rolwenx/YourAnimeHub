@@ -480,4 +480,15 @@ module.exports = {
         }
     },
 
+    async getAllStatusAnime(status) {
+        let conn = await pool.getConnection();
+    
+        let sql = 'SELECT COUNT(*) AS statusCount FROM View_Anime WHERE AnimeStatus = ?';
+        let number_of_rows = await conn.execute(sql, [status]);
+    
+        conn.release();
+    
+        return number_of_rows;
+    },
+
 };
