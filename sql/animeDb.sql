@@ -117,8 +117,11 @@ CREATE TABLE User_Favorite_Anime (
 CREATE TABLE View_Anime(
    AnimeID INT,
    UserID INT,
+   ReviewID VARCHAR(40),
    ReviewText TEXT,
 	ReviewDate TIMESTAMP, -- Date and time of the review
+   ReviewSummary VARCHAR(200),
+   ReviewGrade INT,
    RateGrade SMALLINT,
    LikesOnReview INT,
    DislikesOnReview INT,

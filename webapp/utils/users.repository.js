@@ -244,7 +244,56 @@ async getAllAnimeForWatchlist(userId, action,type) {
     console.error(err);
     throw err;
   }
-}
+},
 
+async addOneReview(reviewData,userId,animeId) {
+        
+  try {
+      let conn = await pool.getConnection();
+      // Check if a row exists for the given animeId and userId
+      let checkSql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+      let [rows] = await conn.execute(checkSql, [animeId, userId]);
+
+  
+      if (rows == null) {
+      
+        // If no row exists, insert a new row
+        const keys = ['AnimeID', 'UserID', ...Object.keys(reviewData)];
+        const values = [animeId, userId, ...Object.values(reviewData)]; 
+    
+        // Construct the SQL query with named placeholders
+        const placeholders = keys.map(key => `${key} = ?`).join(', ');
+        const sql = `INSERT INTO View_Anime SET ${placeholders}`;
+    
+        const result = await conn.execute(sql, values);
+    
+          conn.release();
+          console.log(result);
+    
+          return result;
+      } else {
+          
+          // Construct the SQL query with named placeholders for reviewData
+          const placeholders = Object.keys(reviewData).map(key => `${key} = ?`).join(', ');
+          const sql = `UPDATE View_Anime SET ${placeholders} WHERE AnimeID = ? AND UserID = ?`;
+          
+          
+          // Combine values from animeData and animeId
+          const values = [...Object.values(reviewData), animeId, userId];
+    
+          // Execute the query
+          const result = await conn.execute(sql, values);
+      
+    
+          conn.release();
+    
+          return result;
+        
+      }
+  } catch (err) {
+      console.error("Error:", err);
+      throw err;
+  }
+},
 
 }; 
