@@ -110,14 +110,14 @@ const title = 'Popular Now Manga - YourAnimeHub';
                       <% if (manga.AnimeStatus) { %>
                         <p><strong>Status:</strong> <%= manga.AnimeStatus %></p>
                       <% } %>
-                <p><strong>Format:</strong> <%= mang.TypeFormat %></p>
+                <p><strong>Format:</strong> <%= manga.TypeFormat %></p>
                 <p><strong>Genres:</strong><br>
                     <% const genres = manga.Genre.split(','); %>
                     <% genres.forEach(genre => { %>
                       <span class='badge bg-danger me-1'><%= genre.trim() %></span>
                     <% }); %>
                 </p>">
-            <a href="/mang/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
+            <a href="/manga/<%= manga.AnimeID %>/<%= manga.TitleEnglish %>">
               <img class="cover_image" src="<%= manga.CoverImageURL %>" alt="<%= manga.TitleEnglish %>">
             </a>
             <div class="animeName">
