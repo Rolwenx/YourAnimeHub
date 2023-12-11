@@ -6,7 +6,7 @@
 <section class="login_wrapper_signup">
   <div class="form-box login">
       <h2>Register To YourAnimeHub</h2>
-      <form action="/signup/auth" method="POST">
+      <form action="/signup/auth" method="POST" onsubmit="return validateForm()">
           <div class="input-box">
               <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
               <input type="text" name="username" required>
@@ -20,15 +20,15 @@
           <div class="input-box">
               <span class="icon" id="password_span"><i class="fa fa-eye" aria-hidden="true" id="eye1" onclick="toggle('password1', 'eye1')"></i></span>
               <input type="password" name="userPassword" minlength="8" id="password1" required>
-
               <label>Password</label>
           </div>
           <div class="input-box">
-              <span class="icon" id="password_span"><i class="fa fa-eye" aria-hidden="true" id="eye2" onclick="toggle('password2', 'eye2')"></i></span>
-              <input type="password" name="confirmPassword" id="password2" required oninput="checkPasswordMatch()">
-              <label>Confirm Password</label>
-              <p id="passwordMatchMessage"></p>
-          </div>
+            <span class="icon" id="password_span"><i class="fa fa-eye" aria-hidden="true" id="eye2" onclick="toggle('password2', 'eye2')"></i></span>
+            <input type="password" name="confirmPassword" id="password2" required oninput="validateForm()">
+            <label>Confirm Password</label>
+            <p id="passwordMatchMessage" style="color: red;"></p>
+        </div>
+          
           <div class="remember_forgot">
               <label><input type="checkbox" required>I agree to the <a href="/terms">terms & conditions</a></label>
           </div>
@@ -57,20 +57,22 @@
                 eyeIcon.classList.add("fa-eye");
             }
         }
-    </script>
-    <script>
-        function validateForm() {
-        var password1 = document.getElementById("password1").value;
-        var password2 = document.getElementById("password2").value;
+    </script><script>
+function validateForm() {
+    var password1 = document.getElementById("password1").value;
+    var password2 = document.getElementById("password2").value;
+    var passwordMatchMessage = document.getElementById("passwordMatchMessage");
 
-        if (password1 !== password2) {
-            alert("Passwords do not match!");
-            return false;
-        }
+    if (password1 !== password2) {
+        passwordMatchMessage.textContent = "Passwords do not match!";
+        return false; // Prevent form submission
+    } else {
+        passwordMatchMessage.textContent = ""; // Clear any previous error message
+    }
 
-        return true;
-        }
-    </script>
+    return true; // Allow form submission
+}
+</script>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     
