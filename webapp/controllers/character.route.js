@@ -1,13 +1,9 @@
-// controllers/hello.route.js
 const express = require('express');
 const router = express.Router();
 const characterRepo = require('../utils/characters.repository');
 
-
 router.get('/:characterId/:charName', CharacterViewAction);
 router.get('/:characterId', CharacterViewAction);
-
-
 
 async function CharacterViewAction(request, response) {
     var characterId = request.params.characterId;

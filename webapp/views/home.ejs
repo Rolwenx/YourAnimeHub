@@ -25,7 +25,7 @@
 
 
     <% } else { %>
-        <section class="card_section">
+        <section class="card_section margin-top: 50px;">
             <div class="row_in_card">
                 <div class="homecard one">
                     <h3 class="my_h3">Explore a World of Anime</h3>
@@ -135,12 +135,22 @@
                             <% }); %>
                         </p>">
                   
-                  <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
-                    <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
-                  </a>
-                  <div class="animeName">
-                    <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
-                  </div>
+                        <% if (anime.AnimeFormat === 'Anime') { %>
+                            <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+                                <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+                              </a>
+                              <div class="animeName">
+                                <a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+                              </div>
+                            <% } %>
+                            <% if (anime.AnimeFormat === 'Manga') { %>
+                                <a href="/manga/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>">
+                                    <img class="cover_image" src="<%= anime.CoverImageURL %>" alt="<%= anime.TitleEnglish %>">
+                                  </a>
+                                  <div class="animeName">
+                                    <a href="/manga/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><%= anime.TitleEnglish %></a>
+                                  </div>
+                                <% } %>
                 </div>
               <% }); %>
             <% } else { %>
@@ -319,7 +329,12 @@
                         <div class="name_box">
                             <img src="<%= anime.CoverImageURL %>" alt="Anime Image">
                             <div>
-                                <p><a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><strong><%= anime.TitleEnglish %></strong></a></p>
+                                <% if (anime.AnimeFormat === 'Anime') { %>
+                                    <p><a href="/anime/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><strong><%= anime.TitleEnglish %></strong></a></p>
+                                    <% } %>
+                                    <% if (anime.AnimeFormat === 'Manga') { %>
+                                        <p><a href="/manga/<%= anime.AnimeID %>/<%= anime.TitleEnglish %>"><strong><%= anime.TitleEnglish %></strong></a></p>
+                                        <% } %>
                                 <% const genres = anime.Genre.split(','); %>
                                 <div>
                                     <% genres.forEach(genre => { %>

@@ -40,7 +40,6 @@ router.get('/auth', (req, res) => {
     }
   })
 
-
 router.get('/logout', logoutAction);
 
 router.post('/login', loginPostAction);

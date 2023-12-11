@@ -13,7 +13,8 @@ router.get('/', GuestHomeAction);
 // Admin Home route
 async function GuestHomeAction(request, res) {
     try {
-        var userId = request.user.UserID;
+        // Check if user is logged in
+        var userId = request.user ? request.user.UserID : null;
         const animeMangaList = await animeRepo.getAllAnimeManga();
         const characterList = await characterRepo.getAllCharacters();
         const animeList = await animeRepo.getAllAnime();
@@ -39,7 +40,7 @@ async function GuestHomeAction(request, res) {
             });
     } catch (error) {
         console.error('Error in GuestHomeAction:', error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Internal Server Error HEREE');
     }
 }
 

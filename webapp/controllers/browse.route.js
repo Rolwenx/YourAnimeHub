@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
+const reviewRepo = require('../utils/review.repository');
 const quoteRepo = require('../utils/quote.repository'); 
 const characterRepo = require('../utils/characters.repository');
 
@@ -23,7 +24,7 @@ router.get('/manga/top-100', browseMangaTopAction);
 async function browseReviewsAction(request, res) {
     
     try {
-        const ReviewList = await animeRepo.getAllReviews();
+        const ReviewList = await reviewRepo.getAllReviews();
 
         res.render('browse/browse_reviews', {
             ReviewList,
@@ -206,30 +207,4 @@ async function browseMangaTopAction(request, res) {
     }
     
 }
-
-
-// http://localhost:9000/browse/reviews
-router.get('/reviews', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/browse_reviews', { user: req.user, activePage: 'browse', });
-});
-
-// http://localhost:9000/browse/manga/popular
-
-router.get('/manga/popular', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/manga_popular', { user: req.user,activePage: 'browse', });
-});
-
-// http://localhost:9000/browse/manga/recently_added
-router.get('/manga/recently_added', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/manga_recently', { user: req.user,activePage: 'browse', });
-});
-
-// http://localhost:9000/browse/manga/top-100
-router.get('/manga/top-100', (req, res) => {
-    //res.send('Hello, from controller...');
-    res.render('browse/manga_top100', { user: req.user,activePage: 'browse', });
-});
 module.exports = router;
