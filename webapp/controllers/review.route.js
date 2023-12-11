@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 const reviewRepo = require('../utils/review.repository');
+const { checkUserAuthentication } = require('../utils/users.auth');
+
+// Middleware to check user authentication, applied only to editor routes
+router.use(['/editor/anime/:animeId', '/editor/manga/:mangaId'], checkUserAuthentication);
+
 
 // Since the review ID isn't auto increment, we use this library to give a unique ID to ReviewId
 const { v4: uuidv4 } = require('uuid');
@@ -12,9 +17,10 @@ router.get('/editor/anime/:animeId', ReviewEditorViewAction);
 router.post('/editor/anime/:animeId/post', ReviewEditorPostAction);
 
 async function ReviewViewAction(request, response) {
-    const animeId = request.params.animeId;
-    const userId = request.user ? request.user.UserID : null;
-    const reviewId = userId ? reviewRepo.getReviewID(animeId, userId) : null;
+    const reviewId = request.params.reviewId;
+    var result = await reviewRepo.getAnimeIDFromReviewID(reviewId);
+    const animeId = result.AnimeID;
+    const userId = result.UserID;
 
     try {
         var ReviewInfo = userId ? await reviewRepo.getReviewInfo(animeId, userId) : null;
