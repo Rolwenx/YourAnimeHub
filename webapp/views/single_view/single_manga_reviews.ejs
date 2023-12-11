@@ -1,5 +1,5 @@
 <%
-const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
+const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 %>
 
 <%- include('../partials/header.ejs', { title: title }) %>
@@ -15,7 +15,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     top: 0;
     left: 0;
     background: red;
-    background: url("<%= anime.BackgroundImageURL %>");
+    background: url("<%= manga.BackgroundImageURL %>");
     z-index: -1;
     transform: skewY(-2.2deg);
     transform-origin: 0 0;
@@ -26,13 +26,13 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 <div class="anime_card">
   
     
-    <img src="<%= anime.CoverImageURL %>" alt="cover" class="cover" />
+    <img src="<%= manga.CoverImageURL %>" alt="cover" class="cover" />
         
     <div class="hero">
       <div class="overlay"></div>
       <div class="details">
       
-        <div class="title1"><%= anime.TitleEnglish %></div>
+        <div class="title1"><%= manga.TitleEnglish %></div>
         
       </div> <!-- end details -->
     </div>
@@ -44,7 +44,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
       Add to List
     </button>
     <ul class="dropdown-menu">
-      <form action="/anime/<%= anime.AnimeID %>/set" method="post">
+      <form action="/manga/<%= manga.AnimeID %>/set" method="post">
          <li>
             <button type="submit" name="action" value="set-complete" class="dropdown-item" <% if (animeStatus === 'set-complete') { %>disabled<% } %>>Set as Complete</button>
          </li>
@@ -60,11 +60,11 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
    
     
     <button id="like_btn" class="like_btn" onclick="window.location.href='';">
-      <i class="fa fa-thumbs-up"><%= anime.Likes%></i>
+      <i class="fa fa-thumbs-up"><%= manga.Likes%></i>
     </button>
   </div>
   <div class="description">
-    <p style="color:white;"><%= anime.Synopsis %></p>
+    <p style="color:white;"><%= manga.Synopsis %></p>
   </div>
   
 </div>
@@ -73,11 +73,11 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 
 <!-- Menus text above the hr -->
 <div class="menus">
-  <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>"><p>Overall</p></a>
-  <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/characters#char"><p>Characters</p></a>
-  <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
+  <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>"><p>Overall</p></a>
+  <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/characters#char"><p>Characters</p></a>
+  <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
   <% if (user_info_about_anime !== null) { %>
-    <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
+    <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
   <button id="addManuallyBtn" class="edit_btn">
       <i class="fa fa-pencil"></i>
@@ -87,14 +87,14 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <div id="addManuallyModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <img src="<%= anime.BackgroundImageURL %>" alt="background" class="modal-background">
+      <img src="<%= manga.BackgroundImageURL %>" alt="background" class="modal-background">
       <div class="modal-overlay"></div>
-      <h2 class="modal-title"><%= anime.TitleEnglish %></h2>
+      <h2 class="modal-title"><%= manga.TitleEnglish %></h2>
       
       <!-- Form -->
 
       <% if (user_info_about_anime === null) { %>
-        <form action="/anime/<%= anime.AnimeID %>/edit" method="post">
+        <form action="/manga/<%= manga.AnimeID %>/edit" method="post">
           <div class="form-group">
             <label><strong>Status</strong></label>
             <select class="form-select" name="status">
@@ -134,7 +134,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
           <button class="like_btn" type="submit">Save</button>
         </form>
     <% } else { %>
-      <form action="/anime/<%= anime.AnimeID %>/edit" method="post">
+      <form action="/manga/<%= manga.AnimeID %>/edit" method="post">
         <div class="form-group">
           <label><strong>Status</strong></label>
           <select class="form-select" name="status">
@@ -189,7 +189,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <a style="text-decoration: none; color: black" href="/review/<%= user_info_about_anime.AnimeID%>/<%=user_info_about_anime.ReviewID%>" id="review_one_card">
           <div class="card h-100" >
             <div class="review-image-container">
-              <img src="<%= anime.BackgroundImageURL%>" alt="Review Image of Anime <%= anime.TitleEnglish%>" id="review-image" class="card-img-top">
+              <img src="<%= manga.BackgroundImageURL%>" alt="Review Image of Anime <%= manga.TitleEnglish%>" id="review-image" class="card-img-top">
             </div>
             <div class="card-body">
               <p id="review-summary" class="card-text">Review by <strong><%=character.UserName %></strong></p>
@@ -204,7 +204,6 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     </div>
   <% } %>
 </div>
-
   
     
 

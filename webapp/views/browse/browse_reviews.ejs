@@ -9,18 +9,19 @@ const title = 'Browse Reviews - YourAnimeHub';
     <h1 class="my_h1 text-light" style="margin-left: 20px !important;">REVIEWS</h1>
   </div>
   <div class="row" >
+    <% ReviewList.forEach((review) => { %>
     <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black" href="/review/reviewid" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
+      <a style="text-decoration: none; color:black;" href="/review/<%= review.AnimeID%>/<%= review.ReviewID%>" id="review_one_card">
+        <div class="card h-500" style="width: 90%;">
           <div class="review-image-container">
-            <img src="https://i.imgur.com/zn4q3Ai.png" alt="Review Image" id="review-image"  class="card-img-top">
+            <img src="<%= review.BackgroundImageURL%>" id="review-image"  class="card-img-top">
             <div id="review-overlay">
               <p class="text-light m-0">Read Full Review</p>
             </div>
           </div>
           <div class="card-body">
-            <p id="review-title" class="card-title">Review of Anime Name by User</p>
-            <p id="review-summary" class="card-text">Summary of the review goes here..</p>
+            <p id="review-title" class="card-title">Review of <%= review.AnimeName%> by <%= review.Username%></p>
+            <p id="review-summary" class="card-text"><%= review.ReviewSummary%></p>
           </div>
       </a>
           <div class="card-footer">
@@ -30,153 +31,8 @@ const title = 'Browse Reviews - YourAnimeHub';
           </div>
         </div>
     </div>
-    <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black" href="/review/reviewid" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
-          <div class="review-image-container">
-            <img src="https://i.imgur.com/zn4q3Ai.png" alt="Review Image" id="review-image"  class="card-img-top">
-            <div id="review-overlay">
-              <p class="text-light m-0">Read Full Review</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <p id="review-title" class="card-title">Review of Anime Name by User</p>
-            <p id="review-summary" class="card-text">Summary of the review goes here..</p>
-          </div>
-      </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black" href="/review/reviewid" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
-          <div class="review-image-container">
-            <img src="https://i.imgur.com/zn4q3Ai.png" alt="Review Image" id="review-image"  class="card-img-top">
-            <div id="review-overlay">
-              <p class="text-light m-0">Read Full Review</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <p id="review-title" class="card-title">Review of Anime Name by User</p>
-            <p id="review-summary" class="card-text">Summary of the review goes here..</p>
-          </div>
-      </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black" href="/review/reviewid" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
-          <div class="review-image-container">
-            <img src="https://i.imgur.com/zn4q3Ai.png" alt="Review Image" id="review-image"  class="card-img-top">
-            <div id="review-overlay">
-              <p class="text-light m-0">Read Full Review</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <p id="review-title" class="card-title">Review of Anime Name by User</p>
-            <p id="review-summary" class="card-text">Summary of the review goes here..</p>
-          </div>
-      </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black" href="/review/reviewid" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
-          <div class="review-image-container">
-            <img src="https://i.imgur.com/zn4q3Ai.png" alt="Review Image" id="review-image"  class="card-img-top">
-            <div id="review-overlay">
-              <p class="text-light m-0">Read Full Review</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <p id="review-title" class="card-title">Review of Anime Name by User</p>
-            <p id="review-summary" class="card-text">Summary of the review goes here..</p>
-          </div>
-      </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black" href="/review/reviewid" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
-          <div class="review-image-container">
-            <img src="https://i.imgur.com/zn4q3Ai.png" alt="Review Image" id="review-image"  class="card-img-top">
-            <div id="review-overlay">
-              <p class="text-light m-0">Read Full Review</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <p id="review-title" class="card-title">Review of Anime Name by User</p>
-            <p id="review-summary" class="card-text">Summary of the review goes here..</p>
-          </div>
-      </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black" href="/review/reviewid" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
-          <div class="review-image-container">
-            <img src="https://i.imgur.com/zn4q3Ai.png" alt="Review Image" id="review-image"  class="card-img-top">
-            <div id="review-overlay">
-              <p class="text-light m-0">Read Full Review</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <p id="review-title" class="card-title">Review of Anime Name by User</p>
-            <p id="review-summary" class="card-text">Summary of the review goes here..</p>
-          </div>
-      </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black" href="/review/reviewid" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
-          <div class="review-image-container">
-            <img src="https://i.imgur.com/zn4q3Ai.png" alt="Review Image" id="review-image"  class="card-img-top">
-            <div id="review-overlay">
-              <p class="text-light m-0">Read Full Review</p>
-            </div>
-          </div>
-          <div class="card-body">
-            <p id="review-title" class="card-title">Review of Anime Name by User</p>
-            <p id="review-summary" class="card-text">Summary of the review goes here..</p>
-          </div>
-      </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
-        </div>
-    </div>
+    <% }); %>
+
 
   </div>
 </section>

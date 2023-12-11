@@ -169,4 +169,33 @@ router.post('/:mangaId/edit', async (req, res) => {
       return res.end();
       }
 });
+
+router.get('/:mangaId/:mangaName/reviews', MangaViewActionReviews);
+router.get('/:mangaId/reviews', MangaViewActionReviews);
+
+async function MangaViewActionReviews(request, response) {
+  var mangaId = request.params.mangaId;
+  var userId = request.user.UserID;
+
+  try {
+      var manga = await animeRepo.getOneManga(mangaId);
+      var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
+
+      const animeStatus = await animeRepo.getAnimeStatus(request.user.UserID, mangaId);
+      var user_info_about_anime = await animeRepo.getUserAnime(mangaId,userId);
+
+      var UsernamesWhoDidReviews = await animeRepo.getAllReviewsByAnimeId(mangaId);
+      response.render("single_view/single_manga_reviews", { 
+        "UsernamesWhoDidReviews": UsernamesWhoDidReviews,
+        "user_info_about_anime":user_info_about_anime,
+         "animeStatus":animeStatus,
+         "charactersDetails": charactersDetails, 
+         "manga": manga, 
+         user: request.user,  
+         activePage: 'browse'  });
+  } catch (error) {
+      console.error('Error in MangaViewActionReviews:', error);
+      response.status(500).send('Internal Server Error');
+  }
+}
 module.exports = router;

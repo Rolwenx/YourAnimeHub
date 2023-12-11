@@ -1,6 +1,7 @@
 // anime.repository.js
 
 pool = require("../utils/db.js");
+const userRepo = require('../utils/users.repository.js');
 
 module.exports = {
     async getCharactersByAnimeID(animeId) {
@@ -233,8 +234,10 @@ module.exports = {
             conn.release();
 
 
+
             rows.ReleaseDate = await this.formatDate(rows.ReleaseDate);
             rows.EndDate = await this.formatDate(rows.EndDate);
+
 
             if (rows != null) {
                 return rows;
@@ -313,6 +316,55 @@ module.exports = {
             if (rows && rows.TitleEnglish != null) {
 
                 return rows.TitleEnglish;
+            } else {
+
+                return null;
+            }
+        } catch (err) {
+            console.error('Error executing query:', err);
+            throw err;
+        }
+    },
+
+    async getAnimeTypeByID(animeID) {
+        try {
+            let conn = await pool.getConnection();
+            let sql = "SELECT AnimeFormat FROM Anime WHERE AnimeID = ?";
+
+        
+            const [rows] = await conn.query(sql, [animeID]);
+
+    
+            
+            conn.release();
+            
+            if (rows && rows.AnimeFormat != null) {
+
+                return rows.AnimeFormat;
+            } else {
+
+                return null;
+            }
+        } catch (err) {
+            console.error('Error executing query:', err);
+            throw err;
+        }
+    },
+    async getAnimeURLByID(animeID) {
+        try {
+            let conn = await pool.getConnection();
+            let sql = "SELECT BackgroundImageURL FROM Anime WHERE AnimeID = ?";
+
+        
+            const [rows] = await conn.query(sql, [animeID]);
+
+    
+            
+            conn.release();
+            
+            if (rows && rows.BackgroundImageURL != null) {
+
+                return rows.BackgroundImageURL;
             } else {
 
                 return null;
@@ -416,7 +468,6 @@ module.exports = {
           const result = await conn.execute(sql, values);
 
             conn.release();
-            console.log(result);
     
             return result;
         } else {
@@ -461,7 +512,6 @@ module.exports = {
                 let sql = "SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ?";
                 const [rows, fields] = await conn.execute(sql, [animeId,userId]);
                 conn.release();
-                console.log(rows);
     
                 rows.StartDate = await this.formatDate(rows.StartDate);
                 rows.EndDate = await this.formatDate(rows.EndDate);
@@ -491,4 +541,140 @@ module.exports = {
         return number_of_rows;
     },
 
+    async GetUsernameById(userId) {
+        try {
+          let conn = await pool.getConnection();
+          let sql = "SELECT Username FROM User_Profile WHERE UserID = ?";
+          const [rows] = await conn.execute(sql, [userId]);
+          conn.release();
+    
+          if (rows!=null) {
+            return rows.Username;
+          } else {
+            return null; // No user found with the given userId
+          }
+        } catch (err) {
+          console.error('Error in GetUsernameById:', err);
+          throw err;
+        }
+      },
+    async getAllReviewsByAnimeId(animeId) {
+        try {
+          const conn = await pool.getConnection();
+      
+          const sql = 'SELECT UserID FROM View_Anime WHERE AnimeID = ?';
+          const [rows] = await conn.execute(sql, [animeId]);
+
+          if(rows == null){
+            return null;
+          }
+          else{
+            const UsernamesWhoDidReviews = [];
+
+            // Convert the object into an array
+            const rowsArray = Object.values(rows);
+
+            for (const row of rowsArray) {
+                const userId = row;
+
+                const username = await this.GetUsernameById(userId); 
+                UsernamesWhoDidReviews.push({ ...row, UserName: username });
+            }
+
+            conn.release();
+            return UsernamesWhoDidReviews;
+          }
+      
+
+        } catch (error) {
+          console.error('Error in getAllReviewsByAnimeId:', error);
+          throw error;
+        }
+      },
+
+      async getReviewID(animeId, userId) {
+        try {
+          const conn = await pool.getConnection();
+      
+          const sql = 'SELECT ReviewID FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+          const [rows] = await conn.execute(sql, [animeId,userId]);
+      
+
+            conn.release();
+
+            return rows;
+        } catch (error) {
+          console.error('Error in getAllReviewsByAnimeId:', error);
+          throw error;
+        }
+      },
+      async getReviewInfo(animeId, userId) {
+        try {
+          const conn = await pool.getConnection();
+      
+          const sql = 'SELECT ReviewID, ReviewText, ReviewSummary, LikesOnReview, DislikesOnReview, ReviewGrade FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+          const [rows] = await conn.execute(sql, [animeId, userId]);
+      
+          const updatedRowsList = Array.isArray(rows)
+            ? await Promise.all(rows.map(async (row) => {
+                const animeName = await this.getAnimeNameByID(animeId);
+                const userName = await this.GetUsernameById(userId);
+                const backgroundURL = await this.getAnimeURLByID(animeId);
+                const anime = animeId;
+
+      
+                return {
+                  ...row,
+                  AnimeName: animeName,
+                  AnimeID: anime,
+                  Username: userName,
+                  BackgroundImageURL: backgroundURL,
+                };
+              }))
+            : await Promise.all([{
+              ...rows,
+              AnimeName: await this.getAnimeNameByID(animeId),
+              Username: await this.GetUsernameById(userId),
+              BackgroundImageURL: await this.getAnimeURLByID(animeId),
+              TypeFormat: await this.getAnimeTypeByID(animeId),
+              AnimeID: animeId,
+            }]);
+      
+          return updatedRowsList;
+      
+        } catch (error) {
+          console.error('Error in getReviewInfo:', error);
+          throw error;
+        }
+      },      
+
+
+      async getAllReviews() {
+        let conn = await pool.getConnection();
+            let sql = "SELECT * FROM View_Anime";
+    
+            // Ensure rows is an array
+            const reviewList = await conn.query(sql);
+
+            conn.release();
+
+            const updatedReviewList = await Promise.all(reviewList.map(async (review) => {
+                const animeName = await this.getAnimeNameByID(review.AnimeID);
+                const UserName = await this.GetUsernameById(review.UserID);
+                const backgroundURL = await this.getAnimeURLByID(review.AnimeID);
+    
+                return {
+                    ...review,
+                    AnimeName: animeName,
+                    Username: UserName,
+                    BackgroundImageURL: backgroundURL,
+                };
+            }));
+    
+            return updatedReviewList;
+
+      },
+
+    
+      
 };

@@ -10,7 +10,7 @@ router.get('/anime', browseAnimeAction);
 router.get('/manga', browseMangaAction);
 router.get('/characters', browseCharacterAction);
 router.get('/quotes', browseQuoteAction);
-//router.get('/browse/reviews', browseReviewsAction);
+router.get('/reviews', browseReviewsAction);
 
 router.get('/anime/recently_added', browseAnimeRecentlyAddedAction);
 router.get('/anime/popular', browseAnimePopularAction);
@@ -20,6 +20,23 @@ router.get('/manga/recently_added', browseMangaRecentlyAddedAction);
 router.get('/manga/popular', browseMangaPopularAction);
 router.get('/manga/top-100', browseMangaTopAction);
 
+async function browseReviewsAction(request, res) {
+    
+    try {
+        const ReviewList = await animeRepo.getAllReviews();
+
+        res.render('browse/browse_reviews', {
+            ReviewList,
+            user: request.user,
+            title: 'Browse Anime - YourAnimeHub',
+            activePage: 'browse',
+        });
+    } catch (error) {
+        console.error('Error in browseReviewsAction:', error);
+        res.status(500).send('Internal Server Error');
+    }
+    
+}
 
 async function browseAnimeAction(request, res) {
     

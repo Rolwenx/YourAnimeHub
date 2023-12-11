@@ -136,7 +136,7 @@ async function adminAnimeUpdateAction(request, response) {
         EndDate: request.body.endDate,
         AnimeStatus: request.body.animeStatus,
         Synopsis: request.body.synopsis || null,
-        PopularityPosition: null,
+        PopularityPosition: 0,
         CoverImageURL: request.body.coverImageURL,
         BackgroundImageURL: request.body.backgroundImageURL,
         StreamingPlatformURL: request.body.streamingPlatformURL || null,
@@ -188,7 +188,7 @@ async function adminAnimeCreateAction(request, response) {
         EndDate: request.body.endDate || "0000-00-00",
         AnimeStatus: request.body.animeStatus,
         Synopsis: request.body.synopsis || null,
-        PopularityPosition: null,
+        PopularityPosition: 0,
         CoverImageURL: request.body.coverImageURL,
         BackgroundImageURL: request.body.backgroundImageURL,
         StreamingPlatformURL: request.body.streamingPlatformURL || null,
@@ -254,7 +254,7 @@ async function adminMangaUpdateAction(request, response) {
         EndDate: request.body.endDate,
         AnimeStatus: request.body.animeStatus,
         Synopsis: request.body.synopsis || null,
-        PopularityPosition: null,
+        PopularityPosition: 0,
         CoverImageURL: request.body.coverImageURL,
         BackgroundImageURL: request.body.backgroundImageURL,
         StreamingPlatformURL: request.body.streamingPlatformURL || null,
@@ -311,7 +311,7 @@ async function adminMangaCreateAction(request, response) {
         EndDate: request.body.endDate || "0000-00-00",
         AnimeStatus: request.body.mangaStatus,
         Synopsis: request.body.synopsis || null,
-        PopularityPosition: null,
+        PopularityPosition: 0,
         CoverImageURL: request.body.coverImageURL,
         BackgroundImageURL: request.body.backgroundImageURL,
         StreamingPlatformURL: request.body.streamingPlatformURL || null,
@@ -627,7 +627,7 @@ async function adminUserEditAction(request, response) {
     try {
         // Fetch the user data
         var fetched_user = await userRepo.getOneUser(userName);
-        console.log(fetched_user);
+   
 
         response.render("admin/admin_edit_user", { "fetched_user": fetched_user,  user: request.user,activePage: 'admin' });
     } catch (error) {

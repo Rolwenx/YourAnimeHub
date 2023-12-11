@@ -54,6 +54,8 @@ router.post('/:animeId/set', async (req, res) => {
 
 router.get('/:animeId/:animeName/characters', AnimeViewActionCharacters);
 router.get('/:animeId/characters', AnimeViewActionCharacters);
+router.get('/:animeId/:animeName/reviews', AnimeViewActionReviews);
+router.get('/:animeId/reviews', AnimeViewActionReviews);
 
 
 
@@ -99,8 +101,6 @@ async function AnimeViewActionCharacters(request, response) {
     var userId = request.user.UserID;
 
     try {
-        // Fetch the anime data
-        // Awaits makes sure the promise is resolved before continuing with the execution
         var anime = await animeRepo.getOneAnime(animeId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
@@ -113,6 +113,31 @@ async function AnimeViewActionCharacters(request, response) {
     }
 }
 
+async function AnimeViewActionReviews(request, response) {
+  var animeId = request.params.animeId;
+  var userId = request.user.UserID;
+
+  try {
+      var anime = await animeRepo.getOneAnime(animeId);
+      var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
+
+      const animeStatus = await animeRepo.getAnimeStatus(request.user.UserID, animeId);
+      var user_info_about_anime = await animeRepo.getUserAnime(animeId,userId);
+
+      var UsernamesWhoDidReviews = await animeRepo.getAllReviewsByAnimeId(animeId);
+      response.render("single_view/single_anime_reviews", { 
+        "UsernamesWhoDidReviews": UsernamesWhoDidReviews,
+        "user_info_about_anime":user_info_about_anime,
+         "animeStatus":animeStatus,
+         "charactersDetails": charactersDetails, 
+         "anime": anime, 
+         user: request.user,  
+         activePage: 'browse'  });
+  } catch (error) {
+      console.error('Error in AnimeViewActionReviews:', error);
+      response.status(500).send('Internal Server Error');
+  }
+}
 
 router.get('/:animeId/:animeName/user-info', AnimeViewActionUserInfo);
 router.get('/:animeId/user-info', AnimeViewActionUserInfo);
@@ -132,7 +157,7 @@ async function AnimeViewActionUserInfo(request, response) {
       var user_info_about_anime = await animeRepo.getUserAnime(animeId,userId);
       response.render("single_view/single_anime_userInfo", { "user_info_about_anime":user_info_about_anime, "animeStatus":animeStatus,"charactersDetails": charactersDetails, "anime": anime, user: request.user,  activePage: 'browse'  });
   } catch (error) {
-      console.error('Error in AnimeViewActionCharacters:', error);
+      console.error('Error in AnimeViewActionUserInfo:', error);
       response.status(500).send('Internal Server Error');
   }
 }

@@ -24,6 +24,7 @@ module.exports = {
     }
 },
 
+
   async getOneUser(username) {
     try {
       let conn = await pool.getConnection();

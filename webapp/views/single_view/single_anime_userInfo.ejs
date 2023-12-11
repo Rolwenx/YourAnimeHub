@@ -75,7 +75,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 <div class="menus">
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>"><p>Overall</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/characters#char"><p>Characters</p></a>
-  <a href=""><p>Reviews</p></a>
+  <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
   <% if (user_info_about_anime !== null) { %>
     <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
@@ -185,7 +185,12 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <div class="left_column">
     <!-- Information about the anime -->
     <div class="anime_info">
-      <button class="write_review_button">Write Review</button>
+      <% if (user_info_about_anime !== null && user_info_about_anime.ReviewID != null) { %>
+        <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>';">Edit Your Review</button>
+      <% } %>
+      <% if (user_info_about_anime === null || user_info_about_anime.ReviewID === null) { %>
+        <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>';">Write Review</button>
+      <% } %>
       <button class="propose_edit_button">Propose Edit Request</button>
 
       <div>
