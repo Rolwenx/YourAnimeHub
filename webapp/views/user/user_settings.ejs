@@ -120,27 +120,35 @@ const title = 'Settings - YourAnimeHub';
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
             <div class="form-group">
+              <label for="eMail"><strong>Birthday</strong></label>
+              <input type="date" name="birthday" value="<%= fetched_user.Birthday %>" class="form-control" id="birthday">
+            </div>
+          </div>
+          <input type="submit" class="btn_upload mb-4" value="Save Informations"> 
+             
+        </form>
+      </div>
+      <div class="row gutters">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <h6 class="mb-2 fs-2" style="color: rgb(41, 81, 135);">Password</h6>
+        </div>
+
+        <form action="/user/settings/update/password" method="post">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+            <div class="form-group">
               <label for="fullName"><strong>Password</strong></label>
-              <p style="font-size: 13px; font-style: italic;">Changing your username will disconnect you and you'll need to log In again.</p>
-              <input class="form-control" placeholder="New Password" type="password" name="userPassword" minlength="8" id="password1" required>
+              <input class="form-control" placeholder="New Password" type="password" name="userPassword" minlength="8" id="password1" required oninput="validateForm()">
+
             </div>
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
             <div class="form-group">
               <label for="fullName"><strong>Confirm Password</strong></label>
-              <p style="font-size: 13px; font-style: italic;">Changing your username will disconnect you and you'll need to log In again.</p>
               <input class="form-control" placeholder="Confirm Password" type="password" id="password2" required oninput="validateForm()">
               <p id="passwordMatchMessage"></p>
             </div>
-          </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-            <div class="form-group">
-              <label for="eMail"><strong>Birthday</strong></label>
-              <input type="date" name="birthday" value="<%= fetched_user.Birthday %>" class="form-control" id="birthday">
-            </div>
-          </div>
-          <input type="submit" id="submitButton" class="btn_upload mb-4" value="Save Informations"> 
-             
+          </div>   
+          <input type="submit" id="submitButton" class="btn_upload mb-4" value="Save Informations">    
         </form>
       </div>
       <hr>
@@ -158,36 +166,32 @@ const title = 'Settings - YourAnimeHub';
   </div>
 
 
-<%- include('../partials/footer.ejs', { title: title }) %>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    
-    
- 
-<script>
-  function validateForm() {
-    var password1 = document.getElementById("password1").value;
-    var password2 = document.getElementById("password2").value;
-    var message = document.getElementById("passwordMatchMessage");
-    var submitButton = document.getElementById("submitButton");
-
-    if (password1 !== password2) {
-      message.innerHTML = "Passwords do not match!";
-      submitButton.disabled = true; // Disable the submit button
-      return false; // Prevent form submission
-    } else {
-      message.innerHTML = "";
-      submitButton.disabled = false; // Enable the submit button
-      return true; // Allow form submission
+  <%- include('../partials/footer.ejs', { title: title }) %>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  
+  <script>
+    function validateForm() {
+      var password1 = document.getElementById("password1").value;
+      var password2 = document.getElementById("password2").value;
+      var message = document.getElementById("passwordMatchMessage");
+      var submitButton = document.getElementById("submitButton");
+  
+      if (password1 !== password2) {
+        message.innerHTML = "Passwords do not match!";
+        submitButton.disabled = true; // Disable the submit button
+        return false; // Prevent form submission
+      } else {
+        message.innerHTML = "";
+        submitButton.disabled = false; // Enable the submit button
+        return true; // Allow form submission
+      }
     }
-  }
-
-</script>
-
-
+  </script>
+  
 
 </body>
 </html>
