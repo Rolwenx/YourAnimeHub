@@ -18,7 +18,7 @@ module.exports = {
             for (const row of AnimeIdsResult) {
                 const animeId = row.AnimeID;
                 const [AnimeResult] = await conn.query(
-                    'SELECT AnimeID, TitleEnglish, CoverImageURL FROM Anime WHERE AnimeID = ?',
+                    'SELECT AnimeID, TitleEnglish, CoverImageURL,AnimeFormat FROM Anime WHERE AnimeID = ?',
                     [animeId]
                 );
 

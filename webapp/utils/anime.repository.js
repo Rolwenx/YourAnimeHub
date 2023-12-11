@@ -249,6 +249,7 @@ module.exports = {
     },
     
 
+    
     async getOneManga(mangaId) {
         try {
             let conn = await pool.getConnection();
@@ -257,15 +258,13 @@ module.exports = {
             conn.release();
 
 
-
-
             rows.ReleaseDate = await this.formatDate(rows.ReleaseDate);
             rows.EndDate = await this.formatDate(rows.EndDate);
 
             if (rows != null) {
                 return rows;
             } else {
-                console.log('Manga not found for animeId:', mangaId);
+                console.log('mManga not found for mangaId:', mangaId);
                 return false;
             }
         } catch (err) {
@@ -273,6 +272,7 @@ module.exports = {
             throw err;
         }
     },
+    
 
     // FUNCTIONAL
     async getAnimeIdByName(titleEnglish) {

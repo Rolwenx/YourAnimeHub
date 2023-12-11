@@ -95,23 +95,31 @@ const title = character ? `${character.CharName} - YourAnimeHub` : 'YourAnimeHub
     </div>
     <hr class="rounded">
     <div class="more_inf_cont">
-        <div>
-          <h2 class="my_h2" style="margin-top: 20px; color: #ffeba7;">RELATED ANIME</h2>
-        </div>  
-          <div class="more_inf_content">
-            <div class="character_grid">
-                <% for (let i = 0; i < Math.min(6, related_anime.length); i++) { %>
-                    <div class="character_item">
-                        <a href="/anime/<%= related_anime[i].AnimeID %>/<%= related_anime[i].TitleEnglish %>">
-                            <img src="<%= related_anime[i].CoverImageURL %>" alt="<%= related_anime[i].TitleEnglish %>">
-                            <p style="color: white; font-weight: 600; margin-top: 10px;"><%= related_anime[i].TitleEnglish %></p>
-                        </a>
-                    </div>
-                <% } %>
+      <div>
+        <h2 class="my_h2" style="margin-top: 20px; color: #ffeba7;">RELATED ANIME</h2>
+      </div>  
+      <div class="more_inf_content">
+        <div class="character_grid">
+          <% for (let i = 0; i < Math.min(6, related_anime.length); i++) { %>
+            <div class="character_item">
+              <% if (related_anime[i].AnimeFormat === 'Anime') { %>
+                <a href="/anime/<%= related_anime[i].AnimeID %>/<%= related_anime[i].TitleEnglish %>">
+                  <img src="<%= related_anime[i].CoverImageURL %>" alt="<%= related_anime[i].TitleEnglish %>">
+                <p style="color: white; font-weight: 600; margin-top: 10px;"><%= related_anime[i].TitleEnglish %></p>
+                </a>
+              <% } else if (related_anime[i].AnimeFormat === 'Manga') { %>
+                <a href="/manga/<%= related_anime[i].AnimeID %>/<%= related_anime[i].TitleEnglish %>">
+                  <img src="<%= related_anime[i].CoverImageURL %>" alt="<%= related_anime[i].TitleEnglish %>">
+                <p style="color: white; font-weight: 600; margin-top: 10px;"><%= related_anime[i].TitleEnglish %></p>
+                </a>
+              <% } %>
+              
             </div>
-          </div>
-  
+          <% } %>
+        </div>
       </div>
+    </div>
+    
      
     
   </div>

@@ -126,9 +126,9 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
           <label for="finishDate"><strong>Finish Date:</strong></label>
           <input class="form-control" type="date" id="finishDate" name="finishDate">
   
-          <!-- Total Rereads -->
-          <label for="totalRereads"><strong>Total Rereads:</strong></label>
-          <input class="form-control" type="number" id="totalRereads" name="totalRereads">
+         <!-- Total Rereads -->
+         <label for="totalRereads"><strong>Total Rereads:</strong></label>
+         <input class="form-control" type="number" id="totalRereads" name="totalRereads">
   
           <!-- Notes -->
           <label for="notes"><strong>Notes:</strong></label>
@@ -262,29 +262,48 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 
   <div class="right_column">
    
-  <div class="characters_section">
-    <a href="">
-      <div>
-        <h2 class="my_h2 text-light" style="margin-left: 20px !important;">CHARACTERS</h2>
-      </div>
-    </a>
-    <% if (charactersDetails && charactersDetails.length > 0) { %>
-    <div class="character_grid" id="char">
-      <% for (const character of charactersDetails) { %>
-          <div class="character_item">
-              <a href="/character/<%= character.CharacterID %>/<%= character.CharName %>">
-                  <img src="<%= character.ImageURL %>" alt="<%= character.CharName %>">
-                  <p style="color: white; font-weight: 600; margin-top: 10px;"><%= character.CharName %></p>
-              </a>
-          </div>
-      <% } %>
-  </div>
-  <% } else { %>
-    <p style="color:white;">No characters added yet in the database</p>
-<% } %>
-
-    </div>
   
+    <div style="color:white;" class="status_distribution" id="info">
+        <div>
+            <p class="title_of_menu"><strong>Anime Status:</strong> </p>
+            <% if (user_info_about_anime.AnimeStatus==='set-complete') { %>
+                <p class="answer_of_menu">Completed</p>
+            <% } %>
+            <% if (user_info_about_anime.AnimeStatus==='set-planning') { %>
+                <p class="answer_of_menu">Planning to watch</p>
+            <% } %>
+            <% if (user_info_about_anime.AnimeStatus==='set-watching') { %>
+                <p class="answer_of_menu">Currently Watching</p>
+            <% } %>
+            <% if (user_info_about_anime.AnimeStatus==='set-dropped') { %>
+                <p class="answer_of_menu">Dropped</p>
+            <% } %>
+            <% if (user_info_about_anime.AnimeStatus==='set-paused') { %>
+                <p class="answer_of_menu">Paused</p>
+            <% } %>
+        </div>
+        <div>
+            <p class="title_of_menu"><strong>Rate:</strong> </p>
+            <p class="answer_of_menu"><%= user_info_about_anime.RateGrade %>/5</p>
+          </div>
+          <div>
+            <p class="title_of_menu"><strong>Total Rewatch:</strong> </p>
+            <p class="answer_of_menu"><%= user_info_about_anime.TotalRewatch %></p>
+          </div>
+          <div>
+            <p class="title_of_menu"><strong>Start Date:</strong> </p>
+            <p class="answer_of_menu"><%= user_info_about_anime.StartDate %></p>
+          </div>
+          <div>
+            <p class="title_of_menu"><strong>End Date:</strong> </p>
+            <p class="answer_of_menu"><%= user_info_about_anime.EndDate %></p>
+          </div>
+          <div>
+            <p class="title_of_menu"><strong>Notes:</strong> </p>
+            <p class="answer_of_menu"><%= user_info_about_anime.Notes %></p>
+          </div>
+    </div>
+</div>
     
   </div>
 </div>
