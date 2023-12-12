@@ -1,16 +1,58 @@
 <%
-const title = 'Reviews - YourAnimeHub';
+const title = 'My Reviews - YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title }) %>
+<link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
 
-
-<section>
-  <h1 style="text-align: center;">This is the reviews of the user page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the user will see all the reviews he posted on the website</h4>
+<section id="packages" class="pt-2 ms-5">
+  <div style="margin: auto;">
+    <h1 class="my_h1 text-light" style="margin-left: 20px !important;">MY REVIEWS</h1>
+  </div>
+  <div class="row">
+    <% if (UserReviewList && UserReviewList.length > 0) { %>
+      <% UserReviewList.forEach((review) => { %>
+        <div class="col-md-3 mb-4">
+          <a style="text-decoration: none; color:black;" href="/review/<%= review.AnimeID%>/<%= review.ReviewID%>" id="review_one_card">
+            <div class="card h-500" style="width: 90%;">
+              <div class="review-image-container">
+                <img src="<%= review.BackgroundImageURL%>" id="review-image" class="card-img-top">
+                <div id="review-overlay">
+                  <p class="text-light m-0">Read Full Review</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <p id="review-title" class="card-title">Review of <%= review.AnimeName%> by <%= review.Username%></p>
+                <p id="review-summary" class="card-text"><%= review.ReviewSummary%></p>
+              </div>
+              <div class="card-footer">
+                <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
+                  👍 <span id="like-count">review.LikesOnReview</span>
+                </button>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <div class="col-12 text-center mt-5">
+        <p class="text-light">You haven't made any reviews.</p>
+      </div>
+    <% } %>
+  </div>
 </section>
+<% if (UserReviewList && UserReviewList.length > 0) { %>
+<div class="load-more-container">
+  <button id="load-more-button" class="load-more-button">Load More</button>
+</div>
+<% } %>
 
+<script>
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+</script>
 
-<%- include('../partials/footer.ejs', { title: title }) %>
-
+<%- include('../partials/footer.ejs') %>
 </body>
 </html>

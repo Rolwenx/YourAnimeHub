@@ -6,6 +6,29 @@ const animeRepo = require('../utils/anime.repository.js');
 
 module.exports = {
 
+  async editOneReview(userId, animeId, reviewData) {
+    try {
+      let conn = await pool.getConnection();
+  
+      for (const key in reviewData) {
+        const value = reviewData[key];
+  
+        // Construct the SQL query with named placeholders
+        const sql = `UPDATE View_Anime SET ${key} = ? WHERE UserID = ? AND AnimeID = ?`;
+  
+        // Combine values from reviewData and parameters
+        const values = [value, userId, animeId];
+  
+        // Execute the query
+        await conn.execute(sql, values);
+      }
+  
+      conn.release();
+    } catch (err) {
+      console.error('Error in editOneReview:', err);
+      throw err;
+    }
+  },  
 
 async addOneReview(reviewData,userId,animeId) {
         
@@ -140,6 +163,82 @@ async addOneReview(reviewData,userId,animeId) {
         }
     },
 
+    async getInformationOfUserWhoDidAReview(animeId) {
+      try {
+        let conn = await pool.getConnection();
+    
+        // Check if a row exists for the given animeId and userId
+        let sql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND ReviewID IS NOT NULL';
+        const rows = await conn.execute(sql, [animeId]);
+        conn.release();
+
+
+         if (rows.length > 0) {
+          return rows;
+        } else {
+          return null;
+        }
+      } catch (err) {
+        console.error('Error in getInformationOfUserWhoDidAReview:', err);
+        throw err;
+      }
+    },
+    
+    async CheckIfUserDidAReview(animeId,userId) {
+      try {
+        let conn = await pool.getConnection();
+    
+        // Check if a row exists for the given animeId and userId
+        let sql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND ReviewID IS NOT NULL and UserID = ?';
+        const rows = await conn.execute(sql, [animeId,userId]);
+        conn.release();
+
+
+         if (rows.length > 0) {
+          return rows;
+        } else {
+          return null;
+        }
+      } catch (err) {
+        console.error('Error in CheckIfUserDidAReview:', err);
+        throw err;
+      }
+    },
+    
+    async getUserIdOfPeopleWhoDidAReview(animeId) {
+      try {
+        const conn = await pool.getConnection();
+    
+        const sql = 'SELECT UserID FROM View_Anime WHERE ReviewID IS NOT NULL AND AnimeID = ?';
+        const rows = await conn.query(sql, [animeId]);
+    
+        if (rows && rows.length === 0) {
+          console.log('its null');
+    
+          conn.release();
+          return null;
+        } else {
+          console.log('its not null');
+          const UsernamesWhoDidReviews = [];
+    
+          // Convert the object into an array
+          const rowsArray = Object.values(rows);
+          for (const row of rowsArray) {
+            const userId = row.UserID;
+            const username = await animeRepo.GetUsernameById(userId);
+            UsernamesWhoDidReviews.push({ ...row, UserName: username });
+          }
+    
+          conn.release();
+          return UsernamesWhoDidReviews;
+        }
+      } catch (error) {
+        console.error('Error in getAllReviewsByAnimeId:', error);
+        throw error;
+      }
+    },
+    
+
     // Function that allow to the take information of the View_Anime Table according to the user and the anime
     async getUserAnime(animeId,userId) {
         try {
@@ -204,53 +303,20 @@ async addOneReview(reviewData,userId,animeId) {
           throw err;
         }
       },
-    async getAllReviewsByAnimeId(animeId) {
+      async getAnimeIDFromReviewID(reviewId) {
         try {
           const conn = await pool.getConnection();
       
-          const sql = 'SELECT UserID FROM View_Anime WHERE AnimeID = ?';
-          const [rows] = await conn.execute(sql, [animeId]);
-
-          if(rows == null){
-            return null;
-          }
-          else{
-            const UsernamesWhoDidReviews = [];
-
-            // Convert the object into an array
-            const rowsArray = Object.values(rows);
-
-            for (const row of rowsArray) {
-                const userId = row;
-
-                const username = await animeRepo.GetUsernameById(userId); 
-                UsernamesWhoDidReviews.push({ ...row, UserName: username });
-            }
-
-            conn.release();
-            return UsernamesWhoDidReviews;
-          }
-      
-
-        } catch (error) {
-          console.error('Error in getAllReviewsByAnimeId:', error);
-          throw error;
-        }
-      },
-
-      async getReviewID(animeId, userId) {
-        try {
-          const conn = await pool.getConnection();
-      
-          const sql = 'SELECT ReviewID FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
-          const [rows] = await conn.execute(sql, [animeId,userId]);
+          const sql = 'SELECT AnimeID,UserID FROM View_Anime WHERE ReviewID = ?';
+          const [rows] = await conn.execute(sql, [reviewId]);
+          console.log(rows);
       
 
             conn.release();
 
             return rows;
         } catch (error) {
-          console.error('Error in getAllReviewsByAnimeId:', error);
+          console.error('Error in getAnimeIDFromReviewID:', error);
           throw error;
         }
       },
@@ -267,8 +333,6 @@ async addOneReview(reviewData,userId,animeId) {
                 const userName = await animeRepo.GetUsernameById(userId);
                 const backgroundURL = await animeRepo.getAnimeURLByID(animeId);
                 const anime = animeId;
-
-      
                 return {
                   ...row,
                   AnimeName: animeName,
@@ -288,6 +352,7 @@ async addOneReview(reviewData,userId,animeId) {
       
           return updatedRowsList;
       
+      
         } catch (error) {
           console.error('Error in getReviewInfo:', error);
           throw error;
@@ -296,14 +361,19 @@ async addOneReview(reviewData,userId,animeId) {
 
 
       async getAllReviews() {
-        let conn = await pool.getConnection();
-            let sql = "SELECT * FROM View_Anime";
+        const conn = await pool.getConnection();
+        const sql = "SELECT * FROM View_Anime WHERE ReviewID IS NOT NULL";
     
-            // Ensure rows is an array
+        try {
             const reviewList = await conn.query(sql);
-
+    
             conn.release();
-
+    
+            if (!reviewList.length) {
+                // Handle the case where no reviews were found
+                return [];
+            }
+    
             const updatedReviewList = await Promise.all(reviewList.map(async (review) => {
                 const animeName = await animeRepo.getAnimeNameByID(review.AnimeID);
                 const UserName = await animeRepo.GetUsernameById(review.UserID);
@@ -318,8 +388,50 @@ async addOneReview(reviewData,userId,animeId) {
             }));
     
             return updatedReviewList;
+        } catch (error) {
+            console.error("Error retrieving reviews:", error);
+            // Handle the error appropriately
+            return [];
+        }
+    },
 
-      },
+    async getAllReviewsOfUser(userId) {
+      const conn = await pool.getConnection();
+      const sql = "SELECT * FROM View_Anime WHERE ReviewID IS NOT NULL AND UserId = ?";
+    
+      try {
+        const reviewList = await conn.query(sql, [userId]);
+        console.log(reviewList)
+    
+        conn.release();
+    
+        if (!reviewList.length) {
+          // Handle the case where no reviews were found
+          return [];
+        }
+    
+        const updatedReviewList = await Promise.all(reviewList.map(async (review) => {
+          const animeName = await animeRepo.getAnimeNameByID(review.AnimeID);
+          const UserName = await animeRepo.GetUsernameById(review.UserID);
+          const backgroundURL = await animeRepo.getAnimeURLByID(review.AnimeID);
+    
+          return {
+            ...review,
+            AnimeName: animeName,
+            Username: UserName,
+            BackgroundImageURL: backgroundURL,
+          };
+        }));
+    
+        return updatedReviewList;
+      } catch (error) {
+        console.error("Error retrieving reviews:", error);
+        // Handle the error appropriately
+        return [];
+      }
+    },
+    
+    
 
     
       

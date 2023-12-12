@@ -1,11 +1,12 @@
 // controllers/hello.route.js
 const express = require('express');
 const router = express.Router();
-const { checkUserAuthentication, checkAdminAuthentication } = require('../utils/users.auth');
+const { checkUserAuthentication } = require('../utils/users.auth');
 const userRepo = require('../utils/users.repository');
+const reviewRepo = require('../utils/review.repository');
 
 router.use('/', checkUserAuthentication);
-router.use('/', checkAdminAuthentication);
+
 
 router.get('/', (req, res) => {
     res.render('user/user', { user: req.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
@@ -26,9 +27,17 @@ async function UserAnimeWatchlistAction(request, response) {
         var CompleteAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Anime');
         var PlanningAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Anime');
         var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
+        var DroppedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-dropped','Anime');
+        var PausedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-paused','Anime');
+        var RewatchedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-rewatching','Anime');
+        console.log(RewatchedAnimeList);
 
         
-        response.render("user/user_watchlist_anime", {"WatchingAnimeList":WatchingAnimeList,
+        response.render("user/user_watchlist_anime", {
+        "WatchingAnimeList":WatchingAnimeList,
+        "RewatchedAnimeList":RewatchedAnimeList,
+        "PausedAnimeList":PausedAnimeList,
+        "DroppedAnimeList":DroppedAnimeList,
         "CompleteAnimeList": CompleteAnimeList,
         "PlanningAnimeList":PlanningAnimeList,
          user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
@@ -158,6 +167,7 @@ async function UserMangaPlanningWatchlistAction(request, response) {
 router.get('/settings', UserEditAction);
 router.post('/settings/update/profile', UserUpdateProfileAction);
 router.post('/settings/update/personal_details', UserUpdatePersonalAction);
+router.post('/settings/update/password', UserUpdatePasswordAction);
 
 
 async function UserEditAction(request, response) {
@@ -201,13 +211,10 @@ async function UserUpdatePersonalAction(request, response) {
         Username: request.body.username,
         Email: request.body.email,
         Birthday: request.body.birthday,
-        UserPassword: request.body.userPassword,
     };
 
     try {
         var numRows = await userRepo.editOneUser(userId, userData);
-        console.log(userData.UserPassword);
-        await userRepo.updatePassword(userId,userData.UserPassword);
 
         response.redirect("/user/settings");
     } catch (error) {
@@ -217,10 +224,36 @@ async function UserUpdatePersonalAction(request, response) {
 }
 
 
-//http://localhost:9000/user/reviews
-router.get('/reviews', (req, res) => {
-    res.render('user/user_reviews', { user: req.user,  activePage: 'profile' });
-});
+async function UserUpdatePasswordAction(request, response) {
+    var userId = request.user.UserID;
+    var userData = {
+        UserPassword: request.body.userPassword,
+    };
+
+    try {
+        await userRepo.updatePassword(userId,userData.UserPassword);
+
+        response.redirect("/user/settings");
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserUpdatePersonalAction Internal Server Error");
+    }
+}
+
+router.get('/reviews', UserReviewsAction);
+
+async function UserReviewsAction(request,response){
+    try {
+        const userId = request.user ? request.user.UserID : null;
+        const UserReviewList = await reviewRepo.getAllReviewsOfUser(userId);
+        console.log(UserReviewList);
+
+        response.render('user/user_reviews', { UserReviewList, user: request.user,  activePage: 'profile' });
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserReviewsAction Internal Server Error");
+    }
+}
 
 //http://localhost:9000/user/favourites
 router.get('/favourites', (req, res) => {
