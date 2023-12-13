@@ -97,7 +97,7 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
     <h2 class="my_h2 text-light" style="margin-left: 20px !important;">FAVOURITE CHARACTER</h2>
   </div>
   <div class="anime-block">
-    <% if (FavouriteAnime === null || FavouriteAnime.length === 0) { %>
+    <% if (FavouriteCharacter === null || FavouriteCharacter.length === 0) { %>
       <p>No favourites character yet.</p>
     <% } else { %>
       <table class="table">
@@ -109,16 +109,18 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
           </tr>
         </thead>
         <tbody>
-          <% FavouriteAnime.slice(0, 6).forEach((animeDetails) => { %>
+          <% FavouriteCharacter.slice(0, 4).forEach((charDetails) => { %>
             <tr class="anime-row">
               <td>
-                <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
+                <a href="/character/<%= charDetails.CharacterID%>/<%=charDetails.CharName%>">
                   <div class="anime_title_box">
-                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
-                    <p><%= animeDetails.TitleEnglish %></p>
+                    <img src="<%= charDetails.ImageURL %>" alt="<%= charDetails.CharName %>" class="img-thumbnail" width="50">
+                    <p><%= charDetails.CharName %></p>
                   </div>
                 </a>
               </td>
+              <td><%= charDetails.Birthday %></td>
+              <td><%= charDetails.Likes %></td>
             </tr>
           <% }); %>
         </tbody>

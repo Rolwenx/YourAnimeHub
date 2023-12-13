@@ -211,6 +211,83 @@ module.exports = {
             throw err;
         }
     },
+
+
+    async getAllFavouriteCharacter(userId){
+
+        try {
+            const conn = await pool.getConnection();
+            // FC : UserID, CharacterID
+            // c : CharName, Birthday, ImageURL, Likes
+            const sql = "SELECT fc.*,c.CharName,c.Birthday,c.ImageURL,c.Likes FROM User_Favorite_Character fc JOIN Character_Card c ON fc.CharacterID = c.CharacterID WHERE fc.UserID = ?";
+
+            const charList = await conn.query(sql, [userId]);
+
+            if (!charList.length) {
+                return [];
+              }
+
+              return charList;
+            
+        } catch (error) {
+            console.error('Error in getAllFavouriteCharacter:', error);
+          throw error;
+        }
+      },
+
+      async AddCharacterAsFavourite(userId, characterId){
+
+        try {
+            const conn = await pool.getConnection();
+            let insertSql = 'INSERT INTO User_Favorite_Character (CharacterID, UserID) VALUES (?, ?)';
+            await conn.execute(insertSql, [characterId, userId]);
+
+            conn.release();
+
+            
+        } catch (error) {
+            console.error('Error in AddCharacterAsFavourite:', error);
+          throw error;
+        }
+      },
+
+      async RemoveCharacterAsFavourite(userId, characterId){
+
+        try {
+            const conn = await pool.getConnection();
+            let deleteSql = 'DELETE FROM User_Favorite_Character WHERE CharacterID = ? AND UserID = ?';
+            await conn.execute(deleteSql, [characterId, userId]);
+        
+            conn.release();
+
+            
+        } catch (error) {
+            console.error('Error in RemoveCharacterAsFavourite:', error);
+          throw error;
+        }
+      },
+
+      async CheckIfCharacterInFavourite(userId, characterId){
+
+        try {
+            const conn = await pool.getConnection();
+            let sql = 'SELECT * FROM User_Favorite_Character WHERE CharacterID = ? AND UserID = ?';
+            const allfavourite = await conn.query(sql, [characterId, userId]);
+
+            conn.release();
+            if(allfavourite.length == 0){
+                return false;
+            }else{
+                return true
+            }
+        
+
+            
+        } catch (error) {
+            console.error('Error in CheckIfCharacterInFavourite:', error);
+          throw error;
+        }
+      }
     
 
 };

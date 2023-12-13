@@ -5,6 +5,7 @@ const { checkUserAuthentication } = require('../utils/users.auth');
 const userRepo = require('../utils/users.repository');
 const reviewRepo = require('../utils/review.repository');
 const animeRepo = require('../utils/anime.repository');
+const characterRepo = require('../utils/characters.repository');
 
 router.use('/', checkUserAuthentication);
 
@@ -288,15 +289,25 @@ router.post('/favourites/anime/remove/:animeId', UserRemoveAnimeToFavourites);
 router.post('/favourites/manga/add/:mangaId', UserAddMangaToFavourites);
 router.post('/favourites/manga/remove/:mangaId', UserRemoveMangaToFavourites);
 
+router.post('/favourites/character/add/:characterId', UserAddCharacterToFavourites);
+router.post('/favourites/character/remove/:characterId', UserRemoveCharacterToFavourites);
+
 async function UserFavouritesAction(request,response){
 
     try {
         const userId = request.user ? request.user.UserID : null;
         FavouriteAnime = await animeRepo.getAllFavouriteAnime(userId,'Anime');
         FavouriteManga = await animeRepo.getAllFavouriteAnime(userId,'Manga');
+        FavouriteCharacter = await characterRepo.getAllFavouriteCharacter(userId);
 
 
-        response.render('user/user_favourites', {FavouriteAnime,user: request.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
+        response.render('user/user_favourites', {
+            FavouriteCharacter,
+            FavouriteManga,
+            FavouriteAnime,
+            user: request.user, 
+            title: 'Profile - YourAnimeHub',
+            activePage:'profile' });
     } catch (error) {
         console.error('Error:', error);
         response.status(500).send(" UserFavouritesAction Internal Server Error");
@@ -306,11 +317,11 @@ async function UserFavouritesAction(request,response){
 
 
 async function UserAddAnimeToFavourites(request, response) {
-    var userId = request.user.UserID;
-    var animeId = request.params.animeId; 
+    const userId = request.user.UserID;
+    const animeId = request.params.animeId; 
 
     try {
-        var numRows = await animeRepo.AddAnimeAsFavourite(userId, animeId);
+        const numRows = await animeRepo.AddAnimeAsFavourite(userId, animeId);
         const text = 'Anime has been added to favourite.';
         const whichId = 'favourites';
         const type = 'user';
@@ -323,11 +334,11 @@ async function UserAddAnimeToFavourites(request, response) {
 }
 
 async function UserRemoveAnimeToFavourites(request, response) {
-    var userId = request.user.UserID;
-    var animeId = request.params.animeId; 
+    const userId = request.user.UserID;
+    const animeId = request.params.animeId; 
 
     try {
-        var numRows = await animeRepo.RemoveAnimeAsFavourite(userId, animeId);
+        const numRows = await animeRepo.RemoveAnimeAsFavourite(userId, animeId);
         const text = 'Anime has been removed from favourite.';
         const whichId = animeId;
         const type = 'anime';
@@ -341,8 +352,8 @@ async function UserRemoveAnimeToFavourites(request, response) {
 
 
 async function UserAddMangaToFavourites(request, response) {
-    var userId = request.user.UserID;
-    var mangaId = request.params.mangaId; 
+    const userId = request.user.UserID;
+    const mangaId = request.params.mangaId; 
 
     try {
         var numRows = await animeRepo.AddAnimeAsFavourite(userId, mangaId);
@@ -358,8 +369,8 @@ async function UserAddMangaToFavourites(request, response) {
 }
 
 async function UserRemoveMangaToFavourites(request, response) {
-    var userId = request.user.UserID;
-    var mangaId = request.params.mangaId; 
+    const userId = request.user.UserID;
+    const mangaId = request.params.mangaId; 
 
     try {
         var numRows = await animeRepo.RemoveAnimeAsFavourite(userId, mangaId);
@@ -371,6 +382,40 @@ async function UserRemoveMangaToFavourites(request, response) {
     } catch (error) {
         console.error('Error:', error);
         response.status(500).send(" UserRemoveMangaToFavourites Internal Server Error");
+    }
+}
+
+async function UserAddCharacterToFavourites(request, response) {
+    const userId = request.user.UserID;
+    const characterId = request.params.characterId; 
+
+    try {
+        var numRows = await characterRepo.AddCharacterAsFavourite(userId, characterId);
+        const text = 'Character has been added to favourite.';
+        const whichId = 'favourites';
+        const type = 'user';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserAddCharacterToFavourites Internal Server Error");
+    }
+}
+
+async function UserRemoveCharacterToFavourites(request, response) {
+    const userId = request.user.UserID;
+    const characterId = request.params.characterId; 
+
+    try {
+        var numRows = await characterRepo.RemoveCharacterAsFavourite(userId, characterId);
+        const text = 'Character has been removed from favourite.';
+        const whichId = characterId;
+        const type = 'character';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserRemoveCharacterToFavourites Internal Server Error");
     }
 }
 

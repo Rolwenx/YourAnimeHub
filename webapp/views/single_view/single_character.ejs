@@ -58,12 +58,30 @@ const title = character ? `${character.CharName} - YourAnimeHub` : 'YourAnimeHub
         <i class="fa fa-thumbs-up"><%= character.Likes%></i>
       </button>
     </div>
+
+
+
     <div class="description">
       <p style="color:white;"><%= character.CharSynopsis %></p>
     </div>
     
+    
   </div>
   <div class="more_inf_cont">
+    <% if (is_character_favourited == false) { %>
+      <form action="/user/favourites/character/add/<%= character.CharacterID%>" method="post">
+        <button type="submit" class="fav_btn">
+          <i class="fa fa-heart-o"></i>
+        </button>
+      </form>
+    <% } %>
+    <% if (is_character_favourited == true) { %>
+      <form action="/user/favourites/character/remove/<%= character.CharacterID%>" method="post">
+        <button type="submit" class="fav_btn">
+          <i class="fa fa-heart"></i>
+        </button>
+      </form>
+    <% } %>
       <div>
         <h2 class="my_h2" style="color: #ffeba7;">MORE INFORMATION</h2>
       </div>  
