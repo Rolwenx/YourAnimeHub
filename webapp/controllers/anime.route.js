@@ -20,7 +20,7 @@ router.post('/:animeId/set', async (req, res) => {
             return res.render('partials/RedirectionAlert', { whichId, text, type});
         }
 
-        if (action === 'set-complete' || action === 'set-watching' || action === 'set-planning') {
+        if (action === 'aset-complete' || action === 'aset-watching' || action === 'aset-planning') {
             await animeRepo.updateAnimeStatus(userId, animeId, action);
             const text = 'Anime status updated successfully.';
             return res.render('partials/RedirectionAlert', { whichId, text, type});
@@ -60,12 +60,12 @@ async function AnimeViewAction(request, response) {
         console.log("user_info_about_anime",user_info_about_anime);
 
         const StatsCount = {};
-        StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('set-planning',animeId))[0]?.statusCount || 0;
-        StatsCount.CompleteCount = (await animeRepo.getAllStatusAnime('set-complete',animeId))[0]?.statusCount || 0;
-        StatsCount.WatchingCount = (await animeRepo.getAllStatusAnime('set-watching',animeId))[0]?.statusCount || 0;
-        StatsCount.DroppedCount = (await animeRepo.getAllStatusAnime('set-dropped',animeId))[0]?.statusCount || 0;
-        StatsCount.PausedCount = (await animeRepo.getAllStatusAnime('set-paused',animeId))[0]?.statusCount || 0;
-        StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('set-rewatching',animeId))[0]?.statusCount || 0;
+        StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('aset-planning',animeId))[0]?.statusCount || 0;
+        StatsCount.CompleteCount = (await animeRepo.getAllStatusAnime('aset-complete',animeId))[0]?.statusCount || 0;
+        StatsCount.WatchingCount = (await animeRepo.getAllStatusAnime('aset-watching',animeId))[0]?.statusCount || 0;
+        StatsCount.DroppedCount = (await animeRepo.getAllStatusAnime('aset-dropped',animeId))[0]?.statusCount || 0;
+        StatsCount.PausedCount = (await animeRepo.getAllStatusAnime('aset-paused',animeId))[0]?.statusCount || 0;
+        StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('aset-rewatching',animeId))[0]?.statusCount || 0;
 
         response.render("single_view/single_anime", { "StatsCount": StatsCount, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
 

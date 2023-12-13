@@ -105,6 +105,15 @@ CREATE TABLE User_Favorite_Quote(
    FOREIGN KEY(UserID) REFERENCES User_Profile(UserID)
 );
 
+-- Because there's a favourite quote category in the user profile
+CREATE TABLE User_Favorite_Character(
+   CharacterID INT,
+   UserID INT,
+   PRIMARY KEY(CharacterID, UserID),
+   FOREIGN KEY(CharacterID) REFERENCES Character_Card(CharacterID),
+   FOREIGN KEY(UserID) REFERENCES User_Profile(UserID)
+);
+
 -- Because there's a favourite anime category in the user profile
 CREATE TABLE User_Favorite_Anime (
    UserID INT,
