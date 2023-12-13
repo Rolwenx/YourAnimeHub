@@ -725,8 +725,8 @@ module.exports = {
         try {
             const conn = await pool.getConnection();
             // FA : UserID, AnimeID
-            // A : TitleEnglish, PopularityPosition, CoverImageURL, BackgroundImageURL, EpisodeCount, TypeFormat, Likes
-            const sql = "SELECT fa.*, a.TitleEnglish,a.PopularityPosition,a.CoverImageURL,a.BackgroundImageURL,a.EpisodeCount,a.TypeFormat,a.Likes, a.Chapters,a.Volumes FROM User_Favorite_Anime fa JOIN Anime a ON fa.AnimeID = a.AnimeID WHERE a.AnimeFormat = ? AND fa.UserID = ?";
+            // A : TitleEnglish, CoverImageURL, BackgroundImageURL, EpisodeCount, TypeFormat, Likes
+            const sql = "SELECT fa.*, a.TitleEnglish,a.CoverImageURL,a.BackgroundImageURL,a.EpisodeCount,a.TypeFormat,a.Likes, a.Chapters,a.Volumes FROM User_Favorite_Anime fa JOIN Anime a ON fa.AnimeID = a.AnimeID WHERE a.AnimeFormat = ? AND fa.UserID = ?";
 
             const animeList = await conn.query(sql, [type, userId]);
 
