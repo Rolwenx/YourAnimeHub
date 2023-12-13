@@ -64,7 +64,6 @@ CREATE TABLE Character_Card(
 	 CharSynopsis TEXT,
    ImageURL VARCHAR(100),
    isMainCharacter BOOLEAN NOT NULL,
-	 Likes INT DEFAULT 0,
    Family TEXT, 
    NamesGiven TEXT,
     -- Hidden Spoiler Surnames field (can be hidden by the user)
