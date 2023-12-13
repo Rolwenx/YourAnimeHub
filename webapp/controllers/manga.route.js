@@ -3,8 +3,6 @@ const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 const reviewRepo = require('../utils/review.repository');
 
-router.get('/:mangaId/:mangaName', MangaViewAction);
-router.get('/:mangaId', MangaViewAction);
 
 router.post('/:mangaId/set', async (req, res) => {
     try {
@@ -41,10 +39,89 @@ router.post('/:mangaId/set', async (req, res) => {
     }
 });
 
+
+router.post('/:mangaId/like', async (req, res) => {
+    try {
+
+        var mangaId = req.params.mangaId;
+        const userId = req.user ? req.user.UserID : null;
+        const type = "manga";
+        const whichId = mangaId;
+        
+        if (!userId) {
+            const text = 'Unauthorized. Please log in to perform this action.';
+            
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
+        }
+        const has_user_liked = await animeRepo.CheckIfUserHasLikedAnime(userId,mangaId);
+
+        if(has_user_liked == true){
+            const text = 'Manga has removed as liked.';
+            await animeRepo.RemoveLikeAnAnime(mangaId,userId);
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
+
+        }else{
+            const text = 'Manga has been liked.';
+            await animeRepo.LikeAnAnime(mangaId,userId);
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
+
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.send(`
+            <script>
+                alert('Internal Server Error');
+                window.location.href = '/browse/anime';
+            </script>
+        `);
+        return res.end();
+    }
+});
+
+
+router.post('/:mangaId/edit', async (req, res) => {
+    try {
+        var mangaId = req.params.mangaId;
+        var userId = req.user ? req.user.UserID : null;
+
+        var mangaData = {
+            AnimeStatus: req.body.status || null,
+            ChaptersRead: req.body.chapterProgress || null,
+            VolumeProgress: req.body.volumeProgress || null,
+            TotalRewatch: req.body.totalRereads || null,
+            StartDate: req.body.startDate || null,
+            EndDate: req.body.finishDate || null,
+            Notes: req.body.notes || null,
+            RateGrade: req.body.rate || null,
+        };
+
+        var numRows = await animeRepo.editAnimeFromList(mangaId, userId, mangaData);
+        res.send(`
+        <script>
+            alert('Manga information updated successfully.');
+            window.location.href = '/browse/manga';
+        </script>
+        `);
+        return res.end();
+
+    } catch (error) {
+        console.error('Error:', error);
+        res.send(`
+        <script>
+            alert('Internal Server Error');
+            window.location.href = '/browse/manga';
+        </script>
+        `);
+        return res.end();
+    }
+});
+
+/* ------- MANGA PAGES ACTION -----*/
+
+router.get('/:mangaId/:mangaName', MangaViewAction);
+router.get('/:mangaId', MangaViewAction);
 router.get('/:mangaId/:mangaName/characters', MangaViewActionCharacters);
 router.get('/:mangaId/characters', MangaViewActionCharacters);
-router.get('/:mangaId/:mangaName/reviews', MangaViewActionReviews);
-router.get('/:mangaId/reviews', MangaViewActionReviews);
 
 async function MangaViewAction(request, response) {
     var mangaId = request.params.mangaId;
@@ -93,6 +170,36 @@ async function MangaViewActionCharacters(request, response) {
         response.status(500).send('Internal Server Error');
     }
 }
+  
+  
+router.get('/:mangaId/:mangaName/user-info', MangaViewActionUserInfo);
+router.get('/:mangaId/user-info', MangaViewActionUserInfo);
+
+async function MangaViewActionUserInfo(request, response) {
+    var mangaId = request.params.mangaId;
+    var userId = request.user.UserID;
+
+    try {
+        var manga = await animeRepo.getOneManga(mangaId);
+        var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
+        const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
+
+        const animeStatus = await animeRepo.getAnimeStatus(userId, mangaId);
+        var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
+
+        response.render("single_view/single_manga_userInfo", { is_manga_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
+    } catch (error) {
+        console.error('Error in MangaViewActionUserInfo:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+
+/* ------- MANGA REVIEWS ACTION -----*/
+
+router.get('/:mangaId/reviews', MangaViewActionReviews);
+router.get('/:mangaId/:mangaName/reviews', MangaViewActionReviews);
+
 
 async function MangaViewActionReviews(request, response) {
     var mangaId = request.params.mangaId;
@@ -140,65 +247,6 @@ async function MangaViewActionReviews(request, response) {
       response.status(500).send('Internal Server Error');
     }
   }
-  
-  
-router.get('/:mangaId/:mangaName/user-info', MangaViewActionUserInfo);
-router.get('/:mangaId/user-info', MangaViewActionUserInfo);
 
-async function MangaViewActionUserInfo(request, response) {
-    var mangaId = request.params.mangaId;
-    var userId = request.user.UserID;
-
-    try {
-        var manga = await animeRepo.getOneManga(mangaId);
-        var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
-        const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
-
-        const animeStatus = await animeRepo.getAnimeStatus(userId, mangaId);
-        var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
-
-        response.render("single_view/single_manga_userInfo", { is_manga_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
-    } catch (error) {
-        console.error('Error in MangaViewActionUserInfo:', error);
-        response.status(500).send('Internal Server Error');
-    }
-}
-
-router.post('/:mangaId/edit', async (req, res) => {
-    try {
-        var mangaId = req.params.mangaId;
-        var userId = req.user ? req.user.UserID : null;
-
-        var mangaData = {
-            AnimeStatus: req.body.status || null,
-            ChaptersRead: req.body.chapterProgress || null,
-            VolumeProgress: req.body.volumeProgress || null,
-            TotalRewatch: req.body.totalRereads || null,
-            StartDate: req.body.startDate || null,
-            EndDate: req.body.finishDate || null,
-            Notes: req.body.notes || null,
-            RateGrade: req.body.rate || null,
-        };
-
-        var numRows = await animeRepo.editAnimeFromList(mangaId, userId, mangaData);
-        res.send(`
-        <script>
-            alert('Manga information updated successfully.');
-            window.location.href = '/browse/manga';
-        </script>
-        `);
-        return res.end();
-
-    } catch (error) {
-        console.error('Error:', error);
-        res.send(`
-        <script>
-            alert('Internal Server Error');
-            window.location.href = '/browse/manga';
-        </script>
-        `);
-        return res.end();
-    }
-});
 
 module.exports = router;

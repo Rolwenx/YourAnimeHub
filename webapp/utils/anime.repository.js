@@ -814,5 +814,83 @@ module.exports = {
         }
       },
 
+      async LikeAnAnime(animeId,userId){
+
+        try {
+            const conn = await pool.getConnection();
+
+            let updateSql = 'UPDATE Anime SET Likes = Likes + 1 WHERE AnimeID = ?';
+            await conn.execute(updateSql, [animeId]);
+        
+
+            let updateSql2 = 'UPDATE View_Anime SET hasLiked = 1 WHERE AnimeID = ? AND UserID = ?';
+            await conn.execute(updateSql2, [animeId, userId]);
+            conn.release();
+
+
+            
+        } catch (error) {
+            console.error('Error in LikeAnAnime:', error);
+          throw error;
+        }
+      },
+      
+
+      async RemoveLikeAnAnime(animeId,userId){
+
+        try {
+            const conn = await pool.getConnection();
+
+            let updateSql = 'UPDATE Anime SET Likes = Likes - 1 WHERE AnimeID = ?';
+            await conn.execute(updateSql, [animeId]);
+        
+
+            let updateSql2 = 'UPDATE View_Anime SET hasLiked = 0 WHERE AnimeID = ? AND UserID = ?';
+            await conn.execute(updateSql2, [animeId, userId]);
+            conn.release();
+
+
+            
+        } catch (error) {
+            console.error('Error in RemoveLikeAnAnime:', error);
+          throw error;
+        }
+      },
+
+
+      async CheckIfUserHasLikedAnime(userId, animeId) {
+
+        let conn = await pool.getConnection();
+      
+        // Check if a row exists for the given animeId and userId
+        let checkSql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ? AND hasLiked = 1';
+        let rows = await conn.execute(checkSql, [animeId, userId]);
+
+        let checkSql2 = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+        let rows2 = await conn.execute(checkSql2, [animeId, userId]);
+      
+    
+        // This means that the user doesn't even have a row created, so he can't have liked so we create it.
+        if (rows.length == 0 && rows2.length == 0) {
+            let insertSql = 'INSERT INTO View_Anime (AnimeID, UserID, hasLiked) VALUES (?, ?, ?)';
+            await conn.execute(insertSql, [animeId, userId, 0]);
+            conn.release();
+            return false;
+          
+        } 
+        conn.release();
+        // This means that the user does has a row created, but hasn't liked
+        if (rows.length == 0 && rows2.length != 0) {
+            // we return false since user hasn't liked
+            return false;
+        }
+        // This means that the user has a row created and has liked
+        if (rows.length != 0 && rows2.length != 0) {
+            return true;
+          
+        } 
+      
+      
+      },
       
 };

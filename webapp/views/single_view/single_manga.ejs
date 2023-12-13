@@ -59,9 +59,12 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
    </ul>
    
     
-    <button id="like_btn" class="like_btn" onclick="window.location.href='';">
-      <i class="fa fa-thumbs-up"><%= manga.Likes%></i>
+   <form action="/manga/<%= manga.AnimeID %>/like" method="post">
+    <button type="submit" class="like_btn">
+        <i class="fa fa-thumbs-up"></i>
+        <%= manga.Likes %>
     </button>
+  </form>
   </div>
   <div class="description">
     <p style="color:white;"><%= manga.Synopsis %></p>

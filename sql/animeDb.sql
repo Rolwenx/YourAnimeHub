@@ -132,6 +132,8 @@ CREATE TABLE View_Anime(
 	StartDate DATE,
    EndDate DATE,
    Notes TEXT,
+   -- 0 = hasn't liked / 1 = has liked
+   hasLiked INT,
    PRIMARY KEY(AnimeID, UserID),
    FOREIGN KEY(AnimeID) REFERENCES Anime(AnimeID),
    FOREIGN KEY(UserID) REFERENCES User_Profile(UserID)

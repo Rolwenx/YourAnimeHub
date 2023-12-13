@@ -3,8 +3,6 @@ const router = express.Router();
 const animeRepo = require('../utils/anime.repository');
 const reviewRepo = require('../utils/review.repository');
 
-router.get('/:animeId/:animeName', AnimeViewAction);
-router.get('/:animeId', AnimeViewAction);
 
 router.post('/:animeId/set', async (req, res) => {
     try {
@@ -41,6 +39,86 @@ router.post('/:animeId/set', async (req, res) => {
     }
 });
 
+
+router.post('/:animeId/edit', async (req, res) => {
+    try {
+        var animeId = req.params.animeId;
+        var userId = req.user ? req.user.UserID : null;
+
+        var mangaData = {
+            AnimeStatus: req.body.status || null,
+            EpisodeProgress: req.body.episodeProgress || null,
+            TotalRewatch: req.body.totalRewatches || null,
+            StartDate: req.body.startDate || null,
+            EndDate: req.body.finishDate || null,
+            Notes: req.body.notes || null,
+            RateGrade: req.body.rate || null,
+        };
+
+        var numRows = await animeRepo.editAnimeFromList(animeId, userId, mangaData);
+        res.send(`
+        <script>
+            alert('Anime information updated successfully.');
+            window.location.href = '/browse/anime';
+        </script>
+        `);
+        return res.end();
+
+    } catch (error) {
+        console.error('Error:', error);
+        res.send(`
+        <script>
+            alert('Internal Server Error');
+            window.location.href = '/browse/anime';
+        </script>
+        `);
+        return res.end();
+    }
+});
+
+
+router.post('/:animeId/like', async (req, res) => {
+    try {
+        var animeId = req.params.animeId;
+        const userId = req.user ? req.user.UserID : null;
+        const type = "anime";
+        const whichId = animeId;
+        
+        if (!userId) {
+            const text = 'Unauthorized. Please log in to perform this action.';
+            
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
+        }
+        const has_user_liked = await animeRepo.CheckIfUserHasLikedAnime(userId,animeId);
+
+        if(has_user_liked == true){
+            const text = 'Anime has removed as liked.';
+            await animeRepo.RemoveLikeAnAnime(animeId,userId);
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
+
+        }else{
+            const text = 'Anime has been liked.';
+            await animeRepo.LikeAnAnime(animeId,userId);
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
+
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        res.send(`
+            <script>
+                alert('Internal Server Error');
+                window.location.href = '/browse/anime';
+            </script>
+        `);
+        return res.end();
+    }
+});
+
+
+/* ------- MANGA PAGES ACTION -----*/
+
+router.get('/:animeId/:animeName', AnimeViewAction);
+router.get('/:animeId', AnimeViewAction);
 router.get('/:animeId/:animeName/characters', AnimeViewActionCharacters);
 router.get('/:animeId/characters', AnimeViewActionCharacters);
 router.get('/:animeId/:animeName/reviews', AnimeViewActionReviews);
@@ -166,41 +244,5 @@ async function AnimeViewActionUserInfo(request, response) {
         response.status(500).send('Internal Server Error');
     }
 }
-
-router.post('/:animeId/edit', async (req, res) => {
-    try {
-        var animeId = req.params.animeId;
-        var userId = req.user ? req.user.UserID : null;
-
-        var mangaData = {
-            AnimeStatus: req.body.status || null,
-            EpisodeProgress: req.body.episodeProgress || null,
-            TotalRewatch: req.body.totalRewatches || null,
-            StartDate: req.body.startDate || null,
-            EndDate: req.body.finishDate || null,
-            Notes: req.body.notes || null,
-            RateGrade: req.body.rate || null,
-        };
-
-        var numRows = await animeRepo.editAnimeFromList(animeId, userId, mangaData);
-        res.send(`
-        <script>
-            alert('Anime information updated successfully.');
-            window.location.href = '/browse/anime';
-        </script>
-        `);
-        return res.end();
-
-    } catch (error) {
-        console.error('Error:', error);
-        res.send(`
-        <script>
-            alert('Internal Server Error');
-            window.location.href = '/browse/anime';
-        </script>
-        `);
-        return res.end();
-    }
-});
 
 module.exports = router;
