@@ -26,6 +26,7 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
             <td><strong>Rate</strong></td>
             <td><strong>Episode Progress</strong></td>
             <td><strong>Type</strong></td>
+            <td><strong>Action</strong></td>
           </tr>
         </thead>
         <tbody>
@@ -47,6 +48,13 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
                 <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
               <% } %>
               <td><%= animeDetails.TypeFormat %></td>
+              <td>
+                <form action="/user/watchlist/anime/<%= animeDetails.AnimeID %>/remove" method="POST">
+                    <button type="submit" class="delete_btn" onclick="return confirm('Are you sure you want to remove from watchlist?')">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </form>
+              </td>
             </tr>
           <% }); %>
         </tbody>

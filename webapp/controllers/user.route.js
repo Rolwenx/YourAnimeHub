@@ -51,6 +51,7 @@ router.get('/watchlist/anime', UserAnimeWatchlistAction);
 router.get('/watchlist/anime/complete', UserAnimeCompleteWatchlistAction);
 router.get('/watchlist/anime/watching', UserAnimeWatchingWatchlistAction);
 router.get('/watchlist/anime/planning', UserAnimePlanningWatchlistAction);
+router.post('/watchlist/anime/:animeId/remove', UserRemoveAnimeFromWatchlist);
 
 
 
@@ -116,6 +117,24 @@ async function UserAnimePlanningWatchlistAction(request, response) {
     }
 }
 
+async function UserRemoveAnimeFromWatchlist(request, response) {
+    const userId = request.user.UserID;
+    const animeId = request.params.animeId; 
+
+    try {
+        await animeRepo.RemoveAnimeFromWatchlist(userId, animeId);
+        const text = 'Anime has been removed from your watchlist.';
+        const whichId = 'watchlist/anime';
+        const type = 'user';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserRemoveAnimeFromWatchlist Internal Server Error");
+    }
+}
+
+
 /* --------- USER MANGA WATCHLIST ACTIONS --------*/
 
 
@@ -123,6 +142,7 @@ router.get('/watchlist/manga', UserMangaWatchlistAction);
 router.get('/watchlist/manga/complete', UserMangaCompleteWatchlistAction);
 router.get('/watchlist/manga/reading', UserMangaReadingWatchlistAction);
 router.get('/watchlist/manga/planning', UserMangaPlanningWatchlistAction);
+router.post('/watchlist/manga/:mangaId/remove', UserRemoveMangaFromWatchlist);
 
 
 
@@ -186,6 +206,24 @@ async function UserMangaPlanningWatchlistAction(request, response) {
         response.status(500).send('Internal Server Error');
     }
 }
+
+async function UserRemoveMangaFromWatchlist(request, response) {
+    const userId = request.user.UserID;
+    const mangaId = request.params.mangaId; 
+
+    try {
+        await animeRepo.RemoveAnimeFromWatchlist(userId, mangaId);
+        const text = 'Manga has been removed from your watchlist.';
+        const whichId = 'watchlist/manga';
+        const type = 'user';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserRemoveMangaFromWatchlist Internal Server Error");
+    }
+}
+
 
 /* --------- USER PROFILE SETTINGS ACTIONS --------*/
 

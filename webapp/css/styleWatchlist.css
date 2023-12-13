@@ -57,3 +57,15 @@ body {
     text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s;
 }
+
+.delete_btn{
+    display: block; /* Ensure it's a block-level element */
+    background-color: rgb(41, 81, 135);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}

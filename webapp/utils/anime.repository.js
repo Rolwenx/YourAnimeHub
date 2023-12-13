@@ -795,7 +795,24 @@ module.exports = {
             console.error('Error in RemoveAnimeAsFavourite:', error);
           throw error;
         }
-      }
+      },
+
+      async RemoveAnimeFromWatchlist(userId, animeId){
+
+        try {
+            const conn = await pool.getConnection();
+
+            let updateSql = 'UPDATE View_Anime SET AnimeStatus = NULL WHERE AnimeID = ? AND UserID = ?';
+            await conn.execute(updateSql, [animeId, userId]);
+        
+            conn.release();
+
+            
+        } catch (error) {
+            console.error('Error in RemoveAnimeFromWatchlist:', error);
+          throw error;
+        }
+      },
 
       
 };
