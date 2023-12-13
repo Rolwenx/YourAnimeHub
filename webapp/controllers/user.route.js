@@ -128,6 +128,9 @@ async function UserMangaWatchlistAction(request, response) {
     var userId = request.user.UserID;
     try {
         var CompleteMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-complete');
+        console.log("CompleteMangaList",CompleteMangaList);
+        console.log("CompleteMangaList1",CompleteMangaList[0]);
+        console.log("CompleteMangaList1",CompleteMangaList[1]);
         var PlanningMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-planning');
         var ReadingMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-reading');
         var DroppedMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-dropped');

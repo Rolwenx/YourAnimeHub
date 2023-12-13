@@ -239,7 +239,7 @@ async getAllAnimeForWatchlist(userId, action) {
           continue;
         }
         const combinedInfo = {
-          ...rows[0],
+          ...rows[i],
           ...animeInfo,
         };
         MangaList.push(combinedInfo);
@@ -275,7 +275,7 @@ async getAllMangaForWatchlist(userId, action) {
         }
 
         const combinedInfo = {
-          ...rows[0],
+          ...rows[i],
           ...animeInfo,
         };
 
