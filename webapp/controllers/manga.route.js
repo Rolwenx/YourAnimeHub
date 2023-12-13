@@ -57,6 +57,7 @@ async function MangaViewAction(request, response) {
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, mangaId) : null;
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
+        const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
 
         const StatsCount = {};
         StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('mset-planning',mangaId))[0]?.statusCount || 0;
@@ -66,7 +67,7 @@ async function MangaViewAction(request, response) {
         StatsCount.PausedCount = (await animeRepo.getAllStatusAnime('mset-paused',mangaId))[0]?.statusCount || 0;
         StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('mset-rereading',mangaId))[0]?.statusCount || 0;
 
-        response.render("single_view/single_manga", { "StatsCount": StatsCount, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_manga", { is_manga_favourited, "StatsCount": StatsCount, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
 
     } catch (error) {
         console.error('Error in MangaViewAction:', error);
@@ -84,8 +85,9 @@ async function MangaViewActionCharacters(request, response) {
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, mangaId) : null;
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
+        const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
 
-        response.render("single_view/single_manga_characters", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_manga_characters", {is_manga_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
     } catch (error) {
         console.error('Error in MangaViewActionCharacters:', error);
         response.status(500).send('Internal Server Error');
@@ -100,6 +102,7 @@ async function MangaViewActionReviews(request, response) {
       var manga = await animeRepo.getOneManga(mangaId);
   
       const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, mangaId) : null;
+      const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
   
 
       var who_did_review = await reviewRepo.getInformationOfUserWhoDidAReview(mangaId);
@@ -124,6 +127,7 @@ async function MangaViewActionReviews(request, response) {
   
   
       response.render("single_view/single_manga_reviews", {
+        is_manga_favourited,
         "UsernamesWhoDidReviews": UsernamesWhoDidReviews,
         "combinedUserInfo": combinedUserInfo,
         "animeStatus": animeStatus,
@@ -148,11 +152,12 @@ async function MangaViewActionUserInfo(request, response) {
     try {
         var manga = await animeRepo.getOneManga(mangaId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
+        const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
 
         const animeStatus = await animeRepo.getAnimeStatus(userId, mangaId);
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
 
-        response.render("single_view/single_manga_userInfo", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_manga_userInfo", { is_manga_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
     } catch (error) {
         console.error('Error in MangaViewActionUserInfo:', error);
         response.status(500).send('Internal Server Error');

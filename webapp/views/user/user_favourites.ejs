@@ -1,16 +1,168 @@
+
 <%
-const title = 'Favourites - YourAnimeHub';
+const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnimeHub';
 %>
 <%- include('../partials/header.ejs', { title: title }) %>
+<link type="text/css" rel="stylesheet" href="/css/styleWatchlist.css">
 
+<div class="container mt-5">
 
-<section>
-  <h1 style="text-align: center;">This is the favourites of the user page </h1>
-  <h4 style="text-align: center; margin-bottom:160px">It will be the page where the user will see all the anime/manga he favourited on the website</h4>
-</section>
+  <div class="header_title_anime one">
+    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">FAVOURITE ANIME</h2>
+  </div>
+  <div class="anime-block">
+    <% if (FavouriteAnime === null || FavouriteAnime.length === 0) { %>
+      <p>No favourites anime yet.</p>
+    <% } else { %>
+      <table class="table">
+        <thead>
+          <tr>
+            <td><strong>Title</strong></td>
+            <td><strong>Popularity</strong></td>
+            <td><strong>Episode Count</strong></td>
+            <td><strong>Likes</strong></td>
+            <td><strong>Type</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <% FavouriteAnime.slice(0, 4).forEach((animeDetails) => { %>
+            <tr class="anime-row">
+              <td>
+                <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
+                  <div class="anime_title_box">
+                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                    <p><%= animeDetails.TitleEnglish %></p>
+                  </div>
+                </a>
+              </td>
+              <td><%= animeDetails.PopularityPosition %></td>
+              <td><%= animeDetails.EpisodeCount %></td>
+              <td><%= animeDetails.Likes %></td>
+              <td><%= animeDetails.TypeFormat %></td>
 
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+
+  <button class="view_all_btn" id="load-more-button">Load More</button>
+  
+
+  <div class="header_title_anime one">
+    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">FAVOURITE MANGA</h2>
+  </div>
+  <div class="anime-block">
+    <% if (FavouriteManga === null || FavouriteManga.length === 0) { %>
+      <p>No favourites manga yet.</p>
+    <% } else { %>
+      <table class="table">
+        <thead>
+          <tr>
+            <td><strong>Title</strong></td>
+            <td><strong>Popularity</strong></td>
+            <td><strong>Chapter Count</strong></td>
+            <td><strong>Volumes Count</strong></td>
+            <td><strong>Likes</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <% FavouriteManga.slice(0, 4).forEach((mangaDetails) => { %>
+            <tr class="anime-row">
+              <td>
+                <a href="/manga/<%= mangaDetails.AnimeID%>/<%=mangaDetails.TitleEnglish%>">
+                  <div class="anime_title_box">
+                    <img src="<%= mangaDetails.CoverImageURL %>" alt="<%= mangaDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                    <p><%= mangaDetails.TitleEnglish %></p>
+                  </div>
+                </a>
+              </td>
+              <td><%= mangaDetails.PopularityPosition %></td>
+              <td><%= mangaDetails.Chapters %></td>
+              <td><%= mangaDetails.Volumes %></td>
+              <td><%= mangaDetails.Likes %></td>
+
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+
+  <button class="view_all_btn" id="load-more-button">Load More</button>
+  
+  
+  <div class="header_title_anime one">
+    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">FAVOURITE CHARACTER</h2>
+  </div>
+  <div class="anime-block">
+    <% if (FavouriteAnime === null || FavouriteAnime.length === 0) { %>
+      <p>No favourites character yet.</p>
+    <% } else { %>
+      <table class="table">
+        <thead>
+          <tr>
+            <td><strong>Name</strong></td>
+            <td><strong>Birthday</strong></td>
+            <td><strong>Likes</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <% FavouriteAnime.slice(0, 6).forEach((animeDetails) => { %>
+            <tr class="anime-row">
+              <td>
+                <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
+                  <div class="anime_title_box">
+                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                    <p><%= animeDetails.TitleEnglish %></p>
+                  </div>
+                </a>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+
+  <button class="view_all_btn" id="load-more-button">Load More</button>
+
+  
+  </div>
 
 <%- include('../partials/footer.ejs', { title: title }) %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let displayedCharCount = 10;
+
+    const animeTable = document.getElementById("anime-table");
+    const animeRows = document.querySelectorAll(".anime-row");
+
+    // Initially hide rows greater than 10
+    animeRows.forEach((row, index) => {
+      if (index >= displayedCharCount) {
+        row.style.display = "none";
+      }
+    });
+
+    document.getElementById("load-more-button").addEventListener("click", function () {
+      for (let i = displayedCharCount; i < displayedCharCount + 10; i++) {
+        if (i < animeRows.length) {
+          animeRows[i].style.display = "table-row";
+        }
+      }
+
+      displayedCharCount += 10;
+
+      // Hide load more button if all anime are displayed
+      if (displayedCharCount >= animeRows.length) {
+        document.getElementById("load-more-button").style.display = "none";
+      }
+    });
+  });
+</script>
 
 </body>
 </html>

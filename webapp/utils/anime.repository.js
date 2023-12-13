@@ -32,7 +32,6 @@ module.exports = {
       
         try {
           const animeList = await conn.query(sql, [userId, animeormanga]);
-          console.log(animeList.length);
       
           conn.release();
 
@@ -310,7 +309,7 @@ module.exports = {
             if (rows != null) {
                 return rows;
             } else {
-                console.log('mManga not found for mangaId:', mangaId);
+                console.log('Manga not found for mangaId:', mangaId);
                 return false;
             }
         } catch (err) {
@@ -705,7 +704,6 @@ module.exports = {
       
         try {
           const animeList = await conn.query(sql, [userId, status, animeormanga]);
-          console.log("function",animeList)
       
           conn.release();
       
@@ -721,6 +719,83 @@ module.exports = {
           return [];
         }
       },
+
+      async getAllFavouriteAnime(userId,type){
+
+        try {
+            const conn = await pool.getConnection();
+            // FA : UserID, AnimeID
+            // A : TitleEnglish, PopularityPosition, CoverImageURL, BackgroundImageURL, EpisodeCount, TypeFormat, Likes
+            const sql = "SELECT fa.*, a.TitleEnglish,a.PopularityPosition,a.CoverImageURL,a.BackgroundImageURL,a.EpisodeCount,a.TypeFormat,a.Likes, a.Chapters,a.Volumes FROM User_Favorite_Anime fa JOIN Anime a ON fa.AnimeID = a.AnimeID WHERE a.AnimeFormat = ? AND fa.UserID = ?";
+
+            const animeList = await conn.query(sql, [type, userId]);
+
+            if (!animeList.length) {
+                return [];
+              }
+
+              return animeList;
+            
+        } catch (error) {
+            console.error('Error in addAnimeToFavourite:', error);
+          throw error;
+        }
+      },
+
+      async AddAnimeAsFavourite(userId, animeId){
+
+        try {
+            const conn = await pool.getConnection();
+            let insertSql = 'INSERT INTO User_Favorite_Anime (AnimeID, UserID) VALUES (?, ?)';
+            await conn.execute(insertSql, [animeId, userId]);
+
+            conn.release();
+
+            
+        } catch (error) {
+            console.error('Error in addAnimeToFavourite:', error);
+          throw error;
+        }
+      },
+
+      async RemoveAnimeAsFavourite(userId, animeId){
+
+        try {
+            const conn = await pool.getConnection();
+            let deleteSql = 'DELETE FROM User_Favorite_Anime WHERE AnimeID = ? AND UserID = ?';
+            await conn.execute(deleteSql, [animeId, userId]);
+        
+            conn.release();
+
+            
+        } catch (error) {
+            console.error('Error in RemoveAnimeAsFavourite:', error);
+          throw error;
+        }
+      },
+
+      async CheckIfAnimeInFavourite(userId, animeId){
+
+        try {
+            const conn = await pool.getConnection();
+            let sql = 'SELECT * FROM User_Favorite_Anime WHERE AnimeID = ? AND UserID = ?';
+            const allfavourite = await conn.query(sql, [animeId, userId]);
+            console.log(allfavourite);
+
+            conn.release();
+            if(allfavourite.length == 0){
+                return false;
+            }else{
+                return true
+            }
+        
+
+            
+        } catch (error) {
+            console.error('Error in RemoveAnimeAsFavourite:', error);
+          throw error;
+        }
+      }
 
       
 };

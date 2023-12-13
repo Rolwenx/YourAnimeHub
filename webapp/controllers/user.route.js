@@ -280,9 +280,98 @@ async function UserReviewsAction(request,response){
 
 /* --------- USER FAVOURITES ACTIONS --------*/
 
-//http://localhost:9000/user/favourites
-router.get('/favourites', (req, res) => {
-    res.render('user/user_favourites', { user: req.user,  activePage: 'profile' });
-});
+
+router.get('/favourites', UserFavouritesAction);
+router.post('/favourites/anime/add/:animeId', UserAddAnimeToFavourites);
+router.post('/favourites/anime/remove/:animeId', UserRemoveAnimeToFavourites);
+
+router.post('/favourites/manga/add/:mangaId', UserAddMangaToFavourites);
+router.post('/favourites/manga/remove/:mangaId', UserRemoveMangaToFavourites);
+
+async function UserFavouritesAction(request,response){
+
+    try {
+        const userId = request.user ? request.user.UserID : null;
+        FavouriteAnime = await animeRepo.getAllFavouriteAnime(userId,'Anime');
+        FavouriteManga = await animeRepo.getAllFavouriteAnime(userId,'Manga');
+
+
+        response.render('user/user_favourites', {FavouriteAnime,user: request.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserFavouritesAction Internal Server Error");
+    }
+}
+
+
+
+async function UserAddAnimeToFavourites(request, response) {
+    var userId = request.user.UserID;
+    var animeId = request.params.animeId; 
+
+    try {
+        var numRows = await animeRepo.AddAnimeAsFavourite(userId, animeId);
+        const text = 'Anime has been added to favourite.';
+        const whichId = 'favourites';
+        const type = 'user';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserAddAnimeToFavourites Internal Server Error");
+    }
+}
+
+async function UserRemoveAnimeToFavourites(request, response) {
+    var userId = request.user.UserID;
+    var animeId = request.params.animeId; 
+
+    try {
+        var numRows = await animeRepo.RemoveAnimeAsFavourite(userId, animeId);
+        const text = 'Anime has been removed from favourite.';
+        const whichId = animeId;
+        const type = 'anime';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserRemoveAnimeToFavourites Internal Server Error");
+    }
+}
+
+
+async function UserAddMangaToFavourites(request, response) {
+    var userId = request.user.UserID;
+    var mangaId = request.params.mangaId; 
+
+    try {
+        var numRows = await animeRepo.AddAnimeAsFavourite(userId, mangaId);
+        const text = 'Manga has been added to favourite.';
+        const whichId = 'favourites';
+        const type = 'user';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserAddAnimeToFavourites Internal Server Error");
+    }
+}
+
+async function UserRemoveMangaToFavourites(request, response) {
+    var userId = request.user.UserID;
+    var mangaId = request.params.mangaId; 
+
+    try {
+        var numRows = await animeRepo.RemoveAnimeAsFavourite(userId, mangaId);
+        const text = 'Manga has been removed from favourite.';
+        const whichId = mangaId;
+        const type = 'manga';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserRemoveMangaToFavourites Internal Server Error");
+    }
+}
 
 module.exports = router;

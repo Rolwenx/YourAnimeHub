@@ -57,7 +57,7 @@ async function AnimeViewAction(request, response) {
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
-        console.log("user_info_about_anime",user_info_about_anime);
+        const is_anime_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,animeId);
 
         const StatsCount = {};
         StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('aset-planning',animeId))[0]?.statusCount || 0;
@@ -67,7 +67,7 @@ async function AnimeViewAction(request, response) {
         StatsCount.PausedCount = (await animeRepo.getAllStatusAnime('aset-paused',animeId))[0]?.statusCount || 0;
         StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('aset-rewatching',animeId))[0]?.statusCount || 0;
 
-        response.render("single_view/single_anime", { "StatsCount": StatsCount, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_anime", { is_anime_favourited,"StatsCount": StatsCount, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
 
     } catch (error) {
         console.error('Error in AnimeViewAction:', error);
@@ -82,11 +82,12 @@ async function AnimeViewActionCharacters(request, response) {
     try {
         var anime = await animeRepo.getOneAnime(animeId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
+        const is_anime_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,animeId);
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
 
-        response.render("single_view/single_anime_characters", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_anime_characters", {is_anime_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
     } catch (error) {
         console.error('Error in AnimeViewActionCharacters:', error);
         response.status(500).send('Internal Server Error');
@@ -101,6 +102,7 @@ async function AnimeViewActionReviews(request, response) {
       var anime = await animeRepo.getOneAnime(animeId);
   
       const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
+      const is_anime_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,animeId);
   
 
       var who_did_review = await reviewRepo.getInformationOfUserWhoDidAReview(animeId);
@@ -126,6 +128,7 @@ async function AnimeViewActionReviews(request, response) {
   
   
       response.render("single_view/single_anime_reviews", {
+        is_anime_favourited,
         "UsernamesWhoDidReviews": UsernamesWhoDidReviews,
         "combinedUserInfo": combinedUserInfo,
         "animeStatus": animeStatus,
@@ -150,13 +153,14 @@ async function AnimeViewActionUserInfo(request, response) {
     try {
         var anime = await animeRepo.getOneAnime(animeId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
+        const is_anime_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,animeId);
 
         const animeStatus = await animeRepo.getAnimeStatus(userId, animeId);
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
         console.log(user_info_about_anime);
         console.log(user_info_about_anime.ReviewID);
 
-        response.render("single_view/single_anime_userInfo", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_anime_userInfo", { is_anime_favourited,"user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
     } catch (error) {
         console.error('Error in AnimeViewActionUserInfo:', error);
         response.status(500).send('Internal Server Error');

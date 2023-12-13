@@ -73,6 +73,21 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 
 <!-- Menus text above the hr -->
 <div class="menus">
+  <% if (is_anime_favourited == false) { %>
+    <form action="/user/favourites/anime/add/<%= anime.AnimeID%>" method="post">
+      <button type="submit" class="edit_btn">
+        <i class="fa fa-heart-o"></i>
+      </button>
+    </form>
+  <% } %>
+  <% if (is_anime_favourited == true) { %>
+    <form action="/user/favourites/anime/remove/<%= anime.AnimeID%>" method="post">
+      <button type="submit" class="edit_btn">
+        <i class="fa fa-heart"></i>
+      </button>
+    </form>
+  <% } %>
+
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>"><p>Overall</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
@@ -80,6 +95,8 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 
     <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
+
+  
   
   <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin')) { %>
       <button id="addManuallyBtn" class="edit_btn">

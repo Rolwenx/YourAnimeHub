@@ -73,6 +73,20 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 
 <!-- Menus text above the hr -->
 <div class="menus">
+  <% if (is_manga_favourited == false) { %>
+    <form action="/user/favourites/manga/add/<%= manga.AnimeID%>" method="post">
+      <button type="submit" class="edit_btn">
+        <i class="fa fa-heart-o"></i>
+      </button>
+    </form>
+  <% } %>
+  <% if (is_manga_favourited == true) { %>
+    <form action="/user/favourites/manga/remove/<%= manga.AnimeID%>" method="post">
+      <button type="submit" class="edit_btn">
+        <i class="fa fa-heart"></i>
+      </button>
+    </form>
+  <% } %>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>"><p>Overall</p></a>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
