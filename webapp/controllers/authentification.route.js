@@ -94,6 +94,7 @@ async function loginPostAction(request, response) {
             Email: request.body.email,
             UserPassword: request.body.userPassword,
             UserRole: "User",
+            ProfilePictureURL: request.body.profilepictureurl || 'https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg',
         };
 
         var userID = await userRepo.createUser(UserData);
