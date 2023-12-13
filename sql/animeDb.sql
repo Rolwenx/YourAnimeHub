@@ -39,7 +39,6 @@ CREATE TABLE Anime(
    EndDate DATE,
    AnimeStatus VARCHAR(20),
    Synopsis TEXT,
-   PopularityPosition INT DEFAULT 0,
    CoverImageURL VARCHAR(255),
    BackgroundImageURL VARCHAR(100),
    StreamingPlatformURL VARCHAR(100),
