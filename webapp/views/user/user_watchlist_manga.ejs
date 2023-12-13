@@ -15,50 +15,45 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
 <div class="container mt-5">
 
   <!-- Reading Section -->
-  <div class="header_title_anime one">
-    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">READING</h2>
-  </div>
-  <div class="anime-block">
-      <table class="table">
-        <thead>
-          <tr>
-            <td><strong>Title</strong></td>
-            <td><strong>Rate</strong></td>
-            <td><strong>Progress</strong></td>
-            <td><strong>Type</strong></td>
+<div class="header_title_anime one">
+  <h2 class="my_h2 text-light" style="margin-left: 20px !important;">READING</h2>
+</div>
+<div class="anime-block">
+  <% if (ReadingMangaList === null || ReadingMangaList.length === 0) { %>
+    <p>No currently reading manga added yet.</p>
+  <% } else { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <td><strong>Title</strong></td>
+          <td><strong>Rate</strong></td>
+          <td><strong>Progress</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <% ReadingMangaList.slice(0, 6).forEach((mangaDetails) => { %>
+          <tr class="anime-row">
+            <td>
+              <a href="/manga/<%= mangaDetails.AnimeID%>/<%=mangaDetails.TitleEnglish%>">
+                <div class="anime_title_box">
+                  <img src="<%= mangaDetails[0].CoverImageURL %>" alt="<%= mangaDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
+                  <p><%= mangaDetails[0].TitleEnglish %></p>
+                </div>
+              </a>
+            </td>
+            <td><%= mangaDetails[0].RateGrade %></td>
+            <% if (mangaDetails[0].TypeFormat == "TV") { %>
+              <td><%= mangaDetails[0].EpisodeProgress %> / <%= mangaDetails[0].Chapters %></td>
+            <% } %>
+            <% if (mangaDetails[0].TypeFormat == "TV") { %>
+              <td><%= mangaDetails[0].VolumeProgress %> / <%= mangaDetails[0].Volumes %></td>
+            <% } %>
           </tr>
-        </thead>
-        <tbody>
-          <% ReadingMangaList.slice(0, 6).forEach((mangaDetails) => { %>
-            <tr class="anime-row">
-              <td>
-                <a href="/manga/<%= mangaDetails.AnimeID%>/<%=mangaDetails.TitleEnglish%>">
-                  <div class="anime_title_box">
-                    <img src="<%= mangaDetails[0].CoverImageURL %>" alt="<%= mangaDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                    <p><%= mangaDetails[0].TitleEnglish %></p>
-                  </div>
-                </a>
-              </td>
-              <td><%= mangaDetails[0].RateGrade %></td>
-              <% if (mangaDetails[0].TypeFormat == "Movie") { %>
-                <td>1</td>
-              <% } %>
-              <% if (mangaDetails[0].TypeFormat == "TV") { %>
-                <td><%= mangaDetails[0].EpisodeProgress %> / <%= mangaDetails[0].Chapters %></td>
-              <% } %>
-              <% if (mangaDetails[0].TypeFormat == "TV") { %>
-                <td><%= mangaDetails[0].VolumeProgress %> / <%= mangaDetails[0].Volumes %></td>
-              <% } %>
-              <td><%= mangaDetails[0].TypeFormat %></td>
-            </tr>
-          <% }); %>
-        </tbody>
-      </table>
-
-      <% if (ReadingMangaList.length === 0) { %>
-        <p>No currently reading manga added yet.</p>
-      <% } %>
-  </div>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
   <button class="view_all_btn" onclick="window.location.href='/user/watchlist/manga/reading'">View All</button>
   
 
@@ -67,13 +62,15 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
     <h2 class="my_h2 text-light" style="margin-left: 20px !important;">COMPLETED</h2>
   </div>
   <div class="anime-block">
+    <% if (CompleteMangaList === null || CompleteMangaList.length === 0) { %>
+      <p>No completed manga yet.</p>
+    <% } else { %>
       <table class="table">
         <thead>
           <tr>
             <td><strong>Title</strong></td>
             <td><strong>Rate</strong></td>
             <td><strong>Progress</strong></td>
-            <td><strong>Type</strong></td>
           </tr>
         </thead>
         <tbody>
@@ -88,75 +85,62 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
                 </a>
               </td>
               <td><%= mangaDetails[0].RateGrade %></td>
-              <% if (mangaDetails[0].TypeFormat == "Movie") { %>
-                <td>1</td>
-              <% } %>
               <% if (mangaDetails[0].TypeFormat == "TV") { %>
                 <td><%= mangaDetails[0].EpisodeProgress %> / <%= mangaDetails[0].Chapters %></td>
               <% } %>
               <% if (mangaDetails[0].TypeFormat == "TV") { %>
                 <td><%= mangaDetails[0].VolumeProgress %> / <%= mangaDetails[0].Volumes %></td>
               <% } %>
-              <td><%= mangaDetails[0].TypeFormat %></td>
             </tr>
           <% }); %>
         </tbody>
       </table>
-
-      <% if (CompleteMangaList.length === 0) { %>
-        <p>No completed manga added yet.</p>
-      <% } %>
+    <% } %>
   </div>
   <button class="view_all_btn" onclick="window.location.href='/user/watchlist/manga/complete'">View All</button>
   
   
   
-
-  <!-- Planning Section -->
-  <div class="header_title_anime one">
-    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">PLANNING</h2>
-  </div>
-  <div class="anime-block">
-      <table class="table">
-        <thead>
-          <tr>
-            <td><strong>Title</strong></td>
-            <td><strong>Rate</strong></td>
-            <td><strong>Progress</strong></td>
-            <td><strong>Type</strong></td>
+ <!-- Completed Section -->
+ <div class="header_title_anime one">
+  <h2 class="my_h2 text-light" style="margin-left: 20px !important;">COMPLETED</h2>
+</div>
+<div class="anime-block">
+  <% if (PlanningMangaList === null || PlanningMangaList.length === 0) { %>
+    <p>No planned to read manga yet.</p>
+  <% } else { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <td><strong>Title</strong></td>
+          <td><strong>Rate</strong></td>
+          <td><strong>Progress</strong></td>
+        </tr>
+      </thead>
+      <tbody>
+        <% PlanningMangaList.slice(0, 6).forEach((mangaDetails) => { %>
+          <tr class="anime-row">
+            <td>
+              <a href="/manga/<%= mangaDetails.AnimeID%>/<%=mangaDetails.TitleEnglish%>">
+                <div class="anime_title_box">
+                  <img src="<%= mangaDetails[0].CoverImageURL %>" alt="<%= mangaDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
+                  <p><%= mangaDetails[0].TitleEnglish %></p>
+                </div>
+              </a>
+            </td>
+            <td><%= mangaDetails[0].RateGrade %></td>
+            <% if (mangaDetails[0].TypeFormat == "TV") { %>
+              <td><%= mangaDetails[0].EpisodeProgress %> / <%= mangaDetails[0].Chapters %></td>
+            <% } %>
+            <% if (mangaDetails[0].TypeFormat == "TV") { %>
+              <td><%= mangaDetails[0].VolumeProgress %> / <%= mangaDetails[0].Volumes %></td>
+            <% } %>
           </tr>
-        </thead>
-        <tbody>
-          <% PlanningMangaList.slice(0, 6).forEach((mangaDetails) => { %>
-            <tr class="anime-row">
-              <td>
-                <a href="/manga/<%= mangaDetails.AnimeID%>/<%=mangaDetails.TitleEnglish%>">
-                  <div class="anime_title_box">
-                    <img src="<%= mangaDetails[0].CoverImageURL %>" alt="<%= mangaDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                    <p><%= mangaDetails[0].TitleEnglish %></p>
-                  </div>
-                </a>
-              </td>
-              <td><%= mangaDetails[0].RateGrade %></td>
-              <% if (mangaDetails[0].TypeFormat == "Movie") { %>
-                <td>1</td>
-              <% } %>
-              <% if (mangaDetails[0].TypeFormat == "TV") { %>
-                <td><%= mangaDetails[0].EpisodeProgress %> / <%= mangaDetails[0].Chapters %></td>
-              <% } %>
-              <% if (mangaDetails[0].TypeFormat == "TV") { %>
-                <td><%= mangaDetails[0].VolumeProgress %> / <%= mangaDetails[0].Volumes %></td>
-              <% } %>
-              <td><%= mangaDetails[0].TypeFormat %></td>
-            </tr>
-          <% }); %>
-        </tbody>
-      </table>
-
-      <% if (PlanningMangaList.length === 0) { %>
-        <p>No planned manga to read added yet.</p>
-      <% } %>
-  </div>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
   <button class="view_all_btn" onclick="window.location.href='/user/watchlist/manga/planning'">View All</button>
   
 
