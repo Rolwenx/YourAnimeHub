@@ -45,17 +45,17 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     </button>
     <ul class="dropdown-menu">
       <form action="/manga/<%= manga.AnimeID %>/set" method="post">
-         <li>
-            <button type="submit" name="action" value="set-complete" class="dropdown-item" <% if (animeStatus === 'set-complete') { %>disabled<% } %>>Set as Complete</button>
-         </li>
-         <li>
-            <button type="submit" name="action" value="set-reading" class="dropdown-item" <% if (animeStatus === 'set-reading') { %>disabled<% } %>>Set as Reading</button>
-         </li>
-         <li>
-            <button type="submit" name="action" value="set-planning" class="dropdown-item" <% if (animeStatus === 'set-planning') { %>disabled<% } %>>Set as Planning</button>
-         </li>
+        <li>
+           <button type="submit" name="action" value="mset-complete" class="dropdown-item" <% if (animeStatus === 'mset-complete') { %>disabled<% } %>>Set as Complete</button>
+        </li>
+        <li>
+           <button type="submit" name="action" value="mset-reading" class="dropdown-item" <% if (animeStatus === 'mset-reading') { %>disabled<% } %>>Set as Reading</button>
+        </li>
+        <li>
+           <button type="submit" name="action" value="mset-planning" class="dropdown-item" <% if (animeStatus === 'mset-planning') { %>disabled<% } %>>Set as Planning</button>
+        </li>
 
-      </form>
+     </form>
    </ul>
    
     
@@ -100,12 +100,12 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
           <div class="form-group">
             <label><strong>Status</strong></label>
             <select class="form-select" name="status">
-              <option value="set-complete">Completed</option>
-              <option value="set-reading">Reading</option>
-              <option value="set-planning">Planning to Read</option>
-              <option value="set-paused">Paused</option>
-              <option value="set-dropped">Dropped</option>
-              <option value="set-rereading">Rereading</option>
+              <option value="mset-complete">Completed</option>
+              <option value="mset-reading">Reading</option>
+              <option value="mset-planning">Planning to Read</option>
+              <option value="mset-paused">Paused</option>
+              <option value="mset-dropped">Dropped</option>
+              <option value="mset-rereading">Rereading</option>
           </select>
           
           </div>
@@ -144,12 +144,12 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <div class="form-group">
           <label><strong>Status</strong></label>
           <select class="form-select" name="status">
-            <option value="set-complete" <% if (user_info_about_anime.AnimeStatus === 'set-complete') { %>selected<% } %>>Completed</option>
-            <option value="set-reading" <% if (user_info_about_anime.AnimeStatus === 'set-reading') { %>selected<% } %>>Reading</option>
-            <option value="set-planning" <% if (user_info_about_anime.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Read</option>
-            <option value="set-paused" <% if (user_info_about_anime.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
-            <option value="set-dropped" <% if (user_info_about_anime.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
-            <option value="set-rereading" <% if (user_info_about_anime.AnimeStatus === 'set-rereading') { %>selected<% } %>>Rereading</option>
+            <option value="mset-complete" <% if (user_info_about_anime.AnimeStatus === 'mset-complete') { %>selected<% } %>>Completed</option>
+            <option value="mmset-reading" <% if (user_info_about_anime.AnimeStatus === 'mmset-reading') { %>selected<% } %>>Reading</option>
+            <option value="mset-planning" <% if (user_info_about_anime.AnimeStatus === 'mset-planning') { %>selected<% } %>>Planning to Read</option>
+            <option value="mset-paused" <% if (user_info_about_anime.AnimeStatus === 'mset-paused') { %>selected<% } %>>Paused</option>
+            <option value="mset-dropped" <% if (user_info_about_anime.AnimeStatus === 'mset-dropped') { %>selected<% } %>>Dropped</option>
+            <option value="mset-rereading" <% if (user_info_about_anime.AnimeStatus === 'mset-rereading') { %>selected<% } %>>Rereading</option>
         </select>
         
         </div>
