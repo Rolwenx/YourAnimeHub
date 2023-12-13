@@ -193,3 +193,33 @@ a {
   }
 }
 
+
+/* ------- STATS SECTION ----- */
+
+.stats-section,
+.manga-reading-stats {
+  margin-top: 20px;
+}
+
+.stats-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stats-box {
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.stats-box span {
+  display: block;
+  font-weight: bold;
+  color: #333;
+}
+
+.stats-value {
+  color: #e44d26; /* Customize the color as needed */
+}

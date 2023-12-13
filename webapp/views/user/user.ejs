@@ -42,7 +42,7 @@
             </h3>
             <div class="anime_container">
                 <% if (WatchingAnimeList && Array.isArray(WatchingAnimeList) && WatchingAnimeList.length > 0) { %>
-                    <% WatchingAnimeList.slice(0, 3).forEach((animeEntry) => { %>
+                    <% WatchingAnimeList.slice(0, 5).forEach((animeEntry) => { %>
                         <% const animeDetails = animeEntry['0']; %>
                         <div class="anime_boxes">
                             <div class="anime_box">
@@ -70,7 +70,7 @@
           </h3>
           <div class="anime_container">
               <% if (WatchingMangaList && Array.isArray(WatchingMangaList) && WatchingMangaList.length > 0) { %>
-                  <% WatchingMangaList.slice(0, 3).forEach((animeEntry) => { %>
+                  <% WatchingMangaList.slice(0, 5).forEach((animeEntry) => { %>
                       <% const animeDetails = animeEntry['0']; %>
                       <div class="anime_boxes">
                           <div class="anime_box">
@@ -93,42 +93,34 @@
           </div>
       </div>
     
-          <!-- Anime Section -->
-          <div class="anime-section">
-            <!-- Add code to display anime saved by the user -->
-          </div>
+
+<div class="stats-section">
+  <h3>User Stats</h3>
+  <div class="stats-boxes">
+    <div class="stats-box">
+      <span>Total Anime in Watchlist:</span>
+      <span class="stats-value"><%=StatsCount.MangaInWatchlist %></span>
+    </div>
+
+    <div class="stats-box">
+      <span>Total Manga in Watchlist:</span>
+      <span class="stats-value"><%= StatsCount.MangaInWatchlist %></span>
+    </div>
+  </div>
+</div>
+
+<!-- Manga Reading Stats -->
+<div class="manga-reading-stats">
+  <h3>Manga Reading Stats</h3>
+  <div class="stats-boxes">
+    <div class="stats-box">
+      <span>Total Chapters:</span>
+      <span class="stats-value"><%= StatsCount.chaptersListnbr %></span>
+    </div>
     
-          <!-- Manga Section -->
-          <div class="manga-section">
-            <!-- Add code to display manga saved by the user -->
-          </div>
-    
-          <!-- Stats Section -->
-          <div class="stats-section">
-            <h3>User Stats</h3>
-            <ul>
-              <li>Total Anime in Watchlist: <span>1000</span></li>
-              <li>Total Manga in Watchlist: <span>1000</span></li>
-              <li>Total Liked Quotes: <span>1000</span></li>
-              <li>Total Liked Characters: <span>1000</span></li>
-              <li>Number of Anime Completed: <span>1000</span></li>
-              <li>Number of Manga Completed: <span>1000</span></li>
-              <li>Number of Anime Need to Watch: <span>1000</span></li>
-              <li>Number of Manga Need to Watch: <span>1000</span></li>
-              <li>Number of Anime Currently Watching: <span>1000</span></li>
-              <li>Number of Manga Currently Watching: <span>1000</span></li>
-            </ul>
-          </div>
-    
-          <!-- Manga Reading Stats -->
-          <div class="manga-reading-stats">
-            <h3>Manga Reading Stats</h3>
-            <ul>
-              <li>1. Total Manga: <span>700</span></li>
-              <li>2. Chapters Read: <span>72</span></li>
-              <li>3. Volumes Read: <span>72</span></li>
-            </ul>
-          </div>
+  </div>
+</div>
+
         </div>
       </div>
     </div>

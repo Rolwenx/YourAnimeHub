@@ -4,6 +4,47 @@ pool = require("../utils/db.js");
 const userRepo = require('../utils/users.repository.js');
 
 module.exports = {
+
+    async getAllChaptersRead(userId) {
+        const conn = await pool.getConnection();
+
+        const sql = "SELECT SUM(ChaptersRead) AS TotalChaptersRead FROM View_Anime WHERE UserID = ? AND ChaptersRead IS NOT NULL";
+      
+        try {
+          const chaptersListnbr = await conn.query(sql, [userId]);
+      
+          conn.release();
+      
+          if (chaptersListnbr[0].TotalChaptersRead == null) {
+            return 0;
+          }
+          return chaptersListnbr[0].TotalChaptersRead;
+        } catch (error) {
+          console.error("Error retrieving anime:", error);
+          // Handle the error appropriately
+          return [];
+        }
+      },
+
+    async getAllAnimeInWatchlist(userId,animeormanga) {
+        const conn = await pool.getConnection();
+        const sql = "SELECT va.*, a.AnimeFormat FROM View_Anime va JOIN Anime a ON va.AnimeID = a.AnimeID WHERE va.AnimeStatus IS NOT NULL AND va.UserID = ? AND a.AnimeFormat = ?";
+      
+        try {
+          const animeList = await conn.query(sql, [userId, animeormanga]);
+          console.log(animeList.length);
+      
+          conn.release();
+
+      
+          return animeList.length;
+        } catch (error) {
+          console.error("Error retrieving anime:", error);
+          // Handle the error appropriately
+          return [];
+        }
+      },
+
     async getCharactersByAnimeID(animeId) {
         try {
             let conn = await pool.getConnection();
@@ -39,6 +80,8 @@ module.exports = {
             throw err;
         }
     },    
+
+    
     
     async getAllAnime() {
         try {
@@ -697,4 +740,6 @@ module.exports = {
           return [];
         }
       },
+
+      
 };

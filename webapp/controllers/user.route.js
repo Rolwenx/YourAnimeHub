@@ -26,8 +26,15 @@ async function UserHomeAction(request,response){
         StatsCount.AnimeCount = anime.length;
         StatsCount.MangaCount = manga.length;
 
-        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
-        var WatchingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
+        const WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
+        const WatchingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
+
+        StatsCount.AnimeInWatchlist = await animeRepo.getAllAnimeInWatchlist(userId, 'Anime');
+        StatsCount.MangaInWatchlist = await animeRepo.getAllAnimeInWatchlist(userId, 'Manga');
+
+        StatsCount.chaptersListnbr = await animeRepo.getAllChaptersRead(userId);
+    
+
        
 
         response.render('user/user', {WatchingMangaList,WatchingAnimeList, "StatsCount":StatsCount, user: request.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
