@@ -2,6 +2,7 @@
 <%- include('../partials/header.ejs', { title: title }) %>
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="/css/styleProfile.css">
+<link type="text/css" rel="stylesheet" href="/css/styleHome.css">
 
 <div class="header__wrapper">
     <div class="cols__container">
@@ -14,9 +15,9 @@
         <p><%= user.Email %></p>
 
         <ul class="about">
-          <li><span>4,073</span>Followers</li>
-          <li><span>322</span>Following</li>
-          <li><span>200,543</span>Attraction</li>
+          <li><span><%= StatsCount.AnimeCount %></span>Anime watched</li>
+          <li><span><%= StatsCount.MangaCount %></span>Manga watched</li>
+          <li><span><%= StatsCount.ReviewCount %></span>Reviews made</li>
         </ul>
 
         <div class="content">
@@ -28,13 +29,69 @@
       <div class="right__col">
         <nav>
             <ul>
-              <li><a href="">Anime</a></li>
-              <li><a href="">Manga</a></li>
-              <li><a href="">Stats</a></li>
-              <li><a href="">About</a></li>
+              <li><a href="/user/watchlist/anime">Watchlist</a></li>
+              <li><a href="/user/favourites">Favourites</a></li>
+              <li><a href="/user/reviews">Reviews</a></li>
             </ul>
-            <button>Follow</button>
+            <button class="menu_btn" onclick="location.href='/user/settings'">SETTINGS</button>
           </nav>
+
+          <div class="top_header">
+            <h3 class="my_h3 text-light" style="margin-left:20px; text-decoration: underline;text-underline-position: under;">
+                <a style="color:white;" href="/user/watchlist/anime">Anime Currently Watching</a>
+            </h3>
+            <div class="anime_container">
+                <% if (WatchingAnimeList && Array.isArray(WatchingAnimeList) && WatchingAnimeList.length > 0) { %>
+                    <% WatchingAnimeList.slice(0, 3).forEach((animeEntry) => { %>
+                        <% const animeDetails = animeEntry['0']; %>
+                        <div class="anime_boxes">
+                            <div class="anime_box">
+                                <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                                    <div class="box-img">
+                                        <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>">
+                                    </div>
+                                    <div class="animeName">
+                                        <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                                            <%= animeDetails.TitleEnglish %>
+                                        </a>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p style="color:white; margin-left: 30px;">You are currently watching nothing.</p>
+                <% } %>
+            </div>
+        </div>
+        <div class="top_header">
+          <h3 class="my_h3 text-light" style="margin-left:20px; text-decoration: underline;text-underline-position: under;">
+              <a style="color:white;" href="/user/watchlist/manga">Manga Currently Reading</a>
+          </h3>
+          <div class="anime_container">
+              <% if (WatchingMangaList && Array.isArray(WatchingMangaList) && WatchingMangaList.length > 0) { %>
+                  <% WatchingMangaList.slice(0, 3).forEach((animeEntry) => { %>
+                      <% const animeDetails = animeEntry['0']; %>
+                      <div class="anime_boxes">
+                          <div class="anime_box">
+                              <a href="/manga/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                                  <div class="box-img">
+                                      <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>">
+                                  </div>
+                                  <div class="animeName">
+                                      <a href="/manga/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                                          <%= animeDetails.TitleEnglish %>
+                                      </a>
+                                  </div>
+                              </a>
+                          </div>
+                      </div>
+                  <% }); %>
+              <% } else { %>
+                  <p style="color:white; margin-left: 30px;">You are currently reading nothing.</p>
+              <% } %>
+          </div>
+      </div>
     
           <!-- Anime Section -->
           <div class="anime-section">

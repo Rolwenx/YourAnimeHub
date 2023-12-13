@@ -142,19 +142,6 @@ module.exports = {
         }
     },
 
-    async editOneCharacter(characterId, characterData) {
-        try {
-            let conn = await pool.getConnection();
-            let sql = "UPDATE Character_Card SET ? WHERE CharacterID = ?";
-            const [okPacket, fields] = await conn.execute(sql, [characterData, characterId]);
-            conn.release();
-            console.log("UPDATE " + JSON.stringify(okPacket));
-            return okPacket.affectedRows;
-        } catch (err) {
-            console.log(err);
-            throw err;
-        }
-    },
 
     async editOneCharacter(characterId, characterData) {
         try {

@@ -1,7 +1,7 @@
 <%
-const title = 'Write Review - YourAnimeHub';
+const title = 'Edit Review - YourAnimeHub';
 %>
-<%- include('partials/header.ejs', { title: title}) %>
+<%- include('../partials/header.ejs', { title: title }) %>
 <link type="text/css" rel="stylesheet" href="/css/styleReviewEditor.css">
 <script src="https://cdn.tiny.cloud/1/gbl5h02naji6v4juzg4ldw79ye3bcz14xpuov8uamb2zu2sz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
@@ -32,27 +32,27 @@ const title = 'Write Review - YourAnimeHub';
   
 
 <div class="review-page-container">
-    <form action="/review/editor/manga/<%=manga.AnimeID%>/post" method="post" class="left-column">
+    <form action="/review/editor/anime/<%=anime.AnimeID%>/edit/post" method="post" class="left-column">
         <!-- Textarea for the review -->
         <label for="reviewSummary">Review</label>
         <div class="textarea-container">
-          <textarea class="form-control" rows="6" name="review" id="editor"></textarea>
+          <textarea class="form-control" rows="6" name="review" id="editor"><%= review_info[0].ReviewText %></textarea>
         </div>
       
         <!-- Review Summary input -->
         <div class="form-group">
           <label for="reviewSummary">Review Summary</label>
-          <input class="form-control" type="text" id="reviewSummary" name="reviewSummary" placeholder="Enter a summary (20-120 characters)">
+          <input class="form-control" type="text" id="reviewSummary" name="reviewSummary" value="<%= review_info[0].ReviewSummary %>" minlength="10" required>
         </div>
       
         <!-- Score input -->
         <div class="form-group">
           <label for="score">Score (0-100)</label>
-          <input class="form-control" type="number" id="score" name="score" min="0" max="100" placeholder="Enter a score">
+          <input class="form-control" type="number" id="score" name="score" min="0" max="100"  value="<%= review_info[0].ReviewGrade %>" required>
         </div>
       
         <!-- Add a submit button -->
-        <button class="save_btn" type="submit">Post Review</button>
+        <button class="save_btn" type="submit">Edit Review</button>
       </form>
       
     
@@ -61,8 +61,8 @@ const title = 'Write Review - YourAnimeHub';
     <!-- Preview of the review -->
     <div class="review-preview-container">
       <h3>Review Preview</h3>
-      <div class="review-content" id="reviewPreview"></div>
+      <div class="review-content" id="reviewPreview"><%- review_info[0].ReviewText %></div>
     </div>
   </div>
 </div>
-<%- include('partials/footer.ejs') %>
+<%- include('../partials/footer.ejs') %>

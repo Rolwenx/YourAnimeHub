@@ -11,6 +11,8 @@ const { checkAdminAuthentication } = require('../utils/users.auth');
 // Admin routes
 //all routes starting with "/admin" will go through this middleware.
 router.use('/admin', checkAdminAuthentication);
+
+
 router.get('/admin', adminHomeAction);
 router.get('/admin/animes', adminAnimeListAction);
 router.get('/admin/mangas', adminMangaListAction);

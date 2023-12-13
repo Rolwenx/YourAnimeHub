@@ -14,6 +14,7 @@ const sessionStore = new MariaDBStore({
   user: process.env.MARIADB_USER || 'root',
   password: process.env.MARIADB_PASSWORD || 'janelena17',
   database: process.env.MARIADB_DATABASE || 'animeDb',
+  connectionLimit: 140, 
 });
 
 

@@ -76,9 +76,11 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>"><p>Overall</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/reviews"><p>Reviews</p></a>
-  <% if (user_info_about_anime !== null) { %>
+  <% if (user_info_about_anime !== null && user && user.UserRole != "Guest" && user_info_about_anime.UserID === user.UserID) { %>
     <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
+
+  <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin')) { %>
   <button id="addManuallyBtn" class="edit_btn">
       <i class="fa fa-pencil"></i>
   </button>
@@ -110,10 +112,11 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
           <label for="rate"><strong>Rate:</strong></label> <i class="fa fa-star"></i>
           <input type="number" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
   
-          <!-- Episode Progress -->
+          <% if (anime.TypeFormat === 'TV') { %>
+            <!-- Episode Progress -->
           <label for="episodeProgress"><strong>Episode Progress:</strong></label>
           <input class="form-control" type="number" id="episodeProgress" name="episodeProgress">
-  
+          <% } %>
           <!-- Start Date -->
           <label for="startDate"><strong>Start Date:</strong></label>
           <input class="form-control" type="date" id="startDate" name="startDate">
@@ -177,6 +180,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     
     </div>
   </div>
+  <% } %>
   <hr class="rounded">
 </div>
 
@@ -185,13 +189,14 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <div class="left_column">
     <!-- Information about the anime -->
     <div class="anime_info">
-      <% if (user_info_about_anime !== null && user_info_about_anime.ReviewID != null) { %>
-        <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>';">Edit Your Review</button>
+      <% if (user_info_about_anime !== null && user_info_about_anime[0].ReviewID != null) { %>
+        <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>/edit';">Edit Your Review</button>
+        <button class="propose_edit_button">Propose Edit Request</button>
       <% } %>
-      <% if (user_info_about_anime === null || user_info_about_anime.ReviewID === null) { %>
-        <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>';">Write Review</button>
-      <% } %>
-      <button class="propose_edit_button">Propose Edit Request</button>
+      <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin') && (user_info_about_anime === null || user_info_about_anime.ReviewID === null)) { %>
+        <button class="write_review_button" onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>';">Write Review</button>
+        <button class="propose_edit_button">Propose Edit Request</button>
+       <% } %>
 
       <div>
         <p class="title_of_menu"><strong>Format:</strong> </p>
@@ -201,14 +206,24 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <p class="title_of_menu"><strong>Status:</strong> </p>
         <p class="answer_of_menu"><%= anime.AnimeStatus %></p>
       </div>
-      <div>
-        <p class="title_of_menu"><strong>Number of Episodes:</strong> </p>
-        <p class="answer_of_menu"><%= anime.EpisodeCount %></p>
-      </div>
-      <div>
-        <p class="title_of_menu"><strong>Episode Duration:</strong> </p>
-        <p class="answer_of_menu"><%= anime.EpisodeDuration %></p>
-      </div>
+      <% if (anime.TypeFormat === 'TV') { %>
+        <div>
+          <p class="title_of_menu"><strong>Number of Episodes:</strong> </p>
+          <p class="answer_of_menu"><%= anime.EpisodeCount %></p>
+        </div>
+      <% } %>
+      <% if (anime.TypeFormat === 'Movie') { %>
+        <div>
+          <p class="title_of_menu"><strong>Movie Duration:</strong> </p>
+          <p class="answer_of_menu"><%= anime.EpisodeDuration %></p>
+        </div>
+      <% } %>
+      <% if (anime.TypeFormat === 'TV') { %>
+        <div>
+          <p class="title_of_menu"><strong>Episode Duration:</strong> </p>
+          <p class="answer_of_menu"><%= anime.EpisodeDuration %></p>
+        </div>
+      <% } %>
       <div>
         <p class="title_of_menu"><strong>Popularity Position:</strong> </p>
         <p class="answer_of_menu"><%= anime.PopularityPosition %></p>

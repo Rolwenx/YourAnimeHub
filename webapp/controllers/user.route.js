@@ -4,13 +4,39 @@ const router = express.Router();
 const { checkUserAuthentication } = require('../utils/users.auth');
 const userRepo = require('../utils/users.repository');
 const reviewRepo = require('../utils/review.repository');
+const animeRepo = require('../utils/anime.repository');
 
 router.use('/', checkUserAuthentication);
 
 
-router.get('/', (req, res) => {
-    res.render('user/user', { user: req.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
-});
+
+router.get('/', UserHomeAction);
+
+
+async function UserHomeAction(request,response){
+
+    try {
+        const userId = request.user ? request.user.UserID : null;
+
+        const StatsCount = {};
+        const reviews = await reviewRepo.getAllReviewsOfUser(userId);
+        StatsCount.ReviewCount = reviews.length;
+        const anime = await animeRepo.getAllAnimeWatchedByUser(userId,'set-complete','Anime');
+        const manga = await animeRepo.getAllAnimeWatchedByUser(userId,'set-complete','Manga');
+        StatsCount.AnimeCount = anime.length;
+        StatsCount.MangaCount = manga.length;
+
+        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
+        var WatchingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
+       
+
+        response.render('user/user', {WatchingMangaList,WatchingAnimeList, "StatsCount":StatsCount, user: request.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserHomeAction Internal Server Error");
+    }
+}
+
 
 
 router.get('/watchlist/anime', UserAnimeWatchlistAction);
@@ -246,7 +272,6 @@ async function UserReviewsAction(request,response){
     try {
         const userId = request.user ? request.user.UserID : null;
         const UserReviewList = await reviewRepo.getAllReviewsOfUser(userId);
-        console.log(UserReviewList);
 
         response.render('user/user_reviews', { UserReviewList, user: request.user,  activePage: 'profile' });
     } catch (error) {

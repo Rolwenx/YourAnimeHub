@@ -11,25 +11,22 @@ router.post('/:animeId/set', async (req, res) => {
         const { action } = req.body;
         var animeId = req.params.animeId;
         const userId = req.user ? req.user.UserID : null;
+        const type = "anime";
+        const whichId = animeId;
+        
+        if (!userId) {
+            const text = 'Unauthorized. Please log in to perform this action.';
+            
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
+        }
 
         if (action === 'set-complete' || action === 'set-watching' || action === 'set-planning') {
             await animeRepo.updateAnimeStatus(userId, animeId, action);
-
-            res.send(`
-            <script>
-                alert('Anime status updated successfully.');
-                window.location.href = '/browse/anime';
-            </script>
-            `);
-            return res.end();
+            const text = 'Anime status updated successfully.';
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
         } else {
-            res.send(`
-            <script>
-                alert('Invalid action.');
-                window.location.href = '/browse/anime';
-            </script>
-            `);
-            return res.end();
+            const text = 'Unauthorized Action.';
+            return res.render('partials/RedirectionAlert', { whichId, text, type});
         }
 
     } catch (error) {
@@ -59,15 +56,16 @@ async function AnimeViewAction(request, response) {
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
-        var user_info_about_anime = userId ? await animeRepo.getUserAnime(animeId, userId) : null;
+        var user_info_about_anime = await reviewRepo.CheckIfUserDidAReview(animeId,userId);
+        console.log(user_info_about_anime);
 
         const StatsCount = {};
-        StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('set-planning'))[0]?.statusCount || 0;
-        StatsCount.CompleteCount = (await animeRepo.getAllStatusAnime('set-complete'))[0]?.statusCount || 0;
-        StatsCount.WatchingCount = (await animeRepo.getAllStatusAnime('set-watching'))[0]?.statusCount || 0;
-        StatsCount.DroppedCount = (await animeRepo.getAllStatusAnime('set-dropped'))[0]?.statusCount || 0;
-        StatsCount.PausedCount = (await animeRepo.getAllStatusAnime('set-paused'))[0]?.statusCount || 0;
-        StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('set-rewatching'))[0]?.statusCount || 0;
+        StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('set-planning',animeId))[0]?.statusCount || 0;
+        StatsCount.CompleteCount = (await animeRepo.getAllStatusAnime('set-complete',animeId))[0]?.statusCount || 0;
+        StatsCount.WatchingCount = (await animeRepo.getAllStatusAnime('set-watching',animeId))[0]?.statusCount || 0;
+        StatsCount.DroppedCount = (await animeRepo.getAllStatusAnime('set-dropped',animeId))[0]?.statusCount || 0;
+        StatsCount.PausedCount = (await animeRepo.getAllStatusAnime('set-paused',animeId))[0]?.statusCount || 0;
+        StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('set-rewatching',animeId))[0]?.statusCount || 0;
 
         response.render("single_view/single_anime", { "StatsCount": StatsCount, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
 
@@ -86,7 +84,7 @@ async function AnimeViewActionCharacters(request, response) {
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
-        var user_info_about_anime = userId ? await animeRepo.getUserAnime(animeId, userId) : null;
+        var user_info_about_anime = await reviewRepo.CheckIfUserDidAReview(animeId,userId);
 
         response.render("single_view/single_anime_characters", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
     } catch (error) {
@@ -98,44 +96,59 @@ async function AnimeViewActionCharacters(request, response) {
 async function AnimeViewActionReviews(request, response) {
     var animeId = request.params.animeId;
     var userId = request.user ? request.user.UserID : null;
-
+  
     try {
-        var anime = await animeRepo.getOneAnime(animeId);
-        var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
+      var anime = await animeRepo.getOneAnime(animeId);
+  
+      const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
+  
 
-        const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
-        var user_info_about_anime = userId ? await reviewRepo.getUserAnime(animeId, userId) : null;
-        console.log(user_info_about_anime);
-
-        var UsernamesWhoDidReviews = await reviewRepo.getAllReviewsByAnimeId(animeId);
-        response.render("single_view/single_anime_reviews", {
-            "UsernamesWhoDidReviews": UsernamesWhoDidReviews,
-            "user_info_about_anime": user_info_about_anime,
-            "animeStatus": animeStatus,
-            "charactersDetails": charactersDetails,
-            "anime": anime,
-            user: request.user,
-            activePage: 'browse'
+      var user_info_about_anime = await reviewRepo.getInformationOfUserWhoDidAReview(animeId);
+      var UsernamesWhoDidReviews = await reviewRepo.getUserIdOfPeopleWhoDidAReview(animeId);
+  
+   
+        const combinedUserInfo = (user_info_about_anime || []).map(review => {
+           
+        
+            const correspondingUser = UsernamesWhoDidReviews ? UsernamesWhoDidReviews.find(user => user.UserID === review.UserID) : null;
+        
+            if (correspondingUser) {
+            return { ...review, UserName: correspondingUser.UserName };
+            }
+        
+            return review; // In case no matching user is found
         });
+  
+  
+  
+      response.render("single_view/single_anime_reviews", {
+        "UsernamesWhoDidReviews": UsernamesWhoDidReviews,
+        "combinedUserInfo": combinedUserInfo,
+        "animeStatus": animeStatus,
+        "anime": anime,
+        user: request.user,
+        activePage: 'browse'
+      });
     } catch (error) {
-        console.error('Error in AnimeViewActionReviews:', error);
-        response.status(500).send('Internal Server Error');
+      console.error('Error in AnimeViewActionReviews:', error);
+      response.status(500).send('Internal Server Error');
     }
-}
-
+  }
+  
+  
 router.get('/:animeId/:animeName/user-info', AnimeViewActionUserInfo);
 router.get('/:animeId/user-info', AnimeViewActionUserInfo);
 
 async function AnimeViewActionUserInfo(request, response) {
     var animeId = request.params.animeId;
-    var userId = request.user ? request.user.UserID : null;
+    var userId = request.user.UserID;
 
     try {
         var anime = await animeRepo.getOneAnime(animeId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
-        const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
-        var user_info_about_anime = userId ? await animeRepo.getUserAnime(animeId, userId) : null;
+        const animeStatus = await animeRepo.getAnimeStatus(userId, animeId);
+        var user_info_about_anime = await reviewRepo.getUserAnime(animeId, userId);
 
         response.render("single_view/single_anime_userInfo", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
     } catch (error) {

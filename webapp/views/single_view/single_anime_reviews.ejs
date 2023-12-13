@@ -76,9 +76,11 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>"><p>Overall</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
-  <% if (user_info_about_anime !== null) { %>
+  <% if (combinedUserInfo !== null && user && user.UserRole != "Guest" && combinedUserInfo.UserID === user.UserID) { %>
     <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
+
+  <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin')) { %>
   <button id="addManuallyBtn" class="edit_btn">
       <i class="fa fa-pencil"></i>
   </button>
@@ -93,7 +95,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
       
       <!-- Form -->
 
-      <% if (user_info_about_anime === null) { %>
+      <% if (combinedUserInfo === null) { %>
         <form action="/anime/<%= anime.AnimeID %>/edit" method="post">
           <div class="form-group">
             <label><strong>Status</strong></label>
@@ -138,37 +140,38 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <div class="form-group">
           <label><strong>Status</strong></label>
           <select class="form-select" name="status">
-            <option value="set-complete" <% if (user_info_about_anime.AnimeStatus === 'set-complete') { %>selected<% } %>>Completed</option>
-            <option value="set-watching" <% if (user_info_about_anime.AnimeStatus === 'set-watching') { %>selected<% } %>>Watching</option>
-            <option value="set-planning" <% if (user_info_about_anime.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Watch</option>
-            <option value="set-paused" <% if (user_info_about_anime.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
-            <option value="set-dropped" <% if (user_info_about_anime.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
-            <option value="set-rewatching" <% if (user_info_about_anime.AnimeStatus === 'set-rewatching') { %>selected<% } %>>Rewatching</option>
+            <option value="set-complete" <% if (combinedUserInfo.AnimeStatus === 'set-complete') { %>selected<% } %>>Completed</option>
+            <option value="set-watching" <% if (combinedUserInfo.AnimeStatus === 'set-watching') { %>selected<% } %>>Watching</option>
+            <option value="set-planning" <% if (combinedUserInfo.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Watch</option>
+            <option value="set-paused" <% if (combinedUserInfo.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
+            <option value="set-dropped" <% if (combinedUserInfo.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
+            <option value="set-rewatching" <% if (combinedUserInfo.AnimeStatus === 'set-rewatching') { %>selected<% } %>>Rewatching</option>
         </select>
         
         </div>
         <label for="rate"><strong>Rate:</strong></label> <i class="fa fa-star"></i>
-        <input type="number" value="<%= user_info_about_anime.RateGrade %>" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
+        <input type="number" value="<%= combinedUserInfo.RateGrade %>" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
 
-        <!-- Episode Progress -->
+        <% if (anime.TypeFormat === 'TV') { %>
+          <!-- Episode Progress -->
         <label for="episodeProgress"><strong>Episode Progress:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.EpisodeProgress %>" type="number" id="episodeProgress" name="episodeProgress">
-
+        <input class="form-control" type="number" id="episodeProgress" name="episodeProgress">
+        <% } %>
         <!-- Start Date -->
         <label for="startDate"><strong>Start Date:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.StartDate %>" type="date" id="startDate" name="startDate">
+        <input class="form-control" value="<%= combinedUserInfo.StartDate %>" type="date" id="startDate" name="startDate">
 
         <!-- Finish Date -->
         <label for="finishDate"><strong>Finish Date:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.EndDate %>" type="date" id="finishDate" name="finishDate">
+        <input class="form-control" value="<%= combinedUserInfo.EndDate %>" type="date" id="finishDate" name="finishDate">
 
         <!-- Total Rewatches -->
         <label for="totalRewatches"><strong>Total Rewatches:</strong></label>
-        <input class="form-control" type="number" value="<%= user_info_about_anime.TotalRewatch %>" id="totalRewatches" name="totalRewatches">
+        <input class="form-control" type="number" value="<%= combinedUserInfo.TotalRewatch %>" id="totalRewatches" name="totalRewatches">
 
         <!-- Notes -->
         <label for="notes"><strong>Notes:</strong></label>
-        <textarea class="form-control" id="notes" name="notes" rows="4"><%= user_info_about_anime.Notes %></textarea>
+        <textarea class="form-control" id="notes" name="notes" rows="4"><%= combinedUserInfo.Notes %></textarea>
 
         <!-- Save button -->
         <button class="like_btn" type="submit">Save</button>
@@ -177,25 +180,25 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     
     </div>
   </div>
+  <% } %>
   <hr class="rounded">
 </div>
 
 
-
 <div id="rev" class="row" style="margin-left: 100px;">
-  <% if (UsernamesWhoDidReviews && UsernamesWhoDidReviews.length > 0) { %>
-    <% for (const character of UsernamesWhoDidReviews) { %>
+  <% if (combinedUserInfo && combinedUserInfo.length > 0) { %>
+    <% for (const review of combinedUserInfo) { %>
       <div class="col-md-2 mb-4">
-        <a style="text-decoration: none; color: black" href="/review/<%= user_info_about_anime.AnimeID%>/<%=user_info_about_anime.ReviewID%>" id="review_one_card">
-          <div class="card h-100" >
+        <a style="text-decoration: none; color: black" href="/review/<%= review.AnimeID %>/<%= review.ReviewID %>" id="review_one_card">
+          <div class="card h-100">
             <div class="review-image-container">
-              <img src="<%= anime.BackgroundImageURL%>" alt="Review Image of Anime <%= anime.TitleEnglish%>" id="review-image" class="card-img-top">
+              <img src="<%= anime.BackgroundImageURL %>" alt="Review Image of Anime <%= anime.TitleEnglish %>" id="review-image" class="card-img-top">
             </div>
             <div class="card-body">
-              <p id="review-summary" class="card-text">Review by <strong><%=character.UserName %></strong></p>
+              <p id="review-summary" class="card-text">Review by <strong><%= review.UserName %></strong></p>
             </div>
-          </a>
-        </div>
+          </div>
+        </a>
       </div>
     <% } %>
   <% } else { %>
@@ -204,6 +207,8 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     </div>
   <% } %>
 </div>
+
+
 
   
     

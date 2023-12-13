@@ -76,107 +76,113 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>"><p>Overall</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
-  <% if (user_info_about_anime !== null) { %>
+  <% if (user_info_about_anime !== null && user && user.UserRole != "Guest" && user_info_about_anime.UserID === user.UserID) { %>
     <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
-  <button id="addManuallyBtn" class="edit_btn">
-      <i class="fa fa-pencil"></i>
-  </button>
+  
+  <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin')) { %>
+      <button id="addManuallyBtn" class="edit_btn">
+        <i class="fa fa-pencil"></i>
+      </button>
 
-  <!-- Modal -->
-  <div id="addManuallyModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <img src="<%= anime.BackgroundImageURL %>" alt="background" class="modal-background">
-      <div class="modal-overlay"></div>
-      <h2 class="modal-title"><%= anime.TitleEnglish %></h2>
-      
-      <!-- Form -->
-
-      <% if (user_info_about_anime === null) { %>
-        <form action="/anime/<%= anime.AnimeID %>/edit" method="post">
-          <div class="form-group">
-            <label><strong>Status</strong></label>
-            <select class="form-select" name="status">
-              <option value="set-complete">Completed</option>
-              <option value="set-watching">Watching</option>
-              <option value="set-planning">Planning to Watch</option>
-              <option value="set-paused">Paused</option>
-              <option value="set-dropped">Dropped</option>
-              <option value="set-rewatching">Rewatching</option>
-          </select>
+      <!-- Modal -->
+      <div id="addManuallyModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <img src="<%= anime.BackgroundImageURL %>" alt="background" class="modal-background">
+          <div class="modal-overlay"></div>
+          <h2 class="modal-title"><%= anime.TitleEnglish %></h2>
           
-          </div>
-          <label for="rate"><strong>Rate:</strong></label> <i class="fa fa-star"></i>
-          <input type="number" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
-  
-          <!-- Episode Progress -->
-          <label for="episodeProgress"><strong>Episode Progress:</strong></label>
-          <input class="form-control" type="number" id="episodeProgress" name="episodeProgress">
-  
-          <!-- Start Date -->
-          <label for="startDate"><strong>Start Date:</strong></label>
-          <input class="form-control" type="date" id="startDate" name="startDate">
-  
-          <!-- Finish Date -->
-          <label for="finishDate"><strong>Finish Date:</strong></label>
-          <input class="form-control" type="date" id="finishDate" name="finishDate">
-  
-          <!-- Total Rewatches -->
-          <label for="totalRewatches"><strong>Total Rewatches:</strong></label>
-          <input class="form-control" type="number" id="totalRewatches" name="totalRewatches">
-  
-          <!-- Notes -->
-          <label for="notes"><strong>Notes:</strong></label>
-          <textarea class="form-control" id="notes" name="notes" rows="4"></textarea>
-  
-          <!-- Save button -->
-          <button class="like_btn" type="submit">Save</button>
-        </form>
-    <% } else { %>
-      <form action="/anime/<%= anime.AnimeID %>/edit" method="post">
-        <div class="form-group">
-          <label><strong>Status</strong></label>
-          <select class="form-select" name="status">
-            <option value="set-complete" <% if (user_info_about_anime.AnimeStatus === 'set-complete') { %>selected<% } %>>Completed</option>
-            <option value="set-watching" <% if (user_info_about_anime.AnimeStatus === 'set-watching') { %>selected<% } %>>Watching</option>
-            <option value="set-planning" <% if (user_info_about_anime.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Watch</option>
-            <option value="set-paused" <% if (user_info_about_anime.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
-            <option value="set-dropped" <% if (user_info_about_anime.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
-            <option value="set-rewatching" <% if (user_info_about_anime.AnimeStatus === 'set-rewatching') { %>selected<% } %>>Rewatching</option>
-        </select>
+          <!-- Form -->
+
+          <% if (user_info_about_anime === null) { %>
+            <form action="/anime/<%= anime.AnimeID %>/edit" method="post">
+              <div class="form-group">
+                <label><strong>Status</strong></label>
+                <select class="form-select" name="status">
+                  <option value="set-complete">Completed</option>
+                  <option value="set-watching">Watching</option>
+                  <option value="set-planning">Planning to Watch</option>
+                  <option value="set-paused">Paused</option>
+                  <option value="set-dropped">Dropped</option>
+                  <option value="set-rewatching">Rewatching</option>
+              </select>
+              
+              </div>
+              <label for="rate"><strong>Rate:</strong></label> <i class="fa fa-star"></i>
+              <input type="number" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
+      
+              <% if (anime.TypeFormat === 'TV') { %>
+                <!-- Episode Progress -->
+              <label for="episodeProgress"><strong>Episode Progress:</strong></label>
+              <input class="form-control" type="number" id="episodeProgress" name="episodeProgress">
+              <% } %>
+      
+              <!-- Start Date -->
+              <label for="startDate"><strong>Start Date:</strong></label>
+              <input class="form-control" type="date" id="startDate" name="startDate">
+      
+              <!-- Finish Date -->
+              <label for="finishDate"><strong>Finish Date:</strong></label>
+              <input class="form-control" type="date" id="finishDate" name="finishDate">
+      
+              <!-- Total Rewatches -->
+              <label for="totalRewatches"><strong>Total Rewatches:</strong></label>
+              <input class="form-control" type="number" id="totalRewatches" name="totalRewatches">
+      
+              <!-- Notes -->
+              <label for="notes"><strong>Notes:</strong></label>
+              <textarea class="form-control" id="notes" name="notes" rows="4"></textarea>
+      
+              <!-- Save button -->
+              <button class="like_btn" type="submit">Save</button>
+            </form>
+        <% } else { %>
+          <form action="/anime/<%= anime.AnimeID %>/edit" method="post">
+            <div class="form-group">
+              <label><strong>Status</strong></label>
+              <select class="form-select" name="status">
+                <option value="set-complete" <% if (user_info_about_anime.AnimeStatus === 'set-complete') { %>selected<% } %>>Completed</option>
+                <option value="set-watching" <% if (user_info_about_anime.AnimeStatus === 'set-watching') { %>selected<% } %>>Watching</option>
+                <option value="set-planning" <% if (user_info_about_anime.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Watch</option>
+                <option value="set-paused" <% if (user_info_about_anime.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
+                <option value="set-dropped" <% if (user_info_about_anime.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
+                <option value="set-rewatching" <% if (user_info_about_anime.AnimeStatus === 'set-rewatching') { %>selected<% } %>>Rewatching</option>
+            </select>
+            
+            </div>
+            <label for="rate"><strong>Rate:</strong></label> <i class="fa fa-star"></i>
+            <input type="number" value="<%= user_info_about_anime.RateGrade %>" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
+
+            <!-- Episode Progress -->
+            <label for="episodeProgress"><strong>Episode Progress:</strong></label>
+            <input class="form-control" value="<%= user_info_about_anime.EpisodeProgress %>" type="number" id="episodeProgress" name="episodeProgress">
+
+            <!-- Start Date -->
+            <label for="startDate"><strong>Start Date:</strong></label>
+            <input class="form-control" value="<%= user_info_about_anime.StartDate %>" type="date" id="startDate" name="startDate">
+
+            <!-- Finish Date -->
+            <label for="finishDate"><strong>Finish Date:</strong></label>
+            <input class="form-control" value="<%= user_info_about_anime.EndDate %>" type="date" id="finishDate" name="finishDate">
+
+            <!-- Total Rewatches -->
+            <label for="totalRewatches"><strong>Total Rewatches:</strong></label>
+            <input class="form-control" type="number" value="<%= user_info_about_anime.TotalRewatch %>" id="totalRewatches" name="totalRewatches">
+
+            <!-- Notes -->
+            <label for="notes"><strong>Notes:</strong></label>
+            <textarea class="form-control" id="notes" name="notes" rows="4"><%= user_info_about_anime.Notes %></textarea>
+
+            <!-- Save button -->
+            <button class="like_btn" type="submit">Save</button>
+          </form>
+        <% } %>
         
         </div>
-        <label for="rate"><strong>Rate:</strong></label> <i class="fa fa-star"></i>
-        <input type="number" value="<%= user_info_about_anime.RateGrade %>" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
+      </div>
 
-        <!-- Episode Progress -->
-        <label for="episodeProgress"><strong>Episode Progress:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.EpisodeProgress %>" type="number" id="episodeProgress" name="episodeProgress">
-
-        <!-- Start Date -->
-        <label for="startDate"><strong>Start Date:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.StartDate %>" type="date" id="startDate" name="startDate">
-
-        <!-- Finish Date -->
-        <label for="finishDate"><strong>Finish Date:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.EndDate %>" type="date" id="finishDate" name="finishDate">
-
-        <!-- Total Rewatches -->
-        <label for="totalRewatches"><strong>Total Rewatches:</strong></label>
-        <input class="form-control" type="number" value="<%= user_info_about_anime.TotalRewatch %>" id="totalRewatches" name="totalRewatches">
-
-        <!-- Notes -->
-        <label for="notes"><strong>Notes:</strong></label>
-        <textarea class="form-control" id="notes" name="notes" rows="4"><%= user_info_about_anime.Notes %></textarea>
-
-        <!-- Save button -->
-        <button class="like_btn" type="submit">Save</button>
-      </form>
     <% } %>
-    
-    </div>
-  </div>
   <hr class="rounded">
 </div>
 
@@ -185,13 +191,15 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <div class="left_column">
     <!-- Information about the anime -->
     <div class="anime_info">
-      <% if (user_info_about_anime !== null && user_info_about_anime.ReviewID != null) { %>
-        <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>';">Edit Your Review</button>
+      <% if (user_info_about_anime !== null && user_info_about_anime[0].ReviewID != null) { %>
+        <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>/edit';">Edit Your Review</button>
+        <button class="propose_edit_button">Propose Edit Request</button>
       <% } %>
-      <% if (user_info_about_anime === null || user_info_about_anime.ReviewID === null) { %>
-        <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>';">Write Review</button>
-      <% } %>
-      <button class="propose_edit_button">Propose Edit Request</button>
+      <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin') && (user_info_about_anime === null || user_info_about_anime.ReviewID === null)) { %>
+        <button class="write_review_button" onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>';">Write Review</button>
+        <button class="propose_edit_button">Propose Edit Request</button>
+       <% } %>
+
 
       <div>
         <p class="title_of_menu"><strong>Format:</strong> </p>
@@ -201,14 +209,24 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <p class="title_of_menu"><strong>Status:</strong> </p>
         <p class="answer_of_menu"><%= anime.AnimeStatus %></p>
       </div>
-      <div>
-        <p class="title_of_menu"><strong>Number of Episodes:</strong> </p>
-        <p class="answer_of_menu"><%= anime.EpisodeCount %></p>
-      </div>
-      <div>
-        <p class="title_of_menu"><strong>Episode Duration:</strong> </p>
-        <p class="answer_of_menu"><%= anime.EpisodeDuration %></p>
-      </div>
+        <% if (anime.TypeFormat === 'TV') { %>
+          <div>
+            <p class="title_of_menu"><strong>Number of Episodes:</strong> </p>
+            <p class="answer_of_menu"><%= anime.EpisodeCount %></p>
+          </div>
+        <% } %>
+        <% if (anime.TypeFormat === 'Movie') { %>
+          <div>
+            <p class="title_of_menu"><strong>Movie Duration:</strong> </p>
+            <p class="answer_of_menu"><%= anime.EpisodeDuration %></p>
+          </div>
+        <% } %>
+        <% if (anime.TypeFormat === 'TV') { %>
+          <div>
+            <p class="title_of_menu"><strong>Episode Duration:</strong> </p>
+            <p class="answer_of_menu"><%= anime.EpisodeDuration %></p>
+          </div>
+        <% } %>
       <div>
         <p class="title_of_menu"><strong>Popularity Position:</strong> </p>
         <p class="answer_of_menu"><%= anime.PopularityPosition %></p>

@@ -51,6 +51,7 @@ module.exports = {
     }
   },
 
+
   checkGuestAuthentication(request, response, next) {
     // Middleware to check if the user is unauthenticated (guest)
     if (!request.isAuthenticated()) {

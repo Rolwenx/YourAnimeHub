@@ -224,9 +224,16 @@ async getAllAnimeForWatchlist(userId, action,type) {
     let conn = await pool.getConnection();
     let sql = "SELECT * FROM View_Anime WHERE UserID = ? AND AnimeStatus = ?";
     let rows = await conn.execute(sql, [userId, action]);
+    console.log(rows);
 
-    console.log("initial",rows);
-    let newList = [];
+    if (rows && rows.length === 0) {
+      conn.release();
+      console.log('its null');
+        return null;
+    }
+    else{
+
+      let newList = [];
     for (let i = 0; i < rows.length; i++) {
       const animeInfo = await animeRepo.getAllAnimeInfoByID(rows[i].AnimeID,type);
       if(animeInfo == 'Nothing'){
@@ -241,10 +248,22 @@ async getAllAnimeForWatchlist(userId, action,type) {
 
     conn.release();
     return newList;
+    }
   } catch (err) {
     console.error(err);
     throw err;
   }
+},
+
+async getAllStatusAnime(status) {
+  let conn = await pool.getConnection();
+
+  let sql = 'SELECT COUNT(*) AS statusCount FROM View_Anime WHERE AnimeStatus = ?';
+  let number_of_rows = await conn.execute(sql, [status]);
+
+  conn.release();
+
+  return number_of_rows;
 },
 
 

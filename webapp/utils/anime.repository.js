@@ -530,11 +530,11 @@ module.exports = {
         }
     },
 
-    async getAllStatusAnime(status) {
+    async getAllStatusAnime(status,animeId) {
         let conn = await pool.getConnection();
     
-        let sql = 'SELECT COUNT(*) AS statusCount FROM View_Anime WHERE AnimeStatus = ?';
-        let number_of_rows = await conn.execute(sql, [status]);
+        let sql = 'SELECT COUNT(*) AS statusCount FROM View_Anime WHERE AnimeStatus = ? AND AnimeID = ?';
+        let number_of_rows = await conn.execute(sql, [status,animeId]);
     
         conn.release();
     
@@ -676,5 +676,25 @@ module.exports = {
       },
 
     
+      async getAllAnimeWatchedByUser(userId, status,animeormanga) {
+        const conn = await pool.getConnection();
+        const sql = "SELECT va.*, a.AnimeFormat FROM View_Anime va JOIN Anime a ON va.AnimeID = a.AnimeID WHERE va.ReviewID IS NOT NULL AND va.UserID = ? AND va.AnimeStatus = ? AND a.AnimeFormat = ?";
       
+        try {
+          const animeList = await conn.query(sql, [userId, status, animeormanga]);
+      
+          conn.release();
+      
+          if (!animeList.length) {
+            // Handle the case where no anime completed were found
+            return [];
+          }
+      
+          return animeList;
+        } catch (error) {
+          console.error("Error retrieving anime:", error);
+          // Handle the error appropriately
+          return [];
+        }
+      },
 };

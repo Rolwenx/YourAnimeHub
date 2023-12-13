@@ -76,9 +76,11 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>"><p>Overall</p></a>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
-  <% if (user_info_about_anime !== null) { %>
+  <% if (user_info_about_anime !== null && user && user.UserRole != "Guest" && user_info_about_anime.UserID === user.UserID) { %>
     <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
+
+  <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin')) { %>
   <button id="addManuallyBtn" class="edit_btn">
       <i class="fa fa-pencil"></i>
   </button>
@@ -103,7 +105,7 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
               <option value="set-planning">Planning to Watch</option>
               <option value="set-paused">Paused</option>
               <option value="set-dropped">Dropped</option>
-              <option value="set-rewatching">Rewatching</option>
+              <option value="set-rewatching">Rereading</option>
           </select>
           
           </div>
@@ -147,7 +149,7 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
             <option value="set-planning" <% if (user_info_about_anime.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Watch</option>
             <option value="set-paused" <% if (user_info_about_anime.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
             <option value="set-dropped" <% if (user_info_about_anime.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
-            <option value="set-rewatching" <% if (user_info_about_anime.AnimeStatus === 'set-rewatching') { %>selected<% } %>>Rewatching</option>
+            <option value="set-rewatching" <% if (user_info_about_anime.AnimeStatus === 'set-rewatching') { %>selected<% } %>>Rereading</option>
         </select>
         
         </div>
@@ -169,9 +171,9 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <label for="finishDate"><strong>Finish Date:</strong></label>
         <input class="form-control" value="<%= user_info_about_anime.EndDate %>" type="date" id="finishDate" name="finishDate">
 
-        <!-- Total Rewatches -->
-        <label for="totalRewatches"><strong>Total Rewatches:</strong></label>
-        <input class="form-control" type="number" value="<%= user_info_about_anime.TotalRewatch %>" id="totalRewatches" name="totalRewatches">
+        <!-- Total Rereads -->
+        <label for="totalRereads"><strong>Total Rereads:</strong></label>
+        <input class="form-control" type="number" value="<%= user_info_about_anime.TotalRewatch %>" id="totalRereads" name="totalRereads">
 
         <!-- Notes -->
         <label for="notes"><strong>Notes:</strong></label>
@@ -184,6 +186,7 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     
     </div>
   </div>
+  <% } %>
   <hr class="rounded">
 </div>
 
@@ -192,13 +195,14 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <div class="left_column">
     <!-- Information about the anime -->
     <div class="anime_info">
-      <% if (user_info_about_anime !== null && user_info_about_anime.ReviewID != null) { %>
-        <button class="write_review_button " onclick="window.location.href='/review/editor/manga/<%= manga.AnimeID %>';">Edit Your Review</button>
+      <% if (user_info_about_anime !== null && user_info_about_anime[0].ReviewID != null) { %>
+        <button class="write_review_button " onclick="window.location.href='/review/editor/manga/<%= manga.AnimeID %>/edit';">Edit Your Review</button>
+        <button class="propose_edit_button">Propose Edit Request</button>
       <% } %>
-      <% if (user_info_about_anime === null || user_info_about_anime.ReviewID === null) { %>
-        <button class="write_review_button " onclick="window.location.href='/review/editor/manga/<%= manga.AnimeID %>';">Write Review</button>
-      <% } %>
-      <button class="propose_edit_button">Propose Edit Request</button>
+      <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin') && (user_info_about_anime === null || user_info_about_anime.ReviewID === null)) { %>
+        <button class="write_review_button" onclick="window.location.href='/review/editor/manga/<%= manga.AnimeID %>';">Write Review</button>
+        <button class="propose_edit_button">Propose Edit Request</button>
+       <% } %>
 
       <div>
         <p class="title_of_menu"><strong>Format:</strong> </p>

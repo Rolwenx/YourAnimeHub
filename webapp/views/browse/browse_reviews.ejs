@@ -5,49 +5,54 @@ const title = 'Browse Reviews - YourAnimeHub';
 <link type="text/css" rel="stylesheet" href="/css/styleBrowse.css">
 
 <section id="packages" class="pt-2 ms-5">
-  <div style="margin: auto;" >
+  <div style="margin: auto;">
     <h1 class="my_h1 text-light" style="margin-left: 20px !important;">REVIEWS</h1>
   </div>
-  <div class="row" >
-    <% ReviewList.forEach((review) => { %>
-    <div class="col-md-3 mb-4">
-      <a style="text-decoration: none; color:black;" href="/review/<%= review.AnimeID%>/<%= review.ReviewID%>" id="review_one_card">
-        <div class="card h-500" style="width: 90%;">
-          <div class="review-image-container">
-            <img src="<%= review.BackgroundImageURL%>" id="review-image"  class="card-img-top">
-            <div id="review-overlay">
-              <p class="text-light m-0">Read Full Review</p>
+  <div class="row">
+    <% if (ReviewList && ReviewList.length > 0) { %>
+      <% ReviewList.forEach((review) => { %>
+        <div class="col-md-3 mb-4">
+          <a style="text-decoration: none; color:black;" href="/review/<%= review.AnimeID%>/<%= review.ReviewID%>" id="review_one_card">
+            <div class="card h-500" style="width: 90%;">
+              <div class="review-image-container">
+                <img src="<%= review.BackgroundImageURL%>" id="review-image" class="card-img-top">
+                <div id="review-overlay">
+                  <p class="text-light m-0">Read Full Review</p>
+                </div>
+              </div>
+              <div class="card-body">
+                <p id="review-title" class="card-title">Review of <%= review.AnimeName%> by <%= review.Username%></p>
+                <p id="review-summary" class="card-text"><%= review.ReviewSummary%></p>
+              </div>
+              <div class="card-footer">
+                <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
+                  👍 <span id="like-count">0</span>
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="card-body">
-            <p id="review-title" class="card-title">Review of <%= review.AnimeName%> by <%= review.Username%></p>
-            <p id="review-summary" class="card-text"><%= review.ReviewSummary%></p>
-          </div>
-      </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
+          </a>
         </div>
-    </div>
-    <% }); %>
-
-
+      <% }); %>
+    <% } else { %>
+      <div class="col-12 text-center mt-5">
+        <p class="text-light">No reviews available.</p>
+      </div>
+    <% } %>
   </div>
 </section>
+<% if (ReviewList && ReviewList.length > 0) { %>
 <div class="load-more-container">
   <button id="load-more-button" class="load-more-button">Load More</button>
 </div>
+<% } %>
 
 <script>
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
 </script>
 
 <%- include('../partials/footer.ejs') %>
-
 </body>
 </html>

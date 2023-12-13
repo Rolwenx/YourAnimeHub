@@ -1,7 +1,7 @@
 <%
 const title = 'Write Review - YourAnimeHub';
 %>
-<%- include('partials/header.ejs', { title: title}) %>
+<%- include('../partials/header.ejs', { title: title }) %>
 <link type="text/css" rel="stylesheet" href="/css/styleReviewEditor.css">
 <script src="https://cdn.tiny.cloud/1/gbl5h02naji6v4juzg4ldw79ye3bcz14xpuov8uamb2zu2sz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
@@ -42,13 +42,13 @@ const title = 'Write Review - YourAnimeHub';
         <!-- Review Summary input -->
         <div class="form-group">
           <label for="reviewSummary">Review Summary</label>
-          <input class="form-control" type="text" id="reviewSummary" name="reviewSummary" placeholder="Enter a summary (20-120 characters)">
+          <input class="form-control" minlength="10" type="text" id="reviewSummary" name="reviewSummary" placeholder="Enter a summary (10-120 characters)" required>
         </div>
       
         <!-- Score input -->
         <div class="form-group">
           <label for="score">Score (0-100)</label>
-          <input class="form-control" type="number" id="score" name="score" min="0" max="100" placeholder="Enter a score">
+          <input class="form-control" type="number" id="score" name="score" min="0" max="100" placeholder="Enter a score" required>
         </div>
       
         <!-- Add a submit button -->
@@ -65,4 +65,21 @@ const title = 'Write Review - YourAnimeHub';
     </div>
   </div>
 </div>
-<%- include('partials/footer.ejs') %>
+<%- include('../partials/footer.ejs') %>
+<script>
+  // Add an event listener to the form submission
+  document.querySelector('form').addEventListener('submit', function(event) {
+    // Get the TinyMCE editor content
+    var editorContent = tinymce.get('editor').getContent();
+
+    // Check if the content is empty or doesn't meet your validation criteria
+    if (!editorContent.trim()) {
+      // Prevent the form submission
+      event.preventDefault();
+
+      // Optionally, you can display an alert or handle the validation error in your preferred way
+      alert('Please enter a review in the editor.');
+    }
+  });
+</script>
+
