@@ -13,14 +13,14 @@ router.post('/:mangaId/set', async (req, res) => {
         const userId = req.user ? req.user.UserID : null;
         const type = "manga";
         const whichId = mangaId;
-
+        
         if (!userId) {
             const text = 'Unauthorized. Please log in to perform this action.';
             
             return res.render('partials/RedirectionAlert', { whichId, text, type});
         }
 
-        if (action === 'set-complete' || action === 'set-reading' || action === 'set-planning') {
+        if (action === 'set-complete' || action === 'set-watching' || action === 'set-planning') {
             await animeRepo.updateAnimeStatus(userId, mangaId, action);
             const text = 'Manga status updated successfully.';
             return res.render('partials/RedirectionAlert', { whichId, text, type});
@@ -33,7 +33,7 @@ router.post('/:mangaId/set', async (req, res) => {
         console.error('Error:', error);
         res.send(`
             <script>
-            alert('Internal Server Error');
+                alert('Internal Server Error');
                 window.location.href = '/browse/manga';
             </script>
         `);
@@ -43,6 +43,8 @@ router.post('/:mangaId/set', async (req, res) => {
 
 router.get('/:mangaId/:mangaName/characters', MangaViewActionCharacters);
 router.get('/:mangaId/characters', MangaViewActionCharacters);
+router.get('/:mangaId/:mangaName/reviews', MangaViewActionReviews);
+router.get('/:mangaId/reviews', MangaViewActionReviews);
 
 async function MangaViewAction(request, response) {
     var mangaId = request.params.mangaId;
@@ -54,7 +56,7 @@ async function MangaViewAction(request, response) {
         var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, mangaId) : null;
-        var user_info_about_anime = await reviewRepo.getInformationOfUserWhoDidAReview(mangaId);
+        var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
 
         const StatsCount = {};
         StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('set-planning',mangaId))[0]?.statusCount || 0;
@@ -62,7 +64,7 @@ async function MangaViewAction(request, response) {
         StatsCount.WatchingCount = (await animeRepo.getAllStatusAnime('set-watching',mangaId))[0]?.statusCount || 0;
         StatsCount.DroppedCount = (await animeRepo.getAllStatusAnime('set-dropped',mangaId))[0]?.statusCount || 0;
         StatsCount.PausedCount = (await animeRepo.getAllStatusAnime('set-paused',mangaId))[0]?.statusCount || 0;
-        StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('set-rewatching',mangaId))[0]?.statusCount || 0;
+        StatsCount.RewatchCount = (await animeRepo.getAllStatusAnime('set-rereading',mangaId))[0]?.statusCount || 0;
 
         response.render("single_view/single_manga", { "StatsCount": StatsCount, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
 
@@ -81,7 +83,7 @@ async function MangaViewActionCharacters(request, response) {
         var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, mangaId) : null;
-        var user_info_about_anime = await reviewRepo.getInformationOfUserWhoDidAReview(mangaId);
+        var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
 
         response.render("single_view/single_manga_characters", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
     } catch (error) {
@@ -90,19 +92,65 @@ async function MangaViewActionCharacters(request, response) {
     }
 }
 
+async function MangaViewActionReviews(request, response) {
+    var mangaId = request.params.mangaId;
+    var userId = request.user ? request.user.UserID : null;
+  
+    try {
+      var manga = await animeRepo.getOneManga(mangaId);
+  
+      const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, mangaId) : null;
+  
+
+      var who_did_review = await reviewRepo.getInformationOfUserWhoDidAReview(mangaId);
+      var UsernamesWhoDidReviews = await reviewRepo.getUserIdOfPeopleWhoDidAReview(mangaId);
+      user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
+  
+   
+      // This array takes the informations of user_info_about_anime and adds the Username of the user from UsernamesWhoDidReviews
+        const combinedUserInfo = (who_did_review || []).map(review => {
+           
+        
+            const correspondingUser = UsernamesWhoDidReviews ? UsernamesWhoDidReviews.find(user => user.UserID === review.UserID) : null;
+        
+            if (correspondingUser) {
+            return { ...review, UserName: correspondingUser.UserName };
+            }
+        
+            return review; 
+            
+        });
+        
+  
+  
+      response.render("single_view/single_manga_reviews", {
+        "UsernamesWhoDidReviews": UsernamesWhoDidReviews,
+        "combinedUserInfo": combinedUserInfo,
+        "animeStatus": animeStatus,
+        "manga": manga,
+        user: request.user,
+        activePage: 'browse'
+      });
+    } catch (error) {
+      console.error('Error in MangaViewActionReviews:', error);
+      response.status(500).send('Internal Server Error');
+    }
+  }
+  
+  
 router.get('/:mangaId/:mangaName/user-info', MangaViewActionUserInfo);
 router.get('/:mangaId/user-info', MangaViewActionUserInfo);
 
 async function MangaViewActionUserInfo(request, response) {
     var mangaId = request.params.mangaId;
-    var userId = request.user ? request.user.UserID : null;
+    var userId = request.user.UserID;
 
     try {
         var manga = await animeRepo.getOneManga(mangaId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
 
-        const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, mangaId) : null;
-        var user_info_about_anime = userId ? await reviewRepo.getUserAnime(mangaId, userId) : null;
+        const animeStatus = await animeRepo.getAnimeStatus(userId, mangaId);
+        var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
 
         response.render("single_view/single_manga_userInfo", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
     } catch (error) {
@@ -148,47 +196,4 @@ router.post('/:mangaId/edit', async (req, res) => {
     }
 });
 
-router.get('/:mangaId/:mangaName/reviews', MangaViewActionReviews);
-router.get('/:mangaId/reviews', MangaViewActionReviews);
-
-async function MangaViewActionReviews(request, response) {
-    var mangaId = request.params.mangaId;
-    var userId = request.user ? request.user.UserID : null;
-  
-    try {
-      var manga = await animeRepo.getOneManga(mangaId);
-  
-      const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, mangaId) : null;
-  
-      var user_info_about_anime = await reviewRepo.getInformationOfUserWhoDidAReview(mangaId);
-      var UsernamesWhoDidReviews = await reviewRepo.getUserIdOfPeopleWhoDidAReview(mangaId);
-  
-        const combinedUserInfo = (user_info_about_anime || []).map(review => {
-        
-            const correspondingUser = UsernamesWhoDidReviews ? UsernamesWhoDidReviews.find(user => user.UserID === review.UserID) : null;
-        
-            if (correspondingUser) {
-            return { ...review, UserName: correspondingUser.UserName };
-            }
-        
-            return review; // In case no matching user is found
-        });
-  
-  
-      console.log("CombinedUserInfo", combinedUserInfo);
-  
-      response.render("single_view/single_manga_reviews", {
-        "UsernamesWhoDidReviews": UsernamesWhoDidReviews,
-        "combinedUserInfo": combinedUserInfo,
-        "animeStatus": animeStatus,
-        "manga": manga,
-        user: request.user,
-        activePage: 'browse'
-      });
-    } catch (error) {
-      console.error('Error in MangaViewActionReviews:', error);
-      response.status(500).send('Internal Server Error');
-    }
-  }
-  
 module.exports = router;

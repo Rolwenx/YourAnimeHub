@@ -49,7 +49,7 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
             <button type="submit" name="action" value="set-complete" class="dropdown-item" <% if (animeStatus === 'set-complete') { %>disabled<% } %>>Set as Complete</button>
          </li>
          <li>
-            <button type="submit" name="action" value="set-watching" class="dropdown-item" <% if (animeStatus === 'set-watching') { %>disabled<% } %>>Set as Watching</button>
+            <button type="submit" name="action" value="set-reading" class="dropdown-item" <% if (animeStatus === 'set-reading') { %>disabled<% } %>>Set as Reading</button>
          </li>
          <li>
             <button type="submit" name="action" value="set-planning" class="dropdown-item" <% if (animeStatus === 'set-planning') { %>disabled<% } %>>Set as Planning</button>
@@ -76,7 +76,7 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>"><p>Overall</p></a>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
-  <% if (combinedUserInfo !== null && user && user.UserRole != "Guest" && combinedUserInfo.UserID === user.UserID) { %>
+  <% if ((user && (user.UserRole === 'User' || user.UserRole === 'Admin')) && (user_info_about_anime !== null && user_info_about_anime && user_info_about_anime.AnimeStatus !== null)) { %>
     <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
 
@@ -95,17 +95,17 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
       
       <!-- Form -->
 
-      <% if (combinedUserInfo === null) { %>
+      <% if (user_info_about_anime === null) { %>
         <form action="/manga/<%= manga.AnimeID %>/edit" method="post">
           <div class="form-group">
             <label><strong>Status</strong></label>
             <select class="form-select" name="status">
               <option value="set-complete">Completed</option>
-              <option value="set-watching">Watching</option>
-              <option value="set-planning">Planning to Watch</option>
+              <option value="set-reading">Reading</option>
+              <option value="set-planning">Planning to Read</option>
               <option value="set-paused">Paused</option>
               <option value="set-dropped">Dropped</option>
-              <option value="set-rewatching">Rewatching</option>
+              <option value="set-rereading">Rereading</option>
           </select>
           
           </div>
@@ -114,11 +114,11 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   
           <!-- Chapter Progress -->
           <label for="episodeProgress"><strong>Chapter Progress:</strong></label>
-          <input class="form-control" type="number" id="chapterProgress" name="chapterProgress">
+          <input class="form-control" type="number" id="chapterProgress" name="chapterProgress" placeholder="How far along are you out of <%= manga.Chapters %> chapters">
 
           <!-- Volume Progress -->
           <label for="episodeProgress"><strong>Volumes Progress:</strong></label>
-          <input class="form-control" type="number" id="volumeProgress" name="volumeProgress">
+          <input class="form-control" type="number" id="volumeProgress" name="volumeProgress" placeholder="How far along are you out of <%= manga.Volumes %> volumes">
 
           <!-- Start Date -->
           <label for="startDate"><strong>Start Date:</strong></label>
@@ -144,37 +144,41 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <div class="form-group">
           <label><strong>Status</strong></label>
           <select class="form-select" name="status">
-            <option value="set-complete" <% if (combinedUserInfo.AnimeStatus === 'set-complete') { %>selected<% } %>>Completed</option>
-            <option value="set-watching" <% if (combinedUserInfo.AnimeStatus === 'set-watching') { %>selected<% } %>>Watching</option>
-            <option value="set-planning" <% if (combinedUserInfo.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Watch</option>
-            <option value="set-paused" <% if (combinedUserInfo.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
-            <option value="set-dropped" <% if (combinedUserInfo.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
-            <option value="set-rewatching" <% if (combinedUserInfo.AnimeStatus === 'set-rewatching') { %>selected<% } %>>Rewatching</option>
+            <option value="set-complete" <% if (user_info_about_anime.AnimeStatus === 'set-complete') { %>selected<% } %>>Completed</option>
+            <option value="set-reading" <% if (user_info_about_anime.AnimeStatus === 'set-reading') { %>selected<% } %>>Reading</option>
+            <option value="set-planning" <% if (user_info_about_anime.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Read</option>
+            <option value="set-paused" <% if (user_info_about_anime.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
+            <option value="set-dropped" <% if (user_info_about_anime.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
+            <option value="set-rereading" <% if (user_info_about_anime.AnimeStatus === 'set-rereading') { %>selected<% } %>>Rereading</option>
         </select>
         
         </div>
         <label for="rate"><strong>Rate:</strong></label> <i class="fa fa-star"></i>
-        <input type="number" value="<%= combinedUserInfo.RateGrade %>" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
+        <input type="number" value="<%= user_info_about_anime.RateGrade %>" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
 
-        <!-- Episode Progress -->
-        <label for="episodeProgress"><strong>Episode Progress:</strong></label>
-        <input class="form-control" value="<%= combinedUserInfo.EpisodeProgress %>" type="number" id="episodeProgress" name="episodeProgress">
+        <!-- Chapter Progress -->
+        <label for="chapterProgress"><strong>Chapter Progress:</strong></label>
+        <input class="form-control" value="<%= user_info_about_anime.ChaptersRead %>" type="number" id="chapterProgress" name="chapterProgress" placeholder="How far along are you out of <%= manga.Chapters %> chapters">
+
+        <!-- Volumes Progress -->
+        <label for="volumeProgress"><strong>Volume Progress:</strong></label>
+        <input class="form-control" value="<%= user_info_about_anime.VolumeProgress %>" type="number" id="volumeProgress" name="volumeProgress" placeholder="How far along are you out of <%= manga.Volumes %> volumes">
 
         <!-- Start Date -->
         <label for="startDate"><strong>Start Date:</strong></label>
-        <input class="form-control" value="<%= combinedUserInfo.StartDate %>" type="date" id="startDate" name="startDate">
+        <input class="form-control" value="<%= user_info_about_anime.StartDate %>" type="date" id="startDate" name="startDate">
 
         <!-- Finish Date -->
         <label for="finishDate"><strong>Finish Date:</strong></label>
-        <input class="form-control" value="<%= combinedUserInfo.EndDate %>" type="date" id="finishDate" name="finishDate">
+        <input class="form-control" value="<%= user_info_about_anime.EndDate %>" type="date" id="finishDate" name="finishDate">
 
-        <!-- Total Rewatches -->
+        <!-- Total Rereads -->
         <label for="totalRereads"><strong>Total Rereads:</strong></label>
-        <input class="form-control" type="number" value="<%= combinedUserInfo.TotalRewatch %>" id="totalRereads" name="totalRereads">
+        <input class="form-control" type="number" value="<%= user_info_about_anime.TotalRewatch %>" id="totalRereads" name="totalRereads">
 
         <!-- Notes -->
         <label for="notes"><strong>Notes:</strong></label>
-        <textarea class="form-control" id="notes" name="notes" rows="4"><%= combinedUserInfo.Notes %></textarea>
+        <textarea class="form-control" id="notes" name="notes" rows="4"><%= user_info_about_anime.Notes %></textarea>
 
         <!-- Save button -->
         <button class="like_btn" type="submit">Save</button>
@@ -212,11 +216,6 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <% } %>
 </div>
   
-    
-
-
-
-
 <%- include('../partials/footer.ejs') %>
 
 <script>

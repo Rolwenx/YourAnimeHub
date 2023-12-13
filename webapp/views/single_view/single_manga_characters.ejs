@@ -49,7 +49,7 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
             <button type="submit" name="action" value="set-complete" class="dropdown-item" <% if (animeStatus === 'set-complete') { %>disabled<% } %>>Set as Complete</button>
          </li>
          <li>
-            <button type="submit" name="action" value="set-watching" class="dropdown-item" <% if (animeStatus === 'set-watching') { %>disabled<% } %>>Set as Watching</button>
+            <button type="submit" name="action" value="set-reading" class="dropdown-item" <% if (animeStatus === 'set-reading') { %>disabled<% } %>>Set as Reading</button>
          </li>
          <li>
             <button type="submit" name="action" value="set-planning" class="dropdown-item" <% if (animeStatus === 'set-planning') { %>disabled<% } %>>Set as Planning</button>
@@ -76,7 +76,7 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>"><p>Overall</p></a>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/reviews#rev"><p>Reviews</p></a>
-  <% if (user_info_about_anime !== null && user && user.UserRole != "Guest" && user_info_about_anime.UserID === user.UserID) { %>
+  <% if ((user && (user.UserRole === 'User' || user.UserRole === 'Admin')) && (user_info_about_anime !== null && user_info_about_anime && user_info_about_anime.AnimeStatus !== null)) { %>
     <a href="/manga/<%= manga.AnimeID%>/<%= manga.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
 
@@ -101,11 +101,11 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
             <label><strong>Status</strong></label>
             <select class="form-select" name="status">
               <option value="set-complete">Completed</option>
-              <option value="set-watching">Watching</option>
-              <option value="set-planning">Planning to Watch</option>
+              <option value="set-reading">Reading</option>
+              <option value="set-planning">Planning to Read</option>
               <option value="set-paused">Paused</option>
               <option value="set-dropped">Dropped</option>
-              <option value="set-rewatching">Rereading</option>
+              <option value="set-rereading">Rereading</option>
           </select>
           
           </div>
@@ -145,11 +145,11 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
           <label><strong>Status</strong></label>
           <select class="form-select" name="status">
             <option value="set-complete" <% if (user_info_about_anime.AnimeStatus === 'set-complete') { %>selected<% } %>>Completed</option>
-            <option value="set-watching" <% if (user_info_about_anime.AnimeStatus === 'set-watching') { %>selected<% } %>>Watching</option>
-            <option value="set-planning" <% if (user_info_about_anime.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Watch</option>
+            <option value="set-reading" <% if (user_info_about_anime.AnimeStatus === 'set-reading') { %>selected<% } %>>Reading</option>
+            <option value="set-planning" <% if (user_info_about_anime.AnimeStatus === 'set-planning') { %>selected<% } %>>Planning to Read</option>
             <option value="set-paused" <% if (user_info_about_anime.AnimeStatus === 'set-paused') { %>selected<% } %>>Paused</option>
             <option value="set-dropped" <% if (user_info_about_anime.AnimeStatus === 'set-dropped') { %>selected<% } %>>Dropped</option>
-            <option value="set-rewatching" <% if (user_info_about_anime.AnimeStatus === 'set-rewatching') { %>selected<% } %>>Rereading</option>
+            <option value="set-rereading" <% if (user_info_about_anime.AnimeStatus === 'set-rereading') { %>selected<% } %>>Rereading</option>
         </select>
         
         </div>
@@ -195,7 +195,7 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <div class="left_column">
     <!-- Information about the anime -->
     <div class="anime_info">
-      <% if (user_info_about_anime !== null && user_info_about_anime[0].ReviewID != null) { %>
+      <% if (user_info_about_anime && user_info_about_anime && user_info_about_anime.ReviewID != null) { %>
         <button class="write_review_button " onclick="window.location.href='/review/editor/manga/<%= manga.AnimeID %>/edit';">Edit Your Review</button>
         <button class="propose_edit_button">Propose Edit Request</button>
       <% } %>

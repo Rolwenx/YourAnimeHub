@@ -266,5 +266,23 @@ async getAllStatusAnime(status) {
   return number_of_rows;
 },
 
+// This function is used to get the username of a user based on its id
+async GetUsernameById(userId) {
+  try {
+    let conn = await pool.getConnection();
+    let sql = "SELECT Username FROM User_Profile WHERE UserID = ?";
+    const [rows] = await conn.execute(sql, [userId]);
+    conn.release();
+
+    if (rows!=null) {
+      return rows.Username;
+    } else {
+      return null; // No user found with the given userId
+    }
+  } catch (err) {
+    console.error('Error in GetUsernameById:', err);
+    throw err;
+  }
+},
 
 }; 

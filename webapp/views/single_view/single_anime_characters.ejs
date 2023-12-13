@@ -76,7 +76,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>"><p>Overall</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/characters#char"><p>Characters</p></a>
   <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/reviews"><p>Reviews</p></a>
-  <% if (user_info_about_anime !== null && user && user.UserRole != "Guest" && user_info_about_anime.UserID === user.UserID) { %>
+  <% if ((user && (user.UserRole === 'User' || user.UserRole === 'Admin')) && (user_info_about_anime !== null && user_info_about_anime && user_info_about_anime.AnimeStatus !== null)) { %>
     <a href="/anime/<%= anime.AnimeID%>/<%= anime.TitleEnglish%>/user-info#info"><p>Your Info</p></a>
   <% } %>
 
@@ -115,7 +115,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
           <% if (anime.TypeFormat === 'TV') { %>
             <!-- Episode Progress -->
           <label for="episodeProgress"><strong>Episode Progress:</strong></label>
-          <input class="form-control" type="number" id="episodeProgress" name="episodeProgress">
+          <input class="form-control" type="number" id="episodeProgress" name="episodeProgress" placeholder="How far along are you out of <%= anime.EpisodeCount %> episodes">
           <% } %>
           <!-- Start Date -->
           <label for="startDate"><strong>Start Date:</strong></label>
@@ -153,10 +153,11 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <label for="rate"><strong>Rate:</strong></label> <i class="fa fa-star"></i>
         <input type="number" value="<%= user_info_about_anime.RateGrade %>" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
 
-        <!-- Episode Progress -->
+        <% if (anime.TypeFormat === 'TV') { %>
+          <!-- Episode Progress -->
         <label for="episodeProgress"><strong>Episode Progress:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.EpisodeProgress %>" type="number" id="episodeProgress" name="episodeProgress">
-
+        <input class="form-control" type="number" value="<%= user_info_about_anime.EpisodeProgress %>" id="episodeProgress" name="episodeProgress" placeholder="How far along are you out of <%= anime.EpisodeCount %> episodes">
+        <% } %>
         <!-- Start Date -->
         <label for="startDate"><strong>Start Date:</strong></label>
         <input class="form-control" value="<%= user_info_about_anime.StartDate %>" type="date" id="startDate" name="startDate">
@@ -189,7 +190,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
   <div class="left_column">
     <!-- Information about the anime -->
     <div class="anime_info">
-      <% if (user_info_about_anime !== null && user_info_about_anime[0].ReviewID != null) { %>
+      <% if (user_info_about_anime && user_info_about_anime && user_info_about_anime.ReviewID != null) { %>
         <button class="write_review_button " onclick="window.location.href='/review/editor/anime/<%= anime.AnimeID %>/edit';">Edit Your Review</button>
         <button class="propose_edit_button">Propose Edit Request</button>
       <% } %>
@@ -296,37 +297,27 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-  // Get the modal and button elements
   const modal = document.getElementById('addManuallyModal');
   const btn = document.getElementById('addManuallyBtn');
   const span = document.getElementsByClassName('close')[0];
 
-  // When the user clicks the button, open the modal
   btn.onclick = function () {
     modal.style.display = 'block';
   };
 
-  // When the user clicks on <span> (x), close the modal
   span.onclick = function () {
     modal.style.display = 'none';
   };
 
-  // When the user clicks anywhere outside of the modal, close it
   window.onclick = function (event) {
     if (event.target === modal) {
       modal.style.display = 'none';
     }
   };
 
-  // Add your additional logic here, e.g., handling form submission
   const form = document.getElementById('addManuallyForm');
   form.addEventListener('submit', function (event) {
-    // Prevent the default form submission
     event.preventDefault();
-
-    // Add your logic to handle the form data (e.g., AJAX request)
-
-    // Close the modal after handling the form
     modal.style.display = 'none';
   });
 });

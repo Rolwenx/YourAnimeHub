@@ -48,7 +48,7 @@ router.get('/:animeId/reviews', AnimeViewActionReviews);
 
 async function AnimeViewAction(request, response) {
     var animeId = request.params.animeId;
-    var charName = request.params.animeName;
+    var animeName = request.params.animeName;
     var userId = request.user ? request.user.UserID : null;
 
     try {
@@ -56,8 +56,8 @@ async function AnimeViewAction(request, response) {
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
-        var user_info_about_anime = await reviewRepo.CheckIfUserDidAReview(animeId,userId);
-        console.log(user_info_about_anime);
+        var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
+        console.log("user_info_about_anime",user_info_about_anime);
 
         const StatsCount = {};
         StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('set-planning',animeId))[0]?.statusCount || 0;
@@ -84,7 +84,7 @@ async function AnimeViewActionCharacters(request, response) {
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
-        var user_info_about_anime = await reviewRepo.CheckIfUserDidAReview(animeId,userId);
+        var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
 
         response.render("single_view/single_anime_characters", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
     } catch (error) {
@@ -103,11 +103,13 @@ async function AnimeViewActionReviews(request, response) {
       const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
   
 
-      var user_info_about_anime = await reviewRepo.getInformationOfUserWhoDidAReview(animeId);
+      var who_did_review = await reviewRepo.getInformationOfUserWhoDidAReview(animeId);
       var UsernamesWhoDidReviews = await reviewRepo.getUserIdOfPeopleWhoDidAReview(animeId);
+      user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
   
    
-        const combinedUserInfo = (user_info_about_anime || []).map(review => {
+      // This array takes the informations of user_info_about_anime and adds the Username of the user from UsernamesWhoDidReviews
+        const combinedUserInfo = (who_did_review || []).map(review => {
            
         
             const correspondingUser = UsernamesWhoDidReviews ? UsernamesWhoDidReviews.find(user => user.UserID === review.UserID) : null;
@@ -116,9 +118,11 @@ async function AnimeViewActionReviews(request, response) {
             return { ...review, UserName: correspondingUser.UserName };
             }
         
-            return review; // In case no matching user is found
+            return review; 
+            
         });
-  
+        console.log("combinedUserInfo",combinedUserInfo);
+        
   
   
       response.render("single_view/single_anime_reviews", {
@@ -148,7 +152,9 @@ async function AnimeViewActionUserInfo(request, response) {
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
 
         const animeStatus = await animeRepo.getAnimeStatus(userId, animeId);
-        var user_info_about_anime = await reviewRepo.getUserAnime(animeId, userId);
+        var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
+        console.log(user_info_about_anime);
+        console.log(user_info_about_anime.ReviewID);
 
         response.render("single_view/single_anime_userInfo", { "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
     } catch (error) {

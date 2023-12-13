@@ -6,6 +6,8 @@ const animeRepo = require('../utils/anime.repository.js');
 
 module.exports = {
 
+  // This function is used when editing a review
+
   async editOneReview(userId, animeId, reviewData) {
     try {
       let conn = await pool.getConnection();
@@ -30,6 +32,7 @@ module.exports = {
     }
   },  
 
+  // This function is used when adding a review
 async addOneReview(reviewData,userId,animeId) {
         
   try {
@@ -80,6 +83,8 @@ async addOneReview(reviewData,userId,animeId) {
   }
 },
 
+
+// This function is used to update the status of the anime whenever the user changes it
     async updateAnimeStatus(userId, animeId, status) {
 
         let conn = await pool.getConnection();
@@ -104,6 +109,8 @@ async addOneReview(reviewData,userId,animeId) {
         return true;
       },
 
+
+      // This function is used to get the animeStatus of an anime
       async getAnimeStatus(userId, animeId) {
         let conn = await pool.getConnection();
     
@@ -115,6 +122,8 @@ async addOneReview(reviewData,userId,animeId) {
         return rows.length > 0 ? rows[0].AnimeStatus : null;
     },
     
+
+    // This function is used when the user edits information about an anime (information of him)
     async editAnimeFromList(animeId, userId, animeData) {
         try {
             let conn = await pool.getConnection();
@@ -163,6 +172,7 @@ async addOneReview(reviewData,userId,animeId) {
         }
     },
 
+    // This function gets the information about who did a review on the anime whose animeId is given in parameter
     async getInformationOfUserWhoDidAReview(animeId) {
       try {
         let conn = await pool.getConnection();
@@ -184,6 +194,7 @@ async addOneReview(reviewData,userId,animeId) {
       }
     },
     
+    // This function is used to check if a user did a review
     async CheckIfUserDidAReview(animeId,userId) {
       try {
         let conn = await pool.getConnection();
@@ -192,6 +203,7 @@ async addOneReview(reviewData,userId,animeId) {
         let sql = 'SELECT * FROM View_Anime WHERE AnimeID = ? AND ReviewID IS NOT NULL and UserID = ?';
         const rows = await conn.execute(sql, [animeId,userId]);
         conn.release();
+
 
 
          if (rows.length > 0) {
@@ -205,6 +217,7 @@ async addOneReview(reviewData,userId,animeId) {
       }
     },
     
+    // This function is used to get the information of all users who did a review about an anime
     async getUserIdOfPeopleWhoDidAReview(animeId) {
       try {
         const conn = await pool.getConnection();
@@ -213,19 +226,17 @@ async addOneReview(reviewData,userId,animeId) {
         const rows = await conn.query(sql, [animeId]);
     
         if (rows && rows.length === 0) {
-          console.log('its null');
     
           conn.release();
           return null;
         } else {
-          console.log('its not null');
           const UsernamesWhoDidReviews = [];
     
           // Convert the object into an array
           const rowsArray = Object.values(rows);
           for (const row of rowsArray) {
             const userId = row.UserID;
-            const username = await animeRepo.GetUsernameById(userId);
+            const username = await userRepo.GetUsernameById(userId);
             UsernamesWhoDidReviews.push({ ...row, UserName: username });
           }
     
@@ -240,7 +251,7 @@ async addOneReview(reviewData,userId,animeId) {
     
 
     // Function that allow to the take information of the View_Anime Table according to the user and the anime
-    async getUserAnime(animeId,userId) {
+    async getUserViewAnimeInfo(animeId,userId) {
         try {
 
             let conn = await pool.getConnection();
@@ -275,6 +286,7 @@ async addOneReview(reviewData,userId,animeId) {
         }
     },
 
+    // This function is used to get the number of people who have a specific anime status in their watchlist
     async getAllStatusAnime(status) {
         let conn = await pool.getConnection();
     
@@ -286,23 +298,8 @@ async addOneReview(reviewData,userId,animeId) {
         return number_of_rows;
     },
 
-    async GetUsernameById(userId) {
-        try {
-          let conn = await pool.getConnection();
-          let sql = "SELECT Username FROM User_Profile WHERE UserID = ?";
-          const [rows] = await conn.execute(sql, [userId]);
-          conn.release();
+
     
-          if (rows!=null) {
-            return rows.Username;
-          } else {
-            return null; // No user found with the given userId
-          }
-        } catch (err) {
-          console.error('Error in GetUsernameById:', err);
-          throw err;
-        }
-      },
       async getAnimeIDFromReviewID(reviewId) {
         try {
           const conn = await pool.getConnection();
@@ -320,6 +317,8 @@ async addOneReview(reviewData,userId,animeId) {
           throw error;
         }
       },
+
+
       async getReviewInfo(animeId, userId) {
         try {
           const conn = await pool.getConnection();
@@ -330,7 +329,7 @@ async addOneReview(reviewData,userId,animeId) {
           const updatedRowsList = Array.isArray(rows)
             ? await Promise.all(rows.map(async (row) => {
                 const animeName = await animeRepo.getAnimeNameByID(animeId);
-                const userName = await animeRepo.GetUsernameById(userId);
+                const userName = await userRepo.GetUsernameById(userId);
                 const backgroundURL = await animeRepo.getAnimeURLByID(animeId);
                 const anime = animeId;
                 return {
@@ -344,7 +343,7 @@ async addOneReview(reviewData,userId,animeId) {
             : await Promise.all([{
               ...rows,
               AnimeName: await animeRepo.getAnimeNameByID(animeId),
-              Username: await animeRepo.GetUsernameById(userId),
+              Username: await userRepo.GetUsernameById(userId),
               BackgroundImageURL: await animeRepo.getAnimeURLByID(animeId),
               TypeFormat: await animeRepo.getAnimeTypeByID(animeId),
               AnimeID: animeId,
@@ -376,7 +375,7 @@ async addOneReview(reviewData,userId,animeId) {
     
             const updatedReviewList = await Promise.all(reviewList.map(async (review) => {
                 const animeName = await animeRepo.getAnimeNameByID(review.AnimeID);
-                const UserName = await animeRepo.GetUsernameById(review.UserID);
+                const UserName = await userRepo.GetUsernameById(review.UserID);
                 const backgroundURL = await animeRepo.getAnimeURLByID(review.AnimeID);
     
                 return {
@@ -412,7 +411,7 @@ async addOneReview(reviewData,userId,animeId) {
     
         const updatedReviewList = await Promise.all(reviewList.map(async (review) => {
           const animeName = await animeRepo.getAnimeNameByID(review.AnimeID);
-          const UserName = await animeRepo.GetUsernameById(review.UserID);
+          const UserName = await userRepo.GetUsernameById(review.UserID);
           const backgroundURL = await animeRepo.getAnimeURLByID(review.AnimeID);
     
           return {
