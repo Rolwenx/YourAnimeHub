@@ -29,7 +29,7 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
           </tr>
         </thead>
         <tbody>
-          <% CompleteAnimeList.slice(0, 6).forEach((animeDetails) => { %>
+          <% CompleteAnimeList.forEach((animeDetails) => { %>
             <tr class="anime-row">
               <td>
                 <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
@@ -39,14 +39,14 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
                   </div>
                 </a>
               </td>
-              <td><%= animeDetails[0].RateGrade %></td>
-              <% if (animeDetails[0].TypeFormat == "Movie") { %>
+              <td><%= animeDetails.RateGrade %></td>
+              <% if (animeDetails.TypeFormat == "Movie") { %>
                 <td>1</td>
               <% } %>
-              <% if (animeDetails[0].TypeFormat == "TV") { %>
-                <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
+              <% if (animeDetails.TypeFormat == "TV") { %>
+                <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
               <% } %>
-              <td><%= animeDetails[0].TypeFormat %></td>
+              <td><%= animeDetails.TypeFormat %></td>
             </tr>
           <% }); %>
         </tbody>
@@ -58,15 +58,14 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
 <button class="view_all_btn" id="load-more-button">Load More</button>
 
 <%- include('../partials/footer.ejs', { title: title }) %>
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    let displayedCharCount = 10;
+    let displayedCharCount = 6;
 
     const animeTable = document.getElementById("anime-table");
     const animeRows = document.querySelectorAll(".anime-row");
 
-    // Initially hide rows greater than 10
+    // Initially hide rows greater than 6
     animeRows.forEach((row, index) => {
       if (index >= displayedCharCount) {
         row.style.display = "none";
@@ -74,13 +73,13 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
     });
 
     document.getElementById("load-more-button").addEventListener("click", function () {
-      for (let i = displayedCharCount; i < displayedCharCount + 10; i++) {
+      for (let i = displayedCharCount; i < displayedCharCount + 6; i++) {
         if (i < animeRows.length) {
           animeRows[i].style.display = "table-row";
         }
       }
 
-      displayedCharCount += 10;
+      displayedCharCount += 6;
 
       // Hide load more button if all anime are displayed
       if (displayedCharCount >= animeRows.length) {

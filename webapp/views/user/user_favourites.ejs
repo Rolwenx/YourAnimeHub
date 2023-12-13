@@ -25,7 +25,7 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
           </tr>
         </thead>
         <tbody>
-          <% FavouriteAnime.slice(0, 4).forEach((animeDetails) => { %>
+          <% FavouriteAnime.forEach((animeDetails) => { %>
             <tr class="anime-row">
               <td>
                 <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
@@ -46,8 +46,9 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
       </table>
     <% } %>
   </div>
-
-  <button class="view_all_btn" id="load-more-button">Load More</button>
+  <button class="view_all_btn" id="load-more-button3">Load More</button>
+  
+  
   
 
   <div class="header_title_anime one">
@@ -68,7 +69,7 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
           </tr>
         </thead>
         <tbody>
-          <% FavouriteManga.slice(0, 4).forEach((mangaDetails) => { %>
+          <% FavouriteManga.forEach((mangaDetails) => { %>
             <tr class="anime-row">
               <td>
                 <a href="/manga/<%= mangaDetails.AnimeID%>/<%=mangaDetails.TitleEnglish%>">
@@ -89,8 +90,9 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
       </table>
     <% } %>
   </div>
+  <button class="view_all_btn" id="load-more-button2">Load More</button>
 
-  <button class="view_all_btn" id="load-more-button">Load More</button>
+
   
   
   <div class="header_title_anime one">
@@ -109,7 +111,7 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
           </tr>
         </thead>
         <tbody>
-          <% FavouriteCharacter.slice(0, 4).forEach((charDetails) => { %>
+          <% FavouriteCharacter.forEach((charDetails) => { %>
             <tr class="anime-row">
               <td>
                 <a href="/character/<%= charDetails.CharacterID%>/<%=charDetails.CharName%>">
@@ -131,18 +133,19 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
   <button class="view_all_btn" id="load-more-button">Load More</button>
 
   
-  </div>
+</div>
 
 <%- include('../partials/footer.ejs', { title: title }) %>
 
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    let displayedCharCount = 10;
+    let displayedCharCount = 4;
 
     const animeTable = document.getElementById("anime-table");
     const animeRows = document.querySelectorAll(".anime-row");
 
-    // Initially hide rows greater than 10
+    // Initially hide rows greater than 4
     animeRows.forEach((row, index) => {
       if (index >= displayedCharCount) {
         row.style.display = "none";
@@ -150,17 +153,78 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
     });
 
     document.getElementById("load-more-button").addEventListener("click", function () {
-      for (let i = displayedCharCount; i < displayedCharCount + 10; i++) {
+      for (let i = displayedCharCount; i < displayedCharCount + 4; i++) {
         if (i < animeRows.length) {
           animeRows[i].style.display = "table-row";
         }
       }
 
-      displayedCharCount += 10;
+      displayedCharCount += 4;
 
       // Hide load more button if all anime are displayed
       if (displayedCharCount >= animeRows.length) {
         document.getElementById("load-more-button").style.display = "none";
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let displayedCharCount = 4;
+
+    const animeTable = document.getElementById("anime-table");
+    const animeRows = document.querySelectorAll(".anime-row");
+
+    // Initially hide rows greater than 4
+    animeRows.forEach((row, index) => {
+      if (index >= displayedCharCount) {
+        row.style.display = "none";
+      }
+    });
+
+    document.getElementById("load-more-button2").addEventListener("click", function () {
+      for (let i = displayedCharCount; i < displayedCharCount + 4; i++) {
+        if (i < animeRows.length) {
+          animeRows[i].style.display = "table-row";
+        }
+      }
+
+      displayedCharCount += 4;
+
+      // Hide load more button if all anime are displayed
+      if (displayedCharCount >= animeRows.length) {
+        document.getElementById("load-more-button2").style.display = "none";
+      }
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let displayedCharCount = 4;
+
+    const animeTable = document.getElementById("anime-table");
+    const animeRows = document.querySelectorAll(".anime-row");
+
+    // Initially hide rows greater than 4
+    animeRows.forEach((row, index) => {
+      if (index >= displayedCharCount) {
+        row.style.display = "none";
+      }
+    });
+
+    document.getElementById("load-more-button3").addEventListener("click", function () {
+      for (let i = displayedCharCount; i < displayedCharCount + 4; i++) {
+        if (i < animeRows.length) {
+          animeRows[i].style.display = "table-row";
+        }
+      }
+
+      displayedCharCount += 4;
+
+      // Hide load more button if all anime are displayed
+      if (displayedCharCount >= animeRows.length) {
+        document.getElementById("load-more-button3").style.display = "none";
       }
     });
   });

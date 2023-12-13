@@ -29,7 +29,7 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
           </tr>
         </thead>
         <tbody>
-          <% ReadingMangaList.slice(0, 6).forEach((mangaDetails) => { %>
+          <% ReadingMangaList.forEach((mangaDetails) => { %>
             <tr class="anime-row">
               <td>
                 <a href="/manga/<%= mangaDetails.AnimeID%>/<%=mangaDetails.TitleEnglish%>">
@@ -56,12 +56,12 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    let displayedCharCount = 10;
+    let displayedCharCount = 6;
 
     const animeTable = document.getElementById("anime-table");
     const animeRows = document.querySelectorAll(".anime-row");
 
-    // Initially hide rows greater than 10
+    // Initially hide rows greater than 6
     animeRows.forEach((row, index) => {
       if (index >= displayedCharCount) {
         row.style.display = "none";
@@ -69,13 +69,13 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
     });
 
     document.getElementById("load-more-button").addEventListener("click", function () {
-      for (let i = displayedCharCount; i < displayedCharCount + 10; i++) {
+      for (let i = displayedCharCount; i < displayedCharCount + 6; i++) {
         if (i < animeRows.length) {
           animeRows[i].style.display = "table-row";
         }
       }
 
-      displayedCharCount += 10;
+      displayedCharCount += 6;
 
       // Hide load more button if all anime are displayed
       if (displayedCharCount >= animeRows.length) {
