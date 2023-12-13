@@ -15,10 +15,7 @@ const title = 'Admin - YourAnimeHub';
               <textarea id="quoteText" rows="4" cols="50"name="quoteText" required><%= quote.quoteText %></textarea>
             </div>
         </div>
-        <div class="button">
-            <input type="submit" value="Edit Quote">
-
-        </div>
+        <button type="submit" class="button" onclick="return confirm('Are you sure you want to edit this quote?')">Edit Quote</button>
     </form>
 </div>
 </section>

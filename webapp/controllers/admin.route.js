@@ -26,21 +26,21 @@ router.post('/admin/users/update/:userId/:userName', adminUserUpdateAction);
 
 router.get('/admin/animes/edit/:animeId/:animeName', adminAnimeEditAction);
 router.post('/admin/animes/update/:animeId/:animeName', adminAnimeUpdateAction);
-router.get('/admin/animes/delete/:animeId/:animeName', adminAnimeDelAction);
+router.post('/admin/animes/delete/:animeId/:animeName', adminAnimeDelAction);
 
 router.get('/admin/mangas/edit/:mangaId/:mangaName', adminMangaEditAction);
 router.post('/admin/mangas/update/:mangaId/:mangaName', adminMangaUpdateAction);
-router.get('/admin/mangas/delete/:mangaId/:mangaName', adminMangaDelAction);
+router.post('/admin/mangas/delete/:mangaId/:mangaName', adminMangaDelAction);
 
 router.get('/admin/quotes/edit/:quoteId', adminQuoteEditAction);
 router.post('/admin/quotes/update/:quoteId', adminQuoteUpdateAction);
-router.get('/admin/quotes/delete/:quoteId', adminQuoteDelAction);
+router.post('/admin/quotes/delete/:quoteId', adminQuoteDelAction);
 
 router.get('/admin/quotes/quote_of_the_day', adminQuoteDailyAction);
 
 router.get('/admin/characters/edit/:characterId/:characterName', adminCharacterEditAction);
 router.post('/admin/characters/update/:characterId/:characterName', adminCharacterUpdateAction);
-router.get('/admin/characters/delete/:characterId/:characterName', adminCharacterDelAction);
+router.post('/admin/characters/delete/:characterId/:characterName', adminCharacterDelAction);
 
 router.get('/admin/animes/add', adminAnimeAddAction);
 router.post('/admin/animes/create',adminAnimeCreateAction);

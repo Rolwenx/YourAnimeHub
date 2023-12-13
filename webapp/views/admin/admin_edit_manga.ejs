@@ -64,10 +64,7 @@ const title = 'Admin - YourAnimeHub';
                 <textarea id="synopsis" rows="4" cols="50" name="synopsis"><%= manga.Synopsis %></textarea>
             </div>
         </div>
-        <div class="button">
-            <input type="submit" value="Edit Manga">
-
-        </div>
+        <button type="submit" class="button" onclick="return confirm('Are you sure you want to edit this manga?')">Edit Manga</button>
     </form>
 </div>
 </section>

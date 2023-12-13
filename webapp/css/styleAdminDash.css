@@ -535,6 +535,9 @@ h2{
   margin-top: 10px;
   display: inline-block;
   vertical-align: middle;
+  border:none;
+  background: transparent;
+  cursor:pointer;
 }
 
 .animeCard .card .title-container .delete-btn ion-icon {

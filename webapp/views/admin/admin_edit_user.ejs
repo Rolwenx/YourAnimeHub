@@ -43,10 +43,7 @@ const title = 'Admin - YourAnimeHub';
                 <textarea id="bio" rows="4" cols="50"name="bio"><%= fetched_user.Bio %></textarea>
             </div>
         </div>
-        <div class="button">
-            <input type="submit" value="Edit User">
-
-        </div>
+        <button type="submit" class="button" onclick="return confirm('Are you sure you want to edit this user?')">Edit User</button>
     </form>
 </div>
 </section>

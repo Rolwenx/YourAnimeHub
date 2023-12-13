@@ -65,10 +65,7 @@ const title = 'Admin - YourAnimeHub';
       <input type="checkbox" id="isMainCharacter" name="isMainCharacter" <%= character.isMainCharacter === 1 ? 'checked' : '' %>>
   </div>
         </div>
-        <div class="button">
-            <input type="submit" value="Edit Character">
-
-        </div>
+        <button type="submit" class="button" onclick="return confirm('Are you sure you want to edit this character?')">Edit Character</button>
     </form>
 </div>
 </section>

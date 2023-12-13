@@ -57,17 +57,13 @@ const title = 'Admin - YourAnimeHub';
         <div class="input-box">
           <span class="details">More Information:</span>
           <textarea id="charMoreInfo" rows="4" cols="50"name="charMoreInfo"></textarea>
-      </div>
-      <div class="input-box">
-        <span class="details">Is Main Character:</span>
-        <input type="checkbox" id="isMainCharacter" name="isMainCharacter">
+        </div>
+        <div class="input-box">
+            <span class="details">Is Main Character:</span>
+            <input type="checkbox" id="isMainCharacter" name="isMainCharacter">
+        </div>       
     </div>
-          
-        </div>
-        <div class="button">
-            <input type="submit" value="Add Character">
-
-        </div>
+        <button type="submit" class="button" onclick="return confirm('Are you sure you want to add this character?')">Add Character</button>
     </form>
 </div>
 </section>
