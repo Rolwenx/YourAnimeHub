@@ -97,15 +97,6 @@ CREATE TABLE Appear_In(
 );
 
 -- Because there's a favourite quote category in the user profile
-CREATE TABLE User_Favorite_Quote(
-   QuoteID INT,
-   UserID INT,
-   PRIMARY KEY(QuoteID, UserID),
-   FOREIGN KEY(QuoteID) REFERENCES AnimeQuote(QuoteID),
-   FOREIGN KEY(UserID) REFERENCES User_Profile(UserID)
-);
-
--- Because there's a favourite quote category in the user profile
 CREATE TABLE User_Favorite_Character(
    CharacterID INT,
    UserID INT,
