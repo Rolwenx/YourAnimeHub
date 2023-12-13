@@ -418,27 +418,6 @@ module.exports = {
         }
     },
 
-    async getAllAnimeInfoByID(animeID,type) {
-        try {
-            let conn = await pool.getConnection();
-            let sql = "SELECT * FROM Anime WHERE AnimeID = ? AND AnimeFormat = ?";
-            const rows = await conn.query(sql, [animeID, type]);
-
-            conn.release();
-
-            
-            if (rows.length == 0) {
-
-                return 'Nothing';
-            } else {
-
-                return rows
-            }
-        } catch (err) {
-            console.error('Error executing query:', err);
-            throw err;
-        }
-    },
     
     
     //nOT FUNCTIONAL
@@ -568,7 +547,7 @@ module.exports = {
 
 
         } catch (err) {
-            console.error('Error in getOneAnime:', err);
+            console.error('Error in getUserAnime:', err);
             throw err;
         }
     },
@@ -721,10 +700,12 @@ module.exports = {
     
       async getAllAnimeWatchedByUser(userId, status,animeormanga) {
         const conn = await pool.getConnection();
-        const sql = "SELECT va.*, a.AnimeFormat FROM View_Anime va JOIN Anime a ON va.AnimeID = a.AnimeID WHERE va.ReviewID IS NOT NULL AND va.UserID = ? AND va.AnimeStatus = ? AND a.AnimeFormat = ?";
+        const sql = "SELECT va.*, a.AnimeFormat FROM View_Anime va JOIN Anime a ON va.AnimeID = a.AnimeID WHERE va.UserID = ? AND va.AnimeStatus = ? AND a.AnimeFormat = ?";
+
       
         try {
           const animeList = await conn.query(sql, [userId, status, animeormanga]);
+          console.log("function",animeList)
       
           conn.release();
       

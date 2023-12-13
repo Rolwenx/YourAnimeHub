@@ -7,55 +7,53 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
 
 <a class="cardHeader_a" href="/user/watchlist/manga/complete">
   <div class="header_title_anime one">
-    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">SEE MANGA COMPLETE LIST</h2>
+    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">SEE MANGA COMPLETED LIST</h2>
   </div>
 </a>
 
-<div class="container mt-5">
-  <!-- Completed Section -->
+<div class="container mt-5"><!-- Completed Section -->
   <div class="header_title_anime one">
     <h2 class="my_h2 text-light" style="margin-left: 20px !important;">COMPLETED</h2>
   </div>
   <div class="anime-block">
-    <table class="table" id="anime-table">
-      <thead>
-        <tr>
-          <td><strong>Title</strong></td>
-          <td><strong>Rate</strong></td>
-          <td><strong>Progress</strong></td>
-          <td><strong>Type</strong></td>
-        </tr>
-      </thead>
-      <tbody>
-        <% CompleteAnimeList.slice(0, 10).forEach((animeDetails, index) => { %>
-          <tr class="anime-row" id="anime-row-<%= index %>">
-            <td>
-              <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
-                <div class="anime_title_box">
-                  <img src="<%= animeDetails[0].CoverImageURL %>" alt="<%= animeDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                  <p><%= animeDetails[0].TitleEnglish %></p>
-                </div>
-              </a>
-            </td>
-            <td><%= animeDetails[0].RateGrade %></td>
-            <% if (animeDetails[0].TypeFormat == "Movie") { %>
-              <td>1</td>
-            <% } %>
-            <% if (animeDetails[0].TypeFormat == "TV") { %>
-              <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
-            <% } %>
-            <td><%= animeDetails[0].TypeFormat %></td>
+    <% if (CompleteAnimeList === null || CompleteAnimeList.length === 0) { %>
+      <p>No completed anime yet.</p>
+    <% } else { %>
+      <table class="table">
+        <thead>
+          <tr>
+            <td><strong>Title</strong></td>
+            <td><strong>Rate</strong></td>
+            <td><strong>Episode Progress</strong></td>
+            <td><strong>Type</strong></td>
           </tr>
-        <% }); %>
-      </tbody>
-    </table>
-
-
-
-    <% if (CompleteAnimeList.length === 0) { %>
-      <p>No completed anime added yet.</p>
+        </thead>
+        <tbody>
+          <% CompleteAnimeList.slice(0, 6).forEach((animeDetails) => { %>
+            <tr class="anime-row">
+              <td>
+                <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
+                  <div class="anime_title_box">
+                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                    <p><%= animeDetails.TitleEnglish %></p>
+                  </div>
+                </a>
+              </td>
+              <td><%= animeDetails[0].RateGrade %></td>
+              <% if (animeDetails[0].TypeFormat == "Movie") { %>
+                <td>1</td>
+              <% } %>
+              <% if (animeDetails[0].TypeFormat == "TV") { %>
+                <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
+              <% } %>
+              <td><%= animeDetails[0].TypeFormat %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
     <% } %>
   </div>
+
 </div>
 <button class="view_all_btn" id="load-more-button">Load More</button>
 

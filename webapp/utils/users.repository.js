@@ -219,35 +219,71 @@ module.exports = {
     }
 },
 
-async getAllAnimeForWatchlist(userId, action,type) {
+
+async getAllAnimeForWatchlist(userId, action) {
   try {
     let conn = await pool.getConnection();
     let sql = "SELECT * FROM View_Anime WHERE UserID = ? AND AnimeStatus = ?";
     let rows = await conn.execute(sql, [userId, action]);
-    console.log(rows);
 
     if (rows && rows.length === 0) {
       conn.release();
-      console.log('its null');
-        return null;
-    }
-    else{
+      return null;
+    } else {
+      let MangaList = [];
 
-      let newList = [];
-    for (let i = 0; i < rows.length; i++) {
-      const animeInfo = await animeRepo.getAllAnimeInfoByID(rows[i].AnimeID,type);
-      if(animeInfo == 'Nothing'){
-        continue;
+      for (let i = 0; i < rows.length; i++) {
+        const animeInfo = await animeRepo.getOneAnime(rows[i].AnimeID);
+
+        if (animeInfo === false) {
+          continue;
+        }
+        const combinedInfo = {
+          ...rows[0],
+          ...animeInfo,
+        };
+        MangaList.push(combinedInfo);
       }
-      // Combine the information from rows and animeInfo
-      const combinedInfo = { ...rows[i], ...animeInfo };
 
-      // Push the combinedInfo into the newList array
-      newList.push(combinedInfo);
+      conn.release();
+      return MangaList;
     }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+},
 
-    conn.release();
-    return newList;
+
+async getAllMangaForWatchlist(userId, action) {
+  try {
+    let conn = await pool.getConnection();
+    let sql = "SELECT * FROM View_Anime WHERE UserID = ? AND AnimeStatus = ?";
+    let rows = await conn.execute(sql, [userId, action]);
+
+    if (rows && rows.length === 0) {
+      conn.release();
+      return null;
+    } else {
+      let MangaList = [];
+
+      for (let i = 0; i < rows.length; i++) {
+        const animeInfo = await animeRepo.getOneManga(rows[i].AnimeID);
+
+        if (animeInfo === false) {
+          continue;
+        }
+
+        const combinedInfo = {
+          ...rows[0],
+          ...animeInfo,
+        };
+
+        MangaList.push(combinedInfo);
+      }
+
+      conn.release();
+      return MangaList;
     }
   } catch (err) {
     console.error(err);

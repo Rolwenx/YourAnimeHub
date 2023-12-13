@@ -21,13 +21,15 @@ async function UserHomeAction(request,response){
         const StatsCount = {};
         const reviews = await reviewRepo.getAllReviewsOfUser(userId);
         StatsCount.ReviewCount = reviews.length;
-        const anime = await animeRepo.getAllAnimeWatchedByUser(userId,'set-complete','Anime');
-        const manga = await animeRepo.getAllAnimeWatchedByUser(userId,'set-complete','Manga');
+        const anime = await animeRepo.getAllAnimeWatchedByUser(userId,'aset-complete','Anime');
+        const manga = await animeRepo.getAllAnimeWatchedByUser(userId,'mset-complete','Manga');
+        console.log("anime",anime);
         StatsCount.AnimeCount = anime.length;
         StatsCount.MangaCount = manga.length;
 
-        const WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
-        const WatchingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
+        const WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-watching');
+        const ReadingMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-reading');
+
 
         StatsCount.AnimeInWatchlist = await animeRepo.getAllAnimeInWatchlist(userId, 'Anime');
         StatsCount.MangaInWatchlist = await animeRepo.getAllAnimeInWatchlist(userId, 'Manga');
@@ -37,7 +39,7 @@ async function UserHomeAction(request,response){
 
        
 
-        response.render('user/user', {WatchingMangaList,WatchingAnimeList, "StatsCount":StatsCount, user: request.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
+        response.render('user/user', {ReadingMangaList,WatchingAnimeList, "StatsCount":StatsCount, user: request.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
     } catch (error) {
         console.error('Error:', error);
         response.status(500).send(" UserHomeAction Internal Server Error");
@@ -57,15 +59,14 @@ async function UserAnimeWatchlistAction(request, response) {
     var userId = request.user.UserID;
 
     try {
-        var CompleteAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Anime');
-        var PlanningAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Anime');
-        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
-        var DroppedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-dropped','Anime');
-        var PausedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-paused','Anime');
-        var RewatchedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-rewatching','Anime');
-        console.log(RewatchedAnimeList);
+        var CompleteAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-complete');
+        var PlanningAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-planning');
+        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-watching');
+        var DroppedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-dropped');
+        var PausedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-paused');
+        var RewatchedAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-rewatching');
 
-        
+    
         response.render("user/user_watchlist_anime", {
         "WatchingAnimeList":WatchingAnimeList,
         "RewatchedAnimeList":RewatchedAnimeList,
@@ -84,9 +85,7 @@ async function UserAnimeCompleteWatchlistAction(request, response) {
     var userId = request.user.UserID;
 
     try {
-        var CompleteAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Anime');
-
-
+        var CompleteAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-complete');
         response.render("user/user_watchlist_anime_complete", {"CompleteAnimeList": CompleteAnimeList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
     } catch (error) {
         console.error('Error in UserAnimeCompleteWatchlistAction:', error);
@@ -96,9 +95,8 @@ async function UserAnimeCompleteWatchlistAction(request, response) {
 
 async function UserAnimeWatchingWatchlistAction(request, response) {
     var userId = request.user.UserID;
-
     try {
-        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
+        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-watching');
 
 
         response.render("user/user_watchlist_anime_watching", {"WatchingAnimeList": WatchingAnimeList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
@@ -108,15 +106,10 @@ async function UserAnimeWatchingWatchlistAction(request, response) {
     }
 }
 
-
-
 async function UserAnimePlanningWatchlistAction(request, response) {
     var userId = request.user.UserID;
-
     try {
-        var PlanningAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Anime');
-
-
+        var PlanningAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-planning');
         response.render("user/user_watchlist_anime_planning", {"PlanningAnimeList": PlanningAnimeList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
     } catch (error) {
         console.error('Error in UserAnimeWatchingWatchlistAction:', error);
@@ -133,16 +126,20 @@ router.get('/watchlist/manga/planning', UserMangaPlanningWatchlistAction);
 
 async function UserMangaWatchlistAction(request, response) {
     var userId = request.user.UserID;
-
     try {
-        var CompleteMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Manga');
-        var PlanningMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Manga');
-        var ReadingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
+        var CompleteMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-complete');
+        var PlanningMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-planning');
+        var ReadingMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-reading');
+        var DroppedMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-dropped');
+        var PausedMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-paused');
+        var RewatchedMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-rereading');
 
-        
         response.render("user/user_watchlist_manga", {"ReadingMangaList":ReadingMangaList,
         "CompleteMangaList": CompleteMangaList,
         "PlanningMangaList":PlanningMangaList,
+        "RewatchedMangaList":RewatchedMangaList,
+        "PausedMangaList":PausedMangaList,
+        "DroppedMangaList":DroppedMangaList,
          user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
     } catch (error) {
         console.error('Error in UserMangaWatchlistAction:', error);
@@ -152,11 +149,8 @@ async function UserMangaWatchlistAction(request, response) {
 
 async function UserMangaCompleteWatchlistAction(request, response) {
     var userId = request.user.UserID;
-
     try {
-        var CompleteMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-complete','Manga');
-
-
+        var CompleteMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-complete');
 
         response.render("user/user_watchlist_manga_complete", {"CompleteMangaList": CompleteMangaList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
     } catch (error) {
@@ -169,9 +163,7 @@ async function UserMangaReadingWatchlistAction(request, response) {
     var userId = request.user.UserID;
 
     try {
-        var ReadingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
-
-
+        var ReadingMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-reading');
         response.render("user/user_watchlist_manga_reading", {"ReadingMangaList": ReadingMangaList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
     } catch (error) {
         console.error('Error in UserMangaReadingWatchlistAction:', error);
@@ -185,10 +177,7 @@ async function UserMangaPlanningWatchlistAction(request, response) {
     var userId = request.user.UserID;
 
     try {
-        var PlanningMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-planning','Manga');
-        console.log(PlanningMangaList);
-
-
+        var PlanningMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-planning');
         response.render("user/user_watchlist_manga_planning", {"PlanningMangaList": PlanningMangaList, user: request.user, title: 'Profile - YourAnimeHub', activePage: 'your_list'  });
     } catch (error) {
         console.error('Error in UserMangaPlanningWatchlistAction:', error);

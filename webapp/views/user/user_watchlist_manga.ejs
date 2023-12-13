@@ -6,6 +6,7 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
 <link type="text/css" rel="stylesheet" href="/css/styleWatchlist.css">
 
 
+<!-- User watchlist manga-->
 <a class="cardHeader_a" href="/user/watchlist/anime">
   <div class="header_title_anime one">
     <h2 class="my_h2 text-light" style="margin-left: 20px !important;">SEE ANIME LIST</h2>
@@ -147,9 +148,9 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
           <thead>
             <tr>
               <td><strong>Title</strong></td>
-              <td><strong>Rate</strong></td>
-              <td><strong>Progress</strong></td>
-              <td><strong>Type</strong></td>
+          <td><strong>Rate</strong></td>
+          <td><strong>Chapter Progress</strong></td>
+          <td><strong>Volume Progress</strong></td>
             </tr>
           </thead>
           <tbody>
@@ -163,14 +164,9 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
                     </div>
                   </a>
                 </td>
-                <td><%= animeDetails.RateGrade %></td>
-                <% if (animeDetails.TypeFormat == "Movie") { %>
-                  <td>0/1</td>
-                <% } %>
-                <% if (animeDetails.TypeFormat == "TV") { %>
-                  <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
-                <% } %>
-                <td><%= animeDetails.TypeFormat %></td>
+                <td><%= mangaDetails.RateGrade %></td>
+                <td><%= mangaDetails.ChaptersRead %> / <%= mangaDetails.Chapters %></td>
+                <td><%= mangaDetails.VolumeProgress %> / <%= mangaDetails.Volumes %></td>
               </tr>
             <% }); %>
           </tbody>
@@ -189,9 +185,9 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
           <thead>
             <tr>
               <td><strong>Title</strong></td>
-              <td><strong>Rate</strong></td>
-              <td><strong>Progress</strong></td>
-              <td><strong>Type</strong></td>
+          <td><strong>Rate</strong></td>
+          <td><strong>Chapter Progress</strong></td>
+          <td><strong>Volume Progress</strong></td>
             </tr>
           </thead>
           <tbody>
@@ -205,14 +201,9 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
                     </div>
                   </a>
                 </td>
-                <td><%= animeDetails.RateGrade %></td>
-                <% if (animeDetails.TypeFormat == "Movie") { %>
-                  <td>0/1</td>
-                <% } %>
-                <% if (animeDetails.TypeFormat == "TV") { %>
-                  <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
-                <% } %>
-                <td><%= animeDetails.TypeFormat %></td>
+                <td><%= mangaDetails.RateGrade %></td>
+                <td><%= mangaDetails.ChaptersRead %> / <%= mangaDetails.Chapters %></td>
+                <td><%= mangaDetails.VolumeProgress %> / <%= mangaDetails.Volumes %></td>
               </tr>
             <% }); %>
           </tbody>
@@ -231,9 +222,9 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
           <thead>
             <tr>
               <td><strong>Title</strong></td>
-              <td><strong>Rate</strong></td>
-              <td><strong>Progress</strong></td>
-              <td><strong>Type</strong></td>
+          <td><strong>Rate</strong></td>
+          <td><strong>Chapter Progress</strong></td>
+          <td><strong>Volume Progress</strong></td>
             </tr>
           </thead>
           <tbody>
@@ -247,14 +238,9 @@ const title = user ? `${user.Username}'s mangaList- YourAnimeHub` : 'YourAnimeHu
                     </div>
                   </a>
                 </td>
-                <td><%= animeDetails.RateGrade %></td>
-                <% if (animeDetails.TypeFormat == "Movie") { %>
-                  <td>0/1</td>
-                <% } %>
-                <% if (animeDetails.TypeFormat == "TV") { %>
-                  <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
-                <% } %>
-                <td><%= animeDetails.TypeFormat %></td>
+                <td><%= mangaDetails.RateGrade %></td>
+                <td><%= mangaDetails.ChaptersRead %> / <%= mangaDetails.Chapters %></td>
+                <td><%= mangaDetails.VolumeProgress %> / <%= mangaDetails.Volumes %></td>
               </tr>
             <% }); %>
           </tbody>

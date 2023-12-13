@@ -15,8 +15,8 @@
         <p><%= user.Email %></p>
 
         <ul class="about">
-          <li><span><%= StatsCount.AnimeCount %></span>Anime watched</li>
-          <li><span><%= StatsCount.MangaCount %></span>Manga watched</li>
+          <li><span><%= StatsCount.AnimeCount %></span>Anime completed</li>
+          <li><span><%= StatsCount.MangaCount %></span>Manga completed</li>
           <li><span><%= StatsCount.ReviewCount %></span>Reviews made</li>
         </ul>
 
@@ -41,9 +41,8 @@
                 <a style="color:white;" href="/user/watchlist/anime">Anime Currently Watching</a>
             </h3>
             <div class="anime_container">
-                <% if (WatchingAnimeList && Array.isArray(WatchingAnimeList) && WatchingAnimeList.length > 0) { %>
-                    <% WatchingAnimeList.slice(0, 5).forEach((animeEntry) => { %>
-                        <% const animeDetails = animeEntry['0']; %>
+                  <% if (WatchingAnimeList !== null) { %>
+                    <% WatchingAnimeList.slice(0, 5).forEach((animeDetails) => { %>
                         <div class="anime_boxes">
                             <div class="anime_box">
                                 <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
@@ -69,18 +68,17 @@
               <a style="color:white;" href="/user/watchlist/manga">Manga Currently Reading</a>
           </h3>
           <div class="anime_container">
-              <% if (WatchingMangaList && Array.isArray(WatchingMangaList) && WatchingMangaList.length > 0) { %>
-                  <% WatchingMangaList.slice(0, 5).forEach((animeEntry) => { %>
-                      <% const animeDetails = animeEntry['0']; %>
+              <% if (ReadingMangaList !== null) { %>
+                <% ReadingMangaList.slice(0, 5).forEach((mangaDetails) => { %>
                       <div class="anime_boxes">
                           <div class="anime_box">
-                              <a href="/manga/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
+                              <a href="/manga/<%= mangaDetails.AnimeID %>/<%= mangaDetails.TitleEnglish %>">
                                   <div class="box-img">
-                                      <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>">
+                                      <img src="<%= mangaDetails.CoverImageURL %>" alt="<%= mangaDetails.TitleEnglish %>">
                                   </div>
                                   <div class="animeName">
-                                      <a href="/manga/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
-                                          <%= animeDetails.TitleEnglish %>
+                                      <a href="/manga/<%= mangaDetails.AnimeID %>/<%= mangaDetails.TitleEnglish %>">
+                                          <%= mangaDetails.TitleEnglish %>
                                       </a>
                                   </div>
                               </a>

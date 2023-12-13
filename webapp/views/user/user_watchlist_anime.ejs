@@ -29,7 +29,7 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
         <tr>
           <td><strong>Title</strong></td>
           <td><strong>Rate</strong></td>
-          <td><strong>Progress</strong></td>
+          <td><strong>Episode Progress</strong></td>
           <td><strong>Type</strong></td>
         </tr>
       </thead>
@@ -39,19 +39,19 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
             <td>
               <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
                 <div class="anime_title_box">
-                  <img src="<%= animeDetails[0].CoverImageURL %>" alt="<%= animeDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                  <p><%= animeDetails[0].TitleEnglish %></p>
+                  <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                  <p><%= animeDetails.TitleEnglish %></p>
                 </div>
               </a>
             </td>
-            <td><%= animeDetails[0].RateGrade %></td>
-            <% if (animeDetails[0].TypeFormat == "Movie") { %>
+            <td><%= animeDetails.RateGrade %></td>
+            <% if (animeDetails.TypeFormat == "Movie") { %>
               <td>0/1</td>
             <% } %>
-            <% if (animeDetails[0].TypeFormat == "TV") { %>
-              <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
+            <% if (animeDetails.TypeFormat == "TV") { %>
+              <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
             <% } %>
-            <td><%= animeDetails[0].TypeFormat %></td>
+            <td><%= animeDetails.TypeFormat %></td>
           </tr>
         <% }); %>
       </tbody>
@@ -75,7 +75,7 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
         <tr>
           <td><strong>Title</strong></td>
           <td><strong>Rate</strong></td>
-          <td><strong>Progress</strong></td>
+          <td><strong>Episode Progress</strong></td>
           <td><strong>Type</strong></td>
         </tr>
       </thead>
@@ -85,19 +85,19 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
             <td>
               <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
                 <div class="anime_title_box">
-                  <img src="<%= animeDetails[0].CoverImageURL %>" alt="<%= animeDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                  <p><%= animeDetails[0].TitleEnglish %></p>
+                  <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                  <p><%= animeDetails.TitleEnglish %></p>
                 </div>
               </a>
             </td>
-            <td><%= animeDetails[0].RateGrade %></td>
-            <% if (animeDetails[0].TypeFormat == "Movie") { %>
+            <td><%= animeDetails.RateGrade %></td>
+            <% if (animeDetails.TypeFormat == "Movie") { %>
               <td>0/1</td>
             <% } %>
-            <% if (animeDetails[0].TypeFormat == "TV") { %>
-              <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
+            <% if (animeDetails.TypeFormat == "TV") { %>
+              <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
             <% } %>
-            <td><%= animeDetails[0].TypeFormat %></td>
+            <td><%= animeDetails.TypeFormat %></td>
           </tr>
         <% }); %>
       </tbody>
@@ -123,7 +123,7 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
         <tr>
           <td><strong>Title</strong></td>
           <td><strong>Rate</strong></td>
-          <td><strong>Progress</strong></td>
+          <td><strong>Episode Progress</strong></td>
           <td><strong>Type</strong></td>
         </tr>
       </thead>
@@ -133,19 +133,19 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
             <td>
               <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
                 <div class="anime_title_box">
-                  <img src="<%= animeDetails[0].CoverImageURL %>" alt="<%= animeDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                  <p><%= animeDetails[0].TitleEnglish %></p>
+                  <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                  <p><%= animeDetails.TitleEnglish %></p>
                 </div>
               </a>
             </td>
-            <td><%= animeDetails[0].RateGrade %></td>
-            <% if (animeDetails[0].TypeFormat == "Movie") { %>
+            <td><%= animeDetails.RateGrade %></td>
+            <% if (animeDetails.TypeFormat == "Movie") { %>
               <td>0/1</td>
             <% } %>
-            <% if (animeDetails[0].TypeFormat == "TV") { %>
-              <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
+            <% if (animeDetails.TypeFormat == "TV") { %>
+              <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
             <% } %>
-            <td><%= animeDetails[0].TypeFormat %></td>
+            <td><%= animeDetails.TypeFormat %></td>
           </tr>
         <% }); %>
       </tbody>
@@ -166,7 +166,7 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
           <tr>
             <td><strong>Title</strong></td>
             <td><strong>Rate</strong></td>
-            <td><strong>Progress</strong></td>
+            <td><strong>Episode Progress</strong></td>
             <td><strong>Type</strong></td>
           </tr>
         </thead>
@@ -176,19 +176,19 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
               <td>
                 <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
                   <div class="anime_title_box">
-                    <img src="<%= animeDetails[0].CoverImageURL %>" alt="<%= animeDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                    <p><%= animeDetails[0].TitleEnglish %></p>
+                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                    <p><%= animeDetails.TitleEnglish %></p>
                   </div>
                 </a>
               </td>
-              <td><%= animeDetails[0].RateGrade %></td>
-              <% if (animeDetails[0].TypeFormat == "Movie") { %>
+              <td><%= animeDetails.RateGrade %></td>
+              <% if (animeDetails.TypeFormat == "Movie") { %>
                 <td>0/1</td>
               <% } %>
-              <% if (animeDetails[0].TypeFormat == "TV") { %>
-                <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
+              <% if (animeDetails.TypeFormat == "TV") { %>
+                <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
               <% } %>
-              <td><%= animeDetails[0].TypeFormat %></td>
+              <td><%= animeDetails.TypeFormat %></td>
             </tr>
           <% }); %>
         </tbody>
@@ -208,7 +208,7 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
           <tr>
             <td><strong>Title</strong></td>
             <td><strong>Rate</strong></td>
-            <td><strong>Progress</strong></td>
+            <td><strong>Episode Progress</strong></td>
             <td><strong>Type</strong></td>
           </tr>
         </thead>
@@ -218,19 +218,19 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
               <td>
                 <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
                   <div class="anime_title_box">
-                    <img src="<%= animeDetails[0].CoverImageURL %>" alt="<%= animeDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                    <p><%= animeDetails[0].TitleEnglish %></p>
+                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                    <p><%= animeDetails.TitleEnglish %></p>
                   </div>
                 </a>
               </td>
-              <td><%= animeDetails[0].RateGrade %></td>
-              <% if (animeDetails[0].TypeFormat == "Movie") { %>
+              <td><%= animeDetails.RateGrade %></td>
+              <% if (animeDetails.TypeFormat == "Movie") { %>
                 <td>0/1</td>
               <% } %>
-              <% if (animeDetails[0].TypeFormat == "TV") { %>
-                <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
+              <% if (animeDetails.TypeFormat == "TV") { %>
+                <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
               <% } %>
-              <td><%= animeDetails[0].TypeFormat %></td>
+              <td><%= animeDetails.TypeFormat %></td>
             </tr>
           <% }); %>
         </tbody>
@@ -250,7 +250,7 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
           <tr>
             <td><strong>Title</strong></td>
             <td><strong>Rate</strong></td>
-            <td><strong>Progress</strong></td>
+            <td><strong>Episode Progress</strong></td>
             <td><strong>Type</strong></td>
           </tr>
         </thead>
@@ -260,19 +260,19 @@ const title = user ? `${user.Username}'s animeList- YourAnimeHub` : 'YourAnimeHu
               <td>
                 <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
                   <div class="anime_title_box">
-                    <img src="<%= animeDetails[0].CoverImageURL %>" alt="<%= animeDetails[0].TitleEnglish %>" class="img-thumbnail" width="50">
-                    <p><%= animeDetails[0].TitleEnglish %></p>
+                    <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                    <p><%= animeDetails.TitleEnglish %></p>
                   </div>
                 </a>
               </td>
-              <td><%= animeDetails[0].RateGrade %></td>
-              <% if (animeDetails[0].TypeFormat == "Movie") { %>
+              <td><%= animeDetails.RateGrade %></td>
+              <% if (animeDetails.TypeFormat == "Movie") { %>
                 <td>0/1</td>
               <% } %>
-              <% if (animeDetails[0].TypeFormat == "TV") { %>
-                <td><%= animeDetails[0].EpisodeProgress %> / <%= animeDetails[0].EpisodeCount %></td>
+              <% if (animeDetails.TypeFormat == "TV") { %>
+                <td><%= animeDetails.EpisodeProgress %> / <%= animeDetails.EpisodeCount %></td>
               <% } %>
-              <td><%= animeDetails[0].TypeFormat %></td>
+              <td><%= animeDetails.TypeFormat %></td>
             </tr>
           <% }); %>
         </tbody>
