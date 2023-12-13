@@ -1,1 +1,68 @@
+<%
+const title = 'Edit Review - YourAnimeHub';
+%>
+<%- include('../partials/header.ejs', { title: title }) %>
+<link type="text/css" rel="stylesheet" href="/css/styleReviewEditor.css">
+<script src="https://cdn.tiny.cloud/1/gbl5h02naji6v4juzg4ldw79ye3bcz14xpuov8uamb2zu2sz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+      selector: 'textarea#editor',
+      skin: 'bootstrap',
+      plugins: 'lists, link, image, media',
+      toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+      menubar: false,
+      height: 150,
+      setup: (editor) => {
+        editor.on("init", () => {
+          editor.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+        });
+        editor.on("focus", () => {
+          editor.getContainer().style.boxShadow = "0 0 0 .2rem rgba(0, 123, 255, .25)";
+          editor.getContainer().style.borderColor = "#80bdff";
+        });
+        editor.on("blur", () => {
+          editor.getContainer().style.boxShadow = "";
+          editor.getContainer().style.borderColor = "";
+        });
+  
+      },
+    });
 
+  </script>
+  
+
+<div class="review-page-container">
+    <form action="/review/editor/manga/<%=manga.AnimeID%>/edit/post_review" method="post" class="left-column">
+        <!-- Textarea for the review -->
+        <label for="reviewSummary">Review</label>
+        <div class="textarea-container">
+          <textarea class="form-control" rows="6" name="review" id="editor"><%= review_info[0].ReviewText %></textarea>
+        </div>
+      
+        <!-- Review Summary input -->
+        <div class="form-group">
+          <label for="reviewSummary">Review Summary</label>
+          <input class="form-control" type="text" id="reviewSummary" name="reviewSummary" value="<%= review_info[0].ReviewSummary %>" minlength="10" required>
+        </div>
+      
+        <!-- Score input -->
+        <div class="form-group">
+          <label for="score">Score (0-100)</label>
+          <input class="form-control" type="number" id="score" name="score" min="0" max="100"  value="<%= review_info[0].ReviewGrade %>" required>
+        </div>
+      
+        <!-- Add a submit button -->
+        <button class="save_btn" type="submit" onclick="return confirm('Are you sure you want to edit this review?')">Edit Review</button>
+      </form>
+      
+    
+
+  <div class="right-column">
+    <!-- Preview of the review -->
+    <div class="review-preview-container">
+      <h3>Review Preview</h3>
+      <div class="review-content" id="reviewPreview"><%- review_info[0].ReviewText %></div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer.ejs') %>

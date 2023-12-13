@@ -13,10 +13,6 @@ const { v4: uuidv4 } = require('uuid');
 
 router.get('/:animeId/:reviewId', ReviewViewAction);
 
-router.get('/editor/anime/:animeId', ReviewAddEditorViewAction);
-router.post('/editor/anime/:animeId/post', ReviewAddEditorPostAction);
-router.get('/editor/anime/:animeId/edit', ReviewEditEditorViewAction);
-router.post('/editor/anime/:animeId/edit/post', ReviewEditEditorPostAction);
 
 async function ReviewViewAction(request, response) {
     const reviewId = request.params.reviewId;
@@ -34,6 +30,13 @@ async function ReviewViewAction(request, response) {
         response.status(500).send('Internal Server Error');
     }
 }
+
+
+router.get('/editor/anime/:animeId', ReviewAddEditorViewAction);
+router.post('/editor/anime/:animeId/post', ReviewAddEditorPostAction);
+router.get('/editor/anime/:animeId/edit', ReviewEditEditorViewAction);
+router.post('/editor/anime/:animeId/edit/post_review', ReviewEditEditorPostAction);
+
 
 async function ReviewAddEditorViewAction(request, response) {
     const animeId = request.params.animeId;
@@ -86,7 +89,6 @@ async function ReviewEditEditorViewAction(request, response) {
     var anime = await animeRepo.getOneAnime(animeId);
     const userId = request.user ? request.user.UserID : null;
     const review_info = await reviewRepo.getReviewInfo(animeId, userId) 
-    console.log("review_info",review_info);
 
     try {
         response.render("review_editors/review_edit_anime_edit", {"review_info":review_info,
@@ -113,12 +115,6 @@ async function ReviewEditEditorPostAction(request, response) {
         ReviewGrade: request.body.score || null,
     };
 
-    console.log(reviewData);
-    for (const key in reviewData) {
-        const value = reviewData[key];
-        console.log(`Key: ${key}, Value: ${value}`);
-      }
-
     var result = await reviewRepo.editOneReview(reviewData, userId, animeId);
     response.send(`
           <script>
@@ -130,23 +126,25 @@ async function ReviewEditEditorPostAction(request, response) {
 }
 
 
+router.get('/editor/manga/:mangaId', MangaReviewAddEditorViewAction);
+router.post('/editor/manga/:mangaId/post', MangaReviewAddEditorPostAction);
+router.get('/editor/manga/:mangaId/edit', MangaReviewEditEditorViewAction);
+router.post('/editor/manga/:mangaId/edit/post_review', MangaReviewEditEditorPostAction);
 
-router.get('/editor/manga/:mangaId', ReviewAddEditorViewActionManga);
-router.post('/editor/manga/:mangaId/post', ReviewAddEditorPostActionManga);
 
-async function ReviewAddEditorViewActionManga(request, response) {
+async function MangaReviewAddEditorViewAction(request, response) {
     const mangaId = request.params.mangaId;
     var manga = await animeRepo.getOneManga(mangaId);
 
     try {
-        response.render("review_editors/review_edit_manga", { "manga": manga, user: request.user, activePage: 'profile' });
+        response.render("review_editors/review_editor_manga", { "manga": manga, user: request.user, activePage: 'profile' });
     } catch (error) {
-        console.error('Error in ReviewViewAction:', error);
+        console.error('Error in MangaReviewAddEditorViewAction:', error);
         response.status(500).send('Internal Server Error');
     }
 }
 
-async function ReviewAddEditorPostActionManga(request, response) {
+async function MangaReviewAddEditorPostAction(request, response) {
     const mangaId = request.params.mangaId;
     const userId = request.user ? request.user.UserID : null;
 
@@ -179,4 +177,45 @@ async function ReviewAddEditorPostActionManga(request, response) {
     return response.end();
 }
 
+
+async function MangaReviewEditEditorViewAction(request, response) {
+    const mangaId = request.params.mangaId;
+    var manga = await animeRepo.getOneManga(mangaId);
+    const userId = request.user ? request.user.UserID : null;
+    const review_info = await reviewRepo.getReviewInfo(mangaId, userId) 
+
+    try {
+        response.render("review_editors/review_edit_manga_edit", {"review_info":review_info,
+         "manga": manga, user: request.user, activePage: 'profile' });
+    } catch (error) {
+        console.error('Error in ReviewEditEditorViewAction:', error);
+        response.status(500).send('Internal Server Error');
+    }
+}
+
+async function MangaReviewEditEditorPostAction(request, response) {
+    const mangaId = request.params.mangaId;
+    const userId = request.user ? request.user.UserID : null;
+
+    if (!userId) {
+        // Handle the case where the user is not authenticated
+        response.status(403).send('Unauthorized');
+        return;
+    }
+
+    var reviewData = {
+        ReviewText: request.body.review,
+        ReviewSummary: request.body.reviewSummary || null,
+        ReviewGrade: request.body.score || null,
+    };
+
+    var result = await reviewRepo.editOneReview(reviewData, userId, mangaId);
+    response.send(`
+          <script>
+            alert('Review has been modified.');
+            window.location.href = '/user/reviews';
+          </script>
+        `);
+    return response.end();
+}   
 module.exports = router;

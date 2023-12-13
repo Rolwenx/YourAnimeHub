@@ -303,20 +303,6 @@ async function UserUpdatePasswordAction(request, response) {
     }
 }
 
-router.get('/reviews', UserReviewsAction);
-
-async function UserReviewsAction(request,response){
-    try {
-        const userId = request.user ? request.user.UserID : null;
-        const UserReviewList = await reviewRepo.getAllReviewsOfUser(userId);
-
-        response.render('user/user_reviews', { UserReviewList, user: request.user,  activePage: 'profile' });
-    } catch (error) {
-        console.error('Error:', error);
-        response.status(500).send(" UserReviewsAction Internal Server Error");
-    }
-}
-
 /* --------- USER FAVOURITES ACTIONS --------*/
 
 
@@ -454,6 +440,41 @@ async function UserRemoveCharacterToFavourites(request, response) {
     } catch (error) {
         console.error('Error:', error);
         response.status(500).send(" UserRemoveCharacterToFavourites Internal Server Error");
+    }
+}
+
+
+
+/* --------- USER REVIEWS ACTIONS --------*/
+
+router.get('/reviews', UserReviewsAction);
+router.post('/reviews/:animeId/delete',UserReviewDelete)
+
+async function UserReviewsAction(request,response){
+    try {
+        const userId = request.user ? request.user.UserID : null;
+        const UserReviewList = await reviewRepo.getAllReviewsOfUser(userId);
+
+        response.render('user/user_reviews', { UserReviewList, user: request.user,  activePage: 'profile' });
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserReviewsAction Internal Server Error");
+    }
+}
+
+
+async function UserReviewDelete(request,response){
+    try {
+        const userId = request.user ? request.user.UserID : null;
+        const animeId = request.params.animeId; 
+        await reviewRepo.delOneReview(animeId, userId);
+        const text = 'Review has been deleted.';
+        const whichId = 'reviews';
+        const type = 'user';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserReviewDelete Internal Server Error");
     }
 }
 

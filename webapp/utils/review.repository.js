@@ -6,31 +6,28 @@ const animeRepo = require('../utils/anime.repository.js');
 
 module.exports = {
 
-  // This function is used when editing a review
-
-  async editOneReview(userId, animeId, reviewData) {
+  async editOneReview(reviewData, userId, animeId) {
     try {
-      let conn = await pool.getConnection();
-  
-      for (const key in reviewData) {
-        const value = reviewData[key];
-  
-        // Construct the SQL query with named placeholders
-        const sql = `UPDATE View_Anime SET ${key} = ? WHERE UserID = ? AND AnimeID = ?`;
-  
-        // Combine values from reviewData and parameters
-        const values = [value, userId, animeId];
-  
+        let conn = await pool.getConnection();
+        
+        const placeholders = Object.keys(reviewData).map(key => `${key} = ?`).join(', ');
+        const sql = `UPDATE View_Anime SET ${placeholders} WHERE AnimeID = ? AND UserID = ? `;
+        
+        
+        const values = [...Object.values(reviewData), animeId,userId];
+
         // Execute the query
-        await conn.execute(sql, values);
-      }
-  
-      conn.release();
+        const result = await conn.execute(sql, values);
+    
+
+        conn.release();
+
+        return result;
     } catch (err) {
-      console.error('Error in editOneReview:', err);
-      throw err;
+        console.error('Error in editOneReview:', err);
+        throw err;
     }
-  },  
+},
 
   // This function is used when adding a review
 async addOneReview(reviewData,userId,animeId) {
@@ -430,6 +427,24 @@ async addOneReview(reviewData,userId,animeId) {
       }
     },
     
+
+    async delOneReview(animeId, userId) {
+      try {
+          let conn = await pool.getConnection();
+
+          
+  
+          let updateSql = 'UPDATE View_Anime SET ReviewID = NULL, ReviewDate = NULL,ReviewText = NULL,ReviewSummary = NULL,ReviewGrade = NULL,LikesOnReview = NULL,DislikesOnReview = NULL WHERE AnimeID = ? AND UserID = ?;';
+          await conn.execute(updateSql, [ animeId, userId]);
+
+          conn.release();
+          return true;
+  
+      } catch (err) {
+          console.log(err);
+          throw err;
+      }
+  },    
     
 
     

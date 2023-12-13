@@ -53,6 +53,37 @@ const title = 'Browse Reviews - YourAnimeHub';
   })
 </script>
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let displayedCharCount = 12;
+
+    const animeTable = document.getElementById("anime-table");
+    const animeRows = document.querySelectorAll(".anime-row");
+
+    // Initially hide rows greater than 12
+    animeRows.forEach((row, index) => {
+      if (index >= displayedCharCount) {
+        row.style.display = "none";
+      }
+    });
+
+    document.getElementById("load-more-button").addEventListener("click", function () {
+      for (let i = displayedCharCount; i < displayedCharCount + 12; i++) {
+        if (i < animeRows.length) {
+          animeRows[i].style.display = "table-row";
+        }
+      }
+
+      displayedCharCount += 12;
+
+      // Hide load more button if all anime are displayed
+      if (displayedCharCount >= animeRows.length) {
+        document.getElementById("load-more-button").style.display = "none";
+      }
+    });
+  });
+</script>
+
 <%- include('../partials/footer.ejs') %>
 </body>
 </html>
