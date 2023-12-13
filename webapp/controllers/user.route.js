@@ -12,6 +12,7 @@ router.use('/', checkUserAuthentication);
 
 router.get('/', UserHomeAction);
 
+/* --------- USER PROFILE ACTIONS --------*/
 
 async function UserHomeAction(request,response){
 
@@ -23,7 +24,6 @@ async function UserHomeAction(request,response){
         StatsCount.ReviewCount = reviews.length;
         const anime = await animeRepo.getAllAnimeWatchedByUser(userId,'aset-complete','Anime');
         const manga = await animeRepo.getAllAnimeWatchedByUser(userId,'mset-complete','Manga');
-        console.log("anime",anime);
         StatsCount.AnimeCount = anime.length;
         StatsCount.MangaCount = manga.length;
 
@@ -35,9 +35,6 @@ async function UserHomeAction(request,response){
         StatsCount.MangaInWatchlist = await animeRepo.getAllAnimeInWatchlist(userId, 'Manga');
 
         StatsCount.chaptersListnbr = await animeRepo.getAllChaptersRead(userId);
-    
-
-       
 
         response.render('user/user', {ReadingMangaList,WatchingAnimeList, "StatsCount":StatsCount, user: request.user, title: 'Profile - YourAnimeHub',activePage:'profile' });
     } catch (error) {
@@ -47,6 +44,7 @@ async function UserHomeAction(request,response){
 }
 
 
+/* --------- USER ANIME WATCHLIST ACTIONS --------*/
 
 router.get('/watchlist/anime', UserAnimeWatchlistAction);
 router.get('/watchlist/anime/complete', UserAnimeCompleteWatchlistAction);
@@ -117,6 +115,9 @@ async function UserAnimePlanningWatchlistAction(request, response) {
     }
 }
 
+/* --------- USER MANGA WATCHLIST ACTIONS --------*/
+
+
 router.get('/watchlist/manga', UserMangaWatchlistAction);
 router.get('/watchlist/manga/complete', UserMangaCompleteWatchlistAction);
 router.get('/watchlist/manga/reading', UserMangaReadingWatchlistAction);
@@ -128,9 +129,6 @@ async function UserMangaWatchlistAction(request, response) {
     var userId = request.user.UserID;
     try {
         var CompleteMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-complete');
-        console.log("CompleteMangaList",CompleteMangaList);
-        console.log("CompleteMangaList1",CompleteMangaList[0]);
-        console.log("CompleteMangaList1",CompleteMangaList[1]);
         var PlanningMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-planning');
         var ReadingMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-reading');
         var DroppedMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-dropped');
@@ -188,6 +186,7 @@ async function UserMangaPlanningWatchlistAction(request, response) {
     }
 }
 
+/* --------- USER PROFILE SETTINGS ACTIONS --------*/
 
 router.get('/settings', UserEditAction);
 router.post('/settings/update/profile', UserUpdateProfileAction);
@@ -278,6 +277,8 @@ async function UserReviewsAction(request,response){
         response.status(500).send(" UserReviewsAction Internal Server Error");
     }
 }
+
+/* --------- USER FAVOURITES ACTIONS --------*/
 
 //http://localhost:9000/user/favourites
 router.get('/favourites', (req, res) => {
