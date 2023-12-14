@@ -252,7 +252,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <% } %>
       <div>
         <p class="title_of_menu"><strong>Favourited:</strong> </p>
-        <p class="answer_of_menu"><%= anime.Likes %></p>
+        <p class="answer_of_menu"><%=  StatsCount.Favourited %></p>
       </div>
       <div>
         <p class="title_of_menu"><strong>Start Date:</strong> </p>
@@ -344,7 +344,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         </div>
         <div class="status_item likes">
           <p>Favourited</p>
-          <p><%= anime.Likes %> Users</p>
+          <p><%=  StatsCount.Favourited %> Users</p>
         </div>
         <div class="status_item dropped">
           <p>Dropped</p>
