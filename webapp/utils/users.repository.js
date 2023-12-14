@@ -160,7 +160,6 @@ module.exports = {
             if (isMatch) {
                 return "True";
             } else {
-                console.log('Password does not match!')
                 return "False";
             }
         }

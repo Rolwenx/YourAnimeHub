@@ -22,7 +22,6 @@ async function ReviewViewAction(request, response) {
 
     try {
         var ReviewInfo = userId ? await reviewRepo.getReviewInfo(animeId, userId) : null;
-        console.log(ReviewInfo);
 
         response.render("single_view/single_review", { "ReviewInfo": ReviewInfo, user: request.user, activePage: 'browse' });
     } catch (error) {

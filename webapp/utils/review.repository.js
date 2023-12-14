@@ -52,7 +52,6 @@ async addOneReview(reviewData,userId,animeId) {
         const result = await conn.execute(sql, values);
     
           conn.release();
-          console.log(result);
     
           return result;
       } else {
@@ -397,7 +396,6 @@ async addOneReview(reviewData,userId,animeId) {
     
       try {
         const reviewList = await conn.query(sql, [userId]);
-        console.log(reviewList)
     
         conn.release();
     

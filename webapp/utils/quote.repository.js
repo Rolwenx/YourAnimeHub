@@ -329,7 +329,6 @@ module.exports = {
             const searchTerm = `%${query}%`;
     
             const rows = await conn.execute(sql, [searchTerm, searchTerm,searchTerm,searchTerm,searchTerm, query]);
-            console.log(rows);
             conn.release();
             return rows;
         } catch (error) {
