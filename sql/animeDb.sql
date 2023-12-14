@@ -78,8 +78,6 @@ CREATE TABLE AnimeQuote(
    QuoteText TEXT,
    CharacterID INT NOT NULL,
    AnimeID INT NOT NULL,
-	QuoteLikes INT DEFAULT 0,
-   QuoteDislikes INT DEFAULT 0,
    isQuoteOfDay VARCHAR(5),
    FOREIGN KEY(CharacterID) REFERENCES Character_Card(CharacterID),
    FOREIGN KEY(AnimeID) REFERENCES Anime(AnimeID)
@@ -110,6 +108,15 @@ CREATE TABLE User_Favorite_Anime (
    PRIMARY KEY (UserID, AnimeID),
    FOREIGN KEY (UserID) REFERENCES User_Profile(UserID),
    FOREIGN KEY (AnimeID) REFERENCES Anime(AnimeID)
+);
+
+-- Because there's a favourite quote category in the user profile
+CREATE TABLE User_Favorite_Quote (
+   UserID INT,
+   QuoteID INT,
+   PRIMARY KEY (UserID, AnimeID),
+   FOREIGN KEY (UserID) REFERENCES User_Profile(UserID),
+   FOREIGN KEY (QuoteID) REFERENCES AnimeQuote(QuoteID)
 );
 
 CREATE TABLE View_Anime(

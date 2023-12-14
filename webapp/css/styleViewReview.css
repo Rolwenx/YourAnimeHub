@@ -81,3 +81,17 @@ h2 {
     background-color: #FF5733;
     color: #fff;
 }
+
+.like_btn {
+    background-color: rgb(186, 32, 45);
+    color: white; 
+    border: none;
+    border-radius: 5px;
+    padding: 8px 30px;
+    white-space: nowrap;
+    margin: 60px auto; 
+    cursor: pointer;
+    text-shadow: 2px 1px 3px rgba(0, 0, 0, 0.2);
+    margin-right: 8px;
+    height: 40px;
+  }

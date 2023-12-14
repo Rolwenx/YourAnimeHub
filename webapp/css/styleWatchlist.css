@@ -35,7 +35,7 @@ body {
   .elements{
     margin-top: 20px;
   }
-  .anime-row:hover td {
+  .anime-row:hover td, .anime-row2:hover td {
   background-color: rgb(186, 32, 45);
   color:white; 
 

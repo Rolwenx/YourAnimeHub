@@ -6,6 +6,7 @@ const userRepo = require('../utils/users.repository');
 const reviewRepo = require('../utils/review.repository');
 const animeRepo = require('../utils/anime.repository');
 const characterRepo = require('../utils/characters.repository');
+const quoteRepo = require('../utils/quote.repository');
 
 router.use('/', checkUserAuthentication);
 
@@ -316,17 +317,22 @@ router.post('/favourites/manga/remove/:mangaId', UserRemoveMangaToFavourites);
 router.post('/favourites/character/add/:characterId', UserAddCharacterToFavourites);
 router.post('/favourites/character/remove/:characterId', UserRemoveCharacterToFavourites);
 
+router.post('/favourites/quotes/add/:quoteId', UserAddQuoteToFavourites);
+router.post('/favourites/quotes/remove/:quoteId', UserRemoveQuoteToFavourites);
+
 async function UserFavouritesAction(request,response){
 
     try {
         const userId = request.user ? request.user.UserID : null;
         FavouriteAnime = await animeRepo.getAllFavouriteAnime(userId,'Anime');
         FavouriteManga = await animeRepo.getAllFavouriteAnime(userId,'Manga');
+        FavouriteQuote = await quoteRepo.getAllFavouriteQuote(userId);
         FavouriteCharacter = await characterRepo.getAllFavouriteCharacter(userId);
 
 
         response.render('user/user_favourites', {
             FavouriteCharacter,
+            FavouriteQuote,
             FavouriteManga,
             FavouriteAnime,
             user: request.user, 
@@ -442,6 +448,41 @@ async function UserRemoveCharacterToFavourites(request, response) {
         response.status(500).send(" UserRemoveCharacterToFavourites Internal Server Error");
     }
 }
+
+async function UserAddQuoteToFavourites(request, response) {
+    const userId = request.user.UserID;
+    const quoteId = request.params.quoteId; 
+
+    try {
+        var numRows = await quoteRepo.AddQuoteAsFavourite(userId, quoteId);
+        const text = 'Quote has been added to favourite.';
+        const whichId = 'favourites';
+        const type = 'user';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserAddQuoteToFavourites Internal Server Error");
+    }
+}
+
+async function UserRemoveQuoteToFavourites(request, response) {
+    const userId = request.user.UserID;
+    const quoteId = request.params.quoteId; 
+
+    try {
+        var numRows = await quoteRepo.RemoveQuoteAsFavourite(userId, quoteId);
+        const text = 'Quote has been removed from favourite.';
+        const whichId = quoteId;
+        const type = 'quote';
+        return response.render('partials/RedirectionAlert', { type, text, whichId});
+
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserAddQuoteToFavourites Internal Server Error");
+    }
+}
+
 
 
 

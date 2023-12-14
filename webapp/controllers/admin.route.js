@@ -23,6 +23,23 @@ router.get('/admin/users', adminUserListAction);
 router.get('/admin/users/edit/:userId/:userName', adminUserEditAction);
 router.post('/admin/users/update/:userId/:userName', adminUserUpdateAction);
 
+router.post('/admin/users/delete/:userId/:userName', adminUserDelAction);
+
+async function adminUserDelAction(request, response) {
+    var userId = request.params.userId;
+    var userName = request.params.userName;
+
+
+    try {
+        has_anime_been_deleted = await userRepo.delOneUser(userId);
+
+        response.redirect("/admin/users");
+    } catch (error) {
+        response.redirect("/admin/users");
+    }
+}
+
+
 
 router.get('/admin/animes/edit/:animeId/:animeName', adminAnimeEditAction);
 router.post('/admin/animes/update/:animeId/:animeName', adminAnimeUpdateAction);
@@ -168,7 +185,7 @@ async function adminAnimeDelAction(request, response) {
     try {
         has_anime_been_deleted = await animeRepo.delOneAnime(animeId);
 
-        response.redirect("/admin/animes?deleted=" + has_anime_been_deleted.toString());
+        response.redirect("/admin/animes");
     } catch (error) {
         response.redirect("/admin/animes");
     }
@@ -558,7 +575,6 @@ async function adminCharacterCreateAction(request, response) {
         HiddenSurnames: request.body.charHiddenNames || null,
         SpecificField1: request.body.charMoreInfo || null
      };
-     console.log("char data ",characterData)
     var characterId = await characterRepo.addOneCharacter(characterData);
     if (characterId == null) {
         response.send(`

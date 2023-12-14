@@ -37,15 +37,20 @@ const title = quote ? `Quote #${quote.QuoteID} - YourAnimeHub` : 'YourAnimeHub';
 
 
 <div class="review-like">
-  <div class="like-dislike">
-    <form action="/quote/<%= quote.QuoteID %>/like" method="post">
-      <button class="like-btn" type="submit" name="action" value="like">Like</button>
+  <% if (is_quote_favourited == false) { %>
+    <form action="/user/favourites/quotes/add/<%= quote.QuoteID%>" method="post">
+      <button type="submit" class="like_btn">
+        <i class="fa fa-heart-o"></i>
+      </button>
     </form>
-    <form action="/quote/<%= quote.QuoteID %>/like" method="post">
-      <button class="dislike-btn" type="submit" name="action" value="dislike">Dislike</button>
+  <% } %>
+  <% if (is_quote_favourited == true) { %>
+    <form action="/user/favourites/quotes/remove/<%= quote.QuoteID%>" method="post">
+      <button type="submit" class="like_btn">
+        <i class="fa fa-heart"></i>
+      </button>
     </form>
-    <p><%= likeArray[1] %> out of <%= likeArray[0] %> users liked this quote</p>
-  </div>
+  <% } %>
 </div>
 
 

@@ -237,5 +237,82 @@ module.exports = {
             throw err;
         }
     },    
+
+    async getAllFavouriteQuote(userId){
+
+        try {
+            const conn = await pool.getConnection();
+            // FA : UserID, AnimeID
+            // A : TitleEnglish, CoverImageURL, BackgroundImageURL, EpisodeCount, TypeFormat, Likes
+            const sql = "SELECT fq.*, a.TitleEnglish, a.AnimeID, a.AnimeFormat, a.CoverImageURL, aq.QuoteText, c.ImageURL, c.CharacterID, c.CharName FROM User_Favorite_Quote fq JOIN AnimeQuote aq ON fq.QuoteID = aq.QuoteID JOIN Anime a ON aq.AnimeID = a.AnimeID JOIN Character_Card c ON aq.CharacterID = c.CharacterID WHERE fq.UserID = ?";
+
+            const quoteList = await conn.query(sql, [userId]);
+            conn.release();
+
+            if (!quoteList.length) {
+                return [];
+              }
+
+              return quoteList;
+            
+        } catch (error) {
+            console.error('Error in getAllFavouriteQuote:', error);
+          throw error;
+        }
+      },
+
+      async AddQuoteAsFavourite(userId, quoteId){
+
+        try {
+            const conn = await pool.getConnection();
+            let insertSql = 'INSERT INTO User_Favorite_Quote (QuoteID, UserID) VALUES (?, ?)';
+            await conn.execute(insertSql, [quoteId, userId]);
+
+            conn.release();
+
+            
+        } catch (error) {
+            console.error('Error in AddQuoteAsFavourite:', error);
+          throw error;
+        }
+      },
+
+      async RemoveQuoteAsFavourite(userId, quoteId){
+
+        try {
+            const conn = await pool.getConnection();
+            let deleteSql = 'DELETE FROM User_Favorite_Quote WHERE QuoteID = ? AND UserID = ?';
+            await conn.execute(deleteSql, [quoteId, userId]);
+        
+            conn.release();
+
+            
+        } catch (error) {
+            console.error('Error in RemoveQuoteAsFavourite:', error);
+          throw error;
+        }
+      },
+
+      async CheckIfQuoteInFavourite(userId, quoteId){
+
+        try {
+            const conn = await pool.getConnection();
+            let sql = 'SELECT * FROM User_Favorite_Quote WHERE QuoteID = ? AND UserID = ?';
+            const allfavourite = await conn.query(sql, [quoteId, userId]);
+
+            conn.release();
+            if(allfavourite.length == 0){
+                return false;
+            }else{
+                return true
+            }
+        
+
+            
+        } catch (error) {
+            console.error('Error in CheckIfQuoteInFavourite:', error);
+          throw error;
+        }
+      },
     
 };

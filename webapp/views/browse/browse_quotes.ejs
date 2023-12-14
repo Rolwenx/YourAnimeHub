@@ -14,7 +14,7 @@ const title = 'Browse Quotes - YourAnimeHub';
       <% quoteList.forEach(quote => { %>
     <div class="col-md-6 mb-4">
       <a style="text-decoration: none; color:black" href="/quote/<%= quote.QuoteID %>" id="review_one_card">
-        <div class="card h-100" style="width: 90%;">
+        <div class="card" style="width: 90%;">
           <div class="review-image-container">
             <img src="<%= quote.BackgroundImageURL %>"" alt="Review Image" id="review-image"  class="card-img-top">
             <div id="quote-overlay">
@@ -27,11 +27,6 @@ const title = 'Browse Quotes - YourAnimeHub';
             <p id="quote_anime" class="card-text">From: <%= quote.AnimeName %></p>
           </div>
       </a>
-          <div class="card-footer">
-            <button id="like-button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" title="15 out of 19 liked this review">
-              👍 <span id="like-count">0</span>
-            </button>
-          </div>
         </div>
     </div>
     <% }); %>

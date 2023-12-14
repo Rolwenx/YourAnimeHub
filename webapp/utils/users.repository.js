@@ -59,6 +59,9 @@ module.exports = {
        // Delete rows related to the userId in User_Favorite_Anime
        await conn.execute('DELETE FROM User_Favorite_Anime WHERE UserID = ?', [userId]);
 
+       // Delete rows related to the userId in User_Favorite_Quote
+       await conn.execute('DELETE FROM User_Favorite_Quote WHERE UserID = ?', [userId]);
+
         // Set all attributes related to the userId to null in View_Anime except specific ones
         await conn.execute(`
             UPDATE View_Anime

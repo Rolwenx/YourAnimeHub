@@ -129,6 +129,63 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
 
   <button class="view_all_btn" id="load-more-button">Load More</button>
 
+
+  <div class="header_title_anime one">
+    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">FAVOURITE QUOTE</h2>
+  </div>
+  <div class="anime-block">
+    <% if (FavouriteQuote === null || FavouriteQuote.length === 0) { %>
+      <p>No favourites quotes yet.</p>
+    <% } else { %>
+      <table class="table">
+        <thead>
+          <tr>
+            <td><strong>Text</strong></td>
+            <td><strong>Character</strong></td>
+            <td><strong>Anime</strong></td>
+          </tr>
+        </thead>
+        <tbody>
+          <% FavouriteQuote.forEach((quoteDetails) => { %>
+            <tr class="anime-row2">
+              <td>
+                <a href="/quote/<%= quoteDetails.QuoteID %>">
+                  <div class="anime_title_box">
+                    <p><%= quoteDetails.QuoteText %></p>
+                  </div>
+                </a>
+              </td>
+              <td>
+                <a href="/character/<%= quoteDetails.CharacterID%>/<%=quoteDetails.CharName%>">
+                  <div class="anime_title_box">
+                    <img src="<%= quoteDetails.ImageURL %>" alt="<%= quoteDetails.CharName %>" class="img-thumbnail" width="50">
+                    <p><%= quoteDetails.CharName %></p>
+                  </div>
+                </a>
+              </td>
+              <td>
+                <% if (quoteDetails.AnimeFormat == 'Manga') { %>
+                  <a href="/manga/<%= quoteDetails.AnimeID %>/<%= quoteDetails.TitleEnglish %>">
+               <% } %>
+               <% if (quoteDetails.AnimeFormat == 'Anime') { %>
+                  <a href="/anime/<%= quoteDetails.AnimeID %>/<%=quoteDetails.TitleEnglish %>">
+               <% } %>
+               <div class="anime_title_box">
+                <img src="<%= quoteDetails.CoverImageURL %>" alt="<%= quoteDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                <p><%= quoteDetails.TitleEnglish %></p>
+              </div>
+            </a>
+               
+              
+              </td>
+
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+  <button class="view_all_btn" id="load-more-button4">Load More</button>
   
 </div>
 
@@ -222,6 +279,36 @@ const title = user ? `${user.Username}'s favourites - YourAnimeHub` : 'YourAnime
       // Hide load more button if all anime are displayed
       if (displayedCharCount >= animeRows.length) {
         document.getElementById("load-more-button3").style.display = "none";
+      }
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let displayedCharCount = 4;
+
+    const animeTable = document.getElementById("anime-table");
+    const animeRows = document.querySelectorAll(".anime-row2");
+
+    // Initially hide rows greater than 4
+    animeRows.forEach((row, index) => {
+      if (index >= displayedCharCount) {
+        row.style.display = "none";
+      }
+    });
+
+    document.getElementById("load-more-button4").addEventListener("click", function () {
+      for (let i = displayedCharCount; i < displayedCharCount + 4; i++) {
+        if (i < animeRows.length) {
+          animeRows[i].style.display = "table-row";
+        }
+      }
+
+      displayedCharCount += 4;
+
+      // Hide load more button if all anime are displayed
+      if (displayedCharCount >= animeRows.length) {
+        document.getElementById("load-more-button4").style.display = "none";
       }
     });
   });
