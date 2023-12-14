@@ -49,6 +49,46 @@ module.exports = {
     }
   },
 
+  async delOneUser(userId) {
+    try {
+        let conn = await pool.getConnection();
+
+       // Delete rows related to the userId in User_Favorite_Character
+       await conn.execute('DELETE FROM User_Favorite_Character WHERE UserID = ?', [userId]);
+
+       // Delete rows related to the userId in User_Favorite_Anime
+       await conn.execute('DELETE FROM User_Favorite_Anime WHERE UserID = ?', [userId]);
+
+        // Set all attributes related to the userId to null in View_Anime except specific ones
+        await conn.execute(`
+            UPDATE View_Anime
+            SET
+                RateGrade = NULL,
+                EpisodeProgress = NULL,
+                AnimeStatus = NULL,
+                TotalRewatch = NULL,
+                ChaptersRead = NULL,
+                VolumeProgress = NULL,
+                StartDate = NULL,
+                EndDate = NULL,
+                Notes = NULL,
+                hasLiked = NULL
+            WHERE UserID = ?`,
+            [userId]
+        );
+
+        // Delete the row of the user in User_Profile
+        await conn.execute('DELETE FROM User_Profile WHERE UserID = ?', [userId]);
+
+        conn.release();
+        console.log(`User with ID ${userId} and associated data deleted successfully.`);
+
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+},    
+
   async getOneUserByID(userId) {
     try {
       

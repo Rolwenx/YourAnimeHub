@@ -21,7 +21,13 @@ const title = 'Browse Reviews - YourAnimeHub';
                 </div>
               </div>
               <div class="card-body">
-                <p id="review-title" class="card-title">Review of <%= review.AnimeName%> by <%= review.Username%></p>
+                <% if (review.Username !== null) { %>
+                  <p id="review-title" class="card-title">Review of <%= review.AnimeName %> by <%= review.Username %></p>
+              <% } else { %>
+                  <p id="review-title" class="card-title">Anonymous Review of <%= review.AnimeName %></p>
+              <% } %>
+              
+              
                 <p id="review-summary" class="card-text"><%= review.ReviewSummary%></p>
               </div>
             </div>

@@ -108,6 +108,7 @@ async function browseReviewsAction(request, res) {
     
     try {
         const ReviewList = await reviewRepo.getAllReviews();
+        console.log(ReviewList);
 
         res.render('browse/browse_reviews', {
             ReviewList,

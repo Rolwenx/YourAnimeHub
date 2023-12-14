@@ -153,11 +153,13 @@ const title = 'Settings - YourAnimeHub';
       </div>
       <hr>
       <div class="row gutters">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-          <h6 class="mb-2 text-primary">Delete Account</h6>
-        </div>
-        <p style="font-size: 13px; font-style: italic; font-weight: 600;">Warning! This will permanently delete all your account data.</p>
-        <input type="submit" class="delete_btn mb-4" value="Delete Account" onclick="return confirm('Are you sure you want to delete your account?')">    
+        <form action="/user/settings/delete_account" method="post">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <h6 class="mb-2 text-primary">Delete Account</h6>
+          </div>
+          <p style="font-size: 13px; font-style: italic; font-weight: 600;">Warning! This will permanently delete all your account data.</p>
+          <input type="submit" class="delete_btn mb-4" value="Delete Account" onclick="return confirm('Are you sure you want to delete your account?')">    
+        </form>
       </div>
     </div>
   </div>

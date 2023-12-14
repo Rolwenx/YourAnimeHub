@@ -69,8 +69,6 @@ async function ReviewAddEditorPostAction(request, response) {
         ReviewSummary: request.body.reviewSummary || null,
         ReviewGrade: request.body.score || null,
         ReviewDate: formattedDate,
-        LikesOnReview: 0,
-        DislikesOnReview: 0,
     };
 
     var result = await reviewRepo.addOneReview(reviewData, userId, animeId);
@@ -163,8 +161,6 @@ async function MangaReviewAddEditorPostAction(request, response) {
         ReviewSummary: request.body.reviewSummary || null,
         ReviewGrade: request.body.score || null,
         ReviewDate: formattedDate,
-        LikesOnReview: 0,
-        DislikesOnReview: 0,
     };
 
     var result = await reviewRepo.addOneReview(reviewData, userId, mangaId);

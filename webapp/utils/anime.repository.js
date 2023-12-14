@@ -633,7 +633,7 @@ module.exports = {
         try {
           const conn = await pool.getConnection();
       
-          const sql = 'SELECT ReviewID, ReviewText, ReviewSummary, LikesOnReview, DislikesOnReview, ReviewGrade FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+          const sql = 'SELECT ReviewID, ReviewText, ReviewSummary, ReviewGrade FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
           const [rows] = await conn.execute(sql, [animeId, userId]);
       
           const updatedRowsList = Array.isArray(rows)
@@ -660,6 +660,8 @@ module.exports = {
               TypeFormat: await this.getAnimeTypeByID(animeId),
               AnimeID: animeId,
             }]);
+
+            conn.release();
       
           return updatedRowsList;
       
@@ -729,6 +731,7 @@ module.exports = {
             const sql = "SELECT fa.*, a.TitleEnglish,a.CoverImageURL,a.BackgroundImageURL,a.EpisodeCount,a.TypeFormat,a.Likes, a.Chapters,a.Volumes FROM User_Favorite_Anime fa JOIN Anime a ON fa.AnimeID = a.AnimeID WHERE a.AnimeFormat = ? AND fa.UserID = ?";
 
             const animeList = await conn.query(sql, [type, userId]);
+            conn.release();
 
             if (!animeList.length) {
                 return [];
@@ -749,6 +752,7 @@ module.exports = {
             const sql = "SELECT COUNT(AnimeID) AS FavoritesCount FROM User_Favorite_Anime WHERE AnimeID = ?";
 
             const number = await conn.query(sql, [ animeID]);
+            conn.release();
 
             return number[0].FavoritesCount;
             

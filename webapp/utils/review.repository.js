@@ -320,7 +320,7 @@ async addOneReview(reviewData,userId,animeId) {
         try {
           const conn = await pool.getConnection();
       
-          const sql = 'SELECT ReviewID, ReviewText, ReviewSummary, LikesOnReview, DislikesOnReview, ReviewGrade FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
+          const sql = 'SELECT ReviewID, ReviewText, ReviewSummary, ReviewGrade FROM View_Anime WHERE AnimeID = ? AND UserID = ?';
           const [rows] = await conn.execute(sql, [animeId, userId]);
       
           const updatedRowsList = Array.isArray(rows)
@@ -434,7 +434,7 @@ async addOneReview(reviewData,userId,animeId) {
 
           
   
-          let updateSql = 'UPDATE View_Anime SET ReviewID = NULL, ReviewDate = NULL,ReviewText = NULL,ReviewSummary = NULL,ReviewGrade = NULL,LikesOnReview = NULL,DislikesOnReview = NULL WHERE AnimeID = ? AND UserID = ?;';
+          let updateSql = 'UPDATE View_Anime SET ReviewID = NULL, ReviewDate = NULL,ReviewText = NULL,ReviewSummary = NULL,ReviewGrade = NULL, WHERE AnimeID = ? AND UserID = ?;';
           await conn.execute(updateSql, [ animeId, userId]);
 
           conn.release();

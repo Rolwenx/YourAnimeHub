@@ -120,9 +120,8 @@ CREATE TABLE View_Anime(
 	ReviewDate TIMESTAMP, -- Date and time of the review
    ReviewSummary VARCHAR(200),
    ReviewGrade INT,
+   VolumeProgress INT,
    RateGrade SMALLINT,
-   LikesOnReview INT,
-   DislikesOnReview INT,
 	EpisodeProgress INT, -- to track episodes watched
 	AnimeStatus VARCHAR(50), -- Watching, Planning, Completed, Rewatching, Paused, Dropped
 	TotalRewatch INT,   -- how many times the user watched anime

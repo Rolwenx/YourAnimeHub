@@ -478,4 +478,20 @@ async function UserReviewDelete(request,response){
     }
 }
 
+
+router.post('/settings/delete_account', UserDeleteAccount);
+
+async function UserDeleteAccount(request,response){
+    try {
+        const userId = request.user ? request.user.UserID : null;
+    
+        await userRepo.delOneUser(userId);
+        response.redirect("/");
+    
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).send(" UserDeleteAccount Internal Server Error");
+    }
+}
+
 module.exports = router;

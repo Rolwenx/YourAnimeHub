@@ -211,7 +211,11 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
               <img src="<%= anime.BackgroundImageURL %>" alt="Review Image of Anime <%= anime.TitleEnglish %>" id="review-image" class="card-img-top">
             </div>
             <div class="card-body">
-              <p id="review-summary" class="card-text">Review by <strong><%= review.UserName %></strong></p>
+              <% if (review.UserName !== null) { %>
+                <p id="review-summary" class="card-text">Review by <strong><%= review.UserName %></strong></p>
+            <% } else { %>
+              <p id="review-summary" class="card-text">Anonymous Review</p>
+            <% } %>
             </div>
           </div>
         </a>

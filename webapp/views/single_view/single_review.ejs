@@ -48,7 +48,11 @@
     <% } else if (ReviewInfo[0].TypeFormat === 'Manga') { %>
       <h2><a href="/manga/<%= ReviewInfo[0].AnimeID %>/<%= ReviewInfo[0].AnimeName %>"><%= ReviewInfo[0].AnimeName %></a></h2>
     <% } %>
-    <h4>A Review made by <%= ReviewInfo[0].Username%></h4>
+    <% if (ReviewInfo[0].Username !== null) { %>
+      <h4>A Review made by <%= ReviewInfo[0].Username%></h4>
+  <% } else { %>
+     <h4>An Anonymous Review made by Deleted Account</h4>
+  <% } %>
   </div>
 </div>
 
@@ -57,19 +61,19 @@
 </div>
 
 <% if (ReviewInfo[0].ReviewGrade >= 0 && ReviewInfo[0].ReviewGrade <= 35) { %>
-  <div class="review-rate" style="background-color: #FF5733;"> <!-- Example score: 20 -->
+  <div class="review-rate" style="background-color: #FF5733;"> 
     <p class="rate-btn"><%= ReviewInfo[0].ReviewGrade%>/100</p>
   </div>
 <% } %>
 
-<% if (ReviewInfo[0].ReviewGrade >= 36 && ReviewInfo[0].ReviewGrade <= 65) { %>
-  <div class="review-rate" style="background-color: #FFA500;"> <!-- Example score: 50 -->
+<% if (ReviewInfo[0].ReviewGrade >= 36 && ReviewInfo[0].ReviewGrade <= 70) { %>
+  <div class="review-rate" style="background-color: #FFA500;"> 
     <p class="rate-btn"><%= ReviewInfo[0].ReviewGrade%>/100</p>
   </div>
 <% } %>
 
-<% if (ReviewInfo[0].ReviewGrade >= 66 && ReviewInfo[0].ReviewGrade <= 100) { %>
-  <div class="review-rate" style="background-color: #4CAF50;"> <!-- Example score: 80 -->
+<% if (ReviewInfo[0].ReviewGrade >= 71 && ReviewInfo[0].ReviewGrade <= 100) { %>
+  <div class="review-rate" style="background-color: #4CAF50;"> 
     <p class="rate-btn"><%= ReviewInfo[0].ReviewGrade%>/100</p>
   </div>
 <% } %>
