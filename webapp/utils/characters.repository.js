@@ -218,8 +218,8 @@ module.exports = {
         try {
             const conn = await pool.getConnection();
             // FC : UserID, CharacterID
-            // c : CharName, Birthday, ImageURL, Likes
-            const sql = "SELECT fc.*,c.CharName,c.Birthday,c.ImageURL,c.Likes FROM User_Favorite_Character fc JOIN Character_Card c ON fc.CharacterID = c.CharacterID WHERE fc.UserID = ?";
+            // c : CharName, Birthday, ImageURL
+            const sql = "SELECT fc.*,c.CharName,c.Birthday,c.ImageURL FROM User_Favorite_Character fc JOIN Character_Card c ON fc.CharacterID = c.CharacterID WHERE fc.UserID = ?";
 
             const charList = await conn.query(sql, [userId]);
 

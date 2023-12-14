@@ -909,7 +909,7 @@ module.exports = {
       
       
       },
-      async  getMostFavouritedAnime(limit) {
+      async  getMostFavourited(limit) {
         try {
           let conn = await pool.getConnection();
       
@@ -926,6 +926,7 @@ module.exports = {
             A.EpisodeCount,
             A.Chapters,
             A.Volumes,
+            A.Likes,
             COUNT(UFA.UserID) AS FavoritesCount
           FROM
             Anime A
@@ -950,7 +951,50 @@ module.exports = {
         }
       },      
 
-      async  getMostLikedAnime(limit) {
+      async  getMostFavouritedType(type,limit) {
+        try {
+          let conn = await pool.getConnection();
+      
+          let Sql = `
+          SELECT
+            A.AnimeID,
+            A.TitleEnglish,
+            A.Genre,
+            A.AnimeStatus,
+            A.CoverImageURL,
+            A.BackgroundImageURL,
+            A.AnimeFormat,
+            A.TypeFormat,
+            A.EpisodeCount,
+            A.Chapters,
+            A.Volumes,
+            A.Likes,
+            COUNT(UFA.UserID) AS FavoritesCount
+          FROM
+            Anime A
+          LEFT JOIN
+            User_Favorite_Anime UFA ON A.AnimeID = UFA.AnimeID
+          WHERE A.AnimeFormat = ?
+          GROUP BY
+            A.AnimeID
+          ORDER BY
+            FavoritesCount DESC
+          LIMIT ?`;
+        
+        let list = await conn.execute(Sql, [type,limit]);
+        
+          console.log("list",list);
+      
+          conn.release();
+      
+          return list;
+        } catch (error) {
+          console.error('Error in getMostFavourited:', error);
+          throw error;
+        }
+      },      
+
+      async  getMostLiked(limit) {
         try {
           let conn = await pool.getConnection();
       
@@ -967,5 +1011,24 @@ module.exports = {
           throw error;
         }
       },      
+
+      async  getMostLikedType(type,limit) {
+        try {
+          let conn = await pool.getConnection();
+      
+          let Sql = `SELECT AnimeID, TitleEnglish,Likes,Genre,AnimeStatus,CoverImageURL,BackgroundImageURL,AnimeFormat,TypeFormat,EpisodeCount,Chapters,Volumes FROM Anime WHERE AnimeFormat = ? ORDER BY Likes DESC LIMIT ?`;
+        
+        let list = await conn.execute(Sql, [type,limit]);
+        
+      
+          conn.release();
+      
+          return list;
+        } catch (error) {
+          console.error('Error in getMostFavouritedAnime:', error);
+          throw error;
+        }
+      },      
+      
       
 };

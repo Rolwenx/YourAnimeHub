@@ -43,9 +43,13 @@ async function browseAnimeAction(request, res) {
     
     try {
         const animeList = await animeRepo.getAllAnime();
+        const TopAnime = await animeRepo.getMostFavouritedType('Anime',10);
+        const MostLiked = await animeRepo.getMostLikedType('Anime',8);
 
 
         res.render('browse/browse_anime', {
+            TopAnime,
+            MostLiked,
             animeList,
             user: request.user,
             title: 'Browse Anime - YourAnimeHub',
@@ -62,7 +66,12 @@ async function browseMangaAction(request, res) {
     
     try {
         const mangaList = await animeRepo.getAllMangas();
+        const TopManga = await animeRepo.getMostFavouritedType('Manga',10);
+        const MostLiked = await animeRepo.getMostLikedType('Manga',8);
+        
         res.render('browse/browse_manga', {
+            MostLiked,
+            TopManga,
             mangaList,user: request.user,
             activePage: 'browse',
         });
@@ -127,9 +136,11 @@ async function browseAnimePopularAction(request, res) {
     
     try {
         const animeList = await animeRepo.getAllAnime();
+        const MostLiked = await animeRepo.getMostLikedType('Anime',1000);
 
 
         res.render('browse/anime_popular', {
+            MostLiked,
             animeList,user: request.user,
             activePage: 'browse',
         });
@@ -144,9 +155,11 @@ async function browseAnimeTopAction(request, res) {
     
     try {
         const animeList = await animeRepo.getAllAnime();
+        const TopAnime = await animeRepo.getMostFavouritedType('Anime',1000);
 
 
         res.render('browse/anime_top100', {
+            TopAnime,
             animeList,user: request.user,
             activePage: 'browse',
         });
@@ -178,9 +191,11 @@ async function browseMangaPopularAction(request, res) {
     
     try {
         const mangaList = await animeRepo.getAllMangas();
+        const MostLiked = await animeRepo.getMostLikedType('Manga',1000);
 
 
         res.render('browse/manga_popular', {
+            MostLiked,
             mangaList,user: request.user,
             activePage: 'browse',
         });
@@ -195,9 +210,11 @@ async function browseMangaTopAction(request, res) {
     
     try {
         const mangaList = await animeRepo.getAllMangas();
+        const TopManga = await animeRepo.getMostFavouritedType('Anime',1000);
 
 
         res.render('browse/manga_top100', {
+            TopManga,
             mangaList,user: request.user,
             activePage: 'browse',
         });

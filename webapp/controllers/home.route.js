@@ -16,6 +16,8 @@ async function GuestHomeAction(request, res) {
         // Check if user is logged in
         var userId = request.user ? request.user.UserID : null;
         const animeMangaList = await animeRepo.getAllAnimeManga();
+        const TopAnime = await animeRepo.getMostFavourited(10);
+        const MostLiked = await animeRepo.getMostLiked(5);
         const characterList = await characterRepo.getAllCharacters();
         const animeList = await animeRepo.getAllAnime();
         const mangaList = await animeRepo.getAllMangas();
@@ -27,6 +29,8 @@ async function GuestHomeAction(request, res) {
         console.log("User Role:", request.user ? request.user.UserRole : "Guest");
 
         res.render('home', { 
+            MostLiked,
+            TopAnime,
             animeMangaList,
             user: request.user,
             animeList,

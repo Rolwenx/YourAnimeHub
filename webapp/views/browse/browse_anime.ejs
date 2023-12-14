@@ -92,10 +92,7 @@
         <% recentAnimeList.forEach(anime => { %>
           <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
             data-bs-content="
-                    <% const score = 40; %>
-                    <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                        <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                    </span>
+            <span class='badge bg-success me-1'><%= anime.Likes %></span>
 
                     <% if (anime.EpisodeCount) { %>
                       <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
@@ -132,21 +129,18 @@
 <div class="recently_added_block">
   <a class="cardHeader_a" href="/browse/anime/popular">
     <div class="header_title_anime one">
-      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">POPULAR NOW</h2>
+      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">MOST LIKED</h2>
     </div>
   </a>
   <div class="recentAnime">
     <div class="animeCard">
-      <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-        <% const recentAnimeList = animeList.slice(0, 8); %>
+      <% if (MostLiked && Array.isArray(MostLiked) && MostLiked.length > 0) { %>
+        <% const recentAnimeList = MostLiked.slice(0, 8); %>
 
         <% recentAnimeList.forEach(anime => { %>
           <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
             data-bs-content="
-                    <% const score = 40; %>
-                    <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                        <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                    </span>
+            <span class='badge bg-success me-1'><%= anime.Likes %></span>
 
                     <% if (anime.EpisodeCount) { %>
                       <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
@@ -181,13 +175,13 @@
 <div class="container mb-5">
   <a class="cardHeader_a" href="/browse/anime/top-100">
     <div class="header_title_anime one">
-      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">TOP 100 ANIME</h2>
+      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">TOP 10 ANIME FAVOURITED BY USERS</h2>
     </div>
   </a>
   <div class='top_100'>
-      <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-        <% const recentAnimeList = animeList.slice(0,10); %>
-          <% recentAnimeList.forEach((anime, index) => { %>
+      <% if (TopAnime && Array.isArray(TopAnime) && TopAnime.length > 0) { %>
+        <% const topList = TopAnime.slice(0,10); %>
+          <% topList.forEach((anime, index) => { %>
               <div class="individual_card">
                   <div class="number text-light"><strong>#<%= index + 1 %></strong></div>
                   <div class="the_three">
@@ -206,8 +200,7 @@
                       <div class="details">
                           <p class="status"><strong>TV Show</strong></p>
                           <p class="tv-details"><%= anime.EpisodeCount %> Episodes</p>
-                          <p class="rating">30 <%= 30 >= 50 ? '😊' : '😞' %></p>
-                          <p class="likes"><i class="fa fa-thumbs-up"></i> <%= anime.EpisodeCount %></p>
+                          <p class="likes"><i class="fa fa-thumbs-up"></i> <%= anime.Likes %></p>
                       </div>
                   </div>
               </div>

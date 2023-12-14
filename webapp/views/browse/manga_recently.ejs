@@ -92,25 +92,21 @@ const title = 'Recently Added Manga - YourAnimeHub';
   <div class="recentAnime">
     <div class="animeCard">
       <% if (mangaList && Array.isArray(mangaList) && mangaList.length > 0) { %>
-        <% const recentMangaList = mangaList.slice(-20).reverse(); %> 
+        <% const recentMangaList = mangaList.slice(-16).reverse(); %> 
         <% recentMangaList.forEach(manga => { %>
           <div class="card" style="margin-bottom: 20px;" title="<strong><%= manga.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
             data-bs-content="
-                    <% const score = 40; %>
-                    <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                        <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                    </span>
-
-                    <% if (manga.Chapters) { %>
-                      <p><strong>Number of Chapters:</strong> <%= manga.Chapters %></p>
-                      <% } %>
-                      <% if (manga.Volumes) { %>
-                        <p><strong>Number of Chapters:</strong> <%= manga.Volumes %></p>
-                        <% } %>
+            <span class='badge bg-success me-1'><%= manga.Likes %></span>
+                  
+            <% if (manga.Chapters) { %>
+              <p><strong>Number of Chapters:</strong> <%= manga.Chapters %></p>
+              <% } %>
+              <% if (manga.Volumes) { %>
+                <p><strong>Number of Volumes:</strong> <%= manga.Volumes %></p>
+              <% } %>
                       <% if (manga.AnimeStatus) { %>
                         <p><strong>Status:</strong> <%= manga.AnimeStatus %></p>
                       <% } %>
-                <p><strong>Format:</strong> <%= manga.TypeFormat %></p>
                 <p><strong>Genres:</strong><br>
                     <% const genres = manga.Genre.split(','); %>
                     <% genres.forEach(genre => { %>

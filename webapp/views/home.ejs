@@ -108,26 +108,32 @@
     </section>
     <section>
             <div class="header_title_anime one">
-                <h2 class="my_h2 text-light" style="margin-left: 70px !important;">POPULAR NOW</h2>
+                <h2 class="my_h2 text-light" style="margin-left: 70px !important;">MOST LIKED</h2>
             </div>
     </section>
     
     <div class='popular_now_block'>
         <div class="recentAnime">
           <div class="animeCard">
-            <% if (animeMangaList && Array.isArray(animeMangaList) && animeMangaList.length > 0) { %>
-                <% const recentAnimeList = animeMangaList.slice(0, 5).reverse(); %>
-                <% recentAnimeList.forEach(anime => { %>
+            <% if (MostLiked && Array.isArray(MostLiked) && MostLiked.length > 0) { %>
+                <% const mostLiked = MostLiked.slice(0, 5); %>
+                <% mostLiked.forEach(anime => { %>
 
                 <div class="card" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
                     data-bs-content="
-                            <% const score = 40; %>
-                            <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                                <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                            </span>
-
-                        <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+                    <span class='badge bg-success me-1'><%= anime.Likes %></span>
+                    
+                        <% if (anime.AnimeFormat === 'Anime') { %>
+                            <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
+                        <% } %>
+                        <% if (anime.AnimeFormat === 'Manga') { %>
+                            <p><strong>Number of Chapters:</strong> <%= anime.Chapters %></p>
+                            <p><strong>Number of Volumes:</strong> <%= anime.Volumes %></p>
+                        <% } %>
                         <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
+                        <% if (anime.AnimeFormat === 'Anime') { %>
+                            <p><strong>Type:</strong> <%= anime.TypeFormat %></p>
+                        <% } %>
                         <p><strong>Genres:</strong><br>
                             <% const genres = anime.Genre.split(','); %>
                             <% genres.forEach(genre => { %>
@@ -173,10 +179,7 @@
 
                 <div class="card" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
                     data-bs-content="
-                            <% const score = 40; %>
-                            <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                                <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                            </span>
+                    <span class='badge bg-success me-1'><%= anime.Likes %></span>
 
                         <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
                         <p><strong>Status:</strong> <%= anime.AnimeStatus %></p>
@@ -316,13 +319,13 @@
 <div class="container mb-5">
     <section>
         <div class="header_title_anime one">
-            <h2 class="my_h2" style="margin-left: 70px !important;">TOP 100</h2>
+            <h2 class="my_h2" style="margin-left: 70px !important;">TOP 10 FAVOURITED BY USERS</h2>
         </div>
     </section>
     <div class='top_100'>
-        <% if (animeMangaList && Array.isArray(animeMangaList) && animeMangaList.length > 0) { %>
-            <% const recentAnimeList = animeMangaList.slice(-5).reverse(); %> 
-            <% recentAnimeList.forEach((anime, index) => { %>
+        <% if (TopAnime && Array.isArray(TopAnime) && TopAnime.length > 0) { %>
+            <% const topAnimeList = TopAnime.slice(0,10); %> 
+            <% topAnimeList.forEach((anime, index) => { %>
                 <div class="individual_card">
                     <div class="number text-light"><strong>#<%= index + 1 %></strong></div>
                     <div class="the_three">
@@ -346,8 +349,7 @@
                         <div class="details">
                             <p class="status"><strong>TV Show</strong></p>
                             <p class="tv-details"><%= anime.EpisodeCount %> Episodes</p>
-                            <p class="rating">30 <%= 30 >= 50 ? '😊' : '😞' %></p>
-                            <p class="likes"><i class="fa fa-thumbs-up"></i> <%= anime.EpisodeCount %></p>
+                            <p class="likes"><i class="fa fa-thumbs-up"></i> <%= anime.Likes %></p>
                         </div>
                     </div>
                 </div>

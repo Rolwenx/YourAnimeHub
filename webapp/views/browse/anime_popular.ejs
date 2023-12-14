@@ -86,20 +86,16 @@ const title = 'Popular Now Anime - YourAnimeHub';
 <div class="recently_added_block">
   <a class="cardHeader_a" href="/browse/anime/popular">
     <div class="header_title_anime one">
-      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">POPULAR NOW</h2>
+      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">MOST LIKED</h2>
     </div>
   </a>
   <div class="recentAnime">
     <div class="animeCard">
-      <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-        <% const recentAnimeList = animeList.slice(); %>
-        <% recentAnimeList.forEach(anime => { %>
+          <% if (MostLiked && MostLiked.length > 0) { %>
+            <% MostLiked.forEach((anime) => { %>
           <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
             data-bs-content="
-                    <% const score = 40; %>
-                    <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                        <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                    </span>
+            <span class='badge bg-success me-1'><%= anime.Likes %></span>
 
                     <% if (anime.EpisodeCount) { %>
                       <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>

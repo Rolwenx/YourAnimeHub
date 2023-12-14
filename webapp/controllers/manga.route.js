@@ -137,6 +137,7 @@ async function MangaViewAction(request, response) {
         const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
 
         const StatsCount = {};
+        StatsCount.Favourited = await animeRepo.getHowMuchAnimeHasBeenFavourited(mangaId);
         StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('mset-planning',mangaId))[0]?.statusCount || 0;
         StatsCount.CompleteCount = (await animeRepo.getAllStatusAnime('mset-complete',mangaId))[0]?.statusCount || 0;
         StatsCount.WatchingCount = (await animeRepo.getAllStatusAnime('mset-reading',mangaId))[0]?.statusCount || 0;

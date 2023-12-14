@@ -92,14 +92,11 @@ const title = 'Recently Added Anime - YourAnimeHub';
   <div class="recentAnime">
     <div class="animeCard">
       <% if (animeList && Array.isArray(animeList) && animeList.length > 0) { %>
-        <% const recentAnimeList = animeList.slice(-20).reverse(); %> 
-        <% recentAnimeList.forEach(anime => { %>
+        <% const recentMangaList = animeList.slice(-16).reverse(); %> 
+        <% recentMangaList.forEach(anime => { %>
           <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
             data-bs-content="
-                    <% const score = 40; %>
-                    <span class='badge <%= score >= 50 ? 'bg-success' : 'bg-danger' %>'>
-                        <%= score %>% <%= score >= 50 ? '😊' : '😞' %>
-                    </span>
+                <span class='badge bg-success me-1'><%= anime.Likes %></span>
 
                     <% if (anime.EpisodeCount) { %>
                       <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
@@ -138,7 +135,7 @@ const title = 'Recently Added Anime - YourAnimeHub';
 
       const animeCards = document.querySelectorAll(".animeCard .card");
 
-      // Initially hide cards greater than 6
+      // Initially hide cards greater than 8
       animeCards.forEach((card, index) => {
           if (index >= displayedAnimeCount) {
               card.style.display = "none";
