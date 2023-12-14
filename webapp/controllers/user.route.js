@@ -254,7 +254,6 @@ async function UserUpdateProfileAction(request, response) {
     var userName = request.user.Username;
     var userData = {
         ProfilePictureURL: request.body.profile_pic,
-        TitleDisplayLanguage: request.body.titleDisplay || null,
         Bio: request.body.bio || null,
     };
 
@@ -274,6 +273,8 @@ async function UserUpdatePersonalAction(request, response) {
     var userData = {
         Username: request.body.username,
         Email: request.body.email,
+        FirstName: request.body.firstName,
+        LastName: request.body.lastName,
         Birthday: request.body.birthday,
     };
 

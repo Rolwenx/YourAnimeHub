@@ -13,6 +13,9 @@
         </div>
         <h2><%= user.Username %></h2>
         <p><%= user.Email %></p>
+        <% if (user.FirstName || user.LastName ) { %>
+          <p style="font-size: 12px;"><%= user.FirstName %> <%= user.LastName %></p>
+        <% } %>
 
         <ul class="about">
           <li><span><%= StatsCount.AnimeCount %></span>Anime completed</li>

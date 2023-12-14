@@ -42,6 +42,9 @@ const title = 'Settings - YourAnimeHub';
           </div>
           <h5 class="user-name"><%= fetched_user.Username %></h5>
           <h6 class="user-email"><%= fetched_user.Email %></h6>
+          <% if (fetched_user.FirstName || fetched_user.LastName ) { %>
+            <p style="font-size: 12px;"><%= fetched_user.FirstName %> <%= fetched_user.LastName %></p>
+          <% } %>
         </div>
         <div class="about">
           <h5>About</h5>
@@ -77,18 +80,6 @@ const title = 'Settings - YourAnimeHub';
               </div>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
-            <div class="pl-lg-4 mb-3">
-              <div class="form-group">
-                <label><strong>Title Display</strong></label>
-                <select class="form-select" aria-label="Default select example" name="titleDisplay">
-                  <option value="titleEnglish">Romaji (Kimetsu no Yaiba)</option>
-                  <option value="titleRomaji">English (Demon Slayer)</option>
-                  <option value="titleNative">Native (鬼滅の刃)</option>
-                </select>
-              </div>
-            </div>
-          </div>
           <div class="profile-picture-upload mb-3">
             <label><strong>Avatar</strong></label>
             <div class="current-profile-picture">
@@ -120,7 +111,19 @@ const title = 'Settings - YourAnimeHub';
           </div>
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
             <div class="form-group">
-              <label for="eMail"><strong>Birthday</strong></label>
+              <label for="firstName"><strong>First Name</strong></label>
+              <input type="text" name="firstName" value="<%= fetched_user.FirstName %>" class="form-control" id="firstName">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+            <div class="form-group">
+              <label for="lastName"><strong>Last Name</strong></label>
+              <input type="text" name="lastName" value="<%= fetched_user.LastName %>" class="form-control" id="lastName">
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mb-3">
+            <div class="form-group">
+              <label for="birthday"><strong>Birthday</strong></label>
               <input type="date" name="birthday" value="<%= fetched_user.Birthday %>" class="form-control" id="birthday">
             </div>
           </div>
