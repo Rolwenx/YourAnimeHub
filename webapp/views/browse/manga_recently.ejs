@@ -14,9 +14,12 @@ const title = 'Recently Added Manga - YourAnimeHub';
 <section class="filter_section d-flex justify-content-evenly mb-3">
   <div class="row">
     <div class="d-flex justify-content-center h-100">
-      <div class="search">
-          <input type="text" class="search-input" placeholder="Search.." name="">
-      </div>
+      <form action="/browse/manga/recently_added/search_manga" method="get">
+        <div class="search">
+            <input type="search" name="searchQueryAnime" class="search-input" placeholder="Search..">
+        </div>
+        <button style="border:none; padding: 8px; margin-top:10px;width: 220px;" type="submit"><i class="fa fa-search"></i></button>
+      </form>
     </div>
   </div>
   <div class="row">
@@ -70,23 +73,12 @@ const title = 'Recently Added Manga - YourAnimeHub';
         </div>
     </div>
   </div>
-  <div class="row">
-    <div class="sec-center"> 	
-        <input class="dropdown" type="checkbox" id="dropdown_4" name="dropdown"/>
-        <label class="for-dropdown" for="dropdown_4">Format<i class="fa fa-arrow-down"></i></label>
-        <div class="section-dropdown"> 
-            <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
-            <a href="#">TV<i class="fa fa-arrow-right"></i></a>
-            <a href="#">Movie <i class="fa fa-arrow-right"></i></a>
-        </div>
-    </div>
-  </div>
 </section>
 
 <div class="recently_added_block">
   <a class="cardHeader_a" href="/browse/manga/recently_added">
     <div class="header_title_anime one">
-      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">RECENTLY ADDED</h2>
+      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">RECENTLY ADDED MANGA</h2>
     </div>
   </a>
   <div class="recentAnime">

@@ -12,13 +12,12 @@ const title = 'Top 100 Anime - YourAnimeHub';
 
 
 <section class="filter_section d-flex justify-content-evenly mb-3">
-  <div class="row">
-    <div class="d-flex justify-content-center h-100">
-      <div class="search">
-          <input type="text" class="search-input" placeholder="Search.." name="">
-      </div>
+  <form action="/browse/anime/top-100/search_anime" method="get">
+    <div class="search">
+        <input type="search" name="searchQueryAnime" class="search-input" placeholder="Search..">
     </div>
-  </div>
+    <button style="border:none; padding: 8px; margin-top:10px;width: 220px;" type="submit"><i class="fa fa-search"></i></button>
+  </form>
   <div class="row">
     <div class="sec-center"> 	
       <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>

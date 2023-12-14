@@ -797,7 +797,6 @@ module.exports = {
             const conn = await pool.getConnection();
             let sql = 'SELECT * FROM User_Favorite_Anime WHERE AnimeID = ? AND UserID = ?';
             const allfavourite = await conn.query(sql, [animeId, userId]);
-            console.log(allfavourite);
 
             conn.release();
             if(allfavourite.length == 0){
@@ -940,7 +939,6 @@ module.exports = {
         
         let list = await conn.execute(Sql, [limit]);
         
-          console.log("list",list);
       
           conn.release();
       
@@ -983,7 +981,6 @@ module.exports = {
         
         let list = await conn.execute(Sql, [type,limit]);
         
-          console.log("list",list);
       
           conn.release();
       
@@ -1089,7 +1086,6 @@ module.exports = {
             return 0; 
           }
       
-          return list;
         } catch (error) {
           console.error('Error in getAverageVolumeProgress:', error);
           throw error;
@@ -1099,16 +1095,19 @@ module.exports = {
 
       async searchAnimeManga(query) {
         try {
-
-          let conn = await pool.getConnection();
-            // You can customize this query based on your data model
+            let conn = await pool.getConnection();
+    
             const sql = `
                 SELECT
                     AnimeID,
                     TitleEnglish,
                     TitleRomaji,
                     TitleNative,
+                    Chapters,
+                    EpisodeCount,
+                    Volumes,
                     CoverImageURL,
+                    Genre,
                     AnimeFormat
                 FROM
                     Anime
@@ -1121,14 +1120,146 @@ module.exports = {
     
             const searchTerm = `%${query}%`;
     
-            const rows = await conn.execute(sql, [searchTerm, searchTerm, searchTerm, searchTerm]);
-    
+            const rows = await conn.execute(sql, [searchTerm, searchTerm, searchTerm, searchTerm, query]);
+            conn.release();
             return rows;
         } catch (error) {
             console.error('Error in searchAnimeManga:', error);
             throw error;
         }
-    }
+    },    
+
+    async searchAnime(query,type) {
+      try {
+          let conn = await pool.getConnection();
+  
+          const sql = `
+              SELECT
+              AnimeID,
+              TitleEnglish,
+              Likes,
+              Genre,
+              AnimeStatus,
+              AnimeFormat,
+              TitleRomaji,
+              Chapters,
+              EpisodeCount,
+              Volumes,
+              TitleNative,
+              TypeFormat,
+              CoverImageURL
+              FROM
+                  Anime
+              WHERE
+              AnimeFormat = ?
+              AND (TitleEnglish LIKE ? OR
+                   TitleRomaji LIKE ? OR
+                   TitleNative LIKE ? OR
+                   Genre LIKE ?)
+              ORDER BY TitleEnglish`;
+  
+          const searchTerm = `%${query}%`;
+  
+          const rows = await conn.execute(sql, [type,searchTerm, searchTerm, searchTerm, searchTerm, query]);
+          conn.release();
+          return rows;
+      } catch (error) {
+          console.error('Error in searchAnimeManga:', error);
+          throw error;
+      }
+  },    
+
+    async searchAnimeByMostLiked(query,type) {
+      try {
+
+        // The LIKE ? Checks if the mentioned attributes contains a matching pattern with the query
+          let conn = await pool.getConnection();
+          const sql = `
+              SELECT
+                  AnimeID,
+                  TitleEnglish,
+                  Likes,
+                  Genre,
+                  AnimeStatus,
+                  Chapters,
+                  EpisodeCount,
+                  Volumes,
+                  AnimeFormat,
+                  TitleRomaji,
+                  TitleNative,
+                  TypeFormat,
+                  CoverImageURL
+              FROM
+                  Anime
+              WHERE
+                  AnimeFormat = ?
+                  AND (TitleEnglish LIKE ? OR
+                       TitleRomaji LIKE ? OR
+                       TitleNative LIKE ? OR
+                       Genre LIKE ?)
+              ORDER BY Likes DESC, TitleEnglish`;  
+          // Added "ORDER BY Likes DESC" to rank by most liked
+  
+          const searchTerm = `%${query}%`;
+  
+          const rows = await conn.execute(sql, [type,searchTerm, searchTerm, searchTerm, searchTerm]);
+          conn.release();
+          return rows;
+      } catch (error) {
+          console.error('Error in searchAnimeManga:', error);
+          throw error;
+      }
+  },  
       
+
+  async searchAnimeByMostFavourited(query,type) {
+    try {
+
+      // The LIKE ? Checks if the mentioned attributes contains a matching pattern with the query
+        let conn = await pool.getConnection();
+        const sql = `
+            SELECT
+                A.AnimeID,
+                A.TitleEnglish,
+                A.Likes,
+                A.Genre,
+                A.AnimeStatus,
+                A.EpisodeCount,
+                A.Chapters,
+                A.Volumes,
+                A.AnimeFormat,
+                A.TitleRomaji,
+                A.TitleNative,
+                A.TypeFormat,
+                A.CoverImageURL,
+                COUNT(UFA.UserID) AS FavoritesCount
+              FROM
+                Anime A
+              LEFT JOIN
+                User_Favorite_Anime UFA ON A.AnimeID = UFA.AnimeID
+              WHERE A.AnimeFormat = ?
+              AND (TitleEnglish LIKE ? OR
+                TitleRomaji LIKE ? OR
+                TitleNative LIKE ? OR
+                Genre LIKE ?)
+              GROUP BY
+                A.AnimeID
+              ORDER BY
+                FavoritesCount DESC`;
+
+        
+        // Added "ORDER BY Likes DESC" to rank by most liked
+
+        const searchTerm = `%${query}%`;
+
+        const rows = await conn.execute(sql, [type,searchTerm, searchTerm, searchTerm, searchTerm]);
+        conn.release();
+
+        return rows;
+    } catch (error) {
+        console.error('Error in searchAnimeManga:', error);
+        throw error;
+    }
+},  
       
 };

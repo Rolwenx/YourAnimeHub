@@ -14,9 +14,12 @@ const title = 'Popular Now Manga - YourAnimeHub';
 <section class="filter_section d-flex justify-content-evenly mb-3">
   <div class="row">
     <div class="d-flex justify-content-center h-100">
-      <div class="search">
-          <input type="text" class="search-input" placeholder="Search.." name="">
-      </div>
+      <form action="/browse/manga/popular/search_manga" method="get">
+        <div class="search">
+            <input type="search" name="searchQueryAnime" class="search-input" placeholder="Search..">
+        </div>
+        <button style="border:none; padding: 8px; margin-top:10px;width: 220px;" type="submit"><i class="fa fa-search"></i></button>
+      </form>
     </div>
   </div>
   <div class="row">
@@ -70,17 +73,7 @@ const title = 'Popular Now Manga - YourAnimeHub';
         </div>
     </div>
   </div>
-  <div class="row">
-    <div class="sec-center"> 	
-        <input class="dropdown" type="checkbox" id="dropdown_4" name="dropdown"/>
-        <label class="for-dropdown" for="dropdown_4">Format<i class="fa fa-arrow-down"></i></label>
-        <div class="section-dropdown"> 
-            <li><input class="form-control" id="myInput" type="text" placeholder="Search.."></li>
-            <a href="#">TV<i class="fa fa-arrow-right"></i></a>
-            <a href="#">Movie <i class="fa fa-arrow-right"></i></a>
-        </div>
-    </div>
-  </div>
+
 </section>
 
 <div class="recently_added_block">
@@ -92,7 +85,7 @@ const title = 'Popular Now Manga - YourAnimeHub';
   <div class="recentAnime">
     <div class="animeCard">
       <% if (MostLiked && MostLiked.length > 0) { %>
-        <% MostLiked.forEach((anime) => { %>
+        <% MostLiked.forEach((manga) => { %>
           <div class="card" style="margin-bottom: 20px;" title="<strong><%= manga.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
             data-bs-content="
             <span class='badge bg-success me-1'><%= manga.Likes %></span>

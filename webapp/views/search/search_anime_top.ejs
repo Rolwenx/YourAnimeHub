@@ -1,6 +1,4 @@
-<%
-const title = 'Popular Now Anime - YourAnimeHub';
-%>
+
 <%- include('../partials/header.ejs', { title: title }) %>
 
 <link type="text/css" rel="stylesheet" href="/css/styleHome.css">
@@ -12,16 +10,16 @@ const title = 'Popular Now Anime - YourAnimeHub';
 
 
 <section class="filter_section d-flex justify-content-evenly mb-3">
-  <div class="row">
-    <div class="d-flex justify-content-center h-100">
-      <form action="/browse/anime/popular/search_anime/" method="get">
-        <div class="search">
-            <input type="search" name="searchQueryAnime" class="search-input" placeholder="Search..">
+    <div class="row">
+        <div class="d-flex justify-content-center h-100">
+          <form action="/browse/anime/top-100/search_anime" method="get">
+            <div class="search">
+                <input type="search" name="searchQueryAnime" class="search-input" placeholder="Search..">
+            </div>
+            <button style="border:none; padding: 8px; margin-top:10px;width: 220px;" type="submit"><i class="fa fa-search"></i></button>
+          </form>
         </div>
-        <button style="border:none; padding: 8px; margin-top:10px;width: 220px;" type="submit"><i class="fa fa-search"></i></button>
-      </form>
-    </div>
-  </div>
+      </div>
   <div class="row">
     <div class="sec-center"> 	
       <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
@@ -87,18 +85,18 @@ const title = 'Popular Now Anime - YourAnimeHub';
 </section>
 
 <div class="recently_added_block">
-  <a class="cardHeader_a" href="/browse/anime/popular">
+  <a class="cardHeader_a" href="/browse/anime/top-100">
     <div class="header_title_anime one">
-      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">MOST LIKED</h2>
+      <h2 class="my_h2 text-light" style="margin-left: 20px !important;">TOP ANIME FAVOURITED BY USERS</h2>
     </div>
   </a>
   <div class="recentAnime">
     <div class="animeCard">
-          <% if (MostLiked && MostLiked.length > 0) { %>
-            <% MostLiked.forEach((anime) => { %>
+      <% if (MostLikedsearchResults && MostLikedsearchResults.length > 0) { %>
+        <% MostLikedsearchResults.forEach((anime) => { %>
           <div class="card" style="margin-bottom: 20px;" title="<strong><%= anime.TitleEnglish %></strong>" data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="hover" 
             data-bs-content="
-            <span class='badge bg-success me-1'><%= anime.Likes %></span>
+                <span class='badge bg-success me-1'><%= anime.Likes %></span>
 
                     <% if (anime.EpisodeCount) { %>
                       <p><strong>Number of Episodes:</strong> <%= anime.EpisodeCount %></p>
@@ -137,7 +135,7 @@ const title = 'Popular Now Anime - YourAnimeHub';
 
       const animeCards = document.querySelectorAll(".animeCard .card");
 
-      // Initially hide cards greater than 6
+      // Initially hide cards greater than 8
       animeCards.forEach((card, index) => {
           if (index >= displayedAnimeCount) {
               card.style.display = "none";

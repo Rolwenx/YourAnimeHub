@@ -208,7 +208,6 @@ async function AnimeViewActionReviews(request, response) {
             return review; 
             
         });
-        console.log("combinedUserInfo",combinedUserInfo);
         
   
   

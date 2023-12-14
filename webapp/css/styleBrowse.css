@@ -37,13 +37,13 @@ p{
     text-align: center;
   }
   
-  .recently_added_block .animeCard {
+  .recently_added_block .animeCard , .recently_added_block .animeCard2{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
   
-  .animeCard .card {
+  .animeCard .card, .animeCard2 .card2 {
     width: 200px;
     height: auto;
     overflow: hidden;
@@ -57,13 +57,14 @@ p {
     color: black;
   }
 
-  .recently_added_block .animeCard .card img {
+  .recently_added_block .animeCard .card img, .recently_added_block .animeCard2 .card2 img {
     max-width: 100%;
     
   }
 
   
-  .animeCard .animeName {
+  
+  .animeCard .animeName, .animeCard2 .animeName {
     background-color: rgb(229, 233, 237);
     border-radius: 5px;
     text-align: center;
@@ -74,11 +75,11 @@ p {
   
   
   
-  .animeCard .animeName:hover {
+  .animeCard .animeName:hover, .animeCard2 .animeName:hover {
     text-decoration: underline;
   }
   
-  .animeCard .animeName a {
+  .animeCard .animeName a,.animeCard2 .animeName a {
     color: black;
     font-weight: 600;
     text-decoration: none;
@@ -96,7 +97,7 @@ p {
     margin-top: 50px;
   }
 
-  .animeCard .card .cover_image {
+  .animeCard .card .cover_image,  .animeCard2 .card2 .cover_image {
     min-width: 200px;
       min-height: 300px; 
     width: 100%; 

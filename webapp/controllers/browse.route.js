@@ -6,6 +6,89 @@ const reviewRepo = require('../utils/review.repository');
 const quoteRepo = require('../utils/quote.repository'); 
 const characterRepo = require('../utils/characters.repository');
 
+
+/* -------_ SEARCH ANIME ROUTES --------*/
+router.get('/search_anime', handleSearchAnime);
+router.get('/anime/recently_added/search_anime', handleSearchAnimeRecently);
+router.get('/anime/popular/search_anime', handleSearchAnimePopular);
+router.get('/anime/top-100/search_anime', handleSearchAnimeLiked);
+
+async function handleSearchAnime(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryAnime;
+
+        const MostLikedsearchResults = await animeRepo.searchAnimeByMostLiked(searchQuery, 'Anime');
+        const MostFavouritedearchResults = await animeRepo.searchAnimeByMostFavourited(searchQuery, 'Anime')
+        const SearchResults = await animeRepo.searchAnime(searchQuery, 'Anime');
+
+        res.render('search/search_browse_anime', {
+            MostLikedsearchResults,
+            MostFavouritedearchResults,
+            SearchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearchAnime:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function handleSearchAnimeRecently(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryAnime;
+        const SearchResults = await animeRepo.searchAnime(searchQuery, 'Anime');
+
+        res.render('search/search_anime_recently', {
+            SearchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearchAnimeRecently:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function handleSearchAnimePopular(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryAnime;
+
+        const MostFavouritedearchResults = await animeRepo.searchAnimeByMostFavourited(searchQuery, 'Anime')
+
+        res.render('search/search_anime_popular', {
+            MostFavouritedearchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearch:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function handleSearchAnimeLiked(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryAnime;
+
+        const MostLikedsearchResults = await animeRepo.searchAnimeByMostLiked(searchQuery, 'Anime');
+
+        res.render('search/search_anime_top', {
+            MostLikedsearchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearch:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+
 // Main routes
 router.get('/anime', browseAnimeAction);
 router.get('/manga', browseMangaAction);
@@ -45,6 +128,8 @@ async function browseAnimeAction(request, res) {
         const animeList = await animeRepo.getAllAnime();
         const TopAnime = await animeRepo.getMostFavouritedType('Anime',10);
         const MostLiked = await animeRepo.getMostLikedType('Anime',8);
+
+        
 
 
         res.render('browse/browse_anime', {
@@ -223,5 +308,89 @@ async function browseMangaTopAction(request, res) {
         res.status(500).send('Internal Server Error');
     }
     
+}
+
+
+
+
+/* -------_ SEARCH ANIME ROUTES --------*/
+router.get('/search_manga', handleSearchManga);
+router.get('/manga/recently_added/search_manga', handleSearchMangaRecently);
+router.get('/manga/popular/search_manga', handleSearchMangaPopular);
+router.get('/manga/top-100/search_manga', handleSearchMangaLiked);
+
+async function handleSearchManga(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryAnime;
+
+        const MostLikedsearchResults = await animeRepo.searchAnimeByMostLiked(searchQuery, 'Manga');
+        const MostFavouritedearchResults = await animeRepo.searchAnimeByMostFavourited(searchQuery, 'Manga')
+        const SearchResults = await animeRepo.searchAnime(searchQuery, 'Manga');
+
+        res.render('search/search_browse_manga', {
+            MostLikedsearchResults,
+            MostFavouritedearchResults,
+            SearchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearchManga:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function handleSearchMangaRecently(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryAnime;
+        const SearchResults = await animeRepo.searchAnime(searchQuery, 'Manga');
+
+        res.render('search/search_manga_recently', {
+            SearchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearchMangaecently:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function handleSearchMangaPopular(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryAnime;
+
+        const MostFavouritedearchResults = await animeRepo.searchAnimeByMostFavourited(searchQuery, 'Manga')
+
+        res.render('search/search_manga_popular', {
+            MostFavouritedearchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearchMangaPopular:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function handleSearchMangaLiked(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryAnime;
+
+        const MostLikedsearchResults = await animeRepo.searchAnimeByMostLiked(searchQuery, 'Manga');
+
+        res.render('search/search_manga_top', {
+            MostLikedsearchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearchMangaLiked:', error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 module.exports = router;

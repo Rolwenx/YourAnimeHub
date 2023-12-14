@@ -11,7 +11,6 @@ const userRepo = require('../utils/users.repository');
 
 router.get('/', GuestHomeAction);
 
-// New route for handling search queries
 router.post('/search', handleSearch);
 
 async function handleSearch(req, res) {
@@ -19,10 +18,9 @@ async function handleSearch(req, res) {
         const searchQuery = req.body.searchQuery;
 
         const searchResults = await animeRepo.searchAnimeManga(searchQuery);
-        console.log("searchResults",searchResults);
-        console.log(searchResults == null);
+        console.log(searchResults);
 
-        res.render('search', {
+        res.render('search/search_home', {
             "searchResults":searchResults,
             user: req.user,
             title: `Search Results for "${searchQuery}" - YourAnimeHub`,
