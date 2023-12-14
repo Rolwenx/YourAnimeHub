@@ -18,10 +18,12 @@ async function handleSearch(req, res) {
         const searchQuery = req.body.searchQuery;
 
         const searchResults = await animeRepo.searchAnimeManga(searchQuery);
-        console.log(searchResults);
+        const searchResultsChar = await characterRepo.searchCharacters(searchQuery);
+
 
         res.render('search/search_home', {
             "searchResults":searchResults,
+            'searchResultsChar':searchResultsChar,
             user: req.user,
             title: `Search Results for "${searchQuery}" - YourAnimeHub`,
             activePage: 'search-results',

@@ -1,6 +1,4 @@
-<%
-const title = 'Browse Characters - YourAnimeHub';
-%>
+
 <%- include('../partials/header.ejs', { title: title}) %>
 <link type="text/css" rel="stylesheet" href="../css/styleBrowse.css">
 
@@ -24,11 +22,10 @@ const title = 'Browse Characters - YourAnimeHub';
 
           </div>
 
-
         <div class="Characters">
             <div class="CharCard">
-                <% if (characterList && Array.isArray(characterList) && characterList.length > 0) { %>
-                    <% characterList.forEach(character => { %>
+                <% if (SearchedChar && Array.isArray(SearchedChar) && SearchedChar.length > 0) { %>
+                    <% SearchedChar.forEach(character => { %>
                         <div class="card">
                             <a href="/character/<%= character.CharacterID %>/<%= character.CharName %>">
                                 <img class="cover_image" src="<%= character.ImageURL %>" alt="<%= character.charName %>">
@@ -41,7 +38,7 @@ const title = 'Browse Characters - YourAnimeHub';
                         </div>
                     <% }); %>
                 <% } else { %>
-                    <p>No characters available in the database.</p>
+                    <p>No characters found in the database.</p>
                 <% } %>
             </div>
         </div>

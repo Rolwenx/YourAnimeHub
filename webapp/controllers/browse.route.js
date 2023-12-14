@@ -167,6 +167,10 @@ async function browseMangaAction(request, res) {
     
 }
 
+
+/* ------- CHARACTER ROUTES --------*/
+router.get('/search_character', handleSearchCharacters);
+
 async function browseCharacterAction(request, res) {
     
     try {
@@ -181,6 +185,24 @@ async function browseCharacterAction(request, res) {
         res.status(500).send('Internal Server Error');
     }
     
+}
+
+async function handleSearchCharacters(req, res) {
+    try {
+        const searchQuery = req.query.searchQueryChar;
+
+        const SearchedChar = await characterRepo.searchCharacters(searchQuery);
+
+        res.render('search/search_character', {
+            SearchedChar,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearchMangaLiked:', error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 async function browseQuoteAction(request, res) {

@@ -287,7 +287,53 @@ module.exports = {
             console.error('Error in CheckIfCharacterInFavourite:', error);
           throw error;
         }
-      }
+      },
+
+      async searchCharacters(query) {
+        try {
+            let conn = await pool.getConnection();
+    
+            // I noticed that sometimes i have duplicates so we use distinct to avoid that
+            const sql = `
+
+                SELECT DISTINCT
+                    c.CharacterID,
+                    c.CharName,
+                    c.ImageURL,
+                    c.Gender,
+                    c.HiddenSurnames,
+                    c.CharSynopsis,
+                    c.NamesGiven
+                FROM
+                    Character_Card c
+                JOIN
+                    Appear_In appear_in ON c.CharacterID = appear_in.CharacterID
+                JOIN
+                    Anime a ON appear_in.AnimeID = a.AnimeID
+                WHERE
+                    a.TitleEnglish LIKE ? OR
+                    a.TitleRomaji LIKE ? OR
+                    a.TitleNative LIKE ? OR
+                    c.CharName LIKE ? OR
+                    c.Gender LIKE ? OR
+                    c.Family LIKE ? OR
+                    c.HiddenSurnames LIKE ? OR
+                    c.CharSynopsis LIKE ? OR
+                    c.NamesGiven LIKE ?
+                ORDER BY
+                    c.CharName;
+                `;
+    
+            const searchTerm = `%${query}%`;
+    
+            const rows = await conn.execute(sql, [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm,searchTerm,searchTerm, searchTerm, searchTerm,query]);
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.error('Error in searchCharacters:', error);
+            throw error;
+        }
+    },    
     
 
 };

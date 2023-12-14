@@ -34,10 +34,10 @@
     }
 </style>
 
-<!-- Watching Section -->
+<!-- ANIME/MANGA Section -->
 <div class="header_title_anime one">
-    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">SEARCH RESULTS</h2>
-  </div>
+    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">SEARCH RESULTS (ANIME/MANGA)</h2>
+</div>
   <div class="anime-block">
     <% if (searchResults === null ) { %>
       <p>No results found .</p>
@@ -81,4 +81,39 @@
         </tbody>
       </table>
     <% } %>
+  </div>
   
+
+
+<!-- CHARACTERS Section -->
+<div class="header_title_anime one">
+  <h2 class="my_h2 text-light" style="margin-left: 20px !important;">SEARCH RESULTS (CHARACTERS)</h2>
+</div>
+<div class="anime-block">
+  <% if (searchResultsChar === null ) { %>
+    <p>No results found .</p>
+  <% } else { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <td><strong>Name</strong></td>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <% searchResultsChar.forEach((characterDetails) => { %>
+              <tr class="anime-row">
+                  <td>
+                    <a href="/character/<%= characterDetails.CharacterID%>">
+                      <div class="anime_title_box">
+                        <img src="<%= characterDetails.ImageURL %>" alt="<%= characterDetails.CharName %>" class="img-thumbnail" width="50">
+                        <p><%= characterDetails.CharName %></p>
+                      </div>
+                    </a>
+                  </td>
+                
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
