@@ -1096,6 +1096,39 @@ module.exports = {
         }
       },      
       
+
+      async searchAnimeManga(query) {
+        try {
+
+          let conn = await pool.getConnection();
+            // You can customize this query based on your data model
+            const sql = `
+                SELECT
+                    AnimeID,
+                    TitleEnglish,
+                    TitleRomaji,
+                    TitleNative,
+                    CoverImageURL,
+                    AnimeFormat
+                FROM
+                    Anime
+                WHERE
+                    TitleEnglish LIKE ? OR
+                    TitleRomaji LIKE ? OR
+                    TitleNative LIKE ? OR
+                    Genre LIKE ?
+                ORDER BY TitleEnglish`;
+    
+            const searchTerm = `%${query}%`;
+    
+            const rows = await conn.execute(sql, [searchTerm, searchTerm, searchTerm, searchTerm]);
+    
+            return rows;
+        } catch (error) {
+            console.error('Error in searchAnimeManga:', error);
+            throw error;
+        }
+    }
       
       
 };

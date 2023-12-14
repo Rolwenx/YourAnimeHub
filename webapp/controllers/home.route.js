@@ -7,7 +7,33 @@ const characterRepo = require('../utils/characters.repository');
 const userRepo = require('../utils/users.repository');
 
 
+
+
 router.get('/', GuestHomeAction);
+
+// New route for handling search queries
+router.post('/search', handleSearch);
+
+async function handleSearch(req, res) {
+    try {
+        const searchQuery = req.body.searchQuery;
+
+        const searchResults = await animeRepo.searchAnimeManga(searchQuery);
+        console.log("searchResults",searchResults);
+        console.log(searchResults == null);
+
+        res.render('search', {
+            "searchResults":searchResults,
+            user: req.user,
+            title: `Search Results for "${searchQuery}" - YourAnimeHub`,
+            activePage: 'search-results',
+        });
+    } catch (error) {
+        console.error('Error in handleSearch:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
 
 
 // Admin Home route

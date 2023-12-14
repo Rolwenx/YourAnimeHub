@@ -1,0 +1,83 @@
+<%- include('partials/header.ejs', { title: title}) %>
+<link type="text/css" rel="stylesheet" href="/css/styleWatchlist.css">
+
+<style>
+    body {
+        color: white;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid white;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #333;
+        color: white;
+    }
+
+    .animeLink {
+        text-decoration: none;
+        color: white;
+    }
+
+    .animeLink:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<!-- Watching Section -->
+<div class="header_title_anime one">
+    <h2 class="my_h2 text-light" style="margin-left: 20px !important;">SEARCH RESULTS</h2>
+  </div>
+  <div class="anime-block">
+    <% if (searchResults === null ) { %>
+      <p>No results found .</p>
+    <% } else { %>
+      <table class="table">
+        <thead>
+          <tr>
+            <td><strong>Name</strong></td>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <% searchResults.forEach((animeDetails) => { %>
+            <% if (animeDetails.AnimeFormat === 'Anime') { %>
+                <tr class="anime-row">
+                    <td>
+                      <a href="/anime/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
+                        <div class="anime_title_box">
+                          <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                          <p><%= animeDetails.TitleEnglish %></p>
+                        </div>
+                      </a>
+                    </td>
+                  
+                  </tr>
+              <% } %>
+              <% if (animeDetails.AnimeFormat === 'Manga') { %>
+                <tr class="anime-row">
+                    <td>
+                      <a href="/manga/<%= animeDetails.AnimeID%>/<%=animeDetails.TitleEnglish%>">
+                        <div class="anime_title_box">
+                          <img src="<%= animeDetails.CoverImageURL %>" alt="<%= animeDetails.TitleEnglish %>" class="img-thumbnail" width="50">
+                          <p><%= animeDetails.TitleEnglish %></p>
+                        </div>
+                      </a>
+                    </td>
+                  
+                  </tr>
+              <% } %>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  

@@ -88,12 +88,12 @@
             <% } %>
 
     </header>
-
-<form action="" id="search-form">
-    <input type="search" placeholder="Search here..." name="" id="search-box">
-    <label for=search-box" class="fa fa-search"></label>
-    <i class="fa fa-times" id="close"></i>
-</form>
+    <form action="/search" method="post" id="search-form">
+        <input type="search" placeholder="Search here..." name="searchQuery" id="search-box">
+        <label for="search-box" class="fa fa-search"></label>
+        <i class="fa fa-times" id="close"></i>
+    </form>
+    
     <script>
         
         document.addEventListener('DOMContentLoaded', function () {
