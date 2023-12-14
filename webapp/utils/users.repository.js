@@ -10,7 +10,7 @@ module.exports = {
   async getAllUsers() {
     try {
         let conn = await pool.getConnection();
-        let sql = "SELECT UserID,Username,Email,FirstName, LastName, ProfilePictureURL, TitleDisplayLanguage, UserRole, Birthday, Bio,AccountStatus FROM User_Profile";
+        let sql = "SELECT UserID,Username,Email,FirstName, LastName, ProfilePictureURL, UserRole, Birthday, Bio FROM User_Profile";
 
         // Ensure rows is an array
         const userList = await conn.query(sql);
@@ -28,7 +28,7 @@ module.exports = {
   async getOneUser(username) {
     try {
       let conn = await pool.getConnection();
-      let sql = "SELECT UserID,Username,Email,FirstName, LastName, ProfilePictureURL, TitleDisplayLanguage, UserRole, Birthday, Bio,AccountStatus FROM User_Profile WHERE Username = ? "; 
+      let sql = "SELECT UserID,Username,Email,FirstName, LastName, ProfilePictureURL, UserRole, Birthday, Bio FROM User_Profile WHERE Username = ? "; 
       // must leave out the password+hash
       const [rows, fields] = await conn.execute(sql, [ username ]);
       conn.release();
@@ -95,12 +95,10 @@ module.exports = {
   async getOneUserByID(userId) {
     try {
       
-      console.log(userId);
       let conn = await pool.getConnection();
-      let sql = "SELECT Username,Email,FirstName, LastName, ProfilePictureURL, TitleDisplayLanguage, UserRole, Birthday, Bio,AccountStatus FROM User_Profile WHERE UserID = ? "; 
+      let sql = "SELECT Username,Email,FirstName, LastName, ProfilePictureURL, UserRole, Birthday, Bio FROM User_Profile WHERE UserID = ? "; 
       // must leave out the password+hash
       const [rows, fields] = await conn.execute(sql, [ userId ]);
-      console.log(rows);
       conn.release();
 
       if (rows && rows.Birthday !== undefined) {
@@ -160,10 +158,9 @@ module.exports = {
             const isMatch = await compareAsync(userEnteredPassword, hashedPasswordFromDatabase);
 
             if (isMatch) {
-                console.log('Password match! hey');
                 return "True";
             } else {
-                console.log('Password does not match!');
+                console.log('Password does not match!')
                 return "False";
             }
         }

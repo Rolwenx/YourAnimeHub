@@ -617,7 +617,6 @@ async function adminUserCreateAction(request, response) {
         UserRole: request.body.userole || null,
         Birthday: request.body.birthday || null,
         Bio: request.body.bio || null,
-        AccountStatus: "Active"
      };
     var userId = await userRepo.createUser(userData);
     if (userId == null) {
@@ -663,7 +662,6 @@ async function adminUserUpdateAction(request, response) {
         UserRole: request.body.userole || null,
         Birthday: request.body.birthday || null,
         Bio: request.body.bio || null,
-        AccountStatus: request.body.lastname,
     };
 
 

@@ -214,11 +214,9 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
     <div class="anime_info">
       <% if (user_info_about_anime && user_info_about_anime && user_info_about_anime.ReviewID != null) { %>
         <button class="write_review_button " onclick="window.location.href='/review/editor/manga/<%= manga.AnimeID %>/edit';">Edit Your Review</button>
-        <button class="propose_edit_button">Propose Edit Request</button>
       <% } %>
       <% if ((user && user.UserRole === 'User'||user && user.UserRole === 'Admin') && (user_info_about_anime === null || user_info_about_anime.ReviewID === null)) { %>
         <button class="write_review_button" onclick="window.location.href='/review/editor/manga/<%= manga.AnimeID %>';">Write Review</button>
-        <button class="propose_edit_button">Propose Edit Request</button>
        <% } %>
 
       <div>

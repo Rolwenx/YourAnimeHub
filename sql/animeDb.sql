@@ -19,12 +19,9 @@ CREATE TABLE User_Profile(
    LastName VARCHAR(50),
    UserPassword VARCHAR(50) NOT NULL,
    ProfilePictureURL VARCHAR(100),
-   TitleDisplayLanguage VARCHAR(20),  -- English, Japanese, Romaji
    UserRole VARCHAR(50),
    Birthday DATE,
 	Bio TEXT,
-   -- Active, suspended, banned
-   AccountStatus VARCHAR(50),
 	UNIQUE(Username),
    UNIQUE(Email)
 );
@@ -36,6 +33,7 @@ CREATE TABLE Anime(
    TitleNative VARCHAR(100),
    Genre VARCHAR(250) NOT NULL,
    ReleaseDate DATE,
+   Likes INT,
    EndDate DATE,
    AnimeStatus VARCHAR(20),
    Synopsis TEXT,
