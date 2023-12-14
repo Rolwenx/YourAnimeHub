@@ -302,7 +302,6 @@ module.exports = {
                     c.ImageURL,
                     c.Gender,
                     c.HiddenSurnames,
-                    c.CharSynopsis,
                     c.NamesGiven
                 FROM
                     Character_Card c
@@ -318,7 +317,6 @@ module.exports = {
                     c.Gender LIKE ? OR
                     c.Family LIKE ? OR
                     c.HiddenSurnames LIKE ? OR
-                    c.CharSynopsis LIKE ? OR
                     c.NamesGiven LIKE ?
                 ORDER BY
                     c.CharName;
@@ -326,7 +324,7 @@ module.exports = {
     
             const searchTerm = `%${query}%`;
     
-            const rows = await conn.execute(sql, [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm,searchTerm,searchTerm, searchTerm, searchTerm,query]);
+            const rows = await conn.execute(sql, [searchTerm, searchTerm, searchTerm, searchTerm,searchTerm,searchTerm, searchTerm, searchTerm,query]);
             conn.release();
             return rows;
         } catch (error) {

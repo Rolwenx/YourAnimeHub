@@ -1103,6 +1103,8 @@ module.exports = {
                     TitleEnglish,
                     TitleRomaji,
                     TitleNative,
+                    AnimeStatus,
+                    TypeFormat,
                     Chapters,
                     EpisodeCount,
                     Volumes,
@@ -1115,12 +1117,14 @@ module.exports = {
                     TitleEnglish LIKE ? OR
                     TitleRomaji LIKE ? OR
                     TitleNative LIKE ? OR
+                    AnimeStatus LIKE ? OR
+                    TypeFormat LIKE ? OR
                     Genre LIKE ?
                 ORDER BY TitleEnglish`;
     
             const searchTerm = `%${query}%`;
     
-            const rows = await conn.execute(sql, [searchTerm, searchTerm, searchTerm, searchTerm, query]);
+            const rows = await conn.execute(sql, [searchTerm, searchTerm, searchTerm,searchTerm,searchTerm,searchTerm, query]);
             conn.release();
             return rows;
         } catch (error) {
@@ -1155,12 +1159,14 @@ module.exports = {
               AND (TitleEnglish LIKE ? OR
                    TitleRomaji LIKE ? OR
                    TitleNative LIKE ? OR
+                   AnimeStatus LIKE ? OR
+                    TypeFormat LIKE ? OR
                    Genre LIKE ?)
               ORDER BY TitleEnglish`;
   
           const searchTerm = `%${query}%`;
   
-          const rows = await conn.execute(sql, [type,searchTerm, searchTerm, searchTerm, searchTerm, query]);
+          const rows = await conn.execute(sql, [type,searchTerm,searchTerm,searchTerm, searchTerm, searchTerm, searchTerm,searchTerm, query]);
           conn.release();
           return rows;
       } catch (error) {
@@ -1196,13 +1202,15 @@ module.exports = {
                   AND (TitleEnglish LIKE ? OR
                        TitleRomaji LIKE ? OR
                        TitleNative LIKE ? OR
+                       AnimeStatus LIKE ? OR
+                    TypeFormat LIKE ? OR
                        Genre LIKE ?)
               ORDER BY Likes DESC, TitleEnglish`;  
           // Added "ORDER BY Likes DESC" to rank by most liked
   
           const searchTerm = `%${query}%`;
   
-          const rows = await conn.execute(sql, [type,searchTerm, searchTerm, searchTerm, searchTerm]);
+          const rows = await conn.execute(sql, [type,searchTerm, searchTerm, searchTerm,searchTerm, searchTerm, searchTerm]);
           conn.release();
           return rows;
       } catch (error) {
@@ -1241,6 +1249,8 @@ module.exports = {
               AND (TitleEnglish LIKE ? OR
                 TitleRomaji LIKE ? OR
                 TitleNative LIKE ? OR
+                AnimeStatus LIKE ? OR
+                    TypeFormat LIKE ? OR
                 Genre LIKE ?)
               GROUP BY
                 A.AnimeID
@@ -1252,7 +1262,7 @@ module.exports = {
 
         const searchTerm = `%${query}%`;
 
-        const rows = await conn.execute(sql, [type,searchTerm, searchTerm, searchTerm, searchTerm]);
+        const rows = await conn.execute(sql, [type,searchTerm, searchTerm, searchTerm,searchTerm,searchTerm,searchTerm, searchTerm]);
         conn.release();
 
         return rows;
