@@ -138,6 +138,7 @@ async function AnimeViewAction(request, response) {
         const is_anime_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,animeId);
 
         const StatsCount = {};
+        StatsCount.AverageEpisodeProgress = await animeRepo.getAverageEpisodeProgress(animeId);
         StatsCount.Favourited = await animeRepo.getHowMuchAnimeHasBeenFavourited(animeId);
         StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('aset-planning',animeId))[0]?.statusCount || 0;
         StatsCount.CompleteCount = (await animeRepo.getAllStatusAnime('aset-complete',animeId))[0]?.statusCount || 0;
@@ -159,6 +160,9 @@ async function AnimeViewActionCharacters(request, response) {
     var userId = request.user ? request.user.UserID : null;
 
     try {
+        const StatsCount = {};
+        StatsCount.AverageEpisodeProgress = await animeRepo.getAverageEpisodeProgress(animeId);
+        StatsCount.Favourited = await animeRepo.getHowMuchAnimeHasBeenFavourited(animeId);
         var anime = await animeRepo.getOneAnime(animeId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
         const is_anime_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,animeId);
@@ -166,7 +170,9 @@ async function AnimeViewActionCharacters(request, response) {
         const animeStatus = userId ? await animeRepo.getAnimeStatus(userId, animeId) : null;
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
 
-        response.render("single_view/single_anime_characters", {is_anime_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_anime_characters", {
+            StatsCount,
+            is_anime_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
     } catch (error) {
         console.error('Error in AnimeViewActionCharacters:', error);
         response.status(500).send('Internal Server Error');
@@ -230,16 +236,18 @@ async function AnimeViewActionUserInfo(request, response) {
     var userId = request.user.UserID;
 
     try {
+        const StatsCount = {};
+        StatsCount.AverageEpisodeProgress = await animeRepo.getAverageEpisodeProgress(animeId);
+        StatsCount.Favourited = await animeRepo.getHowMuchAnimeHasBeenFavourited(animeId);
         var anime = await animeRepo.getOneAnime(animeId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(animeId);
         const is_anime_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,animeId);
 
         const animeStatus = await animeRepo.getAnimeStatus(userId, animeId);
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(animeId,userId);
-        console.log(user_info_about_anime);
-        console.log(user_info_about_anime.ReviewID);
 
-        response.render("single_view/single_anime_userInfo", { is_anime_favourited,"user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_anime_userInfo", {
+            StatsCount, is_anime_favourited,"user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "anime": anime, user: request.user, activePage: 'browse' });
     } catch (error) {
         console.error('Error in AnimeViewActionUserInfo:', error);
         response.status(500).send('Internal Server Error');

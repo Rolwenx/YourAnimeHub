@@ -137,6 +137,8 @@ async function MangaViewAction(request, response) {
         const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
 
         const StatsCount = {};
+        StatsCount.AverageChapterProgress = await animeRepo.getAverageChapterProgress(mangaId);
+        StatsCount.AverageVolumesProgress = await animeRepo.getAverageVolumeProgress(mangaId);
         StatsCount.Favourited = await animeRepo.getHowMuchAnimeHasBeenFavourited(mangaId);
         StatsCount.PlanningCount = (await animeRepo.getAllStatusAnime('mset-planning',mangaId))[0]?.statusCount || 0;
         StatsCount.CompleteCount = (await animeRepo.getAllStatusAnime('mset-complete',mangaId))[0]?.statusCount || 0;
@@ -158,6 +160,10 @@ async function MangaViewActionCharacters(request, response) {
     var userId = request.user ? request.user.UserID : null;
 
     try {
+        const StatsCount = {};
+        StatsCount.AverageChapterProgress = await animeRepo.getAverageChapterProgress(mangaId);
+        StatsCount.AverageVolumesProgress = await animeRepo.getAverageVolumeProgress(mangaId);
+        StatsCount.Favourited = await animeRepo.getHowMuchAnimeHasBeenFavourited(mangaId);
         var manga = await animeRepo.getOneManga(mangaId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
 
@@ -165,7 +171,7 @@ async function MangaViewActionCharacters(request, response) {
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
         const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
 
-        response.render("single_view/single_manga_characters", {is_manga_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_manga_characters", {StatsCount,is_manga_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
     } catch (error) {
         console.error('Error in MangaViewActionCharacters:', error);
         response.status(500).send('Internal Server Error');
@@ -181,6 +187,10 @@ async function MangaViewActionUserInfo(request, response) {
     var userId = request.user.UserID;
 
     try {
+        const StatsCount = {};
+        StatsCount.AverageChapterProgress = await animeRepo.getAverageChapterProgress(mangaId);
+        StatsCount.AverageVolumesProgress = await animeRepo.getAverageVolumeProgress(mangaId);
+        StatsCount.Favourited = await animeRepo.getHowMuchAnimeHasBeenFavourited(mangaId);
         var manga = await animeRepo.getOneManga(mangaId);
         var charactersDetails = await animeRepo.getCharactersByAnimeID(mangaId);
         const is_manga_favourited = await animeRepo.CheckIfAnimeInFavourite(userId,mangaId);
@@ -188,7 +198,7 @@ async function MangaViewActionUserInfo(request, response) {
         const animeStatus = await animeRepo.getAnimeStatus(userId, mangaId);
         var user_info_about_anime = await reviewRepo.getUserViewAnimeInfo(mangaId,userId);
 
-        response.render("single_view/single_manga_userInfo", { is_manga_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
+        response.render("single_view/single_manga_userInfo", { StatsCount,is_manga_favourited, "user_info_about_anime": user_info_about_anime, "animeStatus": animeStatus, "charactersDetails": charactersDetails, "manga": manga, user: request.user, activePage: 'browse' });
     } catch (error) {
         console.error('Error in MangaViewActionUserInfo:', error);
         response.status(500).send('Internal Server Error');

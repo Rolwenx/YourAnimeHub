@@ -23,8 +23,8 @@ async function GuestHomeAction(request, res) {
         const mangaList = await animeRepo.getAllMangas();
         const quote_of_the_day = await quoteRepo.transformQuoteOfDay();
 
-        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'set-watching','Anime');
-        var ReadingMangaList = await userRepo.getAllAnimeForWatchlist(userId,'set-reading','Manga');
+        var WatchingAnimeList = await userRepo.getAllAnimeForWatchlist(userId,'aset-watching');
+        var ReadingMangaList = await userRepo.getAllMangaForWatchlist(userId,'mset-reading');
         // Log user role in the console
         console.log("User Role:", request.user ? request.user.UserRole : "Guest");
 

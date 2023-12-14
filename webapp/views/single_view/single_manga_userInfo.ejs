@@ -234,8 +234,16 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <p class="answer_of_menu"><%= manga.Chapters %></p>
       </div>
       <div>
+        <p class="title_of_menu"><strong>Average Chapter Progress:</strong> </p>
+        <p class="answer_of_menu"><%= StatsCount.AverageChapterProgress %></p>
+      </div>
+      <div>
         <p class="title_of_menu"><strong>Number of Volumes:</strong> </p>
         <p class="answer_of_menu"><%= manga.Volumes %></p>
+      </div>
+      <div>
+        <p class="title_of_menu"><strong>Average Volumes Progress:</strong> </p>
+        <p class="answer_of_menu"><%= StatsCount.AverageVolumesProgress %></p>
       </div>
       <div>
         <p class="title_of_menu"><strong>Favourited:</strong> </p>

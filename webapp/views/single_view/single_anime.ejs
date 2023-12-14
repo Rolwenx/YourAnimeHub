@@ -238,6 +238,12 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
             <p class="answer_of_menu"><%= anime.EpisodeCount %></p>
           </div>
         <% } %>
+        <% if (anime.TypeFormat === 'TV') { %>
+          <div>
+            <p class="title_of_menu"><strong>Average Episode Progress</strong> </p>
+            <p class="answer_of_menu"><%=  StatsCount.AverageEpisodeProgress %></p>
+          </div>
+        <% } %>
         <% if (anime.TypeFormat === 'Movie') { %>
           <div>
             <p class="title_of_menu"><strong>Movie Duration:</strong> </p>

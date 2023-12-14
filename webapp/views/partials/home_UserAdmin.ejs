@@ -5,8 +5,7 @@
         </h3>
         <div class="anime_container">
             <% if (WatchingAnimeList && Array.isArray(WatchingAnimeList) && WatchingAnimeList.length > 0) { %>
-                <% WatchingAnimeList.slice(0, 3).forEach((animeEntry) => { %>
-                    <% const animeDetails = animeEntry['0']; %>
+                <% WatchingAnimeList.slice(0, 3).forEach((animeDetails) => { %>
                     <div class="anime_boxes">
                         <div class="anime_box">
                             <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">
@@ -34,8 +33,7 @@
         </h3>
         <div class="anime_container">
             <% if (ReadingMangaList && Array.isArray(ReadingMangaList) && ReadingMangaList.length > 0) { %>
-                <% ReadingMangaList.slice(0, 3).forEach((animeEntry) => { %>
-                    <% const animeDetails = animeEntry['0']; %>
+                <% ReadingMangaList.slice(0, 3).forEach((animeDetails) => { %>
                     <div class="anime_boxes">
                         <div class="anime_box">
                             <a href="/anime/<%= animeDetails.AnimeID %>/<%= animeDetails.TitleEnglish %>">

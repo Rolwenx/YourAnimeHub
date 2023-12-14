@@ -1029,6 +1029,73 @@ module.exports = {
           throw error;
         }
       },      
+
+      async  getAverageEpisodeProgress(animeId) {
+        try {
+          let conn = await pool.getConnection();
+
+          let Sql = `SELECT AnimeID, AVG(EpisodeProgress) AS AverageEpisodeProgress FROM View_Anime WHERE AnimeID = ? GROUP BY AnimeID`;
+      
+        let rows = await conn.execute(Sql, [animeId]);
+
+          conn.release();
+          if (rows[0] != null ) {
+            return rows[0].AverageEpisodeProgress;
+          } else {
+            return 0; 
+          }
+      
+          return list;
+        } catch (error) {
+          console.error('Error in getAverageEpisodeProgress:', error);
+          throw error;
+        }
+      },      
+
+      async  getAverageChapterProgress(mangaId) {
+        try {
+          let conn = await pool.getConnection();
+
+          let Sql = `SELECT AnimeID, AVG(ChaptersRead) AS ChaptersRead FROM View_Anime WHERE AnimeID = ? GROUP BY AnimeID`;
+      
+        let rows = await conn.execute(Sql, [mangaId]);
+
+          conn.release();
+          if (rows[0] != null ) {
+            return rows[0].ChaptersRead;
+          } else {
+            return 0; 
+          }
+      
+          return list;
+        } catch (error) {
+          console.error('Error in getAverageChapterProgress:', error);
+          throw error;
+        }
+      },      
+
+      async  getAverageVolumeProgress(mangaId) {
+        try {
+          let conn = await pool.getConnection();
+
+          let Sql = `SELECT AnimeID, AVG(VolumeProgress) AS VolumeProgress FROM View_Anime WHERE AnimeID = ? GROUP BY AnimeID`;
+      
+        let rows = await conn.execute(Sql, [mangaId]);
+
+          conn.release();
+          if (rows[0] != null ) {
+            return rows[0].VolumeProgress;
+          } else {
+            return 0; 
+          }
+      
+          return list;
+        } catch (error) {
+          console.error('Error in getAverageVolumeProgress:', error);
+          throw error;
+        }
+      },      
+      
       
       
 };
