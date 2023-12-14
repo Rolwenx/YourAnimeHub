@@ -66,7 +66,7 @@ module.exports = {
     
     
             let sql = "DELETE FROM AnimeQuote WHERE QuoteID = ?";
-            const [okPacket, fields] = await conn.execute(sql, [quoteId]);
+            await conn.execute(sql, [quoteId]);
             conn.release();
     
         } catch (err) {
@@ -133,27 +133,6 @@ module.exports = {
             return result;
         } catch (err) {
             console.error('Error in editOneQuote:', err);
-            throw err;
-        }
-    },
-
-
-    // NOT FUNCTIONAL
-    async getQuotesByAnime(animeId) {
-        try {
-            let conn = await pool.getConnection();
-            let sql = `
-                SELECT quote.*, character.CharName, anime.TitleEnglish
-                FROM AnimeQuote AS quote
-                INNER JOIN Character_Card AS character ON quote.CharacterID = character.CharacterID
-                INNER JOIN Anime AS anime ON quote.AnimeID = anime.AnimeID
-                WHERE quote.AnimeID = ?
-            `;
-            const [rows, fields] = await conn.execute(sql, [animeId]);
-            conn.release();
-            return rows;
-        } catch (err) {
-            console.log(err);
             throw err;
         }
     },
@@ -314,5 +293,49 @@ module.exports = {
           throw error;
         }
       },
+
+      async searchQuote(query) {
+        try {
+            let conn = await pool.getConnection();
+
+            const sql = `
+                SELECT
+    
+                aq.QuoteText,
+                aq.QuoteID,
+                aq.CharacterID,
+                c.CharName,
+                a.TitleEnglish,
+                a.TitleRomaji,
+                a.TitleNative
+                FROM
+                    AnimeQuote aq
+                JOIN
+                    Character_Card c
+                ON
+                    aq.CharacterID = c.CharacterID
+                JOIN
+                    Anime a
+                ON 
+                aq.AnimeID = a.AnimeID
+                WHERE
+                    QuoteText LIKE ? OR
+                    TitleEnglish LIKE ? OR
+                    CharName LIKE ? OR
+                    TitleRomaji LIKE ? OR
+                    TitleNative LIKE ?
+                ORDER BY aq.QuoteText`;
+    
+            const searchTerm = `%${query}%`;
+    
+            const rows = await conn.execute(sql, [searchTerm, searchTerm,searchTerm,searchTerm,searchTerm, query]);
+            console.log(rows);
+            conn.release();
+            return rows;
+        } catch (error) {
+            console.error('Error in searchQuote:', error);
+            throw error;
+        }
+    },    
     
 };

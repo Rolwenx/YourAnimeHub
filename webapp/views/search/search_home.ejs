@@ -117,3 +117,36 @@
     </table>
   <% } %>
 </div>
+
+
+<!-- QUOTES Section -->
+<div class="header_title_anime one">
+  <h2 class="my_h2 text-light" style="margin-left: 20px !important;">SEARCH RESULTS (QUOTES)</h2>
+</div>
+<div class="anime-block">
+  <% if (searchResultsQuote === null ) { %>
+    <p>No results found .</p>
+  <% } else { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <td><strong>Quote</strong></td>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <% searchResultsQuote.forEach((quoteDetails) => { %>
+              <tr class="anime-row">
+                  <td>
+                    <a href="/quote/<%= quoteDetails.QuoteID%>">
+                      <div class="anime_title_box">
+                        <p><%= quoteDetails.QuoteText %></p>
+                      </div>
+                    </a>
+                  </td>
+                
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</div>

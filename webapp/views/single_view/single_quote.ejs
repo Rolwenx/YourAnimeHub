@@ -24,8 +24,8 @@ const title = quote ? `Quote #${quote.QuoteID} - YourAnimeHub` : 'YourAnimeHub';
 <div class="review-container">
   <div class="overlay"></div>
   <div class="content">
-      <h2><a href="#"><%= quote.TitleEnglish %></a></h2>
-      <h4>A Quote By <%= quote.CharName %></h4>
+      <h2><a href="/anime/<%= quote.AnimeID %>/<%= quote.TitleEnglish %>"><%= quote.TitleEnglish %></a></h2>
+      <h4>A Quote By <a href="/character/<%= quote.CharacterID %>/<%= quote.CharName %>"><%= quote.CharName %></a></h4>
     
   </div>
   

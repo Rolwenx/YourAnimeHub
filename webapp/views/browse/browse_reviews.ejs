@@ -53,37 +53,36 @@ const title = 'Browse Reviews - YourAnimeHub';
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
 </script>
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    let displayedCharCount = 12;
+    let displayedReviewCount = 8;
 
-    const animeTable = document.getElementById("anime-table");
-    const animeRows = document.querySelectorAll(".anime-row");
+    const reviewCards = document.querySelectorAll(".row .col-md-3 mb-4");
 
-    // Initially hide rows greater than 12
-    animeRows.forEach((row, index) => {
-      if (index >= displayedCharCount) {
-        row.style.display = "none";
+    // Initially hide cards greater than 8
+    reviewCards.forEach((card, index) => {
+      if (index >= displayedReviewCount) {
+        card.style.display = "none";
       }
     });
 
     document.getElementById("load-more-button").addEventListener("click", function () {
-      for (let i = displayedCharCount; i < displayedCharCount + 12; i++) {
-        if (i < animeRows.length) {
-          animeRows[i].style.display = "table-row";
+      for (let i = displayedReviewCount; i < displayedReviewCount + 8; i++) {
+        if (i < reviewCards.length) {
+          reviewCards[i].style.display = "block";  // Assuming these are display: block elements
         }
       }
 
-      displayedCharCount += 12;
+      displayedReviewCount += 8;
 
-      // Hide load more button if all anime are displayed
-      if (displayedCharCount >= animeRows.length) {
+      // Hide load more button if all reviews are displayed
+      if (displayedReviewCount >= reviewCards.length) {
         document.getElementById("load-more-button").style.display = "none";
       }
     });
   });
 </script>
+
 
 <%- include('../partials/footer.ejs') %>
 </body>
