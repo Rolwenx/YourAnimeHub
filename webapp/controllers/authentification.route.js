@@ -27,11 +27,11 @@ router.get('/auth', (req, res) => {
         return res.redirect("/admin");
       } 
       if (req.user.UserRole === "User") {
-        // Redirect to the user's profile page (or home page)
+        // Redirect to the user's profile page 
         return res.redirect("/user"); 
       }
       if (req.user.UserRole === "Guest") {
-        // Redirect to the user's profile page (or home page)
+        // Redirect to the user's profile page 
         return res.redirect("/user"); 
       }
     } else {

@@ -299,13 +299,6 @@ async function adminMangaDelAction(request, response) {
     try {
    
         has_been_deleted = await animeRepo.delOneAnime(mangaId);
-        if (has_been_deleted == true){
-            // add something to say that anime has been deleted
-
-        }
-        else{
-            // add something to say that anime has not been deleted
-        }
  
         response.redirect("/admin/mangas");
     } catch (error) {

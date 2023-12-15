@@ -154,7 +154,6 @@ module.exports = {
         if (rows != null) {
             const hashedPasswordFromDatabase = rows.UserPassword;
 
-            // Use the promisified bcrypt.compare function
             const isMatch = await compareAsync(userEnteredPassword, hashedPasswordFromDatabase);
 
             if (isMatch) {

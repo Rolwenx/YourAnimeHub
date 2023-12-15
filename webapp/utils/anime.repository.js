@@ -1,7 +1,6 @@
 // anime.repository.js
 
 pool = require("../utils/db.js");
-const userRepo = require('../utils/users.repository.js');
 
 module.exports = {
 
