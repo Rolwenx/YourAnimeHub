@@ -1045,7 +1045,6 @@ module.exports = {
             return 0; 
           }
       
-          return list;
         } catch (error) {
           console.error('Error in getAverageEpisodeProgress:', error);
           throw error;
@@ -1067,7 +1066,6 @@ module.exports = {
             return 0; 
           }
       
-          return list;
         } catch (error) {
           console.error('Error in getAverageChapterProgress:', error);
           throw error;

@@ -132,7 +132,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
           <% if (anime.TypeFormat === 'TV') { %>
             <!-- Episode Progress -->
           <label for="episodeProgress"><strong>Episode Progress:</strong></label>
-          <input class="form-control" type="number" id="episodeProgress" name="episodeProgress" placeholder="How far along are you out of <%= anime.EpisodeCount %> episodes">
+          <input class="form-control" type="number" id="episodeProgress" name="episodeProgress" placeholder="How far along are you out of <%= anime.EpisodeCount %> episodes" minlength="0" maxlength="<%= anime.EpisodeCount %>">
           <% } %>
           <!-- Start Date -->
           <label for="startDate"><strong>Start Date:</strong></label>
@@ -172,7 +172,7 @@ const title = anime ? `${anime.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <% if (anime.TypeFormat === 'TV') { %>
           <!-- Episode Progress -->
         <label for="episodeProgress"><strong>Episode Progress:</strong></label>
-        <input class="form-control" type="number" value="<%= user_info_about_anime.EpisodeProgress %>" id="episodeProgress" name="episodeProgress" placeholder="How far along are you out of <%= anime.EpisodeCount %> episodes">
+        <input class="form-control" type="number" value="<%= user_info_about_anime.EpisodeProgress %>" id="episodeProgress" name="episodeProgress" placeholder="How far along are you out of <%= anime.EpisodeCount %> episodes" minlength="0" maxlength="<%= anime.EpisodeCount %>">
         <% } %>
          <!-- Start Date -->
          <label for="startDate"><strong>Start Date:</strong></label>

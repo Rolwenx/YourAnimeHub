@@ -130,12 +130,12 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
           <input type="number" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
   
           <!-- Chapter Progress -->
-          <label for="episodeProgress"><strong>Chapter Progress:</strong></label>
-          <input class="form-control" type="number" id="chapterProgress" name="chapterProgress">
+          <label for="chapterProgress"><strong>Chapter Progress:</strong></label>
+          <input class="form-control" type="number" id="chapterProgress" name="chapterProgress" minlength="0" maxlength="<%= manga.Chapters %>">
 
           <!-- Volume Progress -->
-          <label for="episodeProgress"><strong>Volumes Progress:</strong></label>
-          <input class="form-control" type="number" id="volumeProgress" name="volumeProgress">
+          <label for="volumeProgress"><strong>Volumes Progress:</strong></label>
+          <input class="form-control" type="number" id="volumeProgress" name="volumeProgress" minlength="0" maxlength="<%= manga.Volumes %>">
   
           <!-- Start Date -->
           <label for="startDate"><strong>Start Date:</strong></label>
@@ -174,11 +174,11 @@ const title = manga ? `${manga.TitleEnglish} - YourAnimeHub` : 'YourAnimeHub';
         <input type="number" value="<%= user_info_about_anime.RateGrade %>" min="1" max="5" name="rate" id="rateInput" class="form-control" placeholder="Enter a number from 1 to 5">
 
         <!-- Chapter Progress -->
-        <label for="episodeProgress"><strong>Chapter Progress:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.ChaptersRead %>" type="number" id="chapterProgress" name="chapterProgress">
+        <label for="volumeProgress"><strong>Chapter Progress:</strong></label>
+        <input class="form-control" value="<%= user_info_about_anime.ChaptersRead %>" type="number" id="chapterProgress" name="chapterProgress" minlength="0" maxlength="<%= manga.Chapters %>">
         <!-- Volume Progress -->
-        <label for="episodeProgress"><strong>Volume Progress:</strong></label>
-        <input class="form-control" value="<%= user_info_about_anime.VolumeProgress %>" type="number" id="volumeProgress" name="volumeProgress">
+        <label for="volumeProgress"><strong>Volume Progress:</strong></label>
+        <input class="form-control" value="<%= user_info_about_anime.VolumeProgress %>" type="number" id="volumeProgress" name="volumeProgress" minlength="0" maxlength="<%= manga.Volumes %>">
 
         <!-- Start Date -->
         <label for="startDate"><strong>Start Date:</strong></label>
